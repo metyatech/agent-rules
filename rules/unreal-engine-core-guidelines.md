@@ -186,6 +186,22 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 共有可変状態の `static` は避け、所有者と寿命が明確なオブジェクトへ閉じ込める。
 
+### Unreal Engine 固有のルール
+
+#### Editor ガード
+
+エディタ専用コードは `WITH_EDITOR`/`WITH_EDITORONLY_DATA` でガードし、ランタイムに混入させない。
+
+#### ライフサイクル
+
+- コンストラクタでの `GetWorld`/仮想呼び出しは禁止する。初期化は `OnRegister`/`BeginPlay`/`PostInitProperties` に分離する。
+- `SpawnActorDeferred` は `FinishSpawning` 前に初期化や依存注入が必要なケースのみに限定する。
+- `PostEditChangeProperty` は軽量な状態更新のみに使用し、構築/再構築は `OnConstruction` に集約する。
+
+#### Delegates
+
+動的デリゲートは必要時のみ使用し、Bind/Unbind の対称性を保つ。
+
 ### エラーハンドリング/ログ（UE固有）
 
 - `checkf`: 継続不能な前提違反のみ。
@@ -282,6 +298,11 @@ UnrealBuildRunTestScript と UE5Coro は必須とする。対象機能を使う�
 4. 依存関係の設計（抽象を通じた依存関係を設計する）
 5. 実装順序の決定（汎用的な機能から順に実装する）
 
+#### 実装前の確認
+
+- デザイン仕様は複数回確認し、実装前に正確な理解を得る。
+- コーディング規約は実装開始時に全項目を確認し、後戻りを防ぐ。
+
 #### ビルド
 
 - Lint エラーは信用せず、必ずビルド結果で確認する。
@@ -292,6 +313,7 @@ UnrealBuildRunTestScript と UE5Coro は必須とする。対象機能を使う�
 #### テスト
 
 - 重要機能は AutomationSpec/Functional Tests を用意する。
+- テストは可能な限り網羅的に作成し、通常時とリファクタリング時で同一基準を適用する。
 - ユーザーから明示的な指示がなくても、関連部分を修正した場合は対応するテストを必ず実行する。
 - テスト可能な状態になった時点で、自動テストを必ず追加する。
 
