@@ -188,6 +188,10 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 ### Unreal Engine 固有のルール
 
+#### UI/座標変換
+
+- ワールド座標からUIのスクリーン座標へ変換する場合は、`UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition` を優先する（DPI/viewportスケールを考慮するため）。
+
 #### Editor ガード
 
 エディタ専用コードは `WITH_EDITOR`/`WITH_EDITORONLY_DATA` でガードし、ランタイムに混入させない。
