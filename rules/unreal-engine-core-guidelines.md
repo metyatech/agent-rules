@@ -192,6 +192,12 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 - ワールド座標からUIのスクリーン座標へ変換する場合は、`UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition` を優先する（DPI/viewportスケールを考慮するため）。
 
+#### 静的解析
+
+- Unreal Engine プロジェクトの変更時は、clangd による静的解析を必ず実行する。
+- 実行方法はプロジェクトの設定（例: .vscode/unreal-clangd の compile_commands.json と clangd 設定）に従う。
+- 実行できない場合は理由と代替手順を明記する。
+
 #### Editor ガード
 
 エディタ専用コードは `WITH_EDITOR`/`WITH_EDITORONLY_DATA` でガードし、ランタイムに混入させない。
