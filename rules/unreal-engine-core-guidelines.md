@@ -194,38 +194,17 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 #### 静的解析
 
-- 全ての Unreal Engine プロジェクトは unreal-clangd を導入し、clangd による静的解析を必ず実行する。
-- 静的解析は常に全て確認する（変更ファイルだけに限定せず、プロジェクトの設定で有効な静的解析を全て実行・確認する）。
-- clangd を基準とし、clang-tidy の指摘も必ず確認する。
-- 実行方法はプロジェクトの設定（ビルドシステムが生成する compile_commands.json と clangd 設定）に従う。
+- clangd と clang-tidy を実行して確認する。
+- compile_commands.json はビルドシステムが生成したものを使用する。
+- `<rsp>` は compile_commands.json の該当エントリに含まれるレスポンスファイル（`@...rsp`）。
+- `*.Build.cs` 変更後は compile_commands.json を再生成して再実行する。
 - 実行できない場合は理由と代替手順を明記する。
-- `*.Build.cs` などビルド設定変更後は `compile_commands.json` を再生成してから再実行する。
-- VSCode 関連のファイル（.vscode や .code-workspace など）には依存しない。
 
-##### clangd（標準の診断と同等）
-
-- compile_commands はビルドシステムが生成したものを使用する。
-- 実行例:
+実行コマンド:
 
 ```powershell
 & "C:\Program Files\LLVM\bin\clangd.exe" --compile-commands-dir="<compile_commands_dir>" --clang-tidy --check="<file>"
-```
-
-##### clang-tidy（Magic number など clangd で出ない診断の補完）
-
-- `<rsp>` は対象ファイルに対応するレスポンスファイルを使用する（`compile_commands.json` の該当エントリに含まれる `@...rsp` を参照）。
-- 実行例:
-
-```powershell
 & "C:\Program Files\LLVM\bin\clang-tidy.exe" "<file>" -checks=cppcoreguidelines-avoid-magic-numbers -- --driver-mode=cl /std:c++20 @<rsp>
-```
-
-##### clang-tidy（標準の診断再現）
-
-- 標準の診断結果と同等の結果を得る場合は、対象ファイルに対応するレスポンスファイル（rsp）を用いて `clang-tidy` を実行する。
-- `--driver-mode=cl` と `/std:c++20` を必ず指定する。
-
-```powershell
 & "C:\Program Files\LLVM\bin\clang-tidy.exe" "<file>" -- --driver-mode=cl /std:c++20 @<rsp>
 ```
 
