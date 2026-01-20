@@ -194,19 +194,7 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 #### 静的解析
 
-- clangd と clang-tidy を実行して確認する。
-- compile_commands.json はビルドシステムが生成したものを使用する。
-- `<rsp>` は compile_commands.json の該当エントリに含まれるレスポンスファイル（`@...rsp`）。
-- `*.Build.cs` 変更後は compile_commands.json を再生成して再実行する。
-- 実行できない場合は理由と代替手順を明記する。
-
-実行コマンド:
-
-```powershell
-& "C:\Program Files\LLVM\bin\clangd.exe" --compile-commands-dir="<compile_commands_dir>" --clang-tidy --check="<file>"
-& "C:\Program Files\LLVM\bin\clang-tidy.exe" "<file>" -checks=cppcoreguidelines-avoid-magic-numbers -- --driver-mode=cl /std:c++20 @<rsp>
-& "C:\Program Files\LLVM\bin\clang-tidy.exe" "<file>" -- --driver-mode=cl /std:c++20 @<rsp>
-```
+- VSCode 環境では、PROBLEMS を確認して問題を修正する。
 
 #### Lint 抑制
 
