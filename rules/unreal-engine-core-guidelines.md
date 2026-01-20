@@ -1,6 +1,6 @@
-## Unreal Engine プロジェクト共通ルール
+# Unreal Engine プロジェクト共通ルール
 
-### 実装方針
+## 実装方針
 
 - C++のみで完結できる場合は、C++のみで実装する。
 - ブループリントのイベントグラフは使用せず、すべてC++で実装する。
@@ -8,8 +8,8 @@
 
 以下のコーディング規約を遵守する：
 
-- Unreal Engine 公式コーディング規約: https://dev.epicgames.com/documentation/ja-jp/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine
-- C++ Core Guidelines: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+- Unreal Engine 公式コーディング規約: <https://dev.epicgames.com/documentation/ja-jp/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine>
+- C++ Core Guidelines: <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines>
 
 ### 設計・アーキテクチャ
 
@@ -56,7 +56,7 @@ SOLID原則は「コンテキスト」に応じて適用レベルを調整する
 
 - テストは実装とは別モジュールに分離する。
 
-```
+```text
 Plugins/
   MyFeature/
     Source/
@@ -142,11 +142,11 @@ auto Lambda = [](int32 Value) -> bool { return Value > 0; };
 
 #### 文字列型
 
-| 型      | 用途                                          |
-| ------- | --------------------------------------------- |
-| FName   | 頻用識別子（比較/ハッシュのコスト抑制）       |
-| FText   | ユーザー表示                                  |
-| FString | 一時的文字列処理のみ                          |
+| 型      | 用途                                    |
+| ------- | --------------------------------------- |
+| FName   | 頻用識別子（比較/ハッシュのコスト抑制） |
+| FText   | ユーザー表示                            |
+| FString | 一時的文字列処理のみ                    |
 
 #### 数値
 
@@ -194,9 +194,13 @@ UObject 生成は `NewObject`/`CreateDefaultSubobject` を使用し、直接コ�
 
 #### 静的解析
 
-- Unreal Engine プロジェクトの変更時は、clangd による静的解析を必ず実行する。
-- 実行方法はプロジェクトの設定（例: .vscode/unreal-clangd の compile_commands.json と clangd 設定）に従う。
-- 実行できない場合は理由と代替手順を明記する。
+- VSCode 環境では、PROBLEMS を確認して問題を修正する。
+
+#### Lint 抑制
+
+- 単一行の抑制は `NOLINTNEXTLINE(<rule-name>)` を使用する。
+- 複数行に亘る抑制が必要な場合は `NOLINTBEGIN(<rule-name>)` と `NOLINTEND(<rule-name>)` を使用する。
+- 可能な限り抑制ではなく修正で解消する。
 
 #### Editor ガード
 
@@ -320,7 +324,7 @@ UnrealBuildRunTestScript と UE5Coro は必須とする。対象機能を使う�
   - 追加指定が必要な場合は `UnrealBuildRunTestScript\\Fire-Build.ps1.bat --no-pause -Configuration Development -Platform Win64` の形式で実行する。
 - ソースコード/`*.Build.cs`/プラグイン設定変更後は必ずビルドを実行し、エラーがあれば修正を継続する。
 
-#### テスト
+#### 自動テスト
 
 - 重要機能は AutomationSpec/Functional Tests を用意する。
 - テストは可能な限り網羅的に作成し、通常時とリファクタリング時で同一基準を適用する。
