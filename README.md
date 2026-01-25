@@ -9,7 +9,7 @@ The compose tool lives in a separate repository: `agent-rules-tools/`.
 
 - `rules/`: reusable rule modules (Markdown)
   - `rules/global/`: rules applied to all projects
-  - `rules/domains/`: rules for specific domains (node/unreal/exam)
+  - `rules/domains/`: rules for specific domains
 - `agent-ruleset.json`: a per-project ruleset file stored at each project root
 
 ## Ruleset format
