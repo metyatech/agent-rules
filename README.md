@@ -8,6 +8,8 @@ The compose tool lives in a separate repository: `agent-rules-tools/`.
 ## Structure
 
 - `rules/`: reusable rule modules (Markdown)
+  - `rules/global/`: rules applied to all projects
+  - `rules/domains/`: rules for specific domains (node/unreal/exam)
 - `agent-ruleset.json`: a per-project ruleset file stored at each project root
 
 ## Ruleset format
@@ -15,15 +17,14 @@ The compose tool lives in a separate repository: `agent-rules-tools/`.
 ```json
 {
   "output": "AGENTS.md",
-  "rules": [
-    "agent-rules/rules/languages-and-writing.md",
-    "agent-rules/rules/implementation-and-coding-standards.md",
-    "agent-rules/rules/agent-rules-composition.md"
-  ]
+  "domains": ["unreal"],
+  "rules": ["agent-rules-local/custom.md"]
 }
 ```
 
 - `output` is resolved relative to the ruleset file.
+- Global rules are always included from `rules/global/`.
+- `domains` selects domain folders under `rules/domains/`.
 - Each `rules` entry is resolved relative to the ruleset JSON file.
   - For project-specific rules, add modules in the project itself (e.g. `agent-rules-local/`) and reference them from `agent-ruleset.json`.
 
@@ -41,7 +42,8 @@ Optional arguments:
 - `--ruleset <path>`: only compose a single ruleset
 - `--ruleset-name <name>`: override the ruleset filename (default: `agent-ruleset.json`)
 
-`AGENTS.md` files are generated output; edit the modules in `rules/` instead.
+`AGENTS.md` files are generated output; edit the modules in `rules/global/` or
+`rules/domains/` instead.
 
 ## Public vs private
 
