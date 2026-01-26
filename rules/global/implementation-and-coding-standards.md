@@ -2,7 +2,7 @@
 
 - JavaScript ではなく TypeScript を標準とする（`.ts`/`.tsx`）。
 - JavaScript は、ツール都合で必要な設定ファイル等に限定する。
-- 既存の言語/フレームワーク/依存関係の範囲で完結させる。新規依存追加は必要最小限にする。
+- 外部依存で汎用的な解決ができる場合は積極的に採用する。内製は外部依存が適切に見つからない場合のみに限定する。
 - 対象ツール/フレームワークに公式チュートリアルや推奨される標準手法がある場合は、それを第一優先で採用する（明確な理由がある場合を除く）。
 - Prefer existing internet-hosted tools/libraries for reusable functionality; if none exist, externalize the shared logic into a separate repository/module and reference it via remote dependency (never local filesystem paths).
 - 「既存に合わせる」よりも「理想的な状態（読みやすさ・保守性・一貫性・安全性）」を優先する。
