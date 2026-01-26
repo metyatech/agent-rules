@@ -5,13 +5,6 @@
 - リポジトリは基本的に独立しており、変更は「影響のあるリポジトリ」に限定して行う。
 - 共通モジュール/共有ライブラリを更新した場合は、利用側リポジトリでも参照（サブモジュール/依存関係/バージョン）を更新し、必要な検証まで同じ変更セットで行う。
 
-## Workspace repository management (ghws)
-
-- When working inside the `ghws` workspace repository, treat it as the default place to manage the user's GitHub repositories.
-- If the target repository already exists under the current `ghws` workspace, edit it in place.
-- If the target repository is not present under the current `ghws` workspace, clone it from GitHub with `--recursive` and then work in the cloned folder.
-- When adding a new repository in the `ghws` workspace, create a new folder under that workspace and push it to GitHub.
-
 ## ブランチ/PR 運用
 
 - ブランチの指定がない場合は、現在のブランチで作業してよい。
