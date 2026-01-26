@@ -7,10 +7,10 @@
 
 ## Workspace repository management (ghws)
 
-- The `D:\ghws` repository is the workspace that mirrors the user's GitHub repositories and is the default place to manage them.
-- If the target repository already exists under `D:\ghws`, edit it in place.
-- If the target repository is not present under `D:\ghws`, clone it from GitHub with `--recursive` and then work in the cloned folder.
-- When adding a new repository, create a new folder under `D:\ghws` and push it to GitHub.
+- When working inside the `ghws` workspace repository, treat it as the default place to manage the user's GitHub repositories.
+- If the target repository already exists under the current `ghws` workspace, edit it in place.
+- If the target repository is not present under the current `ghws` workspace, clone it from GitHub with `--recursive` and then work in the cloned folder.
+- When adding a new repository in the `ghws` workspace, create a new folder under that workspace and push it to GitHub.
 
 ## ブランチ/PR 運用
 
