@@ -1,11 +1,10 @@
 # Languages and writing
 
-## 言語（返答・記述）
+## Response language
 
-### 回答言語
+Write final responses to the user in Japanese unless the user requests otherwise.
 
-ユーザーへの最終返答は日本語で書く（ユーザーから別の希望がある場合はそちらを優先）。
+## Writing language
 
-### 記述言語
-
-- 特に指定がない限り、開発者向けドキュメント（例: `README.md`）、コードコメント、コミットメッセージは英語で書く。
+- Unless specified otherwise, write developer-facing documentation (e.g., `README.md`), code comments, and commit messages in English.
+- Write rule modules in English.
