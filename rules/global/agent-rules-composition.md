@@ -16,7 +16,7 @@
 - ユーザーが「常にこうして下さい」など恒常運用の指示を明示した場合は、その指示自体をルールとして適切なモジュールに追記する。
 - ユーザーが「必ず」「つねに」などの強い必須指定を含む指示を出した場合は、その指示がグローバルかプロジェクト固有かを判断し、適切なモジュールに追記して再生成する。
 - When updating rules, infer the core intent; if it represents a global policy, record it in global rules rather than project-local rules.
-- When updating rules, include a diff-style summary of what changed in the final response; if a git diff is available, use it.
+- When updating rules, include a colorized diff-style summary in the final response; prefer `git diff --color=always` when available. If color output is not supported, explain why and provide the plain diff.
 
 ## ルール修正時の注意点
 
