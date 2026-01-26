@@ -5,3 +5,4 @@
 - Populate public package metadata (name, description, repository, issues, homepage, engines) for published artifacts.
 - Validate executable entrypoints and any required shebangs so published commands run after install.
 - Run dependency security checks appropriate to the ecosystem before release and address critical issues.
+- When creating or updating LICENSE files, set the copyright holder name to "metyatech".
