@@ -24,6 +24,7 @@
 - 公開（npm 等）を行ったら、対応する Git タグ（例: `v1.2.3`）を作成して push する。
 - GitHub Releases を作成し、本文は `CHANGELOG.md` の該当バージョンを基準に記述する。
 - バージョンは `package.json`（等の管理対象）と Git タグの間で不整合を起こさない。
+- When asked to choose a version number, always decide it yourself (do not ask the user).
 - When bumping a version, always create the GitHub Release and publish the package (e.g., npm) as part of the same update.
 - For npm publishing, ask the user to run `npm publish` instead of executing it directly.
 - Before publishing, run any required prep commands (e.g., `npm install`, `npm test`, `npm pack --dry-run`) and only attempt `npm publish` once the environment is ready. If authentication errors occur, ask the user to complete the publish step.
