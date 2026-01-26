@@ -16,6 +16,7 @@
 
 - 進め方: 実装や修正より先にテストを追加し、先に失敗を確認してから本実装を行う（test-first）を必ず守る。
 - 常に多様な入力パターンを想定したテストを作成する（必須）。
+- When adding single-flight/concurrency guards or UI disabling for long-running actions, add tests that cover concurrent-call suppression, error recovery, and (when applicable) UI disabled state.
 - 最小のテストだけにせず、期待される挙動の全範囲（成功/失敗、境界値、無効入力、代表的な状態遷移）を網羅する。
 - 原則: 挙動が変わる変更（仕様追加/変更/バグ修正/リファクタ等）には、同一変更セット内で自動テスト（ユニット/統合/スナップショット等）を追加/更新する（必須）。
 - 仕様追加/変更時は、既存仕様の挙動が維持されていることを保証する回帰テストを追加/更新する（必須）。
