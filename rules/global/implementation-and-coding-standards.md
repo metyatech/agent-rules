@@ -27,7 +27,7 @@
 - 深いネストを避け、ガード節/関数分割で見通しを保つ。
 - 意図が分かる命名にする（曖昧な省略や「Utils」的な雑多化を避ける）。
 - ハードコードを避け、設定/定数/データへ寄せられるものは寄せる（変更点を1箇所に集約する）。
-- Always keep implementations, schemas, and specs DRY: extract shared structures into reusable definitions/modules and reference them instead of duplicating.
+- Always keep everything DRY (implementations, schemas, specs, docs, tests, configs, scripts, and any other artifacts): extract shared structures into reusable definitions/modules and reference them instead of duplicating.
 - 変更により不要になったコード/ヘルパー/分岐/コメント/暫定対応は、指示がなくても削除する（残すか迷う場合は確認する）。
 - 未使用の関数/型/定数/ファイルは残さず削除する（意図的に残す場合は理由を明記する）。
 
