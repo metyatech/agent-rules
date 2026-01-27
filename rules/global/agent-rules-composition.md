@@ -17,7 +17,7 @@
 - ユーザーが「必ず」「つねに」などの強い必須指定を含む指示を出した場合は、その指示がグローバルかプロジェクト固有かを判断し、適切なモジュールに追記して再生成する。
 - When updating rules, infer the core intent; if it represents a global policy, record it in global rules rather than project-local rules.
 - When you acknowledge a new persistent instruction, update the appropriate rule module in the same change set and regenerate `AGENTS.md`.
-- When updating rules, include a colorized diff-style summary in the final response; prefer `git diff --color=always` when available.
+- When updating rules, include a colorized diff-style summary in the final response; prefer `git diff --color=always` when available. Exclude `AGENTS.md` from the diff output.
 - Always include raw ANSI escape codes in diff outputs (e.g., paste the direct output of `git diff --color=always` without sanitizing or reformatting) so the response renders with colors in compatible UIs.
 
 ## ルール修正時の注意点
