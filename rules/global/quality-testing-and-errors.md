@@ -12,7 +12,7 @@
 - Enforce commit-time automation: set up a pre-commit hook (or repo-native equivalent) so lint/test/build run automatically before any commit; if the repo lacks a hook system, add one in the same change set.
 - For user-visible UI changes, verify in a real browser using agent-browser and report the result; if that is not possible, explain why and provide manual verification steps.
 - 静的解析（lint / 型チェック / 静的検証）は必須とし、対象リポジトリに未整備なら同一変更セット内で追加する（必須）。
-- 追加時は既存の外部ツール/ライブラリを優先して採用する。新規依存を追加する場合は候補と影響範囲を提示し、ユーザーへ報告したうえで追加する。
+- Prefer existing, maintained external testing tools/libraries and adopt them proactively when they solve the need; avoid reinventing the wheel. If new dependencies are required, present candidates and impact to the user before adding them.
 - 実行できない場合は、その理由と、ユーザーが実行するコマンドを明記する。
 
 ## テスト
