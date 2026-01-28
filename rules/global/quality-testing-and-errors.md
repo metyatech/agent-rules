@@ -15,7 +15,7 @@
 - Configure test runs to avoid automatically opening a browser window; set headless or no-open options where supported.
 - For Next.js E2E, prefer `next build` + `next start` over `next dev` to match production behavior and reduce dev-mode overhead.
 - 静的解析（lint / 型チェック / 静的検証）は必須とし、対象リポジトリに未整備なら同一変更セット内で追加する（必須）。
-- Prefer existing, maintained external testing tools/libraries and adopt them proactively when they solve the need; avoid reinventing the wheel. If new dependencies are required, present candidates and impact to the user before adding them.
+- Prefer existing, maintained external testing tools/libraries and adopt them proactively when they solve the need; avoid reinventing the wheel.
 - 実行できない場合は、その理由と、ユーザーが実行するコマンドを明記する。
 
 ## テスト
