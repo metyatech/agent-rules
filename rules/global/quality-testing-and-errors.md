@@ -8,6 +8,7 @@
 
 - 変更に関連する最小範囲のビルド/テスト/静的解析を実行する。
 - 実行方法は各リポジトリが用意しているスクリプト/コマンドを優先する（例: `npm run build`, `npm test`）。
+- Before creating any commit, run the repository's lint, test, and build (or closest equivalents). If any are missing, add them in the same change set; if they cannot be run, state the reason and list the exact commands the user should run.
 - 静的解析（lint / 型チェック / 静的検証）は必須とし、対象リポジトリに未整備なら同一変更セット内で追加する（必須）。
 - 追加時は既存の外部ツール/ライブラリを優先して採用する。新規依存を追加する場合は候補と影響範囲を提示し、ユーザーへ報告したうえで追加する。
 - 実行できない場合は、その理由と、ユーザーが実行するコマンドを明記する。
