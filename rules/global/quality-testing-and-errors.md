@@ -11,6 +11,7 @@
 - Before creating any commit, run the repository's lint, test, and build (or closest equivalents). If any are missing, add them in the same change set; if they cannot be run, state the reason and list the exact commands the user should run.
 - Enforce commit-time automation: set up a pre-commit hook (or repo-native equivalent) so lint/test/build run automatically before any commit; if the repo lacks a hook system, add one in the same change set.
 - For user-visible UI changes, verify in a real browser using agent-browser and report the result; if that is not possible, explain why and provide manual verification steps.
+- Configure test runs to avoid automatically opening a browser window; set headless or no-open options where supported.
 - 静的解析（lint / 型チェック / 静的検証）は必須とし、対象リポジトリに未整備なら同一変更セット内で追加する（必須）。
 - Prefer existing, maintained external testing tools/libraries and adopt them proactively when they solve the need; avoid reinventing the wheel. If new dependencies are required, present candidates and impact to the user before adding them.
 - 実行できない場合は、その理由と、ユーザーが実行するコマンドを明記する。
