@@ -9,6 +9,7 @@
 
 - ブランチの指定がない場合は、現在のブランチで作業してよい。
 - `main`/`master` への直接コミット/プッシュを許可する。
+- After addressing PR comments, resolve the related conversation(s) in the PR.
 
 ## 変更の局所化
 
