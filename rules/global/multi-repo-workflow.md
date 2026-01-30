@@ -10,6 +10,7 @@
 - ブランチの指定がない場合は、現在のブランチで作業してよい。
 - `main`/`master` への直接コミット/プッシュを許可する。
 - After addressing PR comments, resolve the related conversation(s) in the PR.
+- After completing a PR, merge it, switch to the merge target branch, sync it to the latest state, and delete the PR branch both locally and on the remote.
 
 ## 変更の局所化
 
