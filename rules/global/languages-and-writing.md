@@ -6,7 +6,7 @@ Write final responses to the user in Japanese unless the user requests otherwise
 
 ## Response completion sound
 
-- After completing a response, emit a short audible beep using a shell command (PowerShell ` [console]::Beep(...) `) when possible.
+- After completing a response, emit the Windows `SystemSounds.Asterisk` sound via PowerShell when possible.
 
 ## Writing language
 
