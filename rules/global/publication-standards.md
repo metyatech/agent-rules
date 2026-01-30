@@ -7,4 +7,5 @@
 - Run dependency security checks appropriate to the ecosystem before release and address critical issues.
 - Always run dependency security checks before release and report results in the final response.
 - After publishing, if the tool is already installed in the local environment, update it to the latest published version.
+- When a repository represents a single tool or product, publish it as a single package; bundle related scripts into one distributable rather than multiple separate publishes.
 - When creating or updating LICENSE files, set the copyright holder name to "metyatech".
