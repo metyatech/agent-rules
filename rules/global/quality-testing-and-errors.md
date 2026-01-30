@@ -59,6 +59,7 @@
 - エラーメッセージは実際の原因を簡潔に示し、必要な場合は対象の入力名と値（例: パス）を含める。
 - Error messages must accurately reflect the current state; avoid wording that implies a failed action when it has not been attempted.
 - Before emitting any user prompt, ensure the user has already been given the information required to make that decision; prompts must not appear without their context.
+- For yes/no prompts, treat Enter as "Yes" and "n" as "No".
 
 ## 設定検証
 
