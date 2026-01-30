@@ -60,7 +60,9 @@
 - Error messages must accurately reflect the current state; avoid wording that implies a failed action when it has not been attempted.
 - Before emitting any user prompt, ensure the user has already been given the information required to make that decision; prompts must not appear without their context.
 - For yes/no prompts, treat Enter as "Yes" and "n" as "No".
-- When a prompt communicates a default or implied choice, add automated tests that exercise the real input-parsing path (including empty input) and avoid mocking that decision logic.
+- When behavior depends on user input or default choices, add automated tests that exercise the real decision logic (avoid mocking the decision itself).
+- Input parsing tests must cover default/empty input, representative valid input, and representative negative input.
+- Critical decision boundaries (allow/deny, continue/abort, execute/skip) must be exercised directly by tests.
 
 ## 設定検証
 
