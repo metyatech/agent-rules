@@ -56,6 +56,7 @@
 - 失敗を握りつぶさない（空の catch / 黙殺 / サイレントフォールバックを避ける）。
 - 回復可能なら早期 return + 明示的なエラー通知、回復不能なら明確に停止/失敗させる。
 - エラーメッセージは実際の原因を簡潔に示し、必要な場合は対象の入力名と値（例: パス）を含める。
+- Error messages must accurately reflect the current state; avoid wording that implies a failed action when it has not been attempted.
 
 ## 設定検証
 
