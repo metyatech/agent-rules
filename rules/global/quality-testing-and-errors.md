@@ -8,6 +8,7 @@
 
 - 変更に関連する最小範囲のビルド/テスト/静的解析を実行する。
 - 実行方法は各リポジトリが用意しているスクリプト/コマンドを優先する（例: `npm run build`, `npm test`）。
+- Test commands that emit artifacts must control the output location and ensure the output path is gitignored.
 - Before creating any commit, run the repository's lint, test, and build (or closest equivalents). If any are missing, add them in the same change set; if they cannot be run, state the reason and list the exact commands the user should run.
 - Enforce commit-time automation: set up a pre-commit hook (or repo-native equivalent) so lint/test/build run automatically before any commit; if the repo lacks a hook system, add one in the same change set.
 - For user-visible UI changes, verify in a real browser using agent-browser and report the result; if that is not possible, explain why and provide manual verification steps.
