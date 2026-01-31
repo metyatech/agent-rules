@@ -1,4 +1,4 @@
-# CLI and config standards
+# CLI standards
 
 - Provide --help/-h with clear usage, options, and examples; include required parameters in examples.
 - Provide --version (use -V); reserve -v for --verbose.

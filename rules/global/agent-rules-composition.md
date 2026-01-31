@@ -14,6 +14,7 @@
 - When acknowledging a new persistent instruction, update the rule module in the same change set and regenerate AGENTS.md.
 - When creating a new repository, set up rule files (e.g., agent-ruleset.json and any local rules) so compose-agentsmd can run.
 - When updating rules, infer the core intent; if it is a global policy, record it in global rules rather than project-local rules.
+- If a task requires domain rules not listed in agent-ruleset.json, update the ruleset to include them and regenerate AGENTS.md before proceeding.
 
 ## Editing standards
 
