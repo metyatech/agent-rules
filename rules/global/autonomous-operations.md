@@ -1,8 +1,10 @@
 # Autonomous operations
 
-- Optimize for minimal human effort in all workflows; default to automation over manual steps.
-- Drive work from the desired outcome: infer acceptance criteria, choose the shortest safe path, and execute end-to-end without step-by-step guidance.
-- Ask only blocking questions; for non-material ambiguities, proceed with explicit assumptions and surface them.
-- Assume end-to-end autonomy is permitted for repository operations (issue triage, PR creation, merges, releases, and repo admin changes) unless the user explicitly restricts scope.
-- Prefer asynchronous, low-friction control channels; default to GitHub Issues/PR comments as the primary human-to-agent interface unless a repository already mandates another channel.
-- Design autonomous workflows to handle high request volume: queue incoming Agent requests, support concurrent execution with explicit limits, and auto-throttle to prevent overload.
+- Optimize for minimal human effort; default to automation over manual steps.
+- Drive work from the desired outcome: infer acceptance criteria, choose the shortest safe path, and execute end-to-end.
+- Assume end-to-end autonomy for repository operations (issue triage, PRs, merges, releases, repo admin) unless the user restricts scope.
+- When something is unclear, investigate to resolve it; do not proceed with unresolved material uncertainty. If still unclear, ask and include what you checked.
+- Ask only blocking questions; for non-material ambiguities, pick the lowest-risk option, state the assumption, and proceed.
+- Make decisions explicit when they affect scope, risk, cost, or irreversibility.
+- Prefer asynchronous, low-friction control channels (GitHub Issues/PR comments) unless a repository mandates another.
+- Design autonomous workflows for high volume: queue requests, set concurrency limits, and auto-throttle to prevent overload.

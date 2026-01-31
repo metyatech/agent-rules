@@ -1,35 +1,22 @@
-# AGENTS ルール運用（合成）
+# Rule composition and maintenance
 
-## 対象範囲
+## Scope and composition
 
-- この `AGENTS.md` は単独で完結する前提とする。
-- 親子ディレクトリの `AGENTS.md` に依存しない（継承/優先の概念は使わない）。
-- ルールは共通ルールとして一元管理し、各プロジェクトから参照して合成する（例: 共通ルールリポジトリの `rules/` を参照）。
-- プロジェクト固有ルールが必要な場合は、プロジェクト側にローカルルール（例: `agent-rules-local/`）を配置し、ルールセット定義から参照して合成する。
+- AGENTS.md is self-contained; do not rely on parent/child AGENTS for inheritance or precedence.
+- Maintain shared rules centrally and compose per project; use project-local rules only for truly local policies.
+- Place AGENTS.md at the project root; only add another AGENTS.md for nested independent projects.
 
-## 更新方針
+## Update policy
 
-- ルール変更は共通ルール、プロジェクト固有ルール、ルールセット定義（例: `agent-ruleset.json` や ruleset bundle）に対して行い、合成ツールで `AGENTS.md` を再生成する。
-- 生成済みの `AGENTS.md` は直接編集しない（編集が必要なら元ルールへ反映する）。
-- `AGENTS.md` は生成物だが例外として `.gitignore` に追加せず、再生成してコミットする。
-- ユーザーから「ルールを更新して」と依頼された場合、特段の指示がない限り「適切なルールモジュールとルールセットを更新し、再生成する」ことを意味する。
-- ユーザーが「常にこうして下さい」など恒常運用の指示を明示した場合は、その指示自体をルールとして適切なモジュールに追記する。
-- ユーザーが「必ず」「つねに」などの強い必須指定を含む指示を出した場合は、その指示がグローバルかプロジェクト固有かを判断し、適切なモジュールに追記して再生成する。
-- When updating rules, infer the core intent; if it represents a global policy, record it in global rules rather than project-local rules.
-- When you acknowledge a new persistent instruction, update the appropriate rule module in the same change set and regenerate `AGENTS.md`.
-- When updating rules, include a colorized diff-style summary in the final response; prefer `git diff --color=always` when available. Exclude `AGENTS.md` from the diff output.
-- Always include raw ANSI escape codes in diff outputs (e.g., paste the direct output of `git diff --color=always` without sanitizing or reformatting) so the response renders with colors in compatible UIs.
-- When creating a new repository, set up the rule files (for example, `agent-ruleset.json`, and any needed local rule files) so `compose-agentsmd` can run, then generate `AGENTS.md`.
+- Never edit AGENTS.md directly; update source rules and regenerate AGENTS.md.
+- A request to "update rules" means: update the appropriate rule module and ruleset, then regenerate AGENTS.md.
+- If the user gives a persistent instruction (e.g., "always", "must"), encode it in the appropriate module (global vs local).
+- When acknowledging a new persistent instruction, update the rule module in the same change set and regenerate AGENTS.md.
+- When creating a new repository, set up rule files (e.g., agent-ruleset.json and any local rules) so compose-agentsmd can run.
+- When updating rules, infer the core intent; if it is a global policy, record it in global rules rather than project-local rules.
 
-## ルール修正時の注意点
+## Editing standards
 
-- MECE（相互排他的かつ全体網羅的）に分類し、重複と漏れを作らない。
-- 冗長な説明や同じ内容の繰り返しを避ける（必要十分）。
-- 手順や指示は、何をすれば良いかが一読で分かる端的な表現で書く。
-- 手順以外の列挙に番号を振らない（追加/削除で保守が崩れるため）。
-- 各セクションの役割を明確にし、「どこに書くべきか」が一目で分かる構成にする。
-
-## AGENTS.md の配置
-
-- 各プロジェクトのルートに `AGENTS.md` を置く。
-- サブツリーに別プロジェクトがある場合のみ、そのルートに `AGENTS.md` を置く（同一プロジェクト内で重複配置しない）。
+- Keep rules MECE, concise, and non-redundant.
+- Use short, action-oriented bullets; avoid numbered lists unless order matters.
+- Prefer the most general applicable rule to avoid duplication.

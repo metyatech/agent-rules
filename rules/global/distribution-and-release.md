@@ -1,30 +1,31 @@
-# 配布と公開
+# Release and publication
 
-- 公開物には最低限 `LICENSE` を含める。
-- 配布物に不要なファイル（例: 生成物、テスト生成物、ローカル設定）を含めない。
-- 利用側がクリーン環境から README に書かれた手順だけで利用できる状態を担保する。
-- 公開内容が変わる場合は、バージョン情報があるなら更新し、変更点を追跡可能にする。
+## Packaging and distribution
 
-## GitHub リポジトリの公開情報
+- Include LICENSE in published artifacts (copyright holder: metyatech).
+- Do not ship build/test artifacts or local configs; ensure a clean environment can use the product via README steps.
+- Define a SemVer policy and document what counts as a breaking change.
 
-- 外部公開リポジトリでは、GitHub 側の Description / Topics / Homepage を必ず設定する。
-- GitHub 上での運用に必要なファイルをリポジトリ内に用意する。
-- `.github/workflows/ci.yml`
-- `.github/ISSUE_TEMPLATE/bug_report.md`
-- `.github/ISSUE_TEMPLATE/feature_request.md`
-- `.github/pull_request_template.md`
-- `SECURITY.md`
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-- CI は、当該リポジトリの標準コマンド（例: `npm run lint`, `npm test`）を実行する構成にする。
+## Public repository metadata
 
-## Release 運用
+- For public repos, set GitHub Description, Topics, and Homepage.
+- Ensure required repo files exist: .github/workflows/ci.yml, issue templates, PR template, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, CHANGELOG.md.
+- Configure CI to run the repo's standard lint/test/build commands.
 
-- 公開リポジトリでは `CHANGELOG.md` を用意し、公開内容の変更を追跡可能にする。
-- 公開（npm 等）を行ったら、対応する Git タグ（例: `v1.2.3`）を作成して push する。
-- GitHub Releases を作成し、本文は `CHANGELOG.md` の該当バージョンを基準に記述する。
-- バージョンは `package.json`（等の管理対象）と Git タグの間で不整合を起こさない。
-- When asked to choose a version number, always decide it yourself (do not ask the user).
-- When bumping a version, always create the GitHub Release and publish the package (e.g., npm) as part of the same update.
-- For npm publishing, ask the user to run `npm publish` instead of executing it directly.
-- Before publishing, run any required prep commands (e.g., `npm install`, `npm test`, `npm pack --dry-run`) and only attempt `npm publish` once the environment is ready. If authentication errors occur, ask the user to complete the publish step.
+## Versioning and release flow
+
+- Update version metadata when release content changes; keep package version and Git tag consistent.
+- Create and push a release tag; create a GitHub Release based on CHANGELOG.
+- If asked to choose a version, decide it yourself.
+- When bumping a version, create the GitHub Release and publish the package in the same update.
+- For npm publishing, ask the user to run npm publish (do not execute it directly).
+- Before publishing, run required prep commands (e.g., npm install, npm test, npm pack --dry-run) and only proceed when ready.
+- If authentication fails during publish, ask the user to complete the publish step.
+- Run dependency security checks before release, address critical issues, and report results.
+- After publishing, update any locally installed copy to the latest release.
+
+## Published artifact requirements
+
+- Populate package metadata (name, description, repository, issues, homepage, engines).
+- Validate executable entrypoints and required shebangs so installed commands work.
+- If a repo represents a single tool/product, publish a single package (bundle related scripts).

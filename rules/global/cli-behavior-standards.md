@@ -1,11 +1,10 @@
-# CLI behavior standards
+# CLI and config standards
 
-- Provide `--help`/`-h` with clear usage, options, and examples.
-- Provide --version so automation can pin or verify installed versions.
-- Use -V for version and reserve -v for --verbose.
-- When the CLI reads or writes data, support stdin/stdout piping and allow output to be redirected (e.g., `--output` when files are created).
-- Offer a machine-readable output mode (e.g., `--json`) when the CLI emits structured data.
-- For actions that modify or delete data, provide a safe preview (`--dry-run`) and an explicit confirmation bypass (`--yes`/`--force`).
-- Provide controllable logging (`--quiet`, `--verbose`, or `--trace`) so users can diagnose failures without changing code.
+- Provide --help/-h with clear usage, options, and examples; include required parameters in examples.
+- Provide --version (use -V); reserve -v for --verbose.
+- Support stdin/stdout piping; allow output redirection (e.g., --output for file creation).
+- Offer machine-readable output (e.g., --json) when emitting structured data.
+- For modifying/deleting actions, provide --dry-run and an explicit bypass (--yes/--force).
+- Provide controllable logging (--quiet, --verbose, or --trace).
 - Use deterministic exit codes (0 success, non-zero failure) and avoid silent fallbacks.
-
+- For JSON configuration, define/update a JSON Schema and validate config on load.
