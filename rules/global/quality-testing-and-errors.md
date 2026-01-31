@@ -29,4 +29,3 @@
 - Error messages must reflect actual state and include relevant input context.
 - Validate config and external inputs at boundaries; fail with actionable guidance.
 - Log minimally but with diagnostic context; never log secrets or personal data.
-- Do not prompt without context; for yes/no prompts, Enter means "Yes" and n means "No".

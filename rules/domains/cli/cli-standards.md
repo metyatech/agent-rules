@@ -8,3 +8,4 @@
 - Provide controllable logging (--quiet, --verbose, or --trace).
 - Use deterministic exit codes (0 success, non-zero failure) and avoid silent fallbacks.
 - For JSON configuration, define/update a JSON Schema and validate config on load.
+- For interactive CLI prompts, provide required context before asking; for yes/no prompts, Enter means "Yes" and "n" means "No".
