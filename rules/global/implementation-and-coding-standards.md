@@ -10,9 +10,9 @@
 - 「既存に合わせる」よりも「理想的な状態（読みやすさ・保守性・一貫性・安全性）」を優先する。
 - 根本原因を修正できる場合は、場当たり的なフォールバックや回避策を追加しない（ノイズ/負債化するため）。
 - When a bug originates in a dependency you control or can patch, fix the dependency first; only add app-level workarounds as a last resort after documenting why the dependency fix is not feasible.
-- 不明点や判断が分かれる点は、独断で進めず確認する。
-- 推測だけで判断して進めない。根拠が不足している場合は確認する。
-- 原因・根拠を未確認のまま「可能性が高い」などの推測で実装・修正しない。まず事実確認し、確認できない場合はユーザーに確認する。
+- Clarify uncertainties that materially affect outcomes, risk, or scope; otherwise choose the standard, lowest-risk option, state the assumption, and proceed.
+- Do not act on speculation without evidence. If evidence is missing and the decision is material, verify first; if verification is not feasible, ask the user.
+- Do not implement or fix based on unverified root causes; confirm the cause first, and if confirmation is not possible, ask the user with the minimum context needed.
 - Externalize long embedded strings/templates/rules into separate files when possible to keep code readable and maintainable.
 - When the user asks to rule-encode a request, infer the broader principle and update the most general applicable rule so it covers the request without requiring the user to restate a generalized form.
 
