@@ -16,7 +16,7 @@
 - For any code change, assess README impact and update it in the same change set when needed.
 - If a README update is not needed, explain why in the final response.
 - CLI examples in docs must include required parameters.
-- Do not include user-specific local paths or personal data in doc examples.
+- Do not include user-specific local paths, fixed workspace directories, drive letters, or personal data in doc examples. Prefer repo-relative paths and placeholders so instructions work in arbitrary environments.
 
 ## Markdown linking
 

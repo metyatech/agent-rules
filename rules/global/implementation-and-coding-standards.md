@@ -9,8 +9,9 @@
 - Avoid deep nesting; use guard clauses and small functions.
 - Use clear, intention-revealing naming; avoid "Utils" dumping grounds.
 - Prefer configuration/constants over hardcoding; consolidate change points.
-- Keep everything DRY across code, specs, docs, tests, configs, and scripts.
+- Keep everything DRY across code, specs, docs, tests, configs, and scripts; proactively refactor repeated procedures into shared configs/scripts with small, local overrides.
 - Fix root causes; remove obsolete/unused code, branches, comments, and helpers.
 - Externalize large embedded strings/templates/rules when possible.
 - Do not commit build artifacts (follow the repo's .gitignore).
 - Align file/folder names with their contents and keep naming conventions consistent.
+- Do not assume machine-specific environments (fixed workspace directories, drive letters, per-PC paths). Prefer repo-relative paths and explicit configuration so workflows work in arbitrary clone locations.
