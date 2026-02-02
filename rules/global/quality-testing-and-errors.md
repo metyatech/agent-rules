@@ -6,9 +6,9 @@
 
 ## Verification
 
-- Run the smallest relevant set of lint/typecheck/test/build checks using repo-standard commands.
-- Before committing code changes, run lint/test/build; if any are missing, add them in the same change set.
-- Ensure commit-time automation (pre-commit or repo-native) runs lint/test/build for code changes when feasible.
+- Run the smallest relevant set of lint/typecheck/test/build checks the repo supports using repo-standard commands.
+- Before committing code changes, run the applicable lint/test/build commands; if a relevant check is missing and feasible to add, add it in the same change set.
+- Ensure commit-time automation (pre-commit or repo-native) runs applicable lint/test/build checks for code changes when feasible.
 - If required checks cannot be run, explain why and list the exact commands for the user.
 
 ## Tests (behavior changes)
