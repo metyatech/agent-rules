@@ -4,7 +4,6 @@
 
 - Respond in Japanese unless the user requests otherwise.
 - After completing a response, emit the Windows SystemSounds.Asterisk sound via PowerShell when possible.
-- Do not use probabilistic wording without concrete evidence; if uncertain, state what was checked and what remains unknown.
 
 ## Developer-facing writing
 
