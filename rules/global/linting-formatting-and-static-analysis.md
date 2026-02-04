@@ -4,30 +4,33 @@
 
 - Every code repo must have a formatter and a linter/static analyzer for its primary languages.
 - Prefer one formatter and one linter per language; avoid overlapping tools that fight each other.
-- Prefer repository-standard tooling; if missing, add it using the defaults below.
+- Prefer repository-standard tooling. If a repo already has an established toolchain, keep it unless the task is explicitly to migrate tooling.
+- If a repo lacks tooling, add it using the defaults below; do not invent new combinations.
 - Enforce in CI: run formatting checks (verify-no-changes) and linting on pull requests and require them for merges.
-- Treat warnings as errors in CI (or the closest equivalent).
+- Treat warnings as errors in CI; when a tool cannot, use its strictest available setting so warnings fail CI.
 - Do not disable rules globally; keep suppressions narrow, justified, and time-bounded.
 - Pin tool versions (lockfiles/manifests) for reproducible CI.
 
 ## Security baseline
 
-- Add dependency vulnerability scanning appropriate to the ecosystem (SCA) and require it for merges when feasible.
-- Enable secret scanning (GitHub secret scanning or a repo-local scanner) and remediate findings; never commit secrets.
-- Enable CodeQL (or equivalent) code scanning for supported languages when feasible.
+- Require dependency vulnerability scanning appropriate to the ecosystem (SCA) for merges. If you cannot enable it, report the limitation and get explicit user approval before proceeding without it.
+- Enable GitHub secret scanning and remediate findings; never commit secrets. If it is unavailable, add a repo-local secret scanner and require it for merges.
+- Enable CodeQL code scanning for supported languages. If it cannot be enabled, report the limitation and use the best available alternative for that ecosystem.
 
 ## Default toolchain by language
 
 ### JavaScript / TypeScript (incl. React/Next)
 
-- Format+lint: Biome (preferred for greenfield) or ESLint + Prettier (preferred when already established).
+- Default format+lint: ESLint + Prettier.
+- Existing toolchains: keep Biome if already established; do not run both.
 - Typecheck: `tsc` with strict settings for TS projects.
-- Dependency scan: prefer `osv-scanner` or the package manager's audit tooling.
+- Dependency scan: `osv-scanner`. If unsupported, use the package manager's audit tooling.
 
 ### Python
 
 - Format+lint: Ruff.
-- Typecheck: Pyright (preferred) or mypy.
+- Default typecheck: Pyright.
+- Existing toolchains: keep mypy if already established; do not run both.
 - Dependency scan: pip-audit.
 
 ### Go
@@ -44,21 +47,21 @@
 
 ### Java
 
-- Format: Spotless + google-java-format (or equivalent).
+- Format: Spotless + google-java-format.
 - Lint/static analysis: Checkstyle + SpotBugs.
-- Dependency scan: OWASP Dependency-Check (or equivalent).
+- Dependency scan: OWASP Dependency-Check.
 
 ### Kotlin
 
-- Format: ktlint (or Spotless + ktlint).
+- Format: Spotless + ktlint.
 - Lint/static analysis: detekt.
-- Compiler: enable warnings-as-errors for CI where practical.
+- Compiler: enable warnings-as-errors in CI; if impractical, get explicit user approval before relaxing.
 
 ### C#
 
 - Format: dotnet format (verify-no-changes in CI).
 - Lint/static analysis: enable .NET analyzers; treat warnings as errors; enable nullable reference types.
-- Dependency scan: `dotnet list package --vulnerable` (or equivalent).
+- Dependency scan: `dotnet list package --vulnerable`.
 
 ### C++
 
@@ -86,7 +89,7 @@
 - Format: terraform fmt -check.
 - Validate: terraform validate.
 - Lint: tflint.
-- Security scan: tfsec (or equivalent).
+- Security scan: trivy config.
 
 ### YAML
 
