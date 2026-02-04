@@ -17,5 +17,5 @@
 - For Next.js E2E, prefer next build + next start.
 - If Playwright tests fail to launch, clear playwright/.cache and retry.
 - When adding/changing links, add tests that verify the target resolves; if not feasible, document manual verification.
-- For cross-system integration flows, add an end-to-end test (or a contract test at the boundary) when feasible; otherwise document the limitation and provide manual verification steps.
+- For cross-system integration flows, add an end-to-end test (or a contract test at the boundary). If impractical, document the limitation and get explicit user approval before skipping.
 - Use established icon libraries; do not handcraft custom icons or inline SVGs.
