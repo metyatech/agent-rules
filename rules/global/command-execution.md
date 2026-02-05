@@ -9,4 +9,6 @@
 - If no branch is specified, work on the current branch; direct commits to main/master are allowed.
 - After addressing PR review feedback, resolve the corresponding review thread(s) before concluding; if you lack permission, state it explicitly.
 - After pushing fixes for PR review feedback, re-request review from the same reviewer(s) when possible; if there are no current reviewers, ask who should review.
+- For Codex re-review: comment `@codex review` on the PR.
+- For Copilot re-review: remove Copilot from PR Reviewers and add it back (UI).
 - After completing a PR, merge it, sync the target branch, and delete the PR branch locally and remotely.
