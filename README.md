@@ -68,6 +68,14 @@ compose-agentsmd
 `AGENTS.md` files are generated output; edit the modules in `rules/global/` or
 `rules/domains/` instead.
 
+## Metadata
+
+- [LICENSE](LICENSE)
+- [SECURITY](SECURITY.md)
+- [CONTRIBUTING](CONTRIBUTING.md)
+- [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
+- [CHANGELOG](CHANGELOG.md)
+
 ## Public vs private
 
 This repository is intended for rules that are safe to keep public.

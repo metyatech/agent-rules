@@ -1,0 +1,14 @@
+{
+  // Rules source. Use github:owner/repo@ref or a local path.
+  "source": ".",
+  // Domain folders under rules/domains.
+  "domains": [
+    "cli",
+    "node",
+    "release"
+  ],
+  // Additional local rule files to append.
+  "extra": [],
+  // Output file name.
+  "output": "AGENTS.md"
+}
