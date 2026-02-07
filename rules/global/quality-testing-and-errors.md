@@ -10,7 +10,7 @@
 - For code changes, treat "relevant checks" as the repo's full lint/typecheck/test/build suite (prefer CI results).
 - Prefer a green baseline: if relevant checks fail before you change anything, report it and get explicit user approval before proceeding.
 - If you cannot reproduce/verify, do not guess a fix; request missing info or create a failing regression test.
-- Always report verification: list the exact commands/steps run and their outcome; if anything is unverified, state why and how to verify.
+- Always report evidence: map each Acceptance Criteria item to verification evidence (tests/commands/manual steps) and report outcomes; if anything is unverified, state why and how to verify.
 
 ## Verification
 
