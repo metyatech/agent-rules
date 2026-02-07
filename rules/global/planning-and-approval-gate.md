@@ -11,8 +11,7 @@
     - Running code generation/build steps that are deterministic and repo-scoped.
     - Running these from clean → dirty → clean is acceptable; publishing/deploying/migrating is not.
 - Before any other state-changing execution (e.g., writing or modifying files by hand, changing runtime behavior, or running git commands beyond status/diff/log), do all of the following:
-  - Restate the request as concrete acceptance criteria (explicit goal, success/failure conditions). AC MUST be binary and testable.
-  - For each AC, include a verification method (test/command/manual) in the plan.
+  - Restate the request as Acceptance Criteria (AC) and verification methods, following "Delivery hard gates".
   - Produce a written plan (use your planning tool when available) focused on the goal, approach, and verification checkpoints (do not enumerate per-file implementation details or exact commands unless the requester asks).
   - Confirm the plan with the requester, ask for approval explicitly, and wait for a clear “yes” before executing.
   - Once the requester has approved a plan, proceed within that plan without re-requesting approval; re-request approval only when you change or expand the plan.
