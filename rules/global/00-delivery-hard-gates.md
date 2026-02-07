@@ -14,7 +14,9 @@ These are non-negotiable completion gates for any state-changing work and for an
 - Maintain an explicit mapping: `AC -> evidence (tests/commands/manual steps)`.
 - For code or runtime-behavior changes, automated tests are required unless the requester explicitly approves skipping.
 - Bugfixes MUST include a regression test that fails before the fix and passes after.
-- Run the repo's full verification suite (lint/format/typecheck/test/build) using repo-standard commands; for non-code changes, run the relevant subset and justify.
+- Run the repo's full verification suite (lint/format/typecheck/test/build) using a single repo-standard `verify` command when available; if missing, add it.
+- Enforce verification locally via commit-time hooks (pre-commit or repo-native) and in CI; skipping requires explicit requester approval.
+- For non-code changes, run the relevant subset and justify.
 - If required checks cannot be run, stop and ask for explicit approval to proceed with partial verification, and provide an exact manual verification plan.
 
 ## Final response (MUST include)

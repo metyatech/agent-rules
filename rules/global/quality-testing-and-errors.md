@@ -17,10 +17,10 @@
 - Follow "Delivery hard gates" for running and reporting verification.
 - If you are unsure what constitutes the full suite, run the repo's default verify/CI commands rather than guessing.
 - Before committing code changes, run the full suite; if a relevant check is missing and feasible to add, add it in the same change set.
-- Enforce via CI: run the full suite on pull requests and on pushes to the default branch; if no CI harness exists, add one using repo-standard commands.
+- Enforce via CI: run the full suite on pull requests and on pushes to the default branch, and make it a required status check for merges; if no CI harness exists, add one using repo-standard commands.
 - Configure required status checks on the default branch when you have permission; otherwise report the limitation.
 - Do not rely on smoke-only gating or scheduled-only full runs for correctness; merges must require the full suite.
-- Ensure commit-time automation (pre-commit or repo-native) runs the full suite when feasible.
+- Ensure commit-time automation (pre-commit or repo-native) runs the full suite and blocks commits.
 - Never disable checks, weaken assertions, loosen types, or add retries solely to make checks pass.
 
 ## Tests (behavior changes)
