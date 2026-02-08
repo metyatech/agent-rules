@@ -73,6 +73,7 @@
 - Format+lint: PSScriptAnalyzer (Invoke-Formatter + Invoke-ScriptAnalyzer).
 - Runtime: Set-StrictMode -Version Latest; fail fast on errors.
 - Tests: Pester when tests exist.
+- Enforce PSScriptAnalyzer via the repo’s standard `verify` command/script when PowerShell is used; treat findings as errors.
 
 ### Shell (sh/bash)
 
