@@ -1,0 +1,12 @@
+{
+  "source": "github:metyatech/agent-rules@HEAD",
+  "domains": [
+    "cli",
+    "exam",
+    "node",
+    "release",
+    "unreal",
+    "web"
+  ],
+  "output": "AGENTS.md"
+}

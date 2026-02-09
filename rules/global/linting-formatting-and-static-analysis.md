@@ -56,7 +56,7 @@
 - Lint/static analysis: detekt.
 - Compiler: enable warnings-as-errors in CI; if impractical, get explicit user approval before relaxing.
 
-### C#
+### C# (C-Sharp)
 
 - Format: dotnet format (verify-no-changes in CI).
 - Lint/static analysis: enable .NET analyzers; treat warnings as errors; enable nullable reference types.

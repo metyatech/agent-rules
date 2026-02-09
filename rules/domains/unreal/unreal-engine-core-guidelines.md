@@ -5,8 +5,8 @@
 - Implement in C++ when possible; avoid Blueprint Event Graphs.
 - Use Slate for widgets.
 - Follow the UE coding standard and the C++ Core Guidelines:
-  - https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine
-  - https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+  - <https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine>
+  - <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines>
 
 ## Architecture and design
 

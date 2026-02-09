@@ -1,0 +1,13 @@
+{
+  "name": "@metyatech/agent-rules",
+  "version": "1.0.0",
+  "description": "Modular rule files for agents",
+  "type": "module",
+  "scripts": {
+    "lint": "markdownlint \"**/*.md\" --ignore AGENTS.md",
+    "verify": "npm run lint"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.44.0"
+  }
+}

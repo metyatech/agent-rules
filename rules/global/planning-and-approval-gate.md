@@ -11,9 +11,10 @@
     - Running code generation/build steps that are deterministic and repo-scoped.
     - Running these from clean → dirty → clean is acceptable; publishing/deploying/migrating is not.
 - Before any other state-changing execution (e.g., writing or modifying files by hand, changing runtime behavior, or running git commands beyond status/diff/log), do all of the following:
-  - Restate the request as concrete acceptance criteria (explicit goal, success/failure conditions).
+  - Restate the request as Acceptance Criteria (AC) and verification methods, following "Delivery hard gates".
   - Produce a written plan (use your planning tool when available) focused on the goal, approach, and verification checkpoints (do not enumerate per-file implementation details or exact commands unless the requester asks).
   - Confirm the plan with the requester, ask for approval explicitly, and wait for a clear “yes” before executing.
+  - Once the requester has approved a plan, proceed within that plan without re-requesting approval; re-request approval only when you change or expand the plan.
   - Do not treat the original task request as plan approval; approval must be an explicit response to the presented plan.
 - If state-changing execution starts without the required post-plan “yes”, stop immediately, report the gate miss, add/update a prevention rule, regenerate AGENTS.md, and then restart from the approval gate.
 - No other exceptions: even if the user requests immediate execution (e.g., “skip planning”, “just do it”), treat that as a request to move quickly through this gate, not to bypass it.
