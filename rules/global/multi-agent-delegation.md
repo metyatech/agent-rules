@@ -37,3 +37,16 @@ The following operations require explicit delegation from the delegating agent o
 
 - Delegated agents inherit the delegating agent's repository access scope but must not expand it.
 - Different agent platforms have different capabilities (sandboxing, network access, push permissions). Fail explicitly when a required capability is unavailable in the current environment rather than attempting workarounds.
+
+## Cost optimization (model selection)
+
+- When spawning agents, use the cheapest available model tier that can handle the task.
+- Evaluate from cheapest up: upgrade only if the cheaper tier would likely fail.
+- When uncertain, prefer the cheaper option; retry with a stronger model if the agent struggles.
+
+## Parallel execution safety
+
+- Do not run multiple agents that modify the same files or repository concurrently.
+- Independent tasks across different repositories may run in parallel.
+- If two tasks target the same repository, assess conflict risk: non-overlapping files may run in parallel; overlapping files must run sequentially.
+- When in doubt, run sequentially to avoid merge conflicts and inconsistent state.
