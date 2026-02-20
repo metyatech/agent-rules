@@ -39,6 +39,7 @@
 - Use checkf only for fatal invariants; use ensureMsgf for recoverable anomalies.
 - Log errors/warnings and return early; do not use LogTemp.
 - Define module-specific log categories; keep logging appropriate for Shipping.
+- Failure logs must include actionable context (e.g., url/path/status). Debug-only noise goes to `VeryVerbose`.
 
 ## Networking and security
 
@@ -53,6 +54,8 @@
 - Use AssetManager and soft references for assets; avoid hardcoded paths.
 - Use Enhanced Input and centralized mapping contexts.
 - Use UE5Coro for async; keep UObject access on the game thread and marshal results back.
+- Avoid synchronous subprocess execution (e.g., `FPlatformProcess::ExecProcess`) in gameplay/async paths; prefer UE-native APIs (e.g., `FHttpModule`) and keep the game thread responsive.
+- When dynamically creating components/layers and binding delegates, ensure teardown runs on all failure paths and on EndPlay/cancel.
 
 ## Build and tests
 
@@ -61,3 +64,4 @@
 - Add and run AutomationSpec/Functional Tests for important features.
 - Run tests after relevant changes; record repro steps for issues.
 - Use Fire-BuildAndTest.ps1.bat --no-pause -TestFilter <Filter> for test runs.
+- Tests should avoid Engine internal/private headers/APIs; prefer public `U*` APIs. If internals are unavoidable, isolate and document why.

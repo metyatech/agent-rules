@@ -21,6 +21,10 @@
 - Keep everything DRY across code, specs, docs, tests, configs, and scripts; proactively refactor repeated procedures into shared configs/scripts with small, local overrides.
 - Persist durable runtime/domain data in a database with a fully normalized schema (3NF/BCNF target): store each fact once with keys/constraints, and compute derived statuses/views at read time instead of duplicating them.
 - Fix root causes; remove obsolete/unused code, branches, comments, and helpers.
+- Avoid leaving half-created state on failure paths. Any code that allocates/registers/starts resources must have a shared teardown that runs on all failure and cancellation paths.
+- Do not block inside async APIs or async-looking code paths; avoid synchronous I/O and synchronous process execution where responsiveness is expected.
+- Avoid external command execution (PATH-dependent tools, stringly-typed argument concatenation). Prefer native libraries/SDKs. If unavoidable: use absolute paths, safe argument handling, and strict input validation.
+- Prefer stable public APIs over internal/private APIs. If internal/private APIs are unavoidable, isolate them and document the reason and the expected break risk.
 - Externalize large embedded strings/templates/rules when possible.
 - Do not commit build artifacts (follow the repo's .gitignore).
 - Align file/folder names with their contents and keep naming conventions consistent.
