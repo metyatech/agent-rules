@@ -29,3 +29,4 @@
 - Do not commit build artifacts (follow the repo's .gitignore).
 - Align file/folder names with their contents and keep naming conventions consistent.
 - Do not assume machine-specific environments (fixed workspace directories, drive letters, per-PC paths). Prefer repo-relative paths and explicit configuration so workflows work in arbitrary clone locations.
+- Temporary files/directories created by the agent MUST be placed only under the OS temp directory (e.g., `%TEMP%` / `$env:TEMP`). Do not create ad-hoc temp folders in repos/workspaces unless the requester explicitly approves.
