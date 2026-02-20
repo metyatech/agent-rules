@@ -22,6 +22,7 @@
 - Keep rules MECE, concise, and non-redundant.
 - Use short, action-oriented bullets; avoid numbered lists unless order matters.
 - Prefer the most general applicable rule to avoid duplication.
+- Do not use numeric filename prefixes (e.g., `00-...`) to impose ordering; treat rule modules as a flat set. If ordering matters, encode it explicitly in composition/tooling rather than filenames.
 
 ## Rule placement (global vs domain)
 
