@@ -16,6 +16,15 @@ When operating in delegated mode:
 - Report AC and verification outcomes concisely to the delegating agent.
 - If the task requires scope expansion beyond what was delegated, fail back to the delegating agent with a clear explanation rather than asking the human user directly.
 
+## Delegation prompt hygiene
+
+- Delegated agents MUST treat the delegator as the requester and MUST NOT ask the human user for plan approval. If blocked by repo rules, escalate to the delegator (not the human).
+- Delegating prompts MUST explicitly state delegated mode and whether plan approval is already granted; include AC and verification requirements.
+
+## Read-only / no-write claims
+
+- If a delegated agent reports read-only/no-write constraints, it MUST attempt a minimal, reversible temp-directory probe (create/write/read/delete under the OS temp directory) and report the exact failure/rejection message verbatim.
+
 ## Restricted operations
 
 The following operations require explicit delegation from the delegating agent or user. Do not perform them based on self-judgment alone:
