@@ -1,5 +1,19 @@
 # Planning and approval gate
 
+## Approval waiver (trivial tasks)
+
+- In direct mode, you MAY proceed without asking for explicit approval when the user request is a trivial operational check and the action is low-risk and reversible.
+- Allowed under this waiver:
+  - Read-only inspection and verification (including running linters/tests/builds) that does not modify repo files.
+  - Spawning a sub-agent for a read-only smoke check (no repo writes; temp-only and cleaned up).
+  - Creating temporary files only under the OS temp directory (and deleting them during the task).
+- Not allowed under this waiver (approval is still required):
+  - Any manual edit of repository files, configuration files, or rule files.
+  - Installing/uninstalling dependencies or changing tool versions.
+  - Git operations beyond status/diff/log (commit/push/merge/release).
+  - Any external side effects (deployments, publishing, API writes, account/permission changes).
+- If there is any meaningful uncertainty about impact, request approval as usual.
+
 - Default to a two-phase workflow: clarify goal + plan first, execute after explicit requester approval.
 - In delegated mode (see Multi-agent delegation), the delegation itself constitutes plan approval. Do not re-request approval from the human user. If scope expansion is needed, fail back to the delegating agent.
 - If a request may require any state-changing work, you MUST first dialogue with the requester to clarify details and make the goal explicit. Do not proceed while the goal is ambiguous.
