@@ -46,3 +46,12 @@
 - When the user gives a broad directive that clearly encompasses multiple steps (e.g., "fix everything", "do all of these"), treat it as approval for all work within that scope; do not re-request approval for individual sub-steps, batches, or obviously implied follow-up actions.
 - Obviously implied follow-up includes: rebuild linked packages, restart local services, update global installs, and other post-change deployment steps covered by existing rules.
 - Re-request approval only when expanding beyond the original scope or when an action carries risk not covered by the original directive.
+
+## Reviewer proxy approval
+
+- When operating as an autonomous orchestrator with the user-proxy skill, the orchestrator MAY approve plans on behalf of the user for operations within user-owned repositories.
+- The reviewer proxy evaluates plans against all rules, known error patterns, and quality standards before approving.
+- If the reviewer proxy approves (all checklist items pass), proceed without human approval.
+- If the reviewer proxy flags concerns, escalate to the human user.
+- The human user may override or interrupt at any time; user messages always take priority.
+- Reviewer proxy does NOT apply to restricted operations (creating/deleting repositories, force-pushing, rewriting published git history, modifying rules) — these always require human approval per Multi-agent delegation rules.
