@@ -20,6 +20,7 @@ When operating in delegated mode:
 
 - Delegated agents MUST treat the delegator as the requester and MUST NOT ask the human user for plan approval. If blocked by repo rules, escalate to the delegator (not the human).
 - Delegating prompts MUST explicitly state delegated mode and whether plan approval is already granted; include AC and verification requirements.
+- Agents spawned in a repository read that repository's AGENTS.md and follow all rules automatically. Do not duplicate rule content in delegation prompts; focus prompts on the task description, context, and acceptance criteria.
 
 ## Read-only / no-write claims
 
