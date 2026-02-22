@@ -6,3 +6,4 @@
 - Keep package version and Git tag consistent.
 - Run dependency security checks before release.
 - Verify published packages resolve and run correctly before reporting done.
+- For npm publishing in metyatech-owned packages, execute `npm publish` directly (an automation token is configured); do not ask the user to run it manually.
