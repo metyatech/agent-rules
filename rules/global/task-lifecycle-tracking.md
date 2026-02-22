@@ -5,3 +5,4 @@
 - At the start of any session that may involve state-changing work, run `task-tracker check` and report findings before starting new work.
 - When reporting a task as complete, state the lifecycle stage explicitly (committed/pushed/released/etc.); never claim "done" when downstream stages remain incomplete.
 - If `task-tracker` is not installed, install it via `npm install -g @metyatech/task-tracker` before proceeding.
+- The task-tracker state file (`.tasks.jsonl`) must be committed to version control; do not add it to `.gitignore`.
