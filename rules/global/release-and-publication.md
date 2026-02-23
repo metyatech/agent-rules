@@ -7,6 +7,16 @@
 - Run dependency security checks before release.
 - Verify published packages resolve and run correctly before reporting done.
 
+## Public repository metadata
+
+- For public repos, set GitHub Description, Topics, and Homepage.
+- Assign Topics from the standard set below. Every repo must have at least one topic.
+  - `agent-skill`: repo contains a SKILL.md (an installable agent skill).
+  - `agent-tool`: CLI tool or MCP server used by agents (e.g., task-tracker, agents-mcp, compose-agentsmd).
+  - `agent-rule`: rule source or ruleset repository (e.g., agent-rules).
+  - No special topic for regular projects; use descriptive topics relevant to the project's domain.
+- Verify topics are set as part of the new-repository compliance gate.
+
 ## Delivery chain gate
 
 Before reporting a code change as complete in a publishable package, verify the full delivery chain. Each step that applies must be done; do not stop mid-chain.

@@ -16,6 +16,7 @@ For AC definition, verification evidence, regression tests, and final reporting 
 - If pre-commit hooks cannot be installed (environment restriction, no supported tool), manually run the repo's full verify command before every commit and confirm it passes; do not proceed to `git commit` until verify succeeds.
 - Never disable checks, weaken assertions, loosen types, or add retries solely to make checks pass.
 - If the execution environment restricts test execution (no network, no database, sandboxed), run the available subset, document what was skipped, and ensure CI covers the remainder.
+- When delivering a user-facing tool or GUI, perform end-to-end manual verification (start the service, exercise each feature, confirm correct behavior) in addition to automated tests. Do not rely solely on unit tests for user-facing deliverables.
 
 ## Tests
 
