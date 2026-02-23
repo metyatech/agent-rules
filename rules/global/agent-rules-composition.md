@@ -5,6 +5,7 @@
 - AGENTS.md is self-contained; do not rely on parent/child AGENTS for inheritance or precedence.
 - Maintain shared rules centrally and compose per project; use project-local rules only for truly local policies.
 - Place AGENTS.md at the project root; only add another AGENTS.md for nested independent projects.
+- Before doing any work in a repository that contains `agent-ruleset.json`, run `compose-agentsmd` in that repository to refresh its AGENTS.md and ensure rules are current.
 
 ## Update policy
 
