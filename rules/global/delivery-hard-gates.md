@@ -11,6 +11,7 @@ These are non-negotiable completion gates for any state-changing work and for an
 
 ## Evidence and verification
 
+- Do not run `git commit` until the repo's full verification command has passed in the current working tree. This applies to every commit, not only the final delivery.
 - For each AC, define verification evidence (automated test preferred; otherwise a deterministic manual procedure).
 - Maintain an explicit mapping: `AC -> evidence (tests/commands/manual steps)`.
 - The mapping may be presented in a compact per-item form (one line per AC including evidence + outcome) to reduce verbosity.

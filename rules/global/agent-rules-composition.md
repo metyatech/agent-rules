@@ -7,6 +7,11 @@
 - Place AGENTS.md at the project root; only add another AGENTS.md for nested independent projects.
 - Before doing any work in a repository that contains `agent-ruleset.json`, run `compose-agentsmd` in that repository to refresh its AGENTS.md and ensure rules are current.
 
+## AGENTS.md freshness
+
+- Pre-commit hooks should run `compose-agentsmd --compose` and stage any AGENTS.md changes automatically. Do not fail the commit on AGENTS.md drift; let the updated file be included in the commit.
+- Do not add AGENTS.md freshness checks to CI. AGENTS.md is generated from external rule sources; checking it in CI creates cross-repo coupling. Pre-commit hooks are sufficient.
+
 ## Update policy
 
 - Never edit AGENTS.md directly; update source rules and regenerate AGENTS.md.
