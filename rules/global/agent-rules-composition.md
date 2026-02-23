@@ -12,7 +12,7 @@
 - A request to "update rules" means: update the appropriate rule module and ruleset, then regenerate AGENTS.md.
 - If the user gives a persistent instruction (e.g., "always", "must"), encode it in the appropriate module (global vs local).
 - When acknowledging a new persistent instruction, update the rule module in the same change set and regenerate AGENTS.md.
-- When creating a new repository, set up rule files (e.g., agent-ruleset.json and any local rules) so compose-agentsmd can run.
+- When creating a new repository, verify that it meets all applicable global rules before reporting completion: rule files and AGENTS.md, CI workflow, linting/formatting, community health files, documentation, and dependency scanning. Do not treat repository creation as complete until full compliance is verified.
 - When updating rules, infer the core intent; if it is a global policy, record it in global rules rather than project-local rules.
 - If a task requires domain rules not listed in agent-ruleset.json, update the ruleset to include them and regenerate AGENTS.md before proceeding.
 - Do not include composed `AGENTS.md` diffs in the final response unless the user explicitly asks for them.
