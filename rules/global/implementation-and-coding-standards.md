@@ -20,7 +20,7 @@
 - When selecting a UI framework, prioritize built-in component quality and default aesthetics over raw flexibility; the goal is a standard, modern-looking UI with minimal custom styling code.
 - Keep everything DRY across code, specs, docs, tests, configs, and scripts; proactively refactor repeated procedures into shared configs/scripts with small, local overrides.
 - Persist durable runtime/domain data in a database with a fully normalized schema (3NF/BCNF target): store each fact once with keys/constraints, and compute derived statuses/views at read time instead of duplicating them.
-- Fix root causes; remove obsolete/unused code, branches, comments, and helpers.
+- Fix root causes; remove obsolete/unused code, branches, comments, and helpers. When a tool, dependency, or service under user control malfunctions, investigate and fix the source rather than building workarounds. User-owned repositories are fixable code, not external constraints.
 - Avoid leaving half-created state on failure paths. Any code that allocates/registers/starts resources must have a shared teardown that runs on all failure and cancellation paths.
 - Do not block inside async APIs or async-looking code paths; avoid synchronous I/O and synchronous process execution where responsiveness is expected.
 - Avoid external command execution (PATH-dependent tools, stringly-typed argument concatenation). Prefer native libraries/SDKs. If unavoidable: use absolute paths, safe argument handling, and strict input validation.
