@@ -32,7 +32,8 @@ Thread status is explicit (set by commands, not auto-computed):
 - Add a `--from ai` message for informational updates (progress, notes). Status does not change by default.
 - Add a `--from ai --status needs-reply` message when asking the user a question or requesting a decision.
 - Add a `--from ai --status review` message when reporting task completion or results that need user review.
-- Keep messages concise — capture the decision or context, not the full conversation.
+- Record the user's actual words as `--from user`, not a third-person summary or paraphrase. Record the AI's actual response as `--from ai`. The thread should read as a conversation transcript, not meeting minutes.
+- Keep messages concise when the original is long, but preserve the user's intent and phrasing.
 
 ## Thread lifecycle
 
