@@ -30,7 +30,6 @@
 - Prefer the most general applicable rule to avoid duplication.
 - Write rules as clear directives that prescribe specific behavior ("do X", "always Y", "never Z"). Do not use hedging language ("may", "might", "could", "consider") — if a behavior is required, state it as a requirement; if it is not required, omit it.
 - Do not use numeric filename prefixes (e.g., `00-...`) to impose ordering; treat rule modules as a flat set. If ordering matters, encode it explicitly in composition/tooling rather than filenames.
-- Before presenting a rule change proposal, verify it against all editing standards and rule placement criteria. Confirm: (1) placed at the correct level (global vs domain), (2) written at the broadest applicable scope without unnecessary ecosystem qualifiers, (3) action-oriented without hedging, (4) non-redundant with existing rules. Fix violations before presenting; do not rely on the requester for quality review.
 
 ## Rule placement (global vs domain)
 
@@ -41,11 +40,4 @@
 
 ## Rules vs skills
 
-Rules and skills serve different purposes. Choose the right mechanism based on what happens when the guidance is absent.
-
-- **Global rules**: Invariants and constraints that must always hold. Violation causes breakage, incorrect behavior, or safety issues. Always loaded into context, so keep them concise. Examples: approval gates, quality standards, coding constraints, identity policies.
-- **Domain rules**: Ecosystem-specific standards needed only in repositories that opt in. Violation causes quality degradation within that ecosystem. Examples: Node ESM conventions, npm package publishing standards.
-- **Skills**: Procedures, checklists, and workflows loaded on demand. Missing a skill causes inefficiency or inconsistency, but nothing breaks. Skills may be detailed and lengthy because they are only loaded when triggered. Examples: release workflow, CLI design checklist, per-language toolchain setup, PR review procedure.
-- **Local rules**: Repository-specific overrides or exceptions to global/domain rules.
-
-When a rule file grows with procedural/checklist content, extract the procedures into a skill and keep only the invariant constraints in the rule.
+- **Rules** = invariants/constraints (always loaded, concise). **Skills** = procedures/workflows (on-demand, detailed). When a rule grows with procedural content, extract to a skill.

@@ -1,4 +1,4 @@
-﻿# Multi-agent delegation
+# Multi-agent delegation
 
 ## Execution context
 
@@ -49,12 +49,9 @@ The following operations require explicit delegation from the delegating agent o
 
 ## Cost optimization (model selection)
 
-- When spawning agents, always explicitly specify `model` and `effort` (where supported). Never rely on defaults; defaulting wastes budget by over-provisioning.
-- When spawning agents, minimize the **total cost to achieve the goal**. Total cost includes model pricing, reasoning/thinking token consumption, context usage, and retry overhead.
-- Use the minimum reasoning effort level (e.g., low/medium/high/xhigh) that reliably produces correct output for the task; extended reasoning increases cost significantly.
-- Prefer newer-generation models at lower reasoning effort over older models at maximum reasoning effort when both can succeed; newer models often achieve equal quality with less thinking overhead.
-- Factor in context efficiency: a model that handles a task in one pass is cheaper than one that requires splitting.
-- A model that succeeds on the first attempt at slightly higher unit cost is cheaper overall than one that requires retries.
+- Always explicitly specify `model` and `effort` when spawning agents; never rely on defaults.
+- Minimize total cost (model pricing + reasoning tokens + context + retries).
+- Detailed cost optimization guidance is in the `manager` skill.
 
 ## Parallel execution safety
 
