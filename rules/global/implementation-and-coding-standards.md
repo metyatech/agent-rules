@@ -1,34 +1,24 @@
 # Engineering and implementation standards
 
-- Prefer official/standard approaches recommended by the framework or tooling.
-- Prefer well-maintained external dependencies; build in-house only when no suitable option exists.
-- Prefer third-party tools/services over custom implementations when they can meet the requirements; prefer free options (OSS/free-tier) when feasible and call out limitations/tradeoffs.
-- PowerShell: `\` is a literal character (not an escape). Do not cargo-cult `\\` escaping patterns from other languages; validate APIs that require names like `Local\...` (e.g., named mutexes).
-- PowerShell: avoid assigning to or shadowing automatic/read-only variables (e.g., `$args`, `$PID`); use different names for locals.
-- PowerShell: when invoking PowerShell from PowerShell, avoid double-quoted `-Command` strings that allow the outer shell to expand `$...`; prefer `-File`, single quotes, or here-strings to control expansion.
-- If functionality appears reusable, assess reuse first and propose a shared module/repo; prefer remote dependencies (never local filesystem paths).
+- Prefer official/standard framework/tooling approaches.
+- Prefer well-maintained dependencies; build in-house only when no suitable option exists.
+- Prefer third-party tools/services over custom implementations; prefer OSS/free-tier when feasible and call out tradeoffs.
+- PowerShell: `\` is literal (not escape); avoid shadowing auto variables (`$args`, `$PID`); avoid double-quoted `-Command` strings (prefer `-File`, single quotes, or here-strings).
+- If functionality is reusable, assess reuse first and propose shared module/repo; prefer remote dependencies (never local paths).
 - Maintainability > testability > extensibility > readability.
-- Single responsibility; keep modules narrowly scoped and prefer composition over inheritance.
-- Keep dependency direction clean and swappable; avoid global mutable state.
-- Avoid deep nesting; use guard clauses and small functions.
-- Use clear, intention-revealing naming; avoid "Utils" dumping grounds.
-- Prefer configuration/constants over hardcoding; consolidate change points.
-- For GUI changes, prioritize ergonomics and discoverability so first-time users can complete core flows without external documents.
-- Every user-facing GUI component (inputs, actions, status indicators, lists, and dialog controls) must include an in-app explanation (for example tooltip, context help panel, or equivalent).
-- Do not rely on README-only guidance for GUI operation; critical usage guidance must be available inside the GUI itself.
-- For GUI styling, prefer frameworks and component libraries that provide a modern, polished appearance out of the box (e.g., Material Design, shadcn/ui, Fluent); avoid hand-crafting extensive custom styles when an established design system can achieve the same result with less effort.
-- When selecting a UI framework, prioritize built-in component quality and default aesthetics over raw flexibility; the goal is a standard, modern-looking UI with minimal custom styling code.
-- Keep everything DRY across code, specs, docs, tests, configs, and scripts; proactively refactor repeated procedures into shared configs/scripts with small, local overrides.
-- Persist durable runtime/domain data in a database with a fully normalized schema (3NF/BCNF target): store each fact once with keys/constraints, and compute derived statuses/views at read time instead of duplicating them.
-- Fix root causes; remove obsolete/unused code, branches, comments, and helpers. When a tool, dependency, or service under user control malfunctions, investigate and fix the source rather than building workarounds. User-owned repositories are fixable code, not external constraints.
-- Avoid leaving half-created state on failure paths. Any code that allocates/registers/starts resources must have a shared teardown that runs on all failure and cancellation paths.
-- Do not block inside async APIs or async-looking code paths; avoid synchronous I/O and synchronous process execution where responsiveness is expected.
-- Avoid external command execution (PATH-dependent tools, stringly-typed argument concatenation). Prefer native libraries/SDKs. If unavoidable: use absolute paths, safe argument handling, and strict input validation.
-- Prefer stable public APIs over internal/private APIs. If internal/private APIs are unavoidable, isolate them and document the reason and the expected break risk.
-- Externalize large embedded strings/templates/rules when possible.
-- Do not commit build artifacts (follow the repo's .gitignore).
-- Align file/folder names with their contents and keep naming conventions consistent.
-- Do not assume machine-specific environments (fixed workspace directories, drive letters, per-PC paths). Prefer repo-relative paths and explicit configuration so workflows work in arbitrary clone locations.
-- Temporary files/directories created by the agent MUST be placed only under the OS temp directory (e.g., `%TEMP%` / `$env:TEMP`). Do not create ad-hoc temp folders in repos/workspaces unless the requester explicitly approves.
-- When building tools, CLIs, or services intended for agent use, design for cross-agent compatibility. Do not rely on features specific to a single agent platform (Claude Code, Codex, Gemini CLI, Copilot). Use standard interfaces (CLI, HTTP, stdin/stdout, MCP) that any agent can invoke.
-- After modifying dependency manifests (package.json, pyproject.toml, Cargo.toml, etc.), regenerate lock files (run `npm install`, `pip freeze`, `cargo generate-lockfile`, etc.) and include the updated lock file in the same commit. Never commit a manifest change without the corresponding lock file update.
+- Single responsibility; composition over inheritance; clean dependency direction; no global mutable state.
+- Avoid deep nesting; guard clauses and small functions; clear intention-revealing names; no "Utils" dumping grounds.
+- Prefer config/constants over hardcoding; consolidate change points.
+- For GUI: prioritize ergonomics/discoverability, include in-app guidance for all components, prefer established design systems (Material, shadcn/ui, Fluent).
+- Keep DRY across code/specs/docs/tests/config/scripts; refactor repeated procedures into shared config with local overrides.
+- Fix root causes; remove obsolete/unused code/branches/comments; repair user-controlled tools at source, not via workarounds.
+- Ensure failure/cancellation paths tear down allocated resources; no partial state.
+- Do not block inside async APIs; avoid synchronous I/O where responsiveness is expected.
+- Avoid external command execution; prefer native SDKs. If unavoidable: absolute paths, safe argument handling, strict validation.
+- Prefer stable public APIs; isolate/document unavoidable internal API usage.
+- Externalize large embedded strings/templates/rules.
+- Do not commit build artifacts (respect `.gitignore`); keep file/folder naming aligned and consistent.
+- Do not assume machine-specific environments; use repo-relative paths and explicit configuration.
+- Agent temp files MUST stay under OS temp unless requester approves.
+- For agent-facing tools/services, design for cross-agent compatibility via standard interfaces (CLI, HTTP, stdin/stdout, MCP).
+- After manifest changes, regenerate and commit corresponding lock files in the same commit.

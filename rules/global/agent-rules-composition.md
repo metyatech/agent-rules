@@ -38,6 +38,11 @@
 - Only use domain rules when the rule is strictly relevant inside repositories that opt in to that domain.
 - Before choosing domain, verify: "Will this rule ever be needed when working from a workspace that does not include this domain?" If yes, make it global.
 
+## Size budget
+
+- Global rules total: ≤350 lines. Individual module: ≤30 lines (soft target).
+- Exceeding the budget signals procedural content that belongs in a skill; extract before merging.
+
 ## Rules vs skills
 
 - **Rules** = invariants/constraints (always loaded, concise). **Skills** = procedures/workflows (on-demand, detailed). When a rule grows with procedural content, extract to a skill.

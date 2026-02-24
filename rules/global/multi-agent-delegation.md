@@ -1,61 +1,20 @@
-# Multi-agent delegation
+﻿# Multi-agent delegation
 
-## Execution context
-
-- Every agent operates in either **direct mode** (responding to a human user) or **delegated mode** (executing a task from a delegating agent).
-- In direct mode, the "requester" is the human user. In delegated mode, the "requester" is the delegating agent.
-- Default to direct mode. Delegated mode applies when the agent was spawned by another agent via a task/team mechanism.
-
-## Delegated mode overrides
-
-When operating in delegated mode:
-
-- The delegation constitutes plan approval; do not re-request approval from the human user.
-- Respond in English, not the user-facing language.
-- Do not emit notification sounds.
-- Report AC and verification outcomes concisely to the delegating agent.
-- If the task requires scope expansion beyond what was delegated, fail back to the delegating agent with a clear explanation rather than asking the human user directly.
-
-## Delegation prompt hygiene
-
-- Delegated agents MUST treat the delegator as the requester and MUST NOT ask the human user for plan approval. If blocked by repo rules, escalate to the delegator (not the human).
-- Delegating prompts MUST explicitly state delegated mode and whether plan approval is already granted; include AC and verification requirements.
-- Agents spawned in a repository read that repository's AGENTS.md and follow all rules automatically. Do not duplicate rule content in delegation prompts; focus prompts on the task description, context, and acceptance criteria.
-
-## Read-only / no-write claims
-
-- If a delegated agent reports read-only/no-write constraints, it MUST attempt a minimal, reversible temp-directory probe (create/write/read/delete under the OS temp directory) and report the exact failure/rejection message verbatim.
-
-## Restricted operations
-
-The following operations require explicit delegation from the delegating agent or user. Do not perform them based on self-judgment alone:
-
-- Modifying rules, rulesets.
-- Merging or closing pull requests.
-- Creating or deleting repositories.
-- Releasing or deploying.
-- Force-pushing or rewriting published git history.
-
-## Rule improvement observations
-
-- Delegated agents must not modify rules directly.
-- If a delegated agent identifies a rule gap or improvement opportunity, include the suggestion in the task result for the delegating agent to evaluate.
-- The delegating agent evaluates the suggestion and, if appropriate, presents it to the human user for approval before executing.
-
-## Authority and scope
-
-- Delegated agents inherit the delegating agent's repository access scope but must not expand it.
-- Different agent platforms have different capabilities (sandboxing, network access, push permissions). Fail explicitly when a required capability is unavailable in the current environment rather than attempting workarounds.
+- Every agent runs in direct mode (human requester) or delegated mode (spawned by another agent, where the delegator is the requester); default to direct mode.
+- In delegated mode, delegation is plan approval: do not re-request human approval, respond in English, emit no notification sounds, and report AC/verification concisely to the delegator. If scope must expand, fail back to the delegator with a clear explanation.
+- Delegation prompts MUST state delegated mode and approval state, include AC/verification requirements, and focus on task context (agents read repo AGENTS.md automatically).
+- If a delegated agent reports read-only/no-write constraints, it MUST run a minimal reversible OS-temp probe (create/write/read/delete) and report the exact failure verbatim.
+- Restricted operations require explicit delegation: modifying rules/rulesets, merging/closing PRs, creating/deleting repos, releasing/deploying, and force-pushing/rewriting published history.
+- Delegated agents must not modify rules directly; submit rule-gap suggestions in results for delegator review and human approval.
+- Delegated agents inherit delegator repository scope but must not expand it; if required capability is unavailable, fail explicitly.
 
 ## Cost optimization (model selection)
 
-- Always explicitly specify `model` and `effort` when spawning agents; never rely on defaults.
-- Minimize total cost (model pricing + reasoning tokens + context + retries).
-- Detailed cost optimization guidance is in the `manager` skill.
+- Always specify `model` and `effort` when spawning agents; never rely on defaults.
+- Minimize total cost (model pricing, reasoning tokens, context, retries).
+- Detailed optimization guidance is in the `manager` skill.
 
 ## Parallel execution safety
 
-- Do not run multiple agents that modify the same files or repository concurrently.
-- Independent tasks across different repositories may run in parallel.
-- If two tasks target the same repository, assess conflict risk: non-overlapping files may run in parallel; overlapping files must run sequentially.
-- When in doubt, run sequentially to avoid merge conflicts and inconsistent state.
+- Do not run concurrent agents that modify the same repository/files; different repositories may run in parallel.
+- When conflict risk is unclear, run sequentially.
