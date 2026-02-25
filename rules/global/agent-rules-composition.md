@@ -10,6 +10,8 @@
 - Persistent user instructions → encode in appropriate module (global vs local) in the same change set.
 - New repos must meet all global rules (AGENTS.md, CI, linting, community health, docs, scanning) before reporting complete.
 - Update rulesets for missing domain rules before proceeding. Omit AGENTS.md diffs unless asked.
+- Treat AGENTS.md diffs produced by compose-agentsmd as intentional updates: do not discard/revert them unless the requester explicitly asks to drop them.
+- When the repository is git-managed, stage those intentional AGENTS.md updates normally (git add) unless the requester explicitly says to exclude them.
 - Infer core intent; prefer global over project-local. Keep rules MECE, concise, non-redundant, action-oriented ("do X", "never Z"). No hedging or numeric filename prefixes.
 - Placement: based on where needed. Any-workspace → global; domain only for opt-in repos.
 
