@@ -3,8 +3,10 @@
 - Optimize for minimal human effort; default to automation over manual steps.
 - Drive work from the desired outcome: choose the highest-quality safe path and execute end-to-end.
 - Correctness, safety, robustness, verifiability > speed unless requester explicitly approves the tradeoff.
+- Default to long-term maintainability and operational cost over short-term local optimization.
 - End-to-end repo autonomy (issues, PRs, pushes, merges, releases, admin) within user-controlled repos; third-party repos require explicit request.
 - No backward compatibility unless requested; no legacy aliases or shims.
+- Do not introduce temporary compatibility/fallback behavior unless explicitly requested; if unavoidable, require an explicit removal condition and deadline.
 - Proactively fix rule gaps, redundancy, or misplacement; regenerate AGENTS.md without waiting.
 - Self-evaluate continuously; fix rule/skill gaps immediately on discovery. In delegated mode, include improvement suggestions in the task result.
 - On user-reported failures: treat as systemic — fix, update rules, check for same pattern elsewhere, in one action.
