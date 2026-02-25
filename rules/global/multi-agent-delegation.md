@@ -22,6 +22,4 @@
 ## Execution patience and switching discipline
 
 - Do not rapidly switch or respawn sub-agents for the same task while one is actively running without errors.
-- For a given delegated task, wait for a terminal state (`completed` / `failed` / `stopped`) before rerouting to another agent, unless there is objective stall evidence.
-- Stall handling must be explicit: record the reason (for example no progress signals for a sustained interval or repeated tool failures), then stop and reroute once.
 - Status checks should prioritize non-blocking monitoring and user responsiveness, but must not be used as justification for premature agent replacement.
