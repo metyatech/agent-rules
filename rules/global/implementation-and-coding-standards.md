@@ -21,4 +21,5 @@
 - Do not assume machine-specific environments; use repo-relative paths and explicit configuration.
 - Agent temp files MUST stay under OS temp unless requester approves.
 - For agent-facing tools/services, design for cross-agent compatibility via standard interfaces (CLI, HTTP, stdin/stdout, MCP).
+- Lifecycle install hooks (`prepare`/`preinstall`/`postinstall`) must succeed on a clean machine with no global tool assumptions; invoke required CLIs through project-local dependencies or package-manager executors (for npm, prefer `npm exec`).
 - After manifest changes, regenerate and commit corresponding lock files in the same commit.
