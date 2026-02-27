@@ -17,6 +17,11 @@
 - Investigate unclear items before proceeding; no assumptions without approval. Make scope/risk/cost/irreversibility decisions explicit.
 - Prefer async control channels (GitHub Issues/PR comments). Design high-volume workflows with queuing and throttling.
 
+## PR review response protocol
+
+- After addressing PR review feedback, resolve the corresponding conversation thread.
+- After all feedback is addressed, re-request review from the agent or person who raised it.
+
 ## GitHub notifications
 
 - After addressing a notification, mark as done via GraphQL `markNotificationsAsDone`. Detailed procedures in the `manager` skill.
