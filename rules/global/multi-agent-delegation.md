@@ -27,4 +27,4 @@
 ## agents-mcp dispatch
 
 - Always set `mode: 'edit'` when spawning implementation agents; default `mode: 'plan'` is read-only and wastes the agent call.
-- `agents-mcp wait` is unreliable (may return before agent completes); use `Status(wait=true, timeout=8min)` (a timeout of 8 minutes) as the definitive completion check.
+- `agents-mcp wait` and `Status(wait=true)` both poll until agents complete or timeout; either may be used for completion checks.
