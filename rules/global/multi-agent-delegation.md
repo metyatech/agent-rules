@@ -23,3 +23,8 @@
 
 - Do not rapidly switch or respawn sub-agents for the same task while one is actively running without errors.
 - Status checks should prioritize non-blocking monitoring and user responsiveness, but must not be used as justification for premature agent replacement.
+
+## agents-mcp dispatch
+
+- Always set `mode: 'edit'` when spawning implementation agents; default `mode: 'plan'` is read-only and wastes the agent call.
+- `agents-mcp wait` is unreliable (may return before agent completes); use `Status(wait=true, timeout=8)` as the definitive completion check.

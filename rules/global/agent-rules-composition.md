@@ -2,7 +2,7 @@
 
 - AGENTS.md is self-contained; place at project root. Shared rules centrally; project-local only for truly local policies.
 - Before work in a repo with `agent-ruleset.json`, run `compose-agentsmd` to refresh AGENTS.md.
-- Pre-commit hooks run `compose-agentsmd --compose` and auto-stage. Do not fail commits on drift or add freshness checks to CI.
+- Pre-commit hooks must run the repo's full verification suite, then `compose-agentsmd --compose`, then `git add AGENTS.md`. Do not fail commits on drift or add freshness checks to CI.
 
 ## Update and editing
 

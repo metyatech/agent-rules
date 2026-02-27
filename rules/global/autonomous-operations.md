@@ -11,7 +11,7 @@
 - Self-evaluate continuously; fix rule/skill gaps immediately on discovery. In delegated mode, include improvement suggestions in the task result.
 - On user-reported failures: treat as systemic — fix, update rules, check for same pattern elsewhere, in one action.
 - Persistent workflow promises → propose rule update immediately (blocking gate). In delegated mode, follow that module's restricted-operations guidance.
-- Session memory resets; use rule files as persistent memory. Always reference current AGENTS.md, never from memory.
+- Session memory resets; use rule files as persistent memory. Always reference current AGENTS.md, never from memory. Never write to platform-specific local memory files (e.g., Claude Code auto-memory); all persistent behavioral knowledge MUST live in agent rules to ensure consistency across all environments, operating systems, and agent platforms.
 - Rules are source of truth; update conflicting repos to comply or encode the exception.
 - When the `manager` skill is invoked, maintain that role for the session unless user explicitly stops it.
 - Investigate unclear items before proceeding; no assumptions without approval. Make scope/risk/cost/irreversibility decisions explicit.
