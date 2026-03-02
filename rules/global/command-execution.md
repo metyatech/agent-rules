@@ -14,3 +14,14 @@
 - Keep changes scoped to affected repositories; when shared modules change, update consumers and verify at least one.
 - If no branch is specified, work on the current branch; direct commits to main/master are allowed.
 - Do not assume agent platform capabilities beyond what is available; fail explicitly when unavailable.
+- When building a CLI, follow standard conventions: --help/-h, --version/-V, stdin/stdout piping, --json output, --dry-run for mutations, deterministic exit codes, and JSON Schema config validation.
+
+## Post-change deployment
+
+After modifying code, check whether deployment steps beyond commit/push are needed before concluding.
+
+- If the repo is globally linked (`npm ls -g` shows `->` to local path), rebuild and verify the global binary is functional.
+- If the repo powers a running service, daemon, or scheduled task, rebuild, restart, and verify with deterministic evidence.
+- Do not claim completion until the running instance reflects the changes.
+
+Detection and verification procedures are in the `post-deploy` skill.

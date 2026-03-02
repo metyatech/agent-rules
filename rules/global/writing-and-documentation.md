@@ -7,7 +7,6 @@
 - After completing a response, emit the Windows SystemSounds.Asterisk sound via PowerShell only when operating in direct mode (top-level agent).
 - If operating in delegated mode (spawned by another agent / sub-agent), do not emit notification sounds.
 - If operating as a manager/orchestrator, do not ask delegated sub-agents to emit sounds; emit at most once when the overall task is complete (direct mode only).
-
 - When delivering a new tool, feature, or artifact to the user, explain what it is, how to use it (with example commands), and what its key capabilities are. Do not report only completion status; always include a usage guide in the same response.
 
 ## Developer-facing writing
