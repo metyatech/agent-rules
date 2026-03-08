@@ -19,5 +19,8 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - Test-first: add/update tests, observe failure, implement fix, observe pass.
 - Never swallow errors; fail fast with explicit errors reflecting actual state and input context.
 - Validate config/external inputs at boundaries with actionable failure guidance.
+- For user-facing applications, perform deterministic runtime verification before claiming completion; do not wait for the user to ask for manual or browser-level validation.
+- For user-facing web applications, add automated end-to-end smoke coverage for the primary user journeys by default. If E2E is impractical, explain why, define the gap, and provide a deterministic manual verification plan.
+- Never claim or imply bug-free or perfect behavior. Report verification scope, evidence, and residual risk explicitly.
 
 Detailed evidence format, CI setup, test practices, and error handling procedures are in the `quality-workflow` skill.
