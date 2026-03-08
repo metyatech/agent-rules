@@ -24,3 +24,7 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - Never claim or imply bug-free or perfect behavior. Report verification scope, evidence, and residual risk explicitly.
 
 Detailed evidence format, CI setup, test practices, and error handling procedures are in the `quality-workflow` skill.
+
+## Re-requesting AI reviews
+
+- When addressing feedback from AI review bots (Copilot, Codex, etc.), always follow the specialized re-triggering procedures defined in the pr-review-workflow skill (e.g., using the GitHub API to DELETE then POST the reviewer request) rather than generic mentions or simple UI-based requests. This ensures the bot's state is correctly reset and a new scan is initiated.
