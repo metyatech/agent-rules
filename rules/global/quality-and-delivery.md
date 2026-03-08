@@ -27,6 +27,8 @@ Detailed evidence format, CI setup, test practices, and error handling procedure
 
 ## Re-requesting AI reviews
 
+- For AI review bots, always follow the specific re-triggering procedures defined in the pr-review-workflow skill (e.g., specific API sequences or comment commands) to ensure a valid re-scan.
+
 - When re-requesting reviews from AI bots, follow the exact procedures in the pr-review-workflow skill:
   - **Copilot**: Must use the GitHub API to DELETE then POST the copilot-pull-request-reviewer[bot] request to reliably trigger a re-scan.
   - **Codex**: Use the @codex review comment command.
