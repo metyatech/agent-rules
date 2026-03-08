@@ -1,1 +1,10 @@
-{"source": "local", "modules": ["rules/global/*.md"]}
+{
+  "source": "local",
+  "domains": ["exam", "node", "unreal", "web"],
+  "extra": [],
+  "claude": {
+    "enabled": true,
+    "output": "CLAUDE.md"
+  },
+  "output": "AGENTS.md"
+}
