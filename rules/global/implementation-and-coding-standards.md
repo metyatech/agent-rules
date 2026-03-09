@@ -12,6 +12,9 @@
 - For GUI, use a single natural top-to-bottom/left-to-right flow; present setup first, then action, then result, then optional detail.
 - Reduce first-use cognitive load and avoid showing recommendations or results before prerequisite inputs unless that clearly reduces confusion.
 - Use ordinary user-task language; avoid internal jargon and explain unavoidable terms inline.
+- Structure GUI flows so a first-time user can proceed naturally from top-to-bottom or left-to-right, with each step unlocking or contextualizing the next.
+- Do not surface recommendations, comparisons, or advanced output before the prerequisite inputs are in place, unless doing so clearly reduces confusion.
+- In user-facing tools, present the setup steps first, then the choice/action step, then the result, then optional detail.
 - Keep DRY across code/docs/tests/config; refactor repeated procedures.
 - Fix root causes; remove obsolete code; repair tools at source.
 - Ensure failure paths tear down resources; no partial state.
