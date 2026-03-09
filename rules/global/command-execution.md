@@ -13,8 +13,8 @@
 - Do not assume agent platform capabilities beyond what is available; fail explicitly when unavailable.
 - When building a CLI, follow standard conventions: --help/-h, --version/-V, stdin/stdout piping, --json output, --dry-run for mutations, deterministic exit codes, and JSON Schema config validation.
 ## Codex-only PowerShell safety
-- `Remove-Item` (aliases: `rm`, `ri`, `del`, `erase`) → Use: `if ([IO.File]::Exists($p)) { [IO.File]::SetAttributes($p,[IO.FileAttributes]::Normal); [IO.File]::Delete($p) }`
-- `Remove-Item -Recurse` (aliases: `rmdir`, `rd`) → Use: `if ([IO.Directory]::Exists($d)) { [IO.File]::SetAttributes($d,[IO.FileAttributes]::Normal); foreach ($e in [IO.Directory]::EnumerateFileSystemEntries($d,'*',[IO.SearchOption]::AllDirectories)) { [IO.File]::SetAttributes($e,[IO.FileAttributes]::Normal) }; [IO.Directory]::Delete($d,$true) }`
+- `Remove-Item` (aliases: `rm`, `ri`, `del`, `erase`) ↁEUse: `if ([IO.File]::Exists($p)) { [IO.File]::SetAttributes($p,[IO.FileAttributes]::Normal); [IO.File]::Delete($p) }`
+- `Remove-Item -Recurse` (aliases: `rmdir`, `rd`) ↁEUse: `if ([IO.Directory]::Exists($d)) { [IO.File]::SetAttributes($d,[IO.FileAttributes]::Normal); foreach ($e in [IO.Directory]::EnumerateFileSystemEntries($d,'*',[IO.SearchOption]::AllDirectories)) { [IO.File]::SetAttributes($e,[IO.FileAttributes]::Normal) }; [IO.Directory]::Delete($d,$true) }`
 - In PowerShell, use `;` for sequential command chaining; never use `&&` or `||` as control-flow operators.
 ## Post-change deployment
 - After modifying code, check whether deployment steps beyond commit/push are needed before concluding.
@@ -22,3 +22,5 @@
 - If the repo powers a running service, daemon, or scheduled task, rebuild, restart, and verify with deterministic evidence.
 - Do not claim completion until the running instance reflects the changes.
 - Detection and verification procedures are in the `post-deploy` skill.
+
+- **PowerShell native environment**: Always remember that this is a Windows/PowerShell environment. Do not use Unix commands like grep or ls directly; use native PowerShell cmdlets (Select-String, Get-ChildItem) or provided optimized tools like grep_search.

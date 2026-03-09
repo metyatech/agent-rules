@@ -25,3 +25,5 @@
 ## Markdown linking
 
 - When a Markdown document links to a local file, use a path relative to the Markdown file.
+
+- At the end of a session or task, explicitly report any lingering issues, technical friction, or environment inconveniences that were not fundamentally resolved. This helps identify systemic problems for future rule updates.
