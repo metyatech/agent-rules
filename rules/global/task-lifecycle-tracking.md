@@ -6,5 +6,6 @@
 - When reporting a task as complete, state the lifecycle stage explicitly (committed/pushed/released/etc.); never claim "done" when downstream stages remain incomplete.
 - If `task-tracker` is not installed, install it via `npm install -g @metyatech/task-tracker` before proceeding.
 - CLI: `task-tracker add "desc"` / `check` / `list` / `done <id>` / `remove <id>` / `update <id> --stage <stage>` — use `--stage`, NOT `--status`.
-- Valid stages: `pending`, `in-progress`, `committed`, `pushed`, `released`, `done`.
+- Persistent stages: `pending`, `in-progress`, `committed`, `released`, `done`.
+- Derived display stage: `pushed`. Do not create tracker-only follow-up commits just to record `pushed`; record `committed` in the closing code commit and let `task-tracker` derive `pushed` from upstream reachability of that committed event.
 - The task-tracker state file (`.tasks.jsonl`) must be committed to version control; do not add it to `.gitignore`.
