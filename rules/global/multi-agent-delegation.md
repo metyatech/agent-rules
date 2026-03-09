@@ -8,5 +8,8 @@
 - Delegated agents must not modify rules directly; submit rule-gap suggestions in results for delegator review.
 - Delegated agents inherit delegator repository scope but must not expand it; fail explicitly if unavailable.
 - Do not run concurrent agents that modify the same repository/files; different repositories may run in parallel. When conflict risk is unclear, run sequentially.
+- Do not stop delegated agents merely because they are slow, retrying, or producing weak intermediate output while still making progress.
+- Stop a delegated agent only for a concrete reason: repo/file conflict risk, clear divergence from the approved direction, user-owned data risk, or a better-scoped replacement.
+- If a delegated agent creates clearly agent-owned temp, plan, or memory files outside the target repo, assess and clean them up automatically; escalate only when ownership or value is genuinely ambiguous.
 
 Execution discipline, agents-mcp dispatch configuration, and cost optimization details are in the `manager` skill.
