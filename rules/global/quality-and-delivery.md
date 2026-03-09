@@ -18,6 +18,8 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - Never swallow errors; fail fast with explicit context.
 - Validate config/external inputs at boundaries.
 - For user-facing apps, perform deterministic runtime verification before completion.
+- For GUI/UX changes, include a first-use walkthrough against the stated primary user goal; functional E2E alone is not sufficient when the task includes clarity or usability.
+- If the user still reports a GUI flow as confusing, treat that as a failed acceptance gate: refine labels/order/flow and add a regression check for that confusion class before concluding.
 - Never claim bug-free behavior. Report scope, evidence, and residual risk explicitly.
 
 ## Re-requesting AI reviews

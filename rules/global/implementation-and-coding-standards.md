@@ -12,6 +12,8 @@
 - For GUI, use a single natural top-to-bottom/left-to-right flow so first-time users can proceed from setup to action to result to optional detail.
 - Reduce first-use cognitive load; avoid surfacing recommendations, comparisons, or advanced output before prerequisite inputs unless that clearly reduces confusion.
 - Use ordinary user-task language; avoid internal jargon and explain unavoidable terms inline.
+- For user-facing GUI work, state the primary user goal in plain language and make each step answer "what do I do now?" and "what happens next?" from the UI alone.
+- Do not treat a GUI flow as complete while any primary step label/control still needs outside explanation to understand its purpose; rename, reorder, or rewrite until the intended action is obvious in-product.
 - Keep DRY across code/docs/tests/config; refactor repeated procedures.
 - Fix root causes; remove obsolete code; repair tools at source.
 - Ensure failure paths tear down resources; no partial state.
