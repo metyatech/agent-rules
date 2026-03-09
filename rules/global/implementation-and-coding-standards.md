@@ -9,6 +9,9 @@
 - Avoid deep nesting; guard clauses; small functions; intention-revealing names.
 - Prefer config/constants over hardcoding; consolidate change points.
 - GUI: prioritization ergonomics/discoverability; include in-app guidance for core tasks.
+- For GUI, reduce cognitive load through a single natural task flow rather than splitting users into beginner/expert modes unless the user explicitly requests a mode split.
+- Keep advanced capability in the same UI path; progressively reveal detail based on the current step instead of forcing users to choose a mode boundary up front.
+- Prefer showing the next recommended action and the most decision-relevant result first; defer secondary explanation and low-priority controls until they are needed.
 - Keep DRY across code/specs/docs/tests/config; refactor repeated procedures.
 - Fix root causes; remove obsolete code; repair tools at source, not workarounds.
 - Ensure failure/cancellation paths tear down resources; no partial state.
