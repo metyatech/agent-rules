@@ -1,32 +1,19 @@
 # Writing and documentation
-
 ## User responses
-
 - Respond in Japanese unless the user requests otherwise.
-- Always report whether you committed and whether you pushed; include repo(s), branch(es), and commit hash(es) when applicable.
-- After completing a response, emit the Windows SystemSounds.Asterisk sound via PowerShell only when operating in direct mode (top-level agent).
-- If operating in delegated mode (spawned by another agent / sub-agent), do not emit notification sounds.
-- If operating as a manager/orchestrator, do not ask delegated sub-agents to emit sounds; emit at most once when the overall task is complete (direct mode only).
-- When delivering a new tool, feature, or artifact to the user, explain what it is, how to use it (with example commands), and what its key capabilities are. Do not report only completion status; always include a usage guide in the same response.
-- Prefer short, user-centric progress reports. Explain changes in terms of what the user can now do, not implementation details, unless the user asks for internals.
-- Do not include AC/evidence sections or command transcripts in normal user reports unless the user explicitly asks for them.
-- Mention commit/push status only when the turn included actual changes; use a simple done/not-done style unless the user asks for details.
-
+- Report commit/push status only when the turn changed files; keep it simple unless the user asks for details.
+- In direct mode, emit the Windows SystemSounds.Asterisk sound after completing a response; delegated agents never emit sounds, and managers emit at most once for the overall task.
+- When delivering a new tool, feature, or artifact, explain what it is, how to use it, and its key capabilities.
+- Prefer short, user-centric progress reports. Explain what the user can now do, not implementation details, unless internals are requested.
+- Do not include AC/evidence sections or command transcripts in normal user reports unless explicitly requested.
+- At the end of a session or task, report any lingering unresolved technical friction or environment issues.
 ## Developer-facing writing
-
-- Write developer documentation, code comments, and commit messages in English.
-- Rule modules are written in English.
-
+- Write developer documentation, code comments, commit messages, and rule modules in English.
 ## README and docs
-
-- Every repository must include README.md covering overview/purpose, supported environments/compatibility, install/setup, usage examples, dev commands (build/test/lint/format), required env/config, release/deploy steps if applicable, and links to SECURITY.md / CONTRIBUTING.md / LICENSE / CHANGELOG.md when they exist.
-- For any change, assess documentation impact and update all affected docs in the same change set so docs match behavior (README, docs/, examples, comments, templates, ADRs/specs, diagrams).
+- Every repository must include README.md covering overview/purpose, supported environments/compatibility, install/setup, usage examples, dev commands, required env/config, release/deploy steps if applicable, and links to SECURITY.md / CONTRIBUTING.md / LICENSE / CHANGELOG.md when they exist.
+- For any change, assess documentation impact and update affected docs in the same change set so docs match behavior (README, docs/, examples, comments, templates, ADRs/specs, diagrams).
 - If no documentation updates are needed, explain why in the final response.
-- For CLIs, document every parameter (required and optional) with a description and at least one example; also include at least one end-to-end example command.
-- Do not include user-specific local paths, fixed workspace directories, drive letters, or personal data in doc examples. Prefer repo-relative paths and placeholders so instructions work in arbitrary environments.
-
+- For CLIs, document every parameter with a description and at least one example, plus one end-to-end example command.
+- Do not include user-specific local paths, fixed workspace directories, drive letters, or personal data in doc examples; prefer repo-relative paths and placeholders.
 ## Markdown linking
-
 - When a Markdown document links to a local file, use a path relative to the Markdown file.
-
-- At the end of a session or task, explicitly report any lingering issues, technical friction, or environment inconveniences that were not fundamentally resolved. This helps identify systemic problems for future rule updates.
