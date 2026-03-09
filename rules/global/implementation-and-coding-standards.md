@@ -1,32 +1,26 @@
 # Engineering and implementation standards
 
-- Prefer official/standard framework/tooling approaches.
-- Prefer well-maintained dependencies; build in-house only when no suitable option exists.
-- Prefer the latest feasible stable versions of frameworks, dependencies, CI actions, and workflow tooling.
-- When touching a repository, proactively update stale packages/actions to the latest feasible stable versions unless blocked by compatibility, explicit pinning, or disproportionate migration cost.
-- If a dependency, framework, or workflow action is intentionally kept behind the latest stable version, state the blocker explicitly in the change report.
-- Prefer third-party tools/services over custom implementations; prefer OSS/free-tier when feasible and call out tradeoffs.
-- PowerShell: `\` is literal (not escape); avoid shadowing auto variables (`$args`, `$PID`); avoid double-quoted `-Command` strings (prefer `-File`, single quotes, or here-strings).
-- If functionality is reusable, assess reuse first and propose shared module/repo; prefer remote dependencies (never local paths).
-- Maintainability > testability > extensibility > readability.
-- Single responsibility; composition over inheritance; clean dependency direction; no global mutable state.
-- Avoid deep nesting; guard clauses and small functions; clear intention-revealing names; no "Utils" dumping grounds.
+- Prefer official/standard framework approaches and well-maintained dependencies.
+- Use latest stable versions of packages/tools proactively; document blockers if not.
+- Prefer OSS/free-tier third-party services; call out tradeoffs.
+- PowerShell: \ is literal; avoid shadowing auto-vars; prefer single quotes for -Command.
+- Assess reuse first; prefer remote dependencies over local paths.
+- Single responsibility; composition over inheritance; clean dependency direction.
+- Avoid deep nesting; guard clauses; small functions; intention-revealing names.
 - Prefer config/constants over hardcoding; consolidate change points.
-- For GUI: prioritize ergonomics/discoverability, include in-app guidance for all components, prefer established design systems (Material, shadcn/ui, Fluent); user-facing tools and web apps must be understandable from the product UI itself without requiring a separate chat explanation to use the primary flows.
-- For user-facing tools and web apps, include in-product guidance for core tasks (what the tool does, what inputs mean, what outputs mean, and how to start with a sensible first use); do not rely on README or final chat responses as the primary usage explanation when the UI can reasonably convey it directly.
-- Keep DRY across code/specs/docs/tests/config/scripts; refactor repeated procedures into shared config with local overrides.
-- Fix root causes; remove obsolete/unused code/branches/comments; repair user-controlled tools at source, not via workarounds.
-- Ensure failure/cancellation paths tear down allocated resources; no partial state.
-- Do not block inside async APIs; avoid synchronous I/O where responsiveness is expected.
-- Avoid external command execution; prefer native SDKs. If unavoidable: absolute paths, safe argument handling, strict validation.
+- GUI: prioritization ergonomics/discoverability; include in-app guidance for core tasks.
+- Keep DRY across code/specs/docs/tests/config; refactor repeated procedures.
+- Fix root causes; remove obsolete code; repair tools at source, not workarounds.
+- Ensure failure/cancellation paths tear down resources; no partial state.
+- Do not block async APIs; avoid sync I/O where responsiveness is expected.
+- Avoid external command execution; prefer native SDKs. If needed: safe, validated args.
 - Prefer stable public APIs; isolate/document unavoidable internal API usage.
 - Externalize large embedded strings/templates/rules.
-- Do not commit build artifacts (respect `.gitignore`); keep file/folder naming aligned and consistent.
-- Do not assume machine-specific environments; use repo-relative paths and explicit configuration.
-- Agent temp files MUST stay under OS temp unless requester approves.
-- For agent-facing tools/services, design for cross-agent compatibility via standard interfaces (CLI, HTTP, stdin/stdout, MCP).
-- Lifecycle install hooks (`prepare`/`preinstall`/`postinstall`) must succeed on a clean machine with no global tool assumptions; invoke required CLIs through project-local dependencies or package-manager executors (for npm, prefer `npm exec`).
-- After manifest changes, regenerate and commit corresponding lock files in the same commit.
-
-- **Robust code editing**: When using the eplace tool, always ensure the old_string matches the current file state exactly, including indentation and line endings. For complex multi-line changes or if eplace fails repeatedly, prefer write_file to overwrite the entire file with the correct content.
-- **Rule source maintenance**: When editing rules in the gent-rules source repository (outside the primary workspace), use un_shell_command with PowerShell commands like Set-Content to bypass workspace-access restrictions applied to standard file tools.
+- Do not commit build artifacts; keep naming aligned and consistent.
+- No machine-specific environments; use repo-relative paths and explicit configuration.
+- Agent temp files MUST stay under OS temp unless approved.
+- Design tools/services for agent-compatibility via standard interfaces (CLI, MCP).
+- Lifecycle hooks must succeed on clean machines; invoke required CLIs via npm exec.
+- After manifest changes, regenerate and commit lock files in the same commit.
+- **Robust editing**: Ensure eplace matches exactly; prefer write_file for complex changes.
+- **Rule maintenance**: Use un_shell_command with PowerShell to edit the rule source repo.
