@@ -22,5 +22,5 @@
 - Design tools/services for agent-compatibility via standard interfaces (CLI, MCP).
 - Lifecycle hooks must succeed on clean machines; invoke required CLIs via npm exec.
 - After manifest changes, regenerate and commit lock files in the same commit.
-- **Robust editing protocol**: To ensure eplace matches exactly, always run the formatter (e.g., clang-format -i) on the file IMMEDIATELY BEFORE applying a replacement. This normalizes the disk state to your known formatted string. Do NOT re-read the file after this normalization unless you suspect external changes; trust the normalized string to save tokens.
+- **Robust editing protocol**: To ensure eplace matches exactly, always run the formatter (e.g., clang-format -i) on the file IMMEDIATELY BEFORE applying a replacement. This normalizes the disk state to your known formatted string. Do NOT re-read the file after this normalization unless you suspect external changes; trust the formatted string to save tokens.
 - **Rule maintenance**: Use un_shell_command with PowerShell to edit the rule source repo.
