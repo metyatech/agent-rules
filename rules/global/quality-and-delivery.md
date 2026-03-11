@@ -1,5 +1,4 @@
 # Quality and delivery gates
-
 Non-negotiable gates for any state-changing work or any claim of "done", "fixed", "working", or "passing".
 
 1. **BEFORE** state-changing work: list AC as binary, testable statements.
@@ -10,7 +9,6 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 6. **IN** final response: AC -> evidence mapping with outcomes and verification commands.
 
 ## Quality principles
-
 - Quality (correctness, safety, robustness, verifiability) > speed/convenience.
 - CI must run full suite on PRs/pushes; require passing checks for merges; add CI if missing.
 - Commit-time hooks must run full verify and block commits; confirm hooks installed.
@@ -26,7 +24,6 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - If the user still reports a GUI flow as confusing, treat that as a failed acceptance gate: refine labels/order/flow and add a regression check for that confusion class before concluding.
 - For GUI work, do not conclude from functional correctness alone: require screenshot-based review plus automated checks for horizontal overflow, clipping, unintended compact-control wrapping, and clearly visible primary/current state where feasible.
 - Never claim bug-free behavior. Report scope, evidence, and residual risk explicitly.
-
 - For AI review bots, follow the re-triggering procedures in the `pr-review-workflow` skill.
 
 Detailed evidence format and procedures are in the quality-workflow skill.
