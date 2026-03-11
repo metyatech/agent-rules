@@ -24,8 +24,7 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - When an intended environment cannot be exercised with available tools or access, stop short of a completion claim, state the exact gap, and treat that environment as out of scope until verified.
 - For GUI/UX changes, include a first-use walkthrough against the primary user goal; functional E2E alone is insufficient when clarity/usability is in scope.
 - If the user still reports a GUI flow as confusing, treat that as a failed acceptance gate: refine labels/order/flow and add a regression check for that confusion class before concluding.
-- For GUI/UX changes, add automated checks for horizontal overflow, clipping, unintended compact-control wrapping, and primary-state visibility where feasible; major visual changes must also be reviewed from screenshots, not code alone.
-- For GUI work, do not conclude from functional correctness alone: require screenshot-based review plus automated checks for horizontal overflow, clipping, unintended compact-control wrapping, and clearly visible current-selection/source-target state where feasible.
+- For GUI work, do not conclude from functional correctness alone: require screenshot-based review plus automated checks for horizontal overflow, clipping, unintended compact-control wrapping, and clearly visible primary/current state where feasible.
 - Never claim bug-free behavior. Report scope, evidence, and residual risk explicitly.
 
 - For AI review bots, follow the re-triggering procedures in the `pr-review-workflow` skill.
