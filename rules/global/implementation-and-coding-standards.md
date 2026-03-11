@@ -1,6 +1,6 @@
 # Engineering and implementation standards
 
-- Prefer official framework approaches and well-maintained dependencies.
+- Prefer official frameworks and well-maintained dependencies.
 - Use latest stable versions of packages/tools; document blockers if not.
 - Prefer OSS/free-tier services; call out tradeoffs.
 - PowerShell: \ is literal; avoid shadowing auto-vars; prefer single quotes.
