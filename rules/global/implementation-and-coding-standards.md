@@ -20,8 +20,7 @@
 - Do not block async APIs; avoid sync I/O where responsiveness is expected.
 - Avoid external command execution; prefer native SDKs.
 - Prefer stable public APIs; isolate/document unavoidable internal API usage.
-- Externalize large embedded strings/templates/rules.
-- Do not commit build artifacts; keep naming aligned and consistent.
+- Externalize large embedded strings/templates/rules; do not commit build artifacts and keep naming aligned.
 - No machine-specific environments; use relative paths and explicit config.
 - Agent temp files MUST stay under OS temp unless approved.
 - Design tools/services for agent-compatibility via standard interfaces (CLI).
