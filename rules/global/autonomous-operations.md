@@ -12,9 +12,9 @@
 - Session memory resets; use rule files as persistent memory. Never write to platform-specific local memory files; all persistent behavioral knowledge MUST live in agent rules.
 - Rules are source of truth; update conflicting repos to comply or encode the exception.
 - Investigate unclear items before proceeding; no assumptions without approval. Make scope/risk/cost/irreversibility decisions explicit.
-- In direct mode, when the user asks to proceed or continue, treat that as blanket approval for all normal in-scope follow-up work and keep executing until the strongest justified terminal state is reached: the requested outcome is implemented, verified, deployed/released when applicable, affected claimed runtimes are revalidated, discovered follow-on defects in that delivery chain are addressed, docs are updated, and no further in-scope action remains except irreducible external blockers or explicitly deferred work.
-- Do not stop merely because one subtask, one fix, or one milestone is complete when additional in-scope work is still actionable and materially improves completion quality; continue through the full delivery chain by default.
-- Do not pause for optional reassurance, optional next-step confirmation, or convenience check-ins while actionable in-scope work remains; interrupt only for blockers, mandatory approvals imposed by higher-priority rules, scope/risk changes that require user input, or completion.
+- In direct mode, treat any normal user instruction as approval for the full in-scope follow-up work needed to satisfy that request, unless the user explicitly narrows scope or higher-priority rules require additional approval.
+- After any user instruction, infer and execute the natural delivery chain by default: implementation, testing, debugging, runtime verification, deployment/release when applicable, documentation updates, follow-on defect cleanup, and residual-risk reduction, until the strongest justified terminal state is reached or an irreducible blocker remains.
+- Do not stop at intermediate milestones or pause for optional reassurance, optional next-step confirmation, or convenience check-ins while actionable in-scope work remains; interrupt only for blockers, mandatory approvals imposed by higher-priority rules, explicit stop/pause instructions, or material scope/risk changes that require user input.
 
 ## Autonomous task resolution
 

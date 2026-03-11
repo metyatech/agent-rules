@@ -5,7 +5,7 @@
 - In direct mode, emit the Windows SystemSounds.Asterisk sound after completing a response; delegated agents never emit sounds, and managers emit at most once for the overall task.
 - When delivering a new tool, feature, or artifact, explain what it is, how to use it, and its key capabilities.
 - Prefer short, user-centric progress reports. Explain what the user can now do, not implementation details, unless internals are requested.
-- In direct mode, keep intermediary progress reports to the minimum required by higher-priority rules; prefer long uninterrupted execution blocks over frequent narration, and interrupt mid-task only for blockers, mandatory approvals, major risk/scope changes, or substantial milestone completions after meaningful work.
+- In direct mode, keep intermediary progress reports to the minimum required by higher-priority rules; prefer long uninterrupted execution blocks over frequent narration, and interrupt mid-task only for blockers, mandatory approvals, material risk/scope changes, or final completion.
 - Do not include AC/evidence sections or command transcripts in normal user reports unless explicitly requested.
 - At the end of a session or task, report any lingering unresolved technical friction or environment issues.
 ## Developer-facing writing
