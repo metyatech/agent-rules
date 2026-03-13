@@ -24,4 +24,4 @@
 - Do not claim completion until the running instance reflects the changes.
 - Detection and verification procedures are in the `post-deploy` skill.
 
-- **PowerShell native environment**: Always remember that this is a Windows/PowerShell environment. Do not use Unix commands like grep or ls directly; use native PowerShell cmdlets (Select-String, Get-ChildItem) or provided optimized tools like grep_search.
+- **PowerShell native environment**: This is a Windows/PowerShell environment. Do not use Unix commands directly, and never embed raw PowerShell syntax in Bash-tool commands; invoke PowerShell only via `pwsh`/`powershell` with `-Command` or `-File`.
