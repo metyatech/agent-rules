@@ -2,3 +2,4 @@
 {"id":"CgeN8AP1","description":"Pre-approve PR review feedback handling globally","stage":"committed","createdAt":"2026-03-10T05:24:35.363Z","updatedAt":"2026-03-10T05:25:28.243Z","committedEventId":"g4ZP3ycMZ1PX_d0I"}
 {"id":"F3ED-Ueo","description":"Update global rules for intent inference and PowerShell/Bash separation","stage":"committed","createdAt":"2026-03-13T03:20:21.261Z","updatedAt":"2026-03-13T03:20:56.772Z","committedEventId":"ttMqc1h9i55ttTMM"}
 {"id":"yOtbm6bO","description":"Tighten PowerShell rule to forbid non-trivial inline Bash-to-PowerShell commands","stage":"committed","createdAt":"2026-03-13T03:28:45.763Z","updatedAt":"2026-03-13T03:29:09.905Z","committedEventId":"x5XckcC4M7u_99B4"}
+{"id":"mSkOPvWF","description":"Forbid Bash-to-PowerShell script execution via Command/stdin/heredoc/EncodedCommand","stage":"committed","createdAt":"2026-03-13T03:44:07.088Z","updatedAt":"2026-03-13T03:44:17.517Z","committedEventId":"ASsDCWt4wEzWQkkO"}

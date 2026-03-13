@@ -24,4 +24,4 @@
 - Do not claim completion until the running instance reflects the changes.
 - Detection and verification procedures are in the `post-deploy` skill.
 
-- **PowerShell native environment**: This is a Windows/PowerShell environment. Do not use Unix commands directly. In Bash-tool commands, do not inline non-trivial PowerShell; use `pwsh`/`powershell -File` or a temp `.ps1` instead.
+- **PowerShell native environment**: This is a Windows/PowerShell environment. Do not use Unix commands directly. In Bash-tool commands, run PowerShell only via a temp `.ps1` and `pwsh`/`powershell -File`; do not use `-Command`, stdin, heredoc, or `-EncodedCommand` for PowerShell scripts.
