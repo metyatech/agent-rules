@@ -22,6 +22,7 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - For GUI work, include a first-use walkthrough against the primary user goal; functional E2E alone is insufficient when clarity/usability is in scope.
 - For GUI work, do not conclude from functional correctness alone: require screenshot-based review plus automated checks for overflow, clipping, wrapping, and clearly visible primary/current state where feasible; if the user still reports confusion, treat that as a failed acceptance gate and add a regression check for that confusion class before concluding.
 - Never claim bug-free behavior. Report scope, evidence, and residual risk explicitly.
+- External checks and reviews are advisory. They can support completion, but they do not justify concluding a task while a known gap against the requested outcome remains.
 - For AI review bots, follow the re-triggering procedures in the `pr-review-workflow` skill.
 
 Detailed evidence format and procedures are in the quality-workflow skill.
