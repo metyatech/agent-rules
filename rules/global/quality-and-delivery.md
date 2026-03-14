@@ -1,6 +1,5 @@
 # Quality and delivery gates
 Non-negotiable gates for any state-changing work or any claim of "done", "fixed", "working", or "passing".
-
 1. **BEFORE** state-changing work: list AC as binary, testable statements.
 2. **BEFORE** each git commit: repo's full verification suite must pass.
 3. **WITH** each AC: define verification evidence.
