@@ -12,8 +12,7 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - CI must run full suite on PRs/pushes; require passing checks for merges; add CI if missing.
 - Commit-time hooks must run full verify and block commits; confirm hooks installed.
 - Test-first: add/update tests, observe failure, implement fix, observe pass.
-- Never swallow errors; fail fast with explicit context.
-- Validate config/external inputs at boundaries.
+- Never swallow errors; fail fast with explicit context and validate config/external inputs at boundaries.
 - For user-facing apps, perform deterministic runtime verification before completion, define the claimed runtime environment matrix, and prefer the least costly faithful verification environment that covers each claimed behavior.
 - For systems whose primary behavior depends on multiple clients, environments, or handoff paths, define the claimed primary path matrix up front and make automated verification of each claimed primary path a completion gate, using the least-cost faithful layer that exercises the boundary.
 - For systems whose behavior depends on persisted or carried state across runs or handoffs (for example local storage, cookies, caches, saved sessions, URL tokens, reconnect state, or server restarts), define the claimed primary state matrix up front and make automated verification of fresh-state, resumed-state, and stale-state transitions a completion gate for each affected primary path.
