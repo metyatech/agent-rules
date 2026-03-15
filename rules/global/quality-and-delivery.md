@@ -26,5 +26,4 @@ Non-negotiable gates for any state-changing work or any claim of "done", "fixed"
 - For GUI work, perform a whole-screen plausibility review: if the result would look obviously wrong, broken, or visually incoherent to a reasonable user at a glance, treat it as unfinished even when tests pass.
 - Never claim bug-free behavior. Report scope, evidence, and residual risk explicitly.
 - External checks and reviews are advisory. They can support completion, but they do not justify concluding a task while a known gap against the requested outcome remains.
-- For AI review bots, follow the re-triggering procedures in the `pr-review-workflow` skill.
-Detailed evidence format and procedures are in the quality-workflow skill.
+- For AI review bots, follow the re-triggering procedures in the `pr-review-workflow` skill. Detailed evidence format and procedures are in the quality-workflow skill.
