@@ -6,5 +6,6 @@
 - Treat warnings as errors in CI.
 - Do not disable rules globally; keep suppressions narrow, justified, and time-bounded.
 - Pin tool versions (lockfiles/manifests) for reproducible CI.
+- Repositories with GitHub Actions must configure Dependabot version updates for applicable package ecosystems and for `github-actions`, unless the repository has no external dependency/update surface.
 - For web UI projects, enforce automated visual accessibility checks in CI.
 - Require dependency vulnerability scanning, secret scanning, and CodeQL for supported languages.
