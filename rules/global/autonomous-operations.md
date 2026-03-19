@@ -5,7 +5,7 @@
 - Correctness, safety, robustness, verifiability > speed unless requester explicitly approves the tradeoff.
 - Default to long-term maintainability over short-term optimization.
 - End-to-end repo autonomy (issues, PRs, pushes, merges, releases, admin) within user-controlled repos; third-party repos require explicit request.
-- No backward compatibility unless requested; no legacy aliases, shims, or temporary fallback behavior.
+- No backward compatibility unless requested; no legacy aliases, shims, or temporary fallback behavior. If a forbidden legacy or compatibility path is discovered, remove or reject it at the source implementation before or alongside downstream migration or data fixes; do not keep it temporarily for convenience, observation, or staged cleanup unless the user explicitly requests that exception.
 - Proactively fix rule gaps, redundancy, or misplacement; regenerate AGENTS.md without waiting.
 - Self-evaluate continuously; fix rule/skill gaps immediately on discovery. In delegated mode, include improvement suggestions in the task result.
 - On user-reported failures: treat as systemic - fix, update rules, check for same pattern elsewhere, in one action.
