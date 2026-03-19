@@ -12,6 +12,7 @@
 - Avoid interactive git prompts by using --no-edit or setting GIT_EDITOR=true.
 - If elevated privileges are required, use sudo directly; do not launch a separate elevated shell (e.g., Start-Process -Verb RunAs). Fall back to run as Administrator only when sudo is unavailable.
 - Keep changes scoped to affected repositories; when shared modules change, update consumers and verify at least one.
+- When the destination repo/path is inferred rather than explicitly requested, verify from the repo's stated purpose and the user's intent that it is the canonical home for the work; structural or tooling fit alone is insufficient, and if ownership is unclear, keep the work isolated until the destination is confirmed.
 - If no branch is specified, work on the current branch; direct commits to main/master are allowed.
 - Do not assume agent platform capabilities beyond what is available; fail explicitly when unavailable.
 - When building a CLI, follow standard conventions: --help/-h, --version/-V, stdin/stdout piping, --json output, --dry-run for mutations, deterministic exit codes, and JSON Schema config validation.
