@@ -4,7 +4,7 @@
 - Use latest stable versions of packages/tools; document blockers if not.
 - Prefer OSS/free-tier services; call out tradeoffs.
 - PowerShell: \ is literal; avoid shadowing auto-vars; prefer single quotes.
-- Assess reuse first; prefer remote dependencies over local paths.
+- Assess reuse first: prefer official or remote integrations over local/custom install/update/fetch/publish implementations, and build custom logic only around a verified gap.
 - Single responsibility; composition over inheritance; clean dependency direction.
 - Avoid deep nesting; guard clauses; small functions; intention-revealing names.
 - Prefer config/constants over hardcoding; consolidate change points.
