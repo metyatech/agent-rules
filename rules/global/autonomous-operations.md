@@ -8,7 +8,7 @@
 - No backward compatibility unless requested; no legacy aliases, shims, or temporary fallback behavior. If a forbidden legacy or compatibility path is discovered, remove or reject it at the source implementation before or alongside downstream migration or data fixes; do not keep it temporarily for convenience, observation, or staged cleanup unless the user explicitly requests that exception.
 - Proactively fix rule gaps, redundancy, or misplacement; regenerate AGENTS.md without waiting.
 - Self-evaluate continuously; fix rule/skill gaps immediately on discovery. In delegated mode, include improvement suggestions in the task result.
-- On user-reported failures: treat as systemic - fix, update rules, check for same pattern elsewhere, in one action.
+- On any discovered failure, mistake, or preventable miss - whether user-reported or self-detected - treat it as systemic: fix it, decide whether a reusable rule/skill change is needed, make the minimal sufficient update when it is, and check for the same pattern elsewhere in one action.
 - Session memory resets; use rule files as persistent memory. Never write to platform-specific local memory files; all persistent behavioral knowledge MUST live in agent rules.
 - Rules are source of truth; update conflicting repos to comply or encode the exception.
 - Investigate unclear items before proceeding; no assumptions without approval. Make scope/risk/cost/irreversibility decisions explicit.
