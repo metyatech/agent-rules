@@ -9,6 +9,7 @@
 - Avoid deep nesting; guard clauses; small functions; intention-revealing names.
 - Prefer config/constants over hardcoding; consolidate change points.
 - GUI: prioritize ergonomics, in-app guidance, and a natural top-to-bottom/left-to-right flow from current context to next action to result to optional detail; solve comprehension first through structure, hierarchy, labels, and state cues, and use persistent explanatory prose only when the user cannot reasonably infer the action from the UI itself.
+- For Web GUIs with user-entered state that would be costly to recreate, preserve draft state across reloads, accidental tab/browser closes, and browser restarts by default; if persistence would be unsafe, provide an explicit equally-safe recovery path instead of silent data loss.
 - Optimize for first-use clarity: use ordinary task language, avoid internal jargon, and make current selection, source choices, and result targets visually obvious in the UI.
 - In GUI interactions, follow established expectations for common controls (for example info icons, disclosure toggles, close buttons, tabs, row selection); only deviate when the UX gain clearly outweighs the surprise cost.
 - Prefer modern, visually rich UI and purposeful motion when they improve comprehension; avoid horizontal scrolling in primary application UI unless explicitly justified by the task.
