@@ -7,7 +7,7 @@
 ## Update and editing
 
 - Never edit AGENTS.md directly; update source rules and regenerate. "Update rules" = update module/ruleset, then regenerate.
-- Persistent user instructions → encode in appropriate module (global vs local) in the same change set.
+- Persistent user instructions, including requests about how the agent should behave in future interactions or sessions, are persistent by default; unless explicitly scoped to the current task/session, encode them in the appropriate module (global vs local) in the same change set.
 - New repos must include a root `agent-ruleset.json`, compose `AGENTS.md` from it, and meet all global rules (CI, linting, community health, docs, scanning) before reporting complete.
 - Update rulesets for missing domain rules before proceeding. Omit AGENTS.md diffs unless asked.
 - Treat AGENTS.md diffs produced by compose-agentsmd as intentional updates: do not discard/revert them unless the requester explicitly asks to drop them.
