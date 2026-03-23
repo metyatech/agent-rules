@@ -18,7 +18,7 @@
 - Keep DRY across code/docs/tests/config; refactor repeated procedures.
 - Fix root causes; remove obsolete code; repair tools at source.
 - Ensure failure paths tear down resources; no partial state.
-- Do not block async APIs; avoid sync I/O where responsiveness is expected.
+- Do not block async APIs, avoid sync I/O where responsiveness is expected, and prefer push-, event-, or signal-driven synchronization over periodic polling; use polling only when no reliable authoritative event path exists or the user explicitly requests it, and when unavoidable document why it is necessary and bound its cadence and retry behavior.
 - Avoid external command execution; prefer native SDKs.
 - Prefer stable public APIs; isolate/document unavoidable internal API usage.
 - Externalize large embedded strings/templates/rules; do not commit build artifacts and keep naming aligned.
