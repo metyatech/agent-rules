@@ -7,5 +7,5 @@
 - If `task-tracker` is not installed, install it via `npm install -g @metyatech/task-tracker` before proceeding.
 - CLI: `task-tracker add "desc"` / `check` / `list` / `done <id>` / `remove <id>` / `update <id> --stage <stage>` — use `--stage`, NOT `--status`.
 - Persistent stages: `pending`, `in-progress`, `committed`, `released`, `done`.
-- Derived display stage: `pushed`. Do not create tracker-only follow-up commits just to record `pushed`; record `committed` in the closing code commit and let `task-tracker` derive `pushed` from upstream reachability of that committed event.
+- Derived display stage: `pushed`. Do not create tracker-only follow-up commits just to record `pushed`; when a task reaches `committed`, run `task-tracker update <id> --stage committed` immediately before `git add` / `git commit` so `.tasks.jsonl` is included in that same closing commit, then let `task-tracker` derive `pushed` from upstream reachability of that committed event.
 - The task-tracker state file (`.tasks.jsonl`) must be committed to version control; do not add it to `.gitignore`.
