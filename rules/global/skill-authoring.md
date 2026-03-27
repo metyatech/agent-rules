@@ -7,7 +7,12 @@
   Write in terms of intent.
 - Platform-specific examples belong in README.md, not SKILL.md.
 - Each skill lives in its own repository with SKILL.md at root.
-- Install/manage via `npx skills add <owner>/<repo> --yes --global`.
+- User-managed installable skills live in public `metyatech/skill-*`
+  repositories.
+- Treat the GitHub `metyatech/skill-*` repository as the canonical source of
+  truth; installed local skill directories are derived mirrors.
+- Install/manage user-managed skills via
+  `npx skills add metyatech/skill-<skill-name> --yes --global`.
 - Default to public repositories; include a LICENSE file (prefer MIT).
 - Write SKILL.md and README.md in English; keep instructions concise and
   action-oriented.
