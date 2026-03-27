@@ -13,7 +13,8 @@
 ## README and docs
 - Every repository must include README.md covering overview/purpose, supported environments/compatibility, install/setup, usage examples, dev commands, required env/config, release/deploy steps if applicable, and links to SECURITY.md / CONTRIBUTING.md / LICENSE / CHANGELOG.md when they exist.
 - For any change, assess documentation impact and update affected docs in the same change set so docs match behavior (README, docs/, examples, comments, templates, ADRs/specs, diagrams).
-- If no documentation updates are needed, explain why in the final response.
+- If no documentation updates are needed, omit that no-op note from the final response unless the user explicitly asks or the omission itself is materially relevant.
+- In direct-mode completion reports, omit unchanged or intentionally untouched items by default.
 - For CLIs, document every parameter with a description and at least one example, plus one end-to-end example command.
 - Do not include user-specific local paths, fixed workspace directories, drive letters, or personal data in doc examples; prefer repo-relative paths and placeholders.
 ## Markdown linking
