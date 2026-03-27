@@ -1,5 +1,6 @@
 {
-  "source": "local",
+  "source": ".",
+  "global": false,
   "domains": ["exam", "node", "unreal", "web"],
   "extra": [],
   "claude": {
