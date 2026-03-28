@@ -26,6 +26,9 @@
 - Optimize for first-use clarity: use ordinary task language, avoid internal
   jargon, and make current selection, source choices, and result targets
   visually obvious in the UI.
+- For GUI design tradeoffs, optimize first for user comprehension, usability,
+  and task success in the real workflow; machine-verifiable cues are validation
+  evidence, not a reason to choose a worse interaction.
 - In GUI interactions, follow established expectations for common controls (for
   example info icons, disclosure toggles, close buttons, tabs, row selection);
   only deviate when the UX gain clearly outweighs the surprise cost.
