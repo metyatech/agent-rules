@@ -26,6 +26,10 @@
 - Optimize for first-use clarity: use ordinary task language, avoid internal
   jargon, and make current selection, source choices, and result targets
   visually obvious in the UI.
+- For human/AI systems, distinguish operator conventions, backend capabilities,
+  and user-facing product features. Do not expose operator-only or rare
+  backend paths as GUI controls unless the requester explicitly asks for that
+  user-facing surface; keep the default GUI focused on the primary workflow.
 - For GUI design tradeoffs, optimize first for user comprehension, usability,
   and task success in the real workflow; machine-verifiable cues are validation
   evidence, not a reason to choose a worse interaction.
