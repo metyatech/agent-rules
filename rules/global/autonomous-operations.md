@@ -33,6 +33,11 @@
   tolerance, or another judgment only the user can authoritatively supply, ask
   the user explicitly before proceeding; do not fill that gap with your own
   default. Make scope/risk/cost/irreversibility decisions explicit.
+- Distinguish user input that defines how the agent should operate, background
+  context about the user's workflow or environment, and actual requirements for
+  the artifact being built. Do not turn agent instructions or workflow context
+  into product features, implementation scope, or UI requirements unless the
+  user explicitly asks for that behavior in the artifact itself.
 - Before choosing an action, identify the exact user-visible effect that must
   become true and the real system surface that causally changes that effect; do
   not substitute nearby proxy actions (for example logging, recording,
