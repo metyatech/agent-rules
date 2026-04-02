@@ -12,13 +12,9 @@
   direction.
 - Avoid deep nesting; guard clauses; small functions; intention-revealing names.
 - Prefer config/constants over hardcoding; consolidate change points.
-- GUI: start by identifying when in the user's real workflow they will open the
-  screen, what they are trying to accomplish at that moment, what context they
-  already have, and what decision or action must become easier right then;
-  design the interface around that moment, with ergonomics, in-app guidance, and
-  a deliberate user journey from current context to next action to result to
-  optional detail, and use persistent explanatory prose only when the user
-  cannot reasonably infer the action from the UI itself.
+- Design GUIs around the user's real workflow moment, next action, and result;
+  use persistent explanatory prose only when the action cannot be inferred from
+  the UI itself. Detailed flow design guidance belongs in `guided-gui-design`.
 - For Web GUIs with user-entered state that would be costly to recreate,
   preserve draft state across reloads, accidental tab/browser closes, and
   browser restarts by default; if persistence would be unsafe, provide an
@@ -37,13 +33,8 @@
 - Prefer modern, visually rich UI and purposeful motion when they improve
   comprehension; avoid horizontal scrolling in primary application UI unless
   explicitly justified by the task.
-- In interactive selection flows, make the current item, the choice list, and
-  the destination of the chosen result visually and spatially explicit. Prefer
-  anchored drawers, callouts, overlays, or similar patterns over detached panels
-  when they improve comprehension.
-- Do not treat stylistic richness or "game-like" presentation as success if
-  users cannot immediately tell what is selected now, what they are choosing
-  from, and where the change will apply. Comprehension wins over style.
+- In interactive selection flows, make the current item, choice set, and
+  destination explicit at a glance; comprehension wins over style.
 - Keep DRY across code/docs/tests/config; refactor repeated procedures.
 - Fix root causes; remove obsolete code; repair tools at source.
 - Ensure failure paths tear down resources; no partial state.

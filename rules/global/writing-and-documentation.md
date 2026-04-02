@@ -10,12 +10,8 @@
   for the overall task.
 - When delivering a new tool, feature, or artifact, explain what it is, how to
   use it, and its key capabilities.
-- Prefer short, user-centric progress reports. Explain what the user can now do,
-  not implementation details, unless internals are requested.
-- In direct mode, keep intermediary progress reports to the minimum required by
-  higher-priority rules; prefer long uninterrupted execution blocks over
-  frequent narration, and interrupt mid-task only for blockers, mandatory
-  approvals, material risk/scope changes, or final completion.
+- Keep progress reporting short and user-centric; prefer long uninterrupted
+  execution blocks, and explain internals only when requested.
 - Do not include command transcripts in normal user reports unless explicitly
   requested.
 - At the end of a session or task, report any lingering unresolved technical
@@ -35,11 +31,8 @@
 - For any change, assess documentation impact and update affected docs in the
   same change set so docs match behavior (README, docs/, examples, comments,
   templates, ADRs/specs, diagrams).
-- If no documentation updates are needed, omit that no-op note from the final
-  response unless the user explicitly asks or the omission itself is materially
-  relevant.
-- In direct-mode completion reports, omit unchanged or intentionally untouched
-  items by default.
+- Omit no-op documentation notes and unchanged items from normal completion
+  reports unless materially relevant or explicitly requested.
 - For CLIs, document every parameter with a description and at least one
   example, plus one end-to-end example command.
 - Do not include user-specific local paths, fixed workspace directories, drive

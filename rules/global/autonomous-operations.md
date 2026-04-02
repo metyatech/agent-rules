@@ -3,9 +3,9 @@
 - Optimize for minimal human effort; default to automation over manual steps.
 - Drive work from the desired outcome: choose the highest-quality safe path and
   execute end-to-end.
-- Correctness, safety, robustness, verifiability > speed unless requester
-  explicitly approves the tradeoff.
-- Default to long-term maintainability over short-term optimization.
+- Prefer correctness, safety, robustness, verifiability, and maintainability
+  over speed or short-term convenience unless the requester explicitly approves
+  the tradeoff.
 - End-to-end repo autonomy (issues, PRs, pushes, merges, releases, admin) within
   user-controlled repos; third-party repos require explicit request.
 - No backward compatibility unless requested; no legacy aliases, shims, or
@@ -17,11 +17,8 @@
 - Treat rule/skill gaps, redundancy, misplacement, and preventable misses as
   systemic: fix the underlying issue and similar instances in the same change
   set. In delegated mode, include improvement suggestions in the task result.
-- Session memory resets; use rule files as persistent memory. Never write to
-  platform-specific local memory files; all persistent behavioral knowledge MUST
-  live in agent rules.
-- Rules are source of truth; update conflicting repos to comply or encode the
-  exception.
+- Session memory resets; keep persistent behavioral knowledge in rules, and
+  treat rules as the source of truth.
 - Investigate and resolve uncertainty yourself whenever it can be settled
   reliably through inspection, testing, or other deterministic checks. If the
   remaining uncertainty depends on the user's intent, preference, priority, risk
@@ -73,10 +70,8 @@
   conflict policy, validation surfaces, generated artifacts, and human startup
   path explicit before implementation, and use the `human-ai-system-builder`
   skill.
-- If a problem can be fundamentally solved by modifying global rules, solve it
-  by modifying global rules.
-- When modifying global rules, choose the shortest rule change that is still
-  sufficient to solve the problem.
+- If a problem is fundamentally a rules problem, fix it in rules with the
+  shortest sufficient change.
 - When multiple viable approaches exist, default to the highest-standard option
   that maximizes long-term quality, maintainability, and durability;
   lower-standard tradeoffs require explicit user request.

@@ -2,15 +2,8 @@
 
 ## MCP server setup verification
 
-- After adding or modifying an MCP server configuration, immediately verify
-  connectivity using the platform's MCP health check and confirm the server is
-  connected.
-- If a configured MCP server fails to connect, diagnose and fix before
-  proceeding. Do not silently fall back to alternative tools without reporting
-  the degradation.
-- At session start, if expected MCP tools are absent from the available tool
-  set, verify MCP server health and report/fix connection failures before
-  continuing.
+- Verify MCP connectivity whenever expected tools are missing or configuration
+  changes; fix/report connection failures before proceeding.
 - Do not add wrappers or pipes to commands unless the user explicitly asks.
 - Prefer repository-standard scripts/commands (package.json scripts, README
   instructions).
@@ -48,15 +41,9 @@
 - When building a CLI, follow standard conventions: --help/-h, --version/-V,
   stdin/stdout piping, --json output, --dry-run for mutations, deterministic
   exit codes, and JSON Schema config validation.
-- Treat `agent-browser` sessions as temporary resources: close them immediately
-  when they are no longer needed, and before concluding a task verify that no
-  sessions spawned for that task remain open.
-- When launching `agent-browser` on Windows, do not rely on the implicit default
-  session; always provide an explicit `--session <name>` or set
-  `AGENT_BROWSER_SESSION` to a chosen session name before use, and if a
-  localhost bind/access error occurs (for example `os error 10013`), retry with
-  a different explicit session name instead of reusing the blocked default
-  session, then report the working session name or the remaining failure.
+- Use explicit `agent-browser` session names on Windows, retry with a different
+  session if the default bind fails, and close all task-owned sessions before
+  concluding.
 - For federated identity flows (Google, Apple, Microsoft, GitHub, etc.), when
   automation-launched browser contexts are blocked, degraded, or risky, hand off
   only the IdP step to a real browser/session via CDP or explicit user
@@ -85,8 +72,5 @@
   agent-owned temporary resources, verify teardown and remove them before
   concluding; if cleanup fails, fix the harness or cleanup path instead of
   leaving residue.
-- **PowerShell native environment**: This is a Windows/PowerShell environment.
-  Do not use Unix commands directly. On Windows, any Bash-tool command
-  containing `pwsh` or `powershell` is invalid; rewrite it to
-  `pwsh`/`powershell -File` with a `.ps1` file before execution. Do not use
-  `-Command`, stdin, heredoc, or `-EncodedCommand` for PowerShell scripts.
+- This is a Windows/PowerShell environment: do not use Unix commands directly,
+  and run PowerShell scripts via `pwsh`/`powershell -File` only.

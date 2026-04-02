@@ -16,18 +16,16 @@
   behave in future interactions or sessions, are persistent by default; unless
   explicitly scoped to the current task/session, encode them in the appropriate
   module (global vs local) in the same change set.
-- New repos must include a root `agent-ruleset.json`, compose `AGENTS.md` from
-  it, and meet all global rules (CI, linting, community health, docs, scanning)
-  before reporting complete.
+- New repos must include `agent-ruleset.json`, compose `AGENTS.md`, and satisfy
+  the required global repo standards before reporting complete.
 - Update rulesets for missing domain rules before proceeding. Omit AGENTS.md
   diffs unless asked.
 - Treat AGENTS.md diffs produced by compose-agentsmd as intentional updates: do
   not discard/revert them unless the requester explicitly asks to drop them.
 - When the repository is git-managed, stage those intentional AGENTS.md updates
   normally (git add) unless the requester explicitly says to exclude them.
-- Infer core intent; prefer global over project-local. Keep rules MECE, concise,
-  non-redundant, action-oriented ("do X", "never Z"). No hedging or numeric
-  filename prefixes.
+- Keep rules MECE, concise, non-redundant, and action-oriented; prefer global
+  rules unless the policy is truly repo-local.
 - When updating global rules, encode the underlying general principle rather
   than the incident-specific example; prefer the broadest wording that still
   gives clear action.
@@ -38,5 +36,4 @@
 
 - Total ≤350 lines; per-module ≤30 (soft). Overage → extract procedural content
   to skills.
-- **Rules** = invariants (always loaded, concise). **Skills** = procedures
-  (on-demand, detailed).
+- Keep invariants in rules; move procedures and checklists to skills.
