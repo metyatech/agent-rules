@@ -12,13 +12,9 @@
 - Treat nonzero exits from external commands as failures unless a specific exit
   code is explicitly documented and checked as an expected condition; never map
   unknown nonzero exits to benign states.
-- When a Windows process is intended to run headlessly, every non-interactive
-  child console process in that spawn chain must also be launched headlessly
-  (`windowsHide: true`, `CreateNoWindow`, or `Start-Process -WindowStyle Hidden`
-  as appropriate).
-- From a windowless PowerShell parent, do not spawn non-interactive console
-  children with the `&` call operator; use an explicit hidden process launch
-  that preserves output/exit-code handling.
+- In headless Windows/PowerShell flows, launch every non-interactive console
+  child headlessly and do not use the `&` call operator from a windowless
+  parent to spawn such children.
 - When diagnosing third-party tool failures, check the latest stable release
   first; if the latest still reproduces the failure, treat upgrade as
   insufficient, record the verified limitation, and use a deterministic
@@ -27,20 +23,16 @@
 - If elevated privileges are required, use sudo directly; do not launch a
   separate elevated shell (e.g., Start-Process -Verb RunAs). Fall back to run as
   Administrator only when sudo is unavailable.
-- Keep changes scoped to affected repositories; when shared modules change,
-  update consumers and verify at least one.
-- When the destination repo/path is inferred rather than explicitly requested,
-  verify from the repo's stated purpose and the user's intent that it is the
-  canonical home for the work; structural or tooling fit alone is insufficient,
-  and if ownership is unclear, keep the work isolated until the destination is
-  confirmed.
+- Keep changes scoped to the affected canonical repository; when destination
+  ownership is inferred, verify from repo purpose and user intent before
+  landing changes, and keep uncertain work isolated until confirmed.
 - If no branch is specified, work on the current branch; direct commits to
   main/master are allowed.
 - Do not assume agent platform capabilities beyond what is available; fail
   explicitly when unavailable.
-- When building a CLI, follow standard conventions: --help/-h, --version/-V,
-  stdin/stdout piping, --json output, --dry-run for mutations, deterministic
-  exit codes, and JSON Schema config validation.
+- CLIs must follow standard conventions: help/version flags, piping, machine-
+  readable output, dry-run for mutations, deterministic exit codes, and config
+  validation.
 - Use explicit `agent-browser` session names on Windows, retry with a different
   session if the default bind fails, and close all task-owned sessions before
   concluding.

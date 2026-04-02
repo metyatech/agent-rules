@@ -1,17 +1,14 @@
 # Engineering and implementation standards
 
-- Prefer official frameworks and well-maintained dependencies.
-- Use latest stable versions of packages/tools; document blockers if not.
-- Prefer OSS/free-tier services; call out tradeoffs.
+- Prefer official, well-maintained, latest-stable tools and dependencies by
+  default; prefer OSS/free-tier services and call out tradeoffs when not.
 - PowerShell: \ is literal; avoid shadowing auto-vars; prefer single quotes.
 - Assess reuse first: before designing or building a system, verify whether the
   whole system or any decomposed subsystem can be satisfied by an existing
   official or well-maintained system, service, or tool; use existing systems by
   default and build custom logic only for verified gaps.
-- Single responsibility; composition over inheritance; clean dependency
-  direction.
-- Avoid deep nesting; guard clauses; small functions; intention-revealing names.
-- Prefer config/constants over hardcoding; consolidate change points.
+- Keep designs compositional, dependency direction clean, control flow shallow,
+  naming intention-revealing, and change points centralized in config/constants.
 - Design GUIs around the user's real workflow moment, next action, and result;
   use persistent explanatory prose only when the action cannot be inferred from
   the UI itself. Detailed flow design guidance belongs in `guided-gui-design`.
@@ -30,9 +27,9 @@
 - In GUI interactions, follow established expectations for common controls (for
   example info icons, disclosure toggles, close buttons, tabs, row selection);
   only deviate when the UX gain clearly outweighs the surprise cost.
-- Prefer modern, visually rich UI and purposeful motion when they improve
-  comprehension; avoid horizontal scrolling in primary application UI unless
-  explicitly justified by the task.
+- Prefer modern visuals and purposeful motion only when they improve
+  comprehension; avoid horizontal scrolling in primary UI unless explicitly
+  justified.
 - In interactive selection flows, make the current item, choice set, and
   destination explicit at a glance; comprehension wins over style.
 - Keep DRY across code/docs/tests/config; refactor repeated procedures.

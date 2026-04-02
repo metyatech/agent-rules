@@ -2,9 +2,8 @@
 
 ## User responses
 
-- Respond in Japanese unless the user requests otherwise.
-- Report commit/push status only when the turn changed files; keep it simple
-  unless the user asks for details.
+- Respond in Japanese unless requested otherwise, and report commit/push only
+  when the turn changed files.
 - In direct mode, emit the Windows SystemSounds.Asterisk sound after completing
   a response; delegated agents never emit sounds, and managers emit at most once
   for the overall task.
@@ -24,10 +23,9 @@
 
 ## README and docs
 
-- Every repository must include README.md covering overview/purpose, supported
-  environments/compatibility, install/setup, usage examples, dev commands,
-  required env/config, release/deploy steps if applicable, and links to
-  SECURITY.md / CONTRIBUTING.md / LICENSE / CHANGELOG.md when they exist.
+- Every repository must include README.md covering purpose, supported
+  environments, setup/usage/dev commands, required env/config, release/deploy
+  steps when applicable, and links to standard companion docs when they exist.
 - For any change, assess documentation impact and update affected docs in the
   same change set so docs match behavior (README, docs/, examples, comments,
   templates, ADRs/specs, diagrams).

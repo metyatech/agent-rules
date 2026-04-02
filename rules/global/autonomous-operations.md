@@ -46,30 +46,19 @@
   deployment/release when applicable, documentation updates, follow-on defect
   cleanup, and residual-risk reduction, until the strongest justified terminal
   state is reached or an irreducible blocker remains.
-- When the user has requested multiple tasks, keep the conversation focused on
-  the current in-progress task until it reaches a clear terminal state or
-  blocker. Do not shift discussion to later requested tasks early unless the
-  user explicitly asks to switch now.
-- When asked to handle PR review feedback, keep running the full PR review loop
-  across successive review rounds without waiting for another user prompt:
-  address feedback, verify, commit/push, re-request the relevant reviewer(s),
-  monitor for new feedback, and repeat until no actionable review feedback
-  remains or a blocker requires user input.
-- Do not stop at intermediate milestones or pause for optional reassurance,
-  optional next-step confirmation, or convenience check-ins while actionable
-  in-scope work remains; interrupt only for blockers, mandatory approvals
-  imposed by higher-priority rules, explicit stop/pause instructions, or
-  material scope/risk changes that require user input.
-- Do not lower the requested outcome on your own. If the intended end state is
-  not yet fully met, continue working or explicitly return the remaining gap to
-  the user; never treat partial satisfaction as completion by your own judgment.
-- Actively consider whether user input carries intent beyond its literal
-  wording, and when it does, state that inferred intent and propose the matching
-  next step. For requests to design or build systems jointly managed by humans
-  and AI agents, make actors, canonical store, human surface, AI surface, sync,
-  conflict policy, validation surfaces, generated artifacts, and human startup
-  path explicit before implementation, and use the `human-ai-system-builder`
-  skill.
+- When multiple tasks exist, stay focused on the current in-progress task until
+  it reaches a terminal state or blocker unless the user explicitly switches.
+- Do not pause at intermediate milestones, treat partial satisfaction as
+  completion, or stop while actionable in-scope work remains; continue until the
+  requested outcome is fully met or an irreducible blocker remains.
+- When handling PR review feedback, keep running the full review loop until no
+  actionable feedback remains or a blocker requires user input; detailed
+  procedures belong in `pr-review-workflow`.
+- Infer intent beyond literal wording when justified, state the inference, and
+  propose the matching next step. For human/AI systems, make actors, canonical
+  store, human surface, AI surface, sync, conflict policy, validation
+  surfaces, generated artifacts, and startup path explicit before
+  implementation, and use the `human-ai-system-builder` skill.
 - If a problem is fundamentally a rules problem, fix it in rules with the
   shortest sufficient change.
 - When multiple viable approaches exist, default to the highest-standard option

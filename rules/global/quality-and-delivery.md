@@ -16,12 +16,8 @@ Non-negotiable gates for any state-changing work or any claim of "done",
 
 ## Quality principles
 
-- Quality (correctness, safety, robustness, verifiability) > speed/convenience.
-- CI must run full suite on PRs/pushes; require passing checks for merges; add
-  CI if missing.
-- Commit-time hooks must run full verify and block commits; confirm hooks
-  installed.
-- Test-first: add/update tests, observe failure, implement fix, observe pass.
+- Prefer quality over speed/convenience; CI and commit hooks must enforce full
+  verification, and code fixes must follow a failing-test-to-passing-test loop.
 - Never swallow errors; fail fast with explicit context and validate
   config/external inputs at boundaries.
 - For user-facing apps, perform deterministic runtime verification before
@@ -32,16 +28,14 @@ Non-negotiable gates for any state-changing work or any claim of "done",
   claimed primary path/state matrix up front and verify each claimed primary
   path/state before concluding. Detailed matrix procedure belongs in
   `quality-workflow`.
-- When evidence differs by client, environment, or path, report each claimed
-  client/environment/path separately as verified, reproduced-as-limitation, or
-  unverified; never generalize evidence across them.
-- Anything not directly verified must be reported as unverified or unsupported;
-  use real devices or live environments only when lower-cost faithful
-  environments cannot validate the behavior.
-- For authentication, billing, authorization, data persistence, and other
-  critical systems, passing unit/integration tests, CI, build, and health checks
-  is necessary but insufficient; completion requires live or production-like
-  end-to-end verification of the critical user journey.
+- Report evidence per claimed client/environment/path; anything not directly
+  verified must stay unverified or unsupported, and higher-cost real-device/live
+  checks are justified only when lower-cost faithful environments cannot verify
+  the behavior.
+- For authentication, billing, authorization, persistence, and similar critical
+  systems, unit/integration/CI/build/health checks are necessary but
+  insufficient; completion requires live or production-like end-to-end
+  verification of the critical journey.
 - If an intended environment cannot be exercised with available tools or access,
   stop short of a completion claim, state the exact gap, and leave that
   environment unclaimed until verified.
@@ -56,9 +50,8 @@ Non-negotiable gates for any state-changing work or any claim of "done",
 - On every user-reported bug, identify the earliest deterministic gate that
   should have caught it and add or strengthen that gate in the same change set
   before concluding; a fix without a new catching gate is incomplete.
-- Never claim bug-free behavior. Report scope, evidence, and residual risk
-  explicitly, and do not let external checks or reviews justify concluding while
-  a known gap against the requested outcome remains.
+- Never claim bug-free behavior; report scope, evidence, and residual risk, and
+  do not conclude while a known gap against the requested outcome remains.
 - For AI review bots, follow the re-triggering procedures in the
   `pr-review-workflow` skill. Detailed evidence format and procedures are in the
   quality-workflow skill.
