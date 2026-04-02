@@ -34,6 +34,6 @@
 
 ## Size budget
 
-- Total ≤350 lines; per-module ≤30 (soft). Overage → extract procedural content
-  to skills.
+- Total ≤4500 tokens; per-module ≤400 tokens (soft, `o200k_base`). Overage →
+  extract procedural content to skills.
 - Keep invariants in rules; move procedures and checklists to skills.
