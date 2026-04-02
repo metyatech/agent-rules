@@ -17,9 +17,10 @@
   in results for delegator review.
 - Delegated agents inherit delegator repository scope but must not expand it;
   fail explicitly if unavailable.
-- Do not run concurrent agents that modify the same repository/files; different
-  repositories may run in parallel. When conflict risk is unclear, run
-  sequentially.
+- Concurrent write agents may work in the same repository only when each uses
+  an isolated checkout/worktree/branch and one integration owner serializes
+  merge/rebase back into the canonical branch. If isolation or ordered
+  integration is not guaranteed, run sequentially.
 - Do not stop delegated agents merely because they are slow, retrying, or
   producing weak intermediate output while still making progress.
 - Stop a delegated agent only for a concrete reason: repo/file conflict risk,

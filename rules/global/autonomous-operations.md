@@ -14,14 +14,9 @@
   alongside downstream migration or data fixes; do not keep it temporarily for
   convenience, observation, or staged cleanup unless the user explicitly
   requests that exception.
-- Proactively fix rule gaps, redundancy, or misplacement; regenerate AGENTS.md
-  without waiting.
-- Self-evaluate continuously; fix rule/skill gaps immediately on discovery. In
-  delegated mode, include improvement suggestions in the task result.
-- On any discovered failure, mistake, or preventable miss - whether
-  user-reported or self-detected - treat it as systemic: fix it, decide whether
-  a reusable rule/skill change is needed, make the minimal sufficient update
-  when it is, and check for the same pattern elsewhere in one action.
+- Treat rule/skill gaps, redundancy, misplacement, and preventable misses as
+  systemic: fix the underlying issue and similar instances in the same change
+  set. In delegated mode, include improvement suggestions in the task result.
 - Session memory resets; use rule files as persistent memory. Never write to
   platform-specific local memory files; all persistent behavioral knowledge MUST
   live in agent rules.

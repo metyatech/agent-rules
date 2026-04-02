@@ -65,17 +65,9 @@
 
 ## Codex-only PowerShell safety
 
-- `Remove-Item` (aliases: `rm`, `ri`, `del`, `erase`) Use:
-  `if ([IO.File]::Exists($p)) {`
-  `[IO.File]::SetAttributes($p,[IO.FileAttributes]::Normal);`
-  `[IO.File]::Delete($p) }`
-- `Remove-Item -Recurse` (aliases: `rmdir`, `rd`) Use:
-  `if ([IO.Directory]::Exists($d)) {`
-  `[IO.File]::SetAttributes($d,[IO.FileAttributes]::Normal);`
-  `foreach ($e in [IO.Directory]::EnumerateFileSystemEntries($d,'*',`
-  `[IO.SearchOption]::AllDirectories)) {`
-  `[IO.File]::SetAttributes($e,[IO.FileAttributes]::Normal) };`
-  `[IO.Directory]::Delete($d,$true) }`
+- For destructive PowerShell file operations, verify the final absolute target
+  path first, normalize attributes when needed, and prefer explicit
+  PowerShell/.NET deletion APIs over alias-driven shell deletion.
 - In PowerShell, use `;` for sequential command chaining; never use `&&` or `||`
   as control-flow operators.
 

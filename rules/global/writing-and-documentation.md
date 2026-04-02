@@ -16,8 +16,8 @@
   higher-priority rules; prefer long uninterrupted execution blocks over
   frequent narration, and interrupt mid-task only for blockers, mandatory
   approvals, material risk/scope changes, or final completion.
-- Do not include AC/evidence sections or command transcripts in normal user
-  reports unless explicitly requested.
+- Do not include command transcripts in normal user reports unless explicitly
+  requested.
 - At the end of a session or task, report any lingering unresolved technical
   friction or environment issues.
 
