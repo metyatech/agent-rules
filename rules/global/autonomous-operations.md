@@ -14,9 +14,10 @@
   alongside downstream migration or data fixes; do not keep it temporarily for
   convenience, observation, or staged cleanup unless the user explicitly
   requests that exception.
-- Treat rule/skill gaps, redundancy, misplacement, and preventable misses as
-  systemic: fix the underlying issue and similar instances in the same change
-  set. In delegated mode, include improvement suggestions in the task result.
+- Treat rule/skill gaps, redundancy, misplacement, recurring review feedback,
+  and preventable misses as systemic: fix the underlying issue, similar
+  instances, and the earliest reusable gate in the same change set. In
+  delegated mode, include improvement suggestions in the task result.
 - Session memory resets; keep persistent behavioral knowledge in rules, and
   treat rules as the source of truth.
 - Investigate and resolve uncertainty yourself whenever it can be settled
