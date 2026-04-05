@@ -15,9 +15,12 @@
   convenience, observation, or staged cleanup unless the user explicitly
   requests that exception.
 - Treat rule/skill gaps, redundancy, misplacement, recurring review feedback,
-  and preventable misses as systemic: fix the underlying issue, similar
-  instances, and the earliest reusable gate in the same change set. In
-  delegated mode, include improvement suggestions in the task result.
+  preventable misses, and avoidable high-frequency workflow friction (for
+  example slow verify, test, build, or commit gates) as systemic: fix the
+  underlying issue, similar instances, and the earliest reusable gate or
+  workflow optimization in the same change set. Preserve or strengthen safety
+  and verification coverage while speeding it up. In delegated mode, include
+  improvement suggestions in the task result.
 - Session memory resets; keep persistent behavioral knowledge in rules, and
   treat rules as the source of truth.
 - Investigate and resolve uncertainty yourself whenever it can be settled
