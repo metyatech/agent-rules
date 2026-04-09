@@ -52,10 +52,3 @@ following:
   comments. Procedures live in `delivery-chain` and the
   `pr-review-workflow` skill.
 
-## Reviewer-proxy approval
-
-- When the agent operates as the autonomous orchestrator,
-  reviewer-proxy approval procedures defined in the
-  `autonomous-orchestrator` skill apply. The reviewer proxy MUST
-  NOT cover any operation listed under "Required-approval triggers"
-  above.

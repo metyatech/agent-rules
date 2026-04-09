@@ -37,9 +37,8 @@ cross-cutting selection rules.
 
 ## Orchestrator model selection
 
-- When spawning an orchestrator role (manager or
-  autonomous-orchestrator), default to `claude-sonnet-4-6` with
-  `medium` effort.
+- When spawning the manager orchestrator role, default to
+  `claude-sonnet-4-6` with `medium` effort.
 - Escalate to `claude-opus-4-6` with `medium` effort when strict
   rule compliance is required. Research (arXiv:2505.11423) shows
   higher effort degrades instruction-following on multi-constraint
@@ -48,9 +47,3 @@ cross-cutting selection rules.
   tasks. The agent MUST NOT use elevated effort to improve rule
   compliance.
 
-## Gemini sub-agent reliability
-
-- The agent MUST NOT spawn `gemini` sub-agents for unattended work.
-  Gemini sub-agents fail with HTTP 429 "No capacity available"
-  errors too frequently to be reliable. Gemini CLI MAY be used
-  interactively when invoked directly by the user.
