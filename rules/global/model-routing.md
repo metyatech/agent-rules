@@ -1,8 +1,10 @@
 # Model routing
 
-The full model inventory tables, routing tables, and quota fallback
-logic live in the `manager` skill. This module defines only the
-cross-cutting selection rules.
+The full model inventory tables, routing tables, and quota
+fallback logic live in the `sub-agent-dispatch` skill. This
+module defines only the cross-cutting tier and effort rules.
+Dispatch invariants (agents-mcp, ai-quota, mode, verification
+gates) live in the `sub-agent-dispatch` rule.
 
 ## Definitions
 
@@ -32,8 +34,8 @@ cross-cutting selection rules.
   unavailable or fails, report the limitation and MUST NOT spawn
   any sub-agent.
 - When spawning a sub-agent, explicitly specify both `model` and
-  `effort` from the model inventory in the `manager` skill. The
-  agent MUST NOT rely on default model selection.
+  `effort` from the model inventory in the `sub-agent-dispatch`
+  skill. The agent MUST NOT rely on default model selection.
 
 ## Orchestrator model selection
 

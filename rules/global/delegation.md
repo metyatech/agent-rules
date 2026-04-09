@@ -21,9 +21,12 @@
   conversation.
 - The delegating prompt MUST NOT recite rules the delegated agent
   will already read from AGENTS.md.
-- Detailed delegation procedures (model selection, dispatch
-  configuration, cost optimization, agents-mcp usage, lifecycle and
-  cleanup) live in the `manager` skill.
+- Dispatch invariants (agents-mcp usage, ai-quota check, mode
+  selection, decision framework, verification gates, cost and
+  execution discipline) live in the `sub-agent-dispatch` rule.
+  Detailed model inventory tables, routing logic, prompt
+  templates, and platform-specific procedures live in the
+  `sub-agent-dispatch` skill.
 
 ## Delegated-agent obligations
 
