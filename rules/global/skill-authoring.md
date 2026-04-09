@@ -14,7 +14,11 @@
   appear.
 - Platform-specific examples MUST live in `README.md`, not
   `SKILL.md`.
-- `SKILL.md` and `README.md` MUST be written in English.
+- `SKILL.md` and `README.md` SHOULD be written in English.
+  Reference content (lookup tables, domain-specific examples,
+  language-locked UI labels) MAY use the user's natural language
+  when keeping the original increases reader comprehension or
+  preserves direct linkage to user-facing artifacts.
 - Skill instructions MUST be concise and action-oriented. Normative
   claims SHOULD use the compliance vocabulary defined in
   `rule-system`. Reference content (lookup tables, examples, code,
