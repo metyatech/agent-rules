@@ -1,73 +1,98 @@
-# Rule system and maintenance
+# Rule and skill system
 
 ## Compliance vocabulary
 
-The keywords MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD,
-SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this AGENTS.md and
-every included rule module carry the meanings of RFC 2119 and RFC
-8174:
+The keywords MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT,
+SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this
+AGENTS.md and every included rule module carry the meanings of
+RFC 2119 and RFC 8174:
 
 - **MUST**, **REQUIRED**, **SHALL** — absolute requirement.
 - **MUST NOT**, **SHALL NOT** — absolute prohibition.
-- **SHOULD**, **RECOMMENDED** — strong recommendation; deviate only
-  with a stated reason and weighed alternatives.
-- **SHOULD NOT** — strong recommendation against; same deviation
-  rule.
+- **SHOULD**, **RECOMMENDED** — strong recommendation; deviate
+  only with a stated reason and weighed alternatives.
+- **SHOULD NOT** — strong recommendation against; same
+  deviation rule.
 - **MAY**, **OPTIONAL** — permitted but not required.
 
 When a rule omits a keyword, treat the rule as MUST.
 
 ## Composition
 
-- The agent MUST NOT edit `AGENTS.md` directly. AGENTS.md is the
-  composed output of rule modules and a per-repository ruleset.
-- Before starting work in a repository that contains
-  `agent-ruleset.json`, run `compose-agentsmd` from the repository
-  root and re-read the resulting AGENTS.md.
-- AGENTS.md MUST be self-contained at the repository root.
-- Pre-commit hooks MUST run, in order: the repository's full
-  verification suite, `compose-agentsmd --compose`, then
-  `git add AGENTS.md`. Hooks MUST NOT fail the commit on AGENTS.md
-  drift, and CI MUST NOT add freshness checks.
-- Stage AGENTS.md diffs produced by `compose-agentsmd` with the
-  surrounding change set unless the user explicitly excludes them.
-- A new repository MUST include `agent-ruleset.json`, MUST compose
-  AGENTS.md, and MUST satisfy the required global standards before
-  reporting the repository as complete.
-- Omit AGENTS.md diffs from normal completion reports unless the
-  user requests them.
+- The agent MUST NOT edit `AGENTS.md` directly. AGENTS.md is
+  the composed output of rule modules and a per-repository
+  ruleset, and MUST be self-contained at the repository root.
+- A new repository MUST include `agent-ruleset.json`, MUST
+  compose AGENTS.md, and MUST satisfy the required global
+  standards before reporting the repository as complete.
+- compose-agentsmd workflow procedures (session gate,
+  pre-commit hook ordering, staging diffs, edit-rules /
+  apply-rules) live in the compose-agentsmd repository's
+  `tools/tool-rules.md`.
 
 ## Authoring rules
 
 - Rules MUST be MECE: each obligation appears in exactly one
   module. Cross-reference rather than duplicate.
-- Each rule MUST be atomic: one bullet, one testable obligation.
-  Do not combine obligations with "and".
-- Each rule MUST use the imperative mood with an explicit
-  compliance keyword (or implied MUST).
-- Each rule MUST be testable as a yes/no check without outside
-  context.
+- Each rule MUST be atomic (one bullet, one testable
+  obligation), use the imperative mood with an explicit
+  compliance keyword (or implied MUST), and be testable as a
+  yes/no check without outside context.
 - Rules MUST NOT contain hedges such as "ideally", "where
   appropriate", "reasonable", or "perhaps". Replace hedges with
   explicit conditions.
 - Placement: `rules/global/` for any-workspace rules;
   `rules/domains/<domain>/` only for opt-in domains;
-  `agent-rules-local/` only when no other repository will need it.
-- When updating a rule, encode the underlying general principle,
-  not the incident-specific surface example. Trace each update back
-  to the reasoning error that permitted the original mistake.
-- When a problem is fundamentally a rules problem, fix it in rules
-  with the shortest sufficient change.
-- Persistent user instructions about future agent behavior MUST be
-  encoded in the appropriate rule module in the same change set
-  unless the user explicitly scopes the instruction to the current
-  task.
-- Treat rule and skill gaps, redundancy, misplacement, and recurring
-  review feedback as systemic; fix the underlying issue and similar
-  instances in the same change set.
-- Update the relevant ruleset for any missing domain rule before
-  proceeding with work that depends on it.
+  `agent-rules-local/` only when no other repository will need
+  it.
+- When updating a rule, encode the underlying general
+  principle, not the incident-specific surface example. Trace
+  each update back to the reasoning error that permitted the
+  original mistake.
+- Persistent user instructions about future agent behavior MUST
+  be encoded in the appropriate rule module in the same change
+  set unless the user explicitly scopes the instruction to the
+  current task.
+- Treat rule/skill gaps, redundancy, misplacement, and
+  recurring review feedback as systemic; fix the underlying
+  issue and similar instances in the same change set.
 - In delegated mode, the agent MUST NOT modify rules directly;
   report rule-gap suggestions to the delegator.
-- Session memory resets between sessions. Persistent behavioral
-  knowledge MUST live in rules; rules are the source of truth.
+- Session memory resets between sessions. Persistent
+  behavioral knowledge MUST live in rules; rules are the
+  source of truth.
+
+## Authoring skills
+
+- A skill MUST follow the Agent Skills open standard
+  (agentskills.io/specification). A `SKILL.md` frontmatter
+  MUST contain only `name` and `description`. The `name` MUST
+  be lowercase alphanumeric with hyphens, at most 64
+  characters. The `description` MUST explain trigger
+  conditions.
+- The body of `SKILL.md` MUST be platform-agnostic; intent-level
+  wording is required and platform-specific tool names MUST
+  NOT appear. Platform-specific examples MUST live in
+  `README.md`.
+- `SKILL.md` and `README.md` SHOULD be written in English.
+  Reference content (lookup tables, language-locked UI labels)
+  MAY use the user's natural language when keeping the original
+  preserves direct linkage to user-facing artifacts.
+- Skill instructions MUST be concise and action-oriented.
+  Normative claims SHOULD use the compliance vocabulary.
+- A skill MUST NOT duplicate AGENTS.md global rules; reference
+  the rule module by name instead.
+
+## Skill packaging and updates
+
+- Each skill MUST live in its own repository with `SKILL.md`
+  at the repository root. User-managed installable skills MUST
+  live in public `metyatech/skill-<name>` repositories. Each
+  skill repository MUST include a LICENSE file (MIT preferred)
+  and MUST default to public visibility.
+- The GitHub `metyatech/skill-*` repository is the canonical
+  source of truth. Installed copies under
+  `~/.agents/skills/<name>` are derived mirrors.
+- The agent MUST NOT edit installed skill copies. Edit the
+  source repository, push, and re-install via
+  `npx skills add metyatech/skill-<name> --yes --global`.
