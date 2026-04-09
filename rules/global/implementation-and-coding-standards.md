@@ -17,9 +17,10 @@
   browser restarts by default; if persistence would be unsafe, provide an
   explicit equally-safe recovery path instead of silent data loss.
 - Optimize GUIs for first-use clarity and real-workflow task success: use
-  ordinary task language, avoid internal jargon, make current
-  selection/source/result obvious, and prefer user comprehension over stylistic
-  flourish or machine-verifiable convenience.
+  ordinary task language, avoid irrelevant internal jargon, keep precise
+  operator/domain terms when they are part of the user's real work, make
+  current selection/source/result obvious, and prefer user comprehension over
+  stylistic flourish or machine-verifiable convenience.
 - For human/AI systems, keep operator conventions, backend capabilities, and
   user-facing product features distinct; do not expose operator-only or
   backend-only paths as GUI controls unless the requester explicitly asks for
