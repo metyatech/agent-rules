@@ -31,9 +31,3 @@
   gives clear action.
 - Placement: based on where needed. Any-workspace → global; domain only for
   opt-in repos.
-
-## Size budget
-
-- Total ≤4500 tokens; per-module ≤400 tokens (soft, `o200k_base`). Overage →
-  extract procedural content to skills.
-- Keep invariants in rules; move procedures and checklists to skills.
