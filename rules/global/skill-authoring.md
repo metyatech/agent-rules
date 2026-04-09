@@ -15,8 +15,11 @@
 - Platform-specific examples MUST live in `README.md`, not
   `SKILL.md`.
 - `SKILL.md` and `README.md` MUST be written in English.
-- Skill instructions MUST be concise and action-oriented and MUST
-  use the compliance vocabulary defined in `rule-system`.
+- Skill instructions MUST be concise and action-oriented. Normative
+  claims SHOULD use the compliance vocabulary defined in
+  `rule-system`. Reference content (lookup tables, examples, code,
+  descriptions of options) MAY omit compliance keywords when keywords
+  would not add precision.
 - A skill MUST NOT duplicate AGENTS.md global rules; reference the
   rule module by name instead.
 
