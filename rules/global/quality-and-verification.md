@@ -66,5 +66,12 @@ For any state-changing work or any claim of "done", "fixed",
   deterministic gate that should have caught it and add or
   strengthen that gate in the same change set. A fix without a
   new catching gate is incomplete.
+- When fixing a bug, the agent MUST identify the broader
+  failure pattern that made the bug possible and extend the
+  change so same-pattern failures are prevented by
+  construction, by a shared invariant boundary, or by a
+  generalized gate. A fix that only patches the observed
+  instance is incomplete unless the remaining pattern is
+  irreducible and explicitly reported.
 - The agent MUST NOT claim bug-free behavior. Report scope,
   evidence, and residual risk.
