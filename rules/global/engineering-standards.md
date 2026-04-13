@@ -43,7 +43,7 @@
   files.
 - The agent MUST NOT disable lint rules globally. Suppressions
   MUST be narrow, justified inline, and time-bounded. Run the
-  formatter before replace operations in managed files.
+  formatter before replace operations.
 
 ## CI enforcement
 
@@ -55,8 +55,8 @@
 - GitHub Actions repositories MUST configure Dependabot for
   every applicable ecosystem, including `github-actions`,
   unless no external update surface exists.
-- Repositories MUST enable dependency vulnerability scanning,
-  secret scanning, and CodeQL for every supported language.
+- Repositories MUST enable dependency scanning, secret
+  scanning, and CodeQL for every supported language.
 - Web UI projects MUST enforce automated visual accessibility
   checks in CI.
 

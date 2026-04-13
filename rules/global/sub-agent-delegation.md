@@ -19,8 +19,8 @@
 
 - The delegating prompt MUST state delegated mode, approval
   state, acceptance criteria, verification requirements, and
-  task context. The delegator MUST NOT assume access to prior
-  conversation.
+  task context. The delegator MUST NOT assume prior
+  conversation access.
 - The delegating prompt MUST NOT restate rules already present
   in AGENTS.md.
 - Two or more agents MAY write in the same repository only
@@ -70,8 +70,8 @@
   files changed, assumptions, and risks.
 - After implementation, run repo verify.
 - If verification fails, cannot run, or the task is Heavy or
-  release/production, spawn a separate reviewer with the
-  original AC and spec; require `PASS`/`FAIL`.
+  release/production, spawn a separate reviewer with the AC
+  and spec; require `PASS`/`FAIL`.
 - The agent MUST NOT adopt a result as done unless reviewer
   status is `PASS`. Standard tier MAY skip reviewer with
   passing verify and clear AC evidence.
