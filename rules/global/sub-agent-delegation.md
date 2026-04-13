@@ -18,7 +18,7 @@
 ## Tier classification
 
 - Tier meanings and routing live in the `sub-agent-dispatch`
-  skill: Free, Light, Standard, Heavy, and Large Context.
+  skill.
 
 ## Spawning a delegated agent
 
@@ -63,8 +63,8 @@
 - After spawning, return to the user immediately and use
   background or non-blocking monitoring; the agent MUST NOT
   block waiting for completion.
-- Detailed routing, model inventory, and prompt templates live
-  in the `sub-agent-dispatch` skill.
+- Detailed dispatch procedures live in the
+  `sub-agent-dispatch` skill.
 
 ## Orchestrator model selection
 
@@ -75,15 +75,15 @@
 ## Verification of sub-agent results
 
 - The agent MUST NOT trust a completion claim without evidence.
-  Every implementation sub-agent MUST return: restated AC, AC
-  → evidence mapping (`PASS`/`FAIL`/`NOT RUN`), files changed,
-  assumptions and uncertainties, risks and rollback notes.
+  Every implementation sub-agent MUST return AC, AC → evidence
+  mapping (`PASS`/`FAIL`/`NOT RUN`), files changed,
+  assumptions, and risks.
 - After implementation, run repo-standard verify commands for
   objective evidence.
 - If verification fails, cannot run, or the task is Heavy tier
   or release/production, spawn a separate reviewer sub-agent
-  (never the same instance) and require explicit `PASS`/`FAIL`.
-  The reviewer MUST receive the original AC and spec.
+  and require explicit `PASS`/`FAIL`. The reviewer MUST
+  receive the original AC and spec.
 - The agent MUST NOT adopt a result as done unless reviewer
   status is `PASS`. EXCEPTION: Standard tier with passing
   verify AND clear AC evidence MAY skip the reviewer.
