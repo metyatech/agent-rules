@@ -2,11 +2,11 @@
 
 ## Tooling and dependencies
 
-- Prefer official, maintained, latest-stable tools and
-  dependencies. Prefer OSS or free-tier services; document paid
-  or proprietary tradeoffs.
-- Before building a system, verify whether an existing official
-  or maintained system already satisfies the need. Build custom
+- Prefer official, maintained, latest-stable tools and deps.
+  Prefer OSS/free-tier services; document paid/proprietary
+  tradeoffs.
+- Before building, verify whether an existing official or
+  maintained system already satisfies the need; build custom
   logic only for verified gaps.
 
 ## System design
@@ -14,9 +14,9 @@
 - Designs MUST be compositional with clean dependency
   direction, shallow control flow, intention-revealing names,
   and centralized change points.
-- Keep code, docs, tests, and configuration DRY. Fix root
-  causes, remove obsolete code in the same change set, and
-  repair broken tools at the source.
+- Keep code, docs, tests, and config DRY. Fix root causes,
+  remove obsolete code in the same change set, and repair
+  broken tools at the source.
 - Failure paths MUST tear down resources, leave no partial
   state, and verify cleanup.
 
@@ -24,9 +24,9 @@
 
 - The agent MUST NOT block async APIs or use sync I/O where
   responsiveness is expected.
-- Prefer push, event, or signal synchronization. Use polling
+- Prefer push, event, or signal synchronization; use polling
   only when no authoritative event path exists or requested;
-  document why and bound cadence and retries.
+  document why and bound cadence/retries.
 
 ## API surfaces
 
@@ -88,7 +88,7 @@
 
 ## Post-change deployment verification
 
-- Deployment procedures: `post-deploy`. After modifying code,
+- Deployment procedures: `post-deploy`. After code changes,
   determine whether deployment beyond commit/push is required.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion. For running services,
