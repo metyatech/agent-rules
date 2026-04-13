@@ -29,8 +29,7 @@
 
 ## Delegated-agent obligations
 
-- Respond in English and report verification evidence
-  concisely.
+- Respond in English and report evidence concisely.
 - The delegated agent MUST NOT modify rules directly; report
   rule gaps for delegator review.
 - Inherit the delegator's repository scope and MUST NOT expand
@@ -72,7 +71,7 @@
 - After implementation, run repo-standard verify.
 - If verification fails, cannot run, or the task is Heavy or
   release/production, spawn a separate reviewer with the
-  original AC and spec and require `PASS`/`FAIL`.
+  original AC and spec; require `PASS`/`FAIL`.
 - The agent MUST NOT adopt a result as done unless reviewer
   status is `PASS`. Standard tier MAY skip reviewer with
   passing verify and clear AC evidence.
@@ -87,5 +86,5 @@
 - After a team completes, shut down all team agents and clean
   up resources. If a sub-agent fails, retry or escalate.
 - If a delegated task fails repeatedly because of quota limits,
-  update the task stage in `task-tracker` so work resumes
-  from the last successful stage.
+  update the `task-tracker` stage so work resumes from the
+  last successful stage.
