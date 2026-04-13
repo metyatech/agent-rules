@@ -54,9 +54,8 @@
   applicable ecosystems, including `github-actions`, unless
   no external update surface exists.
 - Repos MUST enable dependency scanning, secret scanning, and
-  CodeQL for every supported language.
-- Web UI projects MUST enforce visual accessibility checks in
-  CI.
+  CodeQL.
+- Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability
 
@@ -64,8 +63,8 @@
   use relative paths and explicit configuration.
 - Lifecycle hooks MUST succeed on a clean machine. Use project
   runners and regenerate lockfiles with manifest changes.
-- Agent-owned temp files MUST live under the OS temp directory
-  unless explicitly approved otherwise.
+- Agent-owned temp files MUST live under the OS temp dir unless
+  explicitly approved otherwise.
 
 ## Tool integration
 
@@ -80,8 +79,8 @@
   checkouts.
 - In `mwt` repos, run `mwt deliver` before completion.
 - In `mwt` repos, after `mwt deliver`, run `mwt prune --merged
-  --with-branches` for delivered worktrees the agent created
-  or owns unless asked to keep them.
+  --with-branches` for delivered worktrees the agent owns
+  unless asked to keep them.
 - In `mwt` repos, do not report completion while delivered
   worktrees remain. Safe automatic `mwt init` MUST track
   `.mwt/config.toml`, commit it before tracked work, leave no
