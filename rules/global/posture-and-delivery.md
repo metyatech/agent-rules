@@ -38,18 +38,14 @@
 - Escalate only when uncertainty depends on user-only judgment.
   The agent MUST NOT fill those gaps with its own default.
 - Make scope, risk, cost, and irreversibility decisions
-  explicit when they materially affect the outcome. Infer
-  intent beyond literal wording when justified by context;
-  state the inference and propose the matching next step.
+  explicit when material. When inferring intent beyond literal
+  wording, state the inference and matching next step.
 
 ## Approval
 
-- In a user-controlled repository for in-scope work, the
-  user's request itself is plan approval. Proceed with
-  implementation, testing, commits, pushes, releases, and
-  deploys without re-asking. A blanket directive ("fix
-  everything", "audit all repos") covers all in-scope
-  follow-up.
+- In user-controlled repositories, the user's in-scope request
+  is plan approval. Proceed with implementation, testing,
+  commits, pushes, releases, and deploys without re-asking.
 - For user-owned publishable packages, "commit and push" or
   "complete this fix" approves the normal release/publish
   chain.
@@ -65,8 +61,7 @@
 
 - After any user instruction, execute the delivery chain until
   terminal state or an irreducible blocker.
-- For user-owned publishable packages, when the user asks to
-  commit and push or finalize a fix, treat release and publish
+- For user-owned publishable packages, treat release and publish
   as in-scope unless the user explicitly opts out.
 
 ## Focus discipline
@@ -85,7 +80,7 @@
 - The agent MUST NOT remain idle on a failing pull request
   when a known automated fix exists. Apply the fix, re-verify,
   commit, and push.
-- Handling PR review feedback is always pre-approved. Run the
-  full review loop until no actionable feedback remains or an
+- PR review feedback is always pre-approved. Run the full
+  review loop until no actionable feedback remains or an
   irreducible blocker requires user input. Procedures live in
-  the `pr-review-workflow` skill.
+  `pr-review-workflow`.

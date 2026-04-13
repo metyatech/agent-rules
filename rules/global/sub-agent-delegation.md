@@ -2,9 +2,8 @@
 
 ## Definitions
 
-- **Delegator** — the agent or human that spawns another agent.
-- **Delegated agent** — an agent spawned by a delegator;
-  operates in delegated mode (`posture-and-delivery`).
+- **Delegator** — the spawning agent or human.
+- **Delegated agent** — a spawned agent in delegated mode.
 - **Restricted operation** — modifying rules, merging or
   closing pull requests, creating or deleting repositories,
   releasing or deploying, force-pushing, or rewriting
@@ -14,8 +13,7 @@
 
 ## Tier classification
 
-- Tier meanings and routing live in the `sub-agent-dispatch`
-  skill.
+- Tier meanings and routing live in `sub-agent-dispatch`.
 
 ## Spawning a delegated agent
 
@@ -23,8 +21,8 @@
   state, acceptance criteria, verification requirements, and
   task context. The delegator MUST NOT assume access to the
   calling conversation.
-- The delegating prompt MUST NOT recite rules the delegated
-  agent will already read from AGENTS.md.
+- The delegating prompt MUST NOT restate rules already present
+  in AGENTS.md.
 - Two or more agents MAY write in the same repository only
   with isolated checkouts, worktrees, or branches and one
   integration owner. Otherwise run them sequentially.
@@ -34,7 +32,7 @@
 - Respond in English and report verification evidence
   concisely.
 - The delegated agent MUST NOT modify rules directly; report
-  rule-gap suggestions in the result for delegator review.
+  rule-gap suggestions for delegator review.
 - Inherit the delegator's repository scope and MUST NOT expand
   it. If unable to operate within scope, fail explicitly
   back.
@@ -58,7 +56,7 @@
 - After spawning, return to the user immediately and use
   background or non-blocking monitoring; the agent MUST NOT
   block waiting for completion.
-- Dispatch details live in the `sub-agent-dispatch` skill.
+- Dispatch details live in `sub-agent-dispatch`.
 
 ## Orchestrator model selection
 
@@ -68,15 +66,13 @@
 
 ## Verification of sub-agent results
 
-- The agent MUST NOT trust a completion claim without evidence.
-  Every implementation sub-agent MUST return AC, AC → evidence
-  mapping (`PASS`/`FAIL`/`NOT RUN`), files changed,
-  assumptions, and risks.
+- The agent MUST NOT trust completion claims without evidence.
+  Implementation sub-agents MUST return AC, AC → evidence,
+  files changed, assumptions, and risks.
 - After implementation, run repo-standard verify commands.
-- If verification fails, cannot run, or the task is Heavy tier
-  or release/production, spawn a separate reviewer sub-agent
-  and require explicit `PASS`/`FAIL`. The reviewer MUST
-  receive the original AC and spec.
+- If verification fails, cannot run, or the task is Heavy or
+  release/production, spawn a separate reviewer and require
+  `PASS`/`FAIL` with the original AC and spec.
 - The agent MUST NOT adopt a result as done unless reviewer
   status is `PASS`. Standard tier with passing verify and clear
   AC evidence MAY skip the reviewer.
@@ -86,8 +82,8 @@
 - Use the minimum reasoning effort that reliably works. Prefer
   newer models at lower effort and MUST NOT use Heavy-tier
   models for Light or Standard work.
-- The agent MUST NOT rapidly switch or respawn sub-agents for
-  the same task while one is actively running without errors.
+- The agent MUST NOT rapidly respawn sub-agents for the same
+  task while one is actively running without errors.
 - After a team completes, shut down all team agents and clean
   up resources. If a sub-agent fails, retry, adjust, or
   escalate.

@@ -17,25 +17,22 @@
 - Keep code, docs, tests, and configuration DRY. Fix root
   causes, remove obsolete code in the same change set, and
   repair broken tools at the source.
-- Failure paths MUST tear down resources and MUST NOT leave
-  partial state. Verify cleanup runs on every error branch.
+- Failure paths MUST tear down resources, leave no partial
+  state, and verify cleanup on every error branch.
 
 ## Runtime and async behavior
 
 - The agent MUST NOT block async APIs or use sync I/O where
   responsiveness is expected.
-- Prefer push, event, or signal synchronization over polling.
-- Use polling only when no authoritative event path exists or
-  the user requests it; document why and bound cadence and
-  retries.
+- Prefer push, event, or signal synchronization. Use polling
+  only when no authoritative event path exists or the user
+  requests it; document why and bound cadence and retries.
 
 ## API surfaces
 
-- Avoid external command execution; prefer native SDKs.
-- Prefer stable public APIs; isolate and document unavoidable
-  internal or unstable APIs.
-- Externalize large embedded strings, templates, and rule data
-  into resource files.
+- Prefer native SDKs and stable public APIs. Isolate and
+  document unavoidable unstable APIs. Externalize large
+  embedded strings, templates, and rule data.
 - The agent MUST NOT commit build artifacts. Keep artifact
   directory names and `.gitignore` entries aligned.
 
@@ -45,9 +42,9 @@
   analyzer per primary language, pinned in manifests or lock
   files.
 - The agent MUST NOT disable lint rules globally. Suppressions
-  MUST be narrow, justified inline, and time-bounded.
-- When editing a file managed by a formatter, run the
-  formatter immediately before performing replace operations.
+  MUST be narrow, justified inline, and time-bounded. Run the
+  formatter before replace operations in formatter-managed
+  files.
 
 ## CI enforcement
 
@@ -60,9 +57,9 @@
 - GitHub Actions repositories MUST configure Dependabot for
   every applicable ecosystem, including `github-actions`,
   unless no external update surface exists.
-- A repository MUST enable dependency vulnerability scanning,
+- Repositories MUST enable dependency vulnerability scanning,
   secret scanning, and CodeQL for every supported language.
-- A web UI project MUST enforce automated visual accessibility
+- Web UI projects MUST enforce automated visual accessibility
   checks in CI.
 
 ## Environment portability
@@ -79,31 +76,26 @@
 
 - Design tools and services for agent compatibility via
   standard interfaces. CLI conventions live in `cli-design`.
-- In a user-controlled repository with a stable seed checkout,
-  initialize `mwt` before tracked edits if the repository is
-  not already initialized.
+- In user-controlled repositories with stable seed checkouts,
+  initialize `mwt` before tracked edits if not already
+  initialized.
 - If `mwt` initialization cannot complete safely or
   deterministically, stop short of tracked edits and report
   the blocker.
-- In an `mwt`-initialized repository, create tracked-edit
-  worktrees with `mwt create`; MUST NOT start tracked work from
-  the seed checkout or ad hoc `git worktree`/`git checkout`
-  flows.
+- In `mwt` repositories, create tracked-edit worktrees with
+  `mwt create`; never start tracked work from the seed or ad
+  hoc `git worktree`/`git checkout` flows.
 - In an `mwt`-initialized repository, run `mwt deliver` before
   reporting completion.
 - In an `mwt`-initialized repository, after `mwt deliver`, run
   `mwt prune --merged --with-branches` for every delivered
   task worktree the agent created or owns unless asked to
   keep it.
-- In an `mwt`-initialized repository, the agent MUST NOT
-  report completion while its own delivered managed worktrees
-  remain as residue.
-- Safe automatic `mwt init` MUST treat `.mwt/config.toml` as
-  tracked repo policy, commit that onboarding change before
-  tracked task work, and leave no untracked `.mwt/` residue in
-  the seed checkout.
-- In an `mwt`-initialized repository, the agent MUST keep the
-  seed or canonical checkout tracked-clean.
+- In `mwt` repositories, do not report completion while
+  delivered managed worktrees remain. Safe automatic `mwt
+  init` MUST treat `.mwt/config.toml` as tracked repo policy,
+  commit it before tracked work, leave no untracked `.mwt/`
+  residue, and keep the seed tracked-clean.
 
 ## Post-change deployment verification
 
@@ -114,8 +106,5 @@ Deployment procedures live in `post-deploy`.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion.
 - For running services, daemons, or scheduled tasks, rebuild,
-  restart, and verify the running instance before claiming
-  completion.
-- Verify teardown of every agent-owned temporary resource
-  before concluding. If cleanup fails, fix it; the agent MUST
-  NOT leave residue.
+  restart, and verify the running instance. Before concluding,
+  tear down every temporary resource and leave no residue.
