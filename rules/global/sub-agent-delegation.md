@@ -24,8 +24,8 @@
 - The delegating prompt MUST NOT restate rules already present
   in AGENTS.md.
 - Two or more agents MAY write in the same repository only
-  with isolated checkouts, worktrees, or branches and one
-  integration owner. Otherwise run them sequentially.
+  with isolated checkouts and one integration owner.
+  Otherwise run sequentially.
 
 ## Delegated-agent obligations
 
@@ -34,8 +34,8 @@
 - The delegated agent MUST NOT modify rules directly; report
   rule gaps for delegator review.
 - Inherit the delegator's repository scope and MUST NOT expand
-  it. If unable to operate within scope, fail explicitly
-  back.
+  it. If unable to operate within scope, fail back
+  explicitly.
 - If the delegated agent reports a read-only or no-write
   constraint, run a minimal reversible OS-temp probe and report
   the exact failure verbatim.
@@ -69,7 +69,7 @@
 - The agent MUST NOT trust completion claims without evidence.
   Implementation sub-agents MUST return AC, AC → evidence,
   files changed, assumptions, and risks.
-- After implementation, run repo-standard verify commands.
+- After implementation, run repo-standard verify.
 - If verification fails, cannot run, or the task is Heavy or
   release/production, spawn a separate reviewer with the
   original AC and spec and require `PASS`/`FAIL`.
@@ -83,7 +83,7 @@
   newer models at lower effort and MUST NOT use Heavy-tier
   models for Light or Standard work.
 - The agent MUST NOT rapidly respawn sub-agents for the same
-  task while one is actively running without errors.
+  task while one is still running without errors.
 - After a team completes, shut down all team agents and clean
   up resources. If a sub-agent fails, retry or escalate.
 - If a delegated task fails repeatedly because of quota limits,

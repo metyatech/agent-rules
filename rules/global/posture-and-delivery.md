@@ -82,5 +82,4 @@
   commit, and push.
 - PR review feedback is pre-approved. Run the review loop until
   no actionable feedback remains or an irreducible blocker
-  requires user input. Procedures live in
-  `pr-review-workflow`.
+  requires user input. See `pr-review-workflow`.

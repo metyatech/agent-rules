@@ -32,7 +32,7 @@
 
 - Prefer native SDKs and stable public APIs. Isolate and
   document unavoidable unstable APIs. Externalize large
-  embedded strings, templates, and rule data.
+  embedded strings and templates.
 - The agent MUST NOT commit build artifacts. Keep artifact
   directory names and `.gitignore` entries aligned.
 
@@ -87,13 +87,12 @@
 - In an `mwt`-initialized repository, run `mwt deliver` before
   reporting completion.
 - In an `mwt`-initialized repository, after `mwt deliver`, run
-  `mwt prune --merged --with-branches` for every delivered task
-  worktree the agent created or owns unless asked to keep it.
+  `mwt prune --merged --with-branches` for delivered task
+  worktrees the agent created or owns unless asked to keep them.
 - In `mwt` repositories, do not report completion while
   delivered worktrees remain. Safe automatic `mwt init` MUST
   track `.mwt/config.toml`, commit it before tracked work,
-  leave no untracked `.mwt/` residue, and keep the seed
-  tracked-clean.
+  leave no untracked `.mwt/` residue, and keep the seed clean.
 
 ## Post-change deployment verification
 
@@ -104,5 +103,5 @@ Deployment procedures live in `post-deploy`.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion. For running services,
   daemons, or scheduled tasks, rebuild, restart, and verify
-  the running instance. Before concluding, tear down every
-  temporary resource and leave no residue.
+  the running instance. Before concluding, tear down temporary
+  resources and leave no residue.
