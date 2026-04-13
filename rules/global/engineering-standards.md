@@ -88,6 +88,24 @@
 - Design tools and services for agent-compatibility via
   standard interfaces. CLI conventions live in the `cli-design`
   skill.
+- When tracked edits are required in a user-controlled
+  repository with a stable local seed checkout, the agent MUST
+  initialize `managed-worktree-system` (`mwt`) from that seed
+  checkout before editing if the repository is not already
+  initialized.
+- If `mwt` initialization cannot be completed safely or
+  deterministically, the agent MUST stop short of tracked
+  edits and report the exact blocker.
+- In an `mwt`-initialized repository, the agent MUST create
+  tracked-edit worktrees with `mwt create` and MUST NOT start
+  tracked work from the seed checkout or from ad hoc
+  `git worktree` or `git checkout` flows.
+- In an `mwt`-initialized repository, the agent MUST integrate
+  tracked changes with `mwt deliver` and MUST clean up task
+  worktrees with `mwt prune` or the repository's declared
+  managed-worktree cleanup command.
+- In an `mwt`-initialized repository, the agent MUST keep the
+  seed or canonical checkout tracked-clean.
 
 ## Post-change deployment verification
 
