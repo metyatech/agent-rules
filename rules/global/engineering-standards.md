@@ -70,15 +70,15 @@
 
 - Design tools/services for agent compatibility via standard
   interfaces. CLI: `cli-design`.
-- In user-controlled repos with stable seed checkouts,
-  initialize `mwt` before tracked edits if needed.
+- In user-controlled repos with stable seed checkouts, use
+  `mwt` before tracked edits if needed.
 - If `mwt` init cannot complete safely/deterministically, stop
   edits and report the blocker.
-- Use `mwt create` for tracked-edit worktrees; never start
-  tracked work from the seed or ad hoc checkouts.
+- Use `mwt create` for worktrees; never start tracked work
+  from the seed or ad hoc checkouts.
 - Run `mwt deliver` before completion in `mwt` repos.
 - After `mwt deliver`, run `mwt prune --merged --with-branches`
-  for owned delivered worktrees unless asked to keep them.
+  for owned worktrees unless asked to keep them.
 - In `mwt` repos, do not report completion while delivered
   worktrees remain. Safe automatic `mwt init` MUST track
   `.mwt/config.toml`, commit it before tracked work, leave no
