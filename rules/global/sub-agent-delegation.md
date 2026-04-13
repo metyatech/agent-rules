@@ -63,8 +63,7 @@
 - After spawning, return to the user immediately and use
   background or non-blocking monitoring; the agent MUST NOT
   block waiting for completion.
-- Detailed dispatch procedures live in the
-  `sub-agent-dispatch` skill.
+- Dispatch details live in the `sub-agent-dispatch` skill.
 
 ## Orchestrator model selection
 

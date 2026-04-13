@@ -2,9 +2,8 @@
 
 ## Compliance vocabulary
 
-RFC 2119 / RFC 8174 keywords in this AGENTS.md and included
-rule modules carry their RFC meanings. When a rule omits a
-keyword, treat it as MUST.
+RFC 2119 / RFC 8174 keywords carry their RFC meanings.
+Omitted keywords mean MUST.
 
 ## Composition
 
