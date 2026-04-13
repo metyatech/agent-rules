@@ -18,23 +18,23 @@
   causes, remove obsolete code in the same change set, and
   repair broken tools at the source.
 - Failure paths MUST tear down resources, leave no partial
-  state, and verify cleanup on every error branch.
+  state, and verify cleanup.
 
 ## Runtime and async behavior
 
 - The agent MUST NOT block async APIs or use sync I/O where
   responsiveness is expected.
 - Prefer push, event, or signal synchronization. Use polling
-  only when no authoritative event path exists or the user
-  requests it; document why and bound cadence and retries.
+  only when no authoritative event path exists or requested;
+  document why and bound cadence and retries.
 
 ## API surfaces
 
 - Prefer native SDKs and stable APIs. Isolate and document
   unavoidable unstable APIs. Externalize large strings and
   templates.
-- The agent MUST NOT commit build artifacts. Keep artifact
-  directory names and `.gitignore` entries aligned.
+- The agent MUST NOT commit build artifacts; keep artifact
+  directories and `.gitignore` aligned.
 
 ## Linters, formatters, and static analysis
 
@@ -43,14 +43,12 @@
   files.
 - The agent MUST NOT disable lint rules globally. Suppressions
   MUST be narrow, justified inline, and time-bounded. Run the
-  formatter before replace operations in formatter-managed
-  files.
+  formatter before replace operations in managed files.
 
 ## CI enforcement
 
-- CI MUST run formatting checks and linting on every pull
-  request and require these for merge. CI MUST treat warnings
-  as errors.
+- CI MUST run required formatting and lint checks on every pull
+  request and treat warnings as errors.
 
 ## Dependency and security scanning
 
@@ -65,7 +63,7 @@
 ## Environment portability
 
 - The agent MUST NOT introduce machine-specific environments.
-  Paths MUST be relative; configuration MUST be explicit.
+  Paths MUST be relative and configuration explicit.
 - Lifecycle hooks must succeed on a clean machine. Use project-
   managed runners and regenerate lock files with manifest
   changes.
@@ -78,9 +76,8 @@
   standard interfaces. CLI rules live in `cli-design`.
 - In user-controlled repositories with stable seed checkouts,
   initialize `mwt` before tracked edits if needed.
-- If `mwt` initialization cannot complete safely or
-  deterministically, stop short of tracked edits and report
-  the blocker.
+- If `mwt` init cannot complete safely or deterministically,
+  stop tracked edits and report the blocker.
 - In `mwt` repositories, create tracked-edit worktrees with
   `mwt create`; never start tracked work from the seed or ad
   hoc checkout flows.
@@ -100,7 +97,7 @@
 Deployment procedures live in `post-deploy`.
 
 - After modifying code, determine whether deployment beyond
-  commit and push is required before concluding.
+  commit and push is required.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion. For running services,
   daemons, or scheduled tasks, rebuild, restart, and verify

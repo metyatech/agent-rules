@@ -13,7 +13,7 @@
 
 ## Tier classification
 
-- Tier meanings and routing live in `sub-agent-dispatch`.
+- Tier routing lives in `sub-agent-dispatch`.
 
 ## Spawning a delegated agent
 
@@ -68,7 +68,7 @@
 - The agent MUST NOT trust completion claims without evidence.
   Implementation sub-agents MUST return AC, AC → evidence,
   files changed, assumptions, and risks.
-- After implementation, run repo-standard verify.
+- After implementation, run repo verify.
 - If verification fails, cannot run, or the task is Heavy or
   release/production, spawn a separate reviewer with the
   original AC and spec; require `PASS`/`FAIL`.
