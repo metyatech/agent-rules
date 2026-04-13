@@ -2,20 +2,9 @@
 
 ## Compliance vocabulary
 
-The keywords MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT,
-SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this
-AGENTS.md and every included rule module carry the meanings of
-RFC 2119 and RFC 8174:
-
-- **MUST**, **REQUIRED**, **SHALL** — absolute requirement.
-- **MUST NOT**, **SHALL NOT** — absolute prohibition.
-- **SHOULD**, **RECOMMENDED** — strong recommendation; deviate
-  only with a stated reason and weighed alternatives.
-- **SHOULD NOT** — strong recommendation against; same
-  deviation rule.
-- **MAY**, **OPTIONAL** — permitted but not required.
-
-When a rule omits a keyword, treat the rule as MUST.
+RFC 2119 / RFC 8174 keywords in this AGENTS.md and included
+rule modules carry their RFC meanings. When a rule omits a
+keyword, treat it as MUST.
 
 ## Composition
 
@@ -25,10 +14,8 @@ When a rule omits a keyword, treat the rule as MUST.
 - A new repository MUST include `agent-ruleset.json`, MUST
   compose AGENTS.md, and MUST satisfy the required global
   standards before reporting the repository as complete.
-- compose-agentsmd workflow procedures (session gate,
-  pre-commit hook ordering, staging diffs, edit-rules /
-  apply-rules) live in the compose-agentsmd repository's
-  `tools/tool-rules.md`.
+- compose-agentsmd procedures live in
+  `compose-agentsmd/tools/tool-rules.md`.
 
 ## Authoring rules
 

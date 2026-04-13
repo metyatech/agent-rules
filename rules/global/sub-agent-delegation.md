@@ -3,13 +3,13 @@
 ## Definitions
 
 - **Delegator** — the agent or human that spawns another agent.
-- **Delegated agent** — the agent spawned by a delegator.
-  Operates in delegated mode (defined in `posture-and-delivery`).
-- **Restricted operation** — an operation a delegated agent
-  MUST NOT perform without an explicit per-call delegation:
-  modifying rules or rulesets, merging or closing pull requests,
-  creating or deleting repositories, releasing or deploying,
-  force-pushing, or rewriting published history.
+- **Delegated agent** — an agent spawned by a delegator;
+  operates in delegated mode (`posture-and-delivery`).
+- **Restricted operation** — modifying rules or rulesets,
+  merging or closing pull requests, creating or deleting
+  repositories, releasing or deploying, force-pushing, or
+  rewriting published history without explicit per-call
+  delegation.
 - **Tier** — task difficulty/cost classification: Free, Light,
   Standard, Heavy, Large Context.
 - **Effort** — model reasoning intensity (`low`, `medium`,
@@ -17,13 +17,8 @@
 
 ## Tier classification
 
-- **Free** — trivial lookups; Copilot 0x models only.
-- **Light** — mechanical transforms, formatting, simple edits.
-- **Standard** — general implementation, code review,
-  multi-file changes.
-- **Heavy** — architecture, safety-critical code, complex
-  multi-step reasoning.
-- **Large Context** — > 200k input tokens; prefer 1M-context.
+- Tier meanings and routing live in the `sub-agent-dispatch`
+  skill: Free, Light, Standard, Heavy, and Large Context.
 
 ## Spawning a delegated agent
 
@@ -68,21 +63,14 @@
 - After spawning, return to the user immediately and use
   background or non-blocking monitoring; the agent MUST NOT
   block waiting for completion.
-- Decision framework, model inventory tables, routing logic,
-  prompt templates, quota fallback logic, and platform-specific
-  procedures live in the `sub-agent-dispatch` skill.
+- Detailed routing, model inventory, and prompt templates live
+  in the `sub-agent-dispatch` skill.
 
 ## Orchestrator model selection
 
-- When spawning the manager orchestrator role, default to
-  `claude-sonnet-4-6` with `medium` effort.
-- Escalate to `claude-opus-4-6` with `medium` effort when
-  strict rule compliance is required. Research
-  (arXiv:2505.11423) shows higher effort degrades
-  instruction-following on multi-constraint rule sets.
-- Use `high`, `xhigh`, or `max` effort only for complex
-  reasoning tasks. The agent MUST NOT use elevated effort to
-  improve rule compliance.
+- Orchestrator model defaults and escalation rules live in the
+  `sub-agent-dispatch` skill. The agent MUST NOT use elevated
+  effort to improve rule compliance.
 
 ## Verification of sub-agent results
 

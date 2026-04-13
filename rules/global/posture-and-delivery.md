@@ -7,14 +7,10 @@
   delegator).
 - **In-scope work** — work that follows logically from the
   requester's request without expanding their stated goal.
-- **Delivery chain** — the ordered follow-on actions that
-  complete a user request end-to-end: implementation, testing,
-  runtime verification, deployment or release when applicable,
-  documentation updates, and follow-on defect cleanup.
+- **Delivery chain** — the ordered follow-on actions required
+  to complete a request end to end.
 - **Terminal state** — the strongest justified completion
-  state given the agent's authority. Normally pushed/released
-  for user-controlled repos; an open pull request for
-  third-party repos.
+  state available under the agent's authority.
 - **Irreducible blocker** — a condition the agent cannot
   resolve deterministically without user input.
 

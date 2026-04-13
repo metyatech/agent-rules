@@ -2,10 +2,9 @@
 
 ## Tooling and dependencies
 
-- Prefer official, well-maintained, latest-stable tools and
-  dependencies. Prefer OSS or free-tier services; when using a
-  paid or proprietary service, call out the tradeoff in
-  documentation or commit message.
+- Prefer official, maintained, latest-stable tools and
+  dependencies. Prefer OSS or free-tier services; document paid
+  or proprietary tradeoffs.
 - Before designing or building a system, verify whether the
   whole system or any decomposed subsystem can be satisfied by
   an existing official or well-maintained system. Use the
@@ -14,11 +13,9 @@
 
 ## System design
 
-- Designs MUST be compositional; dependency direction MUST be
-  clean (high-level depends on low-level abstractions).
-  Control flow MUST be shallow. Naming MUST be
-  intention-revealing. Change points MUST be centralized in
-  configuration or constants.
+- Designs MUST be compositional with clean dependency
+  direction, shallow control flow, intention-revealing names,
+  and centralized change points.
 - Keep code, docs, tests, and configuration DRY. Fix root
   causes; remove obsolete code in the same change set; repair
   broken tools at the source.
@@ -29,11 +26,10 @@
 
 - The agent MUST NOT block async APIs or use synchronous I/O
   where responsiveness is expected.
-- Prefer push-, event-, or signal-driven synchronization over
-  periodic polling. Polling MAY be used only when no reliable
-  authoritative event path exists OR the user explicitly
-  requests it; document why and bound cadence and retry
-  behavior in code.
+- Prefer push, event, or signal synchronization over polling.
+- Use polling only when no authoritative event path exists or
+  the user requests it; document why and bound cadence and
+  retries.
 
 ## API surfaces
 
@@ -63,10 +59,9 @@
 
 ## Dependency and security scanning
 
-- A repository with GitHub Actions MUST configure Dependabot
-  version updates for every applicable package ecosystem and
-  for `github-actions`, unless the repository has no external
-  dependency or update surface.
+- GitHub Actions repositories MUST configure Dependabot for
+  every applicable ecosystem, including `github-actions`,
+  unless they have no external update surface.
 - A repository MUST enable dependency vulnerability scanning,
   secret scanning, and CodeQL for every supported language.
 - A web UI project MUST enforce automated visual accessibility
@@ -96,17 +91,17 @@
 - If `mwt` initialization cannot be completed safely or
   deterministically, the agent MUST stop short of tracked
   edits and report the exact blocker.
-- In an `mwt`-initialized repository, the agent MUST create
-  tracked-edit worktrees with `mwt create` and MUST NOT start
-  tracked work from the seed checkout or from ad hoc
-  `git worktree` or `git checkout` flows.
+- In an `mwt`-initialized repository, create tracked-edit
+  worktrees with `mwt create`; MUST NOT start tracked work from
+  the seed checkout or ad hoc `git worktree`/`git checkout`
+  flows.
 - In an `mwt`-initialized repository, the agent MUST integrate
   tracked changes with `mwt deliver` before reporting
   completion.
-- In an `mwt`-initialized repository, after a successful `mwt
-  deliver`, the agent MUST immediately run `mwt prune --merged
-  --with-branches` for every delivered task worktree it
-  created or owns unless the user explicitly asks to keep it.
+- In an `mwt`-initialized repository, after successful `mwt
+  deliver`, immediately run `mwt prune --merged --with-branches`
+  for every delivered task worktree the agent created or owns
+  unless the user asks to keep it.
 - In an `mwt`-initialized repository, the agent MUST NOT
   report completion while its own delivered managed worktrees
   remain as residue.
