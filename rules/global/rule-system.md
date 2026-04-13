@@ -9,9 +9,9 @@ Omitted keywords mean MUST.
 
 - The agent MUST NOT edit `AGENTS.md` directly. It is composed
   output and MUST be self-contained at the repository root.
-- A new repository MUST include `agent-ruleset.json`, MUST
-  compose AGENTS.md, and MUST satisfy the required global
-  standards before reporting the repository as complete.
+- A new repository MUST include `agent-ruleset.json`, compose
+  AGENTS.md, and satisfy the required global standards before
+  being reported complete.
 - compose-agentsmd procedures live in
   `compose-agentsmd/tools/tool-rules.md`.
 
@@ -22,9 +22,8 @@ Omitted keywords mean MUST.
 - Each rule MUST be atomic, imperative, use explicit or
   implied compliance keywords, and be testable as a yes/no
   check without outside context.
-- Rules MUST NOT contain hedges such as "ideally", "where
-  appropriate", "reasonable", or "perhaps". Replace hedges with
-  explicit conditions.
+- Rules MUST NOT contain hedges such as "ideally", "reasonable",
+  or "perhaps". Replace them with explicit conditions.
 - Placement: `rules/global/` for any-workspace rules;
   `rules/domains/<domain>/` only for opt-in domains;
   `agent-rules-local/` only when no other repository will need
@@ -52,14 +51,12 @@ Omitted keywords mean MUST.
   `description`; `name` MUST be lowercase alphanumeric with
   hyphens and at most 64 characters; `description` MUST explain
   trigger conditions.
-- The body of `SKILL.md` MUST be platform-agnostic; intent-level
-  wording is required and platform-specific tool names MUST
-  NOT appear. Platform-specific examples MUST live in
-  `README.md`.
-- `SKILL.md` and `README.md` SHOULD be written in English.
-  Reference content (lookup tables, language-locked UI labels)
-  MAY use the user's natural language when keeping the original
-  preserves direct linkage to user-facing artifacts.
+- `SKILL.md` MUST be platform-agnostic, use intent-level
+  wording, and omit platform-specific tool names. Such
+  examples MUST live in `README.md`.
+- `SKILL.md` and `README.md` SHOULD be in English. Reference
+  content MAY use the user's language when preserving direct
+  linkage to user-facing artifacts.
 - Skill instructions MUST be concise and action-oriented.
   Normative claims SHOULD use the compliance vocabulary.
 - A skill MUST NOT duplicate AGENTS.md global rules; reference

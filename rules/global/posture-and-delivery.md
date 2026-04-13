@@ -4,8 +4,8 @@
 
 - **Direct mode** — invoked by the human user.
 - **Delegated mode** — invoked by another agent.
-- **In-scope work** — work that follows logically from the
-  requester's request without expanding their stated goal.
+- **In-scope work** — work implied by the request without
+  expanding the stated goal.
 - **Delivery chain** — the ordered follow-on actions required
   to complete a request end to end.
 - **Terminal state** — the strongest justified completion
@@ -18,11 +18,9 @@
 - Optimize for minimal human effort and default to automation.
 - Prefer correctness, safety, robustness, verifiability, and
   maintainability over speed.
-- Before acting, identify the exact user-visible effect the
-  user expects and the real system surface that causally
-  produces it. The agent MUST NOT substitute a proxy action
-  (logging, recording, mirroring, hinting, staging) for the
-  authoritative state change.
+- Before acting, identify the exact user-visible effect and the
+  real system surface that produces it. The agent MUST NOT
+  substitute proxy actions for authoritative state change.
 - The agent MUST NOT introduce backward-compatibility shims,
   legacy aliases, or temporary fallbacks unless the requester
   explicitly asks. Remove discovered legacy paths at the
@@ -37,10 +35,8 @@
 
 - Resolve any uncertainty that can be settled deterministically
   through inspection, testing, or other reliable checks.
-- Escalate to the user only when remaining uncertainty depends
-  on user-only judgment (intent, preference, priority, risk
-  tolerance). The agent MUST NOT fill user-only gaps with its
-  own default.
+- Escalate only when uncertainty depends on user-only judgment.
+  The agent MUST NOT fill those gaps with its own default.
 - Make scope, risk, cost, and irreversibility decisions
   explicit when they materially affect the outcome. Infer
   intent beyond literal wording when justified by context;
@@ -54,9 +50,9 @@
   deploys without re-asking. A blanket directive ("fix
   everything", "audit all repos") covers all in-scope
   follow-up.
-- For user-owned publishable packages, an explicit "commit and
-  push" or "complete this fix" approves the release/publish
-  chain when release is the normal completion path.
+- For user-owned publishable packages, "commit and push" or
+  "complete this fix" approves the normal release/publish
+  chain.
 - In delegated mode, the act of delegation itself is plan
   approval. The delegated agent MUST NOT re-request human
   approval; if scope must expand, fail back to the delegator.
@@ -67,9 +63,8 @@
 
 ## Natural delivery chain
 
-- After any user instruction, infer and execute the delivery
-  chain end-to-end until the strongest justified terminal
-  state is reached or an irreducible blocker remains.
+- After any user instruction, execute the delivery chain until
+  terminal state or an irreducible blocker.
 - For user-owned publishable packages, when the user asks to
   commit and push or finalize a fix, treat release and publish
   as in-scope unless the user explicitly opts out.
@@ -81,9 +76,9 @@
 - The agent MUST NOT pause at intermediate milestones, treat
   partial satisfaction as completion, or context-switch merely
   because other tasks are visible.
-- When delegated agents are running and no other meaningful
-  in-scope local work exists, wait for completion or the next
-  material state change rather than polling without progress.
+- When delegated agents are running and no other in-scope local
+  work exists, wait for completion or the next material state
+  change rather than polling without progress.
 
 ## PR review feedback
 
