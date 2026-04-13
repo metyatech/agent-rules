@@ -30,74 +30,67 @@
 
 ## API surfaces
 
-- Prefer native SDKs and stable APIs. Isolate and document
-  unavoidable unstable APIs. Externalize large strings and
-  templates.
-- The agent MUST NOT commit build artifacts; keep artifact
-  directories and `.gitignore` aligned.
+- Prefer native SDKs and stable APIs; isolate unavoidable
+  unstable APIs and externalize large strings/templates.
+- The agent MUST NOT commit build artifacts; keep artifact dirs
+  and `.gitignore` aligned.
 
 ## Linters, formatters, and static analysis
 
-- Every repository MUST have one formatter and one linter or
-  analyzer per primary language, pinned in manifests or lock
-  files.
+- Every repo MUST have one formatter and one linter/analyzer
+  per primary language, pinned in manifests or lockfiles.
 - The agent MUST NOT disable lint rules globally. Suppressions
-  MUST be narrow, justified inline, and time-bounded. Run the
-  formatter before replace operations.
+  MUST be narrow, justified inline, and time-bounded. Run
+  formatters before replace operations.
 
 ## CI enforcement
 
-- CI MUST run required formatting and lint checks on every pull
-  request and treat warnings as errors.
+- CI MUST run formatting/lint checks on every pull request and
+  treat warnings as errors.
 
 ## Dependency and security scanning
 
-- GitHub Actions repositories MUST configure Dependabot for
-  every applicable ecosystem, including `github-actions`,
-  unless no external update surface exists.
-- Repositories MUST enable dependency scanning, secret
-  scanning, and CodeQL for every supported language.
-- Web UI projects MUST enforce automated visual accessibility
-  checks in CI.
+- GitHub Actions repos MUST configure Dependabot for all
+  applicable ecosystems, including `github-actions`, unless
+  no external update surface exists.
+- Repos MUST enable dependency scanning, secret scanning, and
+  CodeQL for every supported language.
+- Web UI projects MUST enforce visual accessibility checks in
+  CI.
 
 ## Environment portability
 
-- The agent MUST NOT introduce machine-specific environments.
-  Paths MUST be relative and configuration explicit.
-- Lifecycle hooks must succeed on a clean machine. Use project-
-  managed runners and regenerate lock files with manifest
-  changes.
-- Agent-owned temporary files MUST live under the OS temporary
-  directory unless the user explicitly approves otherwise.
+- The agent MUST NOT introduce machine-specific environments;
+  use relative paths and explicit configuration.
+- Lifecycle hooks MUST succeed on a clean machine. Use project
+  runners and regenerate lockfiles with manifest changes.
+- Agent-owned temp files MUST live under the OS temp directory
+  unless explicitly approved otherwise.
 
 ## Tool integration
 
 - Design tools and services for agent compatibility via
-  standard interfaces. CLI rules live in `cli-design`.
-- In user-controlled repositories with stable seed checkouts,
+  standard interfaces. CLI: `cli-design`.
+- In user-controlled repos with stable seed checkouts,
   initialize `mwt` before tracked edits if needed.
-- If `mwt` init cannot complete safely or deterministically,
-  stop tracked edits and report the blocker.
-- In `mwt` repositories, create tracked-edit worktrees with
-  `mwt create`; never start tracked work from the seed or ad
-  hoc checkout flows.
-- In an `mwt`-initialized repository, run `mwt deliver` before
-  reporting completion.
-- In `mwt` repositories, after `mwt deliver`, run `mwt prune
-  --merged --with-branches` for delivered worktrees the agent
-  created or owns unless asked to keep them.
-- In `mwt` repositories, do not report completion while
-  delivered worktrees remain. Safe automatic `mwt init` MUST
-  track `.mwt/config.toml`, commit it before tracked work,
-  leave no untracked `.mwt/` residue, and keep the seed
-  clean.
+- If `mwt` init cannot complete safely/deterministically, stop
+  tracked edits and report the blocker.
+- In `mwt` repos, create tracked-edit worktrees with `mwt
+  create`; never start tracked work from the seed or ad hoc
+  checkouts.
+- In `mwt` repos, run `mwt deliver` before completion.
+- In `mwt` repos, after `mwt deliver`, run `mwt prune --merged
+  --with-branches` for delivered worktrees the agent created
+  or owns unless asked to keep them.
+- In `mwt` repos, do not report completion while delivered
+  worktrees remain. Safe automatic `mwt init` MUST track
+  `.mwt/config.toml`, commit it before tracked work, leave no
+  untracked `.mwt/` residue, and keep the seed clean.
 
 ## Post-change deployment verification
 
-Deployment procedures live in `post-deploy`.
-
-- After modifying code, determine whether deployment beyond
-  commit and push is required.
+- Deployment procedures: `post-deploy`. After modifying code,
+  determine whether deployment beyond commit/push is required.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion. For running services,
   daemons, or scheduled tasks, rebuild, restart, and verify

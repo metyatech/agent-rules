@@ -13,14 +13,14 @@
 
 ## Tier classification
 
-- Tier routing lives in `sub-agent-dispatch`.
+- Tier routing: `sub-agent-dispatch`.
 
 ## Spawning a delegated agent
 
 - The delegating prompt MUST state delegated mode, approval
   state, acceptance criteria, verification requirements, and
-  task context. The delegator MUST NOT assume prior
-  conversation access.
+  task context. The delegator MUST NOT assume prior convo
+  access.
 - The delegating prompt MUST NOT restate rules already present
   in AGENTS.md.
 - Two or more agents MAY write in the same repository only
@@ -35,16 +35,16 @@
 - Inherit the delegator's repository scope and MUST NOT expand
   it. If unable to operate within scope, fail back
   explicitly.
-- If the delegated agent reports a read-only or no-write
-  constraint, run a minimal reversible OS-temp probe and report
-  the exact failure verbatim.
+- If the delegated agent reports a read-only/no-write
+  constraint, run a minimal reversible OS-temp probe and
+  report the exact failure verbatim.
 - A delegated agent MUST NOT perform a restricted operation
   without an explicit per-call delegation.
 
 ## Dispatch tooling
 
-- Sub-agents MUST be launched via `agents-mcp`. The agent MUST
-  NOT use platform built-in subagent spawners.
+- Sub-agents MUST use `agents-mcp`; the agent MUST NOT use
+  platform built-in subagent spawners.
 - Before spawning, run `ai-quota`. If it is unavailable or
   fails, report and MUST NOT spawn.
 - When spawning a sub-agent, explicitly specify both `model`
@@ -66,8 +66,8 @@
 ## Verification of sub-agent results
 
 - The agent MUST NOT trust completion claims without evidence.
-  Implementation sub-agents MUST return AC, AC → evidence,
-  files changed, assumptions, and risks.
+  Implementation sub-agents MUST return AC, evidence, files
+  changed, assumptions, and risks.
 - After implementation, run repo verify.
 - If verification fails, cannot run, or the task is Heavy or
   release/production, spawn a separate reviewer with the AC
