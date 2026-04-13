@@ -19,8 +19,8 @@
 
 - The delegating prompt MUST state delegated mode, approval
   state, acceptance criteria, verification requirements, and
-  task context. The delegator MUST NOT assume access to the
-  calling conversation.
+  task context. The delegator MUST NOT assume access to prior
+  conversation.
 - The delegating prompt MUST NOT restate rules already present
   in AGENTS.md.
 - Two or more agents MAY write in the same repository only
@@ -32,7 +32,7 @@
 - Respond in English and report verification evidence
   concisely.
 - The delegated agent MUST NOT modify rules directly; report
-  rule-gap suggestions for delegator review.
+  rule gaps for delegator review.
 - Inherit the delegator's repository scope and MUST NOT expand
   it. If unable to operate within scope, fail explicitly
   back.
@@ -71,11 +71,11 @@
   files changed, assumptions, and risks.
 - After implementation, run repo-standard verify commands.
 - If verification fails, cannot run, or the task is Heavy or
-  release/production, spawn a separate reviewer and require
-  `PASS`/`FAIL` with the original AC and spec.
+  release/production, spawn a separate reviewer with the
+  original AC and spec and require `PASS`/`FAIL`.
 - The agent MUST NOT adopt a result as done unless reviewer
-  status is `PASS`. Standard tier with passing verify and clear
-  AC evidence MAY skip the reviewer.
+  status is `PASS`. Standard tier MAY skip reviewer with
+  passing verify and clear AC evidence.
 
 ## Cost, execution, and lifecycle
 
@@ -85,8 +85,7 @@
 - The agent MUST NOT rapidly respawn sub-agents for the same
   task while one is actively running without errors.
 - After a team completes, shut down all team agents and clean
-  up resources. If a sub-agent fails, retry, adjust, or
-  escalate.
+  up resources. If a sub-agent fails, retry or escalate.
 - If a delegated task fails repeatedly because of quota limits,
   update the task stage in `task-tracker` so work resumes
   from the last successful stage.

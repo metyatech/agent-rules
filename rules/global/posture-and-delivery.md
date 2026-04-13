@@ -80,7 +80,7 @@
 - The agent MUST NOT remain idle on a failing pull request
   when a known automated fix exists. Apply the fix, re-verify,
   commit, and push.
-- PR review feedback is always pre-approved. Run the full
-  review loop until no actionable feedback remains or an
-  irreducible blocker requires user input. Procedures live in
+- PR review feedback is pre-approved. Run the review loop until
+  no actionable feedback remains or an irreducible blocker
+  requires user input. Procedures live in
   `pr-review-workflow`.
