@@ -68,19 +68,17 @@
 
 ## Tool integration
 
-- Design tools and services for agent compatibility via
-  standard interfaces. CLI: `cli-design`.
+- Design tools/services for agent compatibility via standard
+  interfaces. CLI: `cli-design`.
 - In user-controlled repos with stable seed checkouts,
   initialize `mwt` before tracked edits if needed.
 - If `mwt` init cannot complete safely/deterministically, stop
-  tracked edits and report the blocker.
-- In `mwt` repos, create tracked-edit worktrees with `mwt
-  create`; never start tracked work from the seed or ad hoc
-  checkouts.
-- In `mwt` repos, run `mwt deliver` before completion.
-- In `mwt` repos, after `mwt deliver`, run `mwt prune --merged
-  --with-branches` for delivered worktrees the agent owns
-  unless asked to keep them.
+  edits and report the blocker.
+- Use `mwt create` for tracked-edit worktrees; never start
+  tracked work from the seed or ad hoc checkouts.
+- Run `mwt deliver` before completion in `mwt` repos.
+- After `mwt deliver`, run `mwt prune --merged --with-branches`
+  for owned delivered worktrees unless asked to keep them.
 - In `mwt` repos, do not report completion while delivered
   worktrees remain. Safe automatic `mwt init` MUST track
   `.mwt/config.toml`, commit it before tracked work, leave no
@@ -89,7 +87,7 @@
 ## Post-change deployment verification
 
 - Deployment procedures: `post-deploy`. After code changes,
-  determine whether deployment beyond commit/push is required.
+  determine whether deployment beyond commit/push is needed.
 - For globally linked packages, rebuild and verify the global
   binary before reporting completion. For running services,
   daemons, or scheduled tasks, rebuild, restart, and verify
