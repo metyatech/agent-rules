@@ -74,8 +74,8 @@
   `mwt` before tracked edits if needed.
 - If `mwt` init cannot complete safely/deterministically, stop
   edits and report the blocker.
-- Use `mwt create` for worktrees; never start tracked work
-  from the seed or ad hoc checkouts.
+- Use `mwt create`; never start tracked work from the seed or
+  ad hoc checkouts.
 - Run `mwt deliver` before completion in `mwt` repos.
 - After `mwt deliver`, run `mwt prune --merged --with-branches`
   for owned worktrees unless asked to keep them.
