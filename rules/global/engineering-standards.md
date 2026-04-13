@@ -5,11 +5,9 @@
 - Prefer official, maintained, latest-stable tools and
   dependencies. Prefer OSS or free-tier services; document paid
   or proprietary tradeoffs.
-- Before designing or building a system, verify whether the
-  whole system or any decomposed subsystem can be satisfied by
-  an existing official or well-maintained system. Use the
-  existing system by default; build custom logic only for
-  verified gaps.
+- Before building a system, verify whether an existing official
+  or maintained system already satisfies the need. Build custom
+  logic only for verified gaps.
 
 ## System design
 
@@ -17,8 +15,8 @@
   direction, shallow control flow, intention-revealing names,
   and centralized change points.
 - Keep code, docs, tests, and configuration DRY. Fix root
-  causes; remove obsolete code in the same change set; repair
-  broken tools at the source.
+  causes, remove obsolete code in the same change set, and
+  repair broken tools at the source.
 - Failure paths MUST tear down resources and MUST NOT leave
   partial state. Verify cleanup runs on every error branch.
 
@@ -34,8 +32,8 @@
 ## API surfaces
 
 - Avoid external command execution; prefer native SDKs.
-- Prefer stable public APIs; isolate and document any
-  unavoidable use of internal or unstable APIs.
+- Prefer stable public APIs; isolate and document unavoidable
+  internal or unstable APIs.
 - Externalize large embedded strings, templates, and rule data
   into resource files.
 - The agent MUST NOT commit build artifacts. Keep artifact
@@ -43,9 +41,9 @@
 
 ## Linters, formatters, and static analysis
 
-- Every code repository MUST have exactly one formatter and
-  one linter (or static analyzer) per primary language. Tool
-  versions MUST be pinned via lock files or manifests.
+- Every repository MUST have one formatter and one linter or
+  static analyzer per primary language, with versions pinned in
+  lock files or manifests.
 - The agent MUST NOT disable lint rules globally. Suppressions
   MUST be narrow, justified inline, and time-bounded.
 - When editing a file managed by a formatter, run the
@@ -71,10 +69,9 @@
 
 - The agent MUST NOT introduce machine-specific environments.
   Paths MUST be relative; configuration MUST be explicit.
-- Lifecycle hooks (install, build, test) MUST succeed on a
-  clean machine. Invoke developer tools via `npm exec` or the
-  equivalent project-managed runner. Regenerate and commit
-  lock files in the same change set when the manifest changes.
+- Lifecycle hooks must succeed on a clean machine. Invoke tools
+  via the project-managed runner and regenerate lock files in
+  the same change set as manifest changes.
 - Agent-owned temporary files MUST live under the OS temporary
   directory unless the user explicitly approves otherwise.
 
@@ -83,11 +80,9 @@
 - Design tools and services for agent-compatibility via
   standard interfaces. CLI conventions live in the `cli-design`
   skill.
-- When tracked edits are required in a user-controlled
-  repository with a stable local seed checkout, the agent MUST
-  initialize `managed-worktree-system` (`mwt`) from that seed
-  checkout before editing if the repository is not already
-  initialized.
+- In a user-controlled repository with a stable seed checkout,
+  initialize `mwt` before tracked edits if the repository is
+  not already initialized.
 - If `mwt` initialization cannot be completed safely or
   deterministically, the agent MUST stop short of tracked
   edits and report the exact blocker.
@@ -95,9 +90,8 @@
   worktrees with `mwt create`; MUST NOT start tracked work from
   the seed checkout or ad hoc `git worktree`/`git checkout`
   flows.
-- In an `mwt`-initialized repository, the agent MUST integrate
-  tracked changes with `mwt deliver` before reporting
-  completion.
+- In an `mwt`-initialized repository, run `mwt deliver` before
+  reporting completion.
 - In an `mwt`-initialized repository, after successful `mwt
   deliver`, immediately run `mwt prune --merged --with-branches`
   for every delivered task worktree the agent created or owns
@@ -105,15 +99,10 @@
 - In an `mwt`-initialized repository, the agent MUST NOT
   report completion while its own delivered managed worktrees
   remain as residue.
-- When the agent performs a safe automatic `mwt init` for a
-  clean user-controlled seed checkout, the agent MUST treat
-  `.mwt/config.toml` as tracked repository policy.
-- When the agent creates `.mwt/config.toml` during safe
-  automatic `mwt init`, the agent MUST commit that onboarding
-  change before starting tracked task work.
-- When the agent performs a safe automatic `mwt init`, the
-  agent MUST NOT leave untracked `.mwt/` residue in the seed
-  checkout.
+- Safe automatic `mwt init` MUST treat `.mwt/config.toml` as
+  tracked repo policy, commit that onboarding change before
+  tracked task work, and leave no untracked `.mwt/` residue in
+  the seed checkout.
 - In an `mwt`-initialized repository, the agent MUST keep the
   seed or canonical checkout tracked-clean.
 
@@ -124,17 +113,11 @@ in the `post-deploy` skill.
 
 - After modifying code, determine whether deployment steps
   beyond commit and push are needed before concluding.
-- If the affected repository powers a globally linked package
-  (an npm package whose global install path is a symlink to
-  the local working tree), rebuild the package and verify the
-  global binary is functional before reporting completion.
-- If the affected repository powers a running service, daemon,
-  or scheduled task, rebuild, restart, and verify the running
-  instance with deterministic evidence. The agent MUST NOT
-  claim completion until the running instance reflects the
-  changes.
+- For globally linked packages, rebuild and verify the global
+  binary before reporting completion.
+- For running services, daemons, or scheduled tasks, rebuild,
+  restart, and verify the running instance before claiming
+  completion.
 - Verify teardown of every agent-owned temporary resource
-  (services, daemons, browser sessions, temporary clones,
-  patch files) before concluding. If cleanup fails, fix the
-  harness or the cleanup path. The agent MUST NOT leave
-  residue.
+  before concluding. If cleanup fails, fix it. The agent MUST
+  NOT leave residue.

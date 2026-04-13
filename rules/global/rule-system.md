@@ -7,9 +7,8 @@ Omitted keywords mean MUST.
 
 ## Composition
 
-- The agent MUST NOT edit `AGENTS.md` directly. AGENTS.md is
-  the composed output of rule modules and a per-repository
-  ruleset, and MUST be self-contained at the repository root.
+- The agent MUST NOT edit `AGENTS.md` directly. It is composed
+  output and MUST be self-contained at the repository root.
 - A new repository MUST include `agent-ruleset.json`, MUST
   compose AGENTS.md, and MUST satisfy the required global
   standards before reporting the repository as complete.
@@ -20,10 +19,9 @@ Omitted keywords mean MUST.
 
 - Rules MUST be MECE: each obligation appears in exactly one
   module. Cross-reference rather than duplicate.
-- Each rule MUST be atomic (one bullet, one testable
-  obligation), use the imperative mood with an explicit
-  compliance keyword (or implied MUST), and be testable as a
-  yes/no check without outside context.
+- Each rule MUST be atomic, imperative, use explicit or
+  implied compliance keywords, and be testable as a yes/no
+  check without outside context.
 - Rules MUST NOT contain hedges such as "ideally", "where
   appropriate", "reasonable", or "perhaps". Replace hedges with
   explicit conditions.
@@ -37,8 +35,7 @@ Omitted keywords mean MUST.
   original mistake.
 - Persistent user instructions about future agent behavior MUST
   be encoded in the appropriate rule module in the same change
-  set unless the user explicitly scopes the instruction to the
-  current task.
+  set unless explicitly scoped to the current task.
 - Treat rule/skill gaps, redundancy, misplacement, and
   recurring review feedback as systemic; fix the underlying
   issue and similar instances in the same change set.
@@ -50,12 +47,11 @@ Omitted keywords mean MUST.
 
 ## Authoring skills
 
-- A skill MUST follow the Agent Skills open standard
-  (agentskills.io/specification). A `SKILL.md` frontmatter
-  MUST contain only `name` and `description`. The `name` MUST
-  be lowercase alphanumeric with hyphens, at most 64
-  characters. The `description` MUST explain trigger
-  conditions.
+- A skill MUST follow the Agent Skills open standard.
+- `SKILL.md` frontmatter MUST contain only `name` and
+  `description`; `name` MUST be lowercase alphanumeric with
+  hyphens and at most 64 characters; `description` MUST explain
+  trigger conditions.
 - The body of `SKILL.md` MUST be platform-agnostic; intent-level
   wording is required and platform-specific tool names MUST
   NOT appear. Platform-specific examples MUST live in
