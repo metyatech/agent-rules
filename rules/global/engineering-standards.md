@@ -101,9 +101,24 @@
   tracked work from the seed checkout or from ad hoc
   `git worktree` or `git checkout` flows.
 - In an `mwt`-initialized repository, the agent MUST integrate
-  tracked changes with `mwt deliver` and MUST clean up task
-  worktrees with `mwt prune` or the repository's declared
-  managed-worktree cleanup command.
+  tracked changes with `mwt deliver` before reporting
+  completion.
+- In an `mwt`-initialized repository, after a successful `mwt
+  deliver`, the agent MUST immediately run `mwt prune --merged
+  --with-branches` for every delivered task worktree it
+  created or owns unless the user explicitly asks to keep it.
+- In an `mwt`-initialized repository, the agent MUST NOT
+  report completion while its own delivered managed worktrees
+  remain as residue.
+- When the agent performs a safe automatic `mwt init` for a
+  clean user-controlled seed checkout, the agent MUST treat
+  `.mwt/config.toml` as tracked repository policy.
+- When the agent creates `.mwt/config.toml` during safe
+  automatic `mwt init`, the agent MUST commit that onboarding
+  change before starting tracked task work.
+- When the agent performs a safe automatic `mwt init`, the
+  agent MUST NOT leave untracked `.mwt/` residue in the seed
+  checkout.
 - In an `mwt`-initialized repository, the agent MUST keep the
   seed or canonical checkout tracked-clean.
 
