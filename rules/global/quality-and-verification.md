@@ -24,11 +24,16 @@ For any state-changing work or any claim of "done", "fixed",
    verification suite and observe success.
 3. With each AC, define the evidence (concrete commands,
    outputs, or manual steps) that will demonstrate satisfaction.
-4. For code or runtime changes, add automated tests. A bug fix
+4. Before concluding, enumerate the changed externally visible
+   contract surface and map each changed surface item to direct
+   verification evidence. Contract surface includes documented
+   commands, subcommands, flags, API endpoints, UI controls,
+   views, states, file formats, and other user-visible behavior.
+5. For code or runtime changes, add automated tests. A bug fix
    MUST include a regression test.
-5. Run the repository-standard verify command. If none exists,
+6. Run the repository-standard verify command. If none exists,
    add one in the same change set.
-6. Maintain AC and evidence internally; surface them only when
+7. Maintain AC and evidence internally; surface them only when
    the user requests.
 
 ## Failure handling
@@ -66,6 +71,10 @@ For any state-changing work or any claim of "done", "fixed",
   deterministic gate that should have caught it and add or
   strengthen that gate in the same change set. A fix without a
   new catching gate is incomplete.
+- When a bug reveals that a changed externally visible contract
+  item lacked direct verification, the agent MUST add a
+  mechanical contract check or matrix that covers the affected
+  surface class rather than only the observed instance.
 - When fixing a bug, the agent MUST identify the broader
   failure pattern that made the bug possible and extend the
   change so same-pattern failures are prevented by
