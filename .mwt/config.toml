@@ -13,7 +13,7 @@ include = [ ".env", ".env.local", ".env.*.local" ]
 exclude = [ "node_modules/", ".venv/", ".next/", "dist/" ]
 
 [verify]
-command = "npx --yes markdownlint-cli \"rules/**/*.md\" README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md --ignore node_modules; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; compose-agentsmd"
+command = "powershell -NoProfile -Command \"npx --yes markdownlint-cli 'rules/**/*.md' README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md --ignore node_modules; if (`$LASTEXITCODE -ne 0) { exit `$LASTEXITCODE }; compose-agentsmd\""
 
 [policy]
 allow_ignored_seed_changes = true
