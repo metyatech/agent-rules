@@ -44,6 +44,12 @@
   `task-tracker add`. Treat `task-tracker` as the authoritative
   cross-session tracker; session-scoped task tools MUST NOT
   replace it.
+- In `mwt` repos, run `task-tracker add` and any
+  `task-tracker update` that changes `.tasks.jsonl` from the
+  owning task worktree so the tracker state lands in that
+  task's commits. The agent MUST NOT write tracked task state
+  from the seed checkout except for read-only inspection or
+  after delivery when no task worktree exists.
 - A thread MUST capture discussion topics, design decisions,
   and multi-session context to remember across sessions.
 - Add a `--from user` thread message for any substantive user
