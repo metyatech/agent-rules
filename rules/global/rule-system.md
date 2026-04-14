@@ -44,6 +44,33 @@ Omitted keywords mean MUST.
   behavioral knowledge MUST live in rules; rules are the
   source of truth.
 
+## Mechanisation of rules
+
+- When a rule's compliance can be verified deterministically
+  from the source or build artefacts (AST shape, prop
+  presence, lexical patterns, file paths, schema conformance,
+  numeric bounds), the agent MUST implement the check in a
+  lint, schema, type system, or hook rather than as a written
+  rule. Deterministic checks MUST run in the authoring
+  pipeline (dev server, pre-commit, or CI) so violations
+  surface without relying on human or agent recall.
+- Written rules MUST be limited to (a) principles explaining
+  why a system check exists, (b) judgement-based guidance
+  that no deterministic check can capture, and (c) short
+  cross-references to the system that enforces the rule.
+- Before adding a new rule, the agent MUST decide whether it
+  is mechanically checkable. If it is, the agent MUST ship
+  the check in the same change set; text alone is not a
+  complete delivery.
+- When editing an existing written rule, the agent MUST
+  migrate any mechanically checkable subset into a system
+  check in the same change set and reduce the remaining text
+  to the judgement-only residue.
+- Skills follow the same division: reserve `SKILL.md` for
+  principles and judgement guidance; push every deterministic
+  check into the matching platform package, linter, or
+  schema.
+
 ## Authoring skills
 
 - A skill MUST follow the Agent Skills open standard.
