@@ -70,19 +70,24 @@
 
 - Design tools/services for agent compatibility via standard
   interfaces. CLI: `cli-design`.
-- In user-controlled repos with stable seed checkouts, use
-  `mwt` before tracked edits if needed.
-- If `mwt` init cannot complete safely/deterministically, stop
-  edits and report the blocker.
-- Use `mwt create`; never start tracked work from seed or ad
-  hoc checkouts.
+- Every tracked edit in a user-controlled repo MUST go through
+  `mwt create`; the agent MUST NOT edit seed checkouts directly
+  and MUST NOT commit to seed branches, regardless of whether
+  `mwt` is already initialised in the repo.
+- If the repo is not yet `mwt`-initialised, the agent MUST run
+  `mwt init` in the same session before the first tracked edit.
+  `mwt init` MUST track `.mwt/config.toml`, commit it before
+  any tracked work, leave no untracked `.mwt/` residue, and
+  keep the seed clean.
+- If `mwt init` or `mwt create` cannot complete safely or
+  deterministically, the agent MUST stop tracked edits and
+  report the blocker rather than fall back to direct seed
+  editing.
 - Run `mwt deliver` before completion in `mwt` repos.
 - After `mwt deliver`, run `mwt prune --merged --with-branches`
   for owned worktrees unless asked to keep them.
 - In `mwt` repos, do not report completion while delivered
-  worktrees remain. Safe automatic `mwt init` MUST track
-  `.mwt/config.toml`, commit it before tracked work, leave no
-  untracked `.mwt/` residue, and keep the seed clean.
+  worktrees remain.
 
 ## Post-change deployment verification
 
