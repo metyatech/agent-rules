@@ -78,6 +78,31 @@
   `mwt prune --merged --with-branches` for owned worktrees unless
   asked to keep them. Do not report completion while delivered
   worktrees remain.
+- The agent MUST NOT operate on (including `cd` into, file
+  edits, commands that set the shell CWD to, indirect
+  references such as `.env` `COURSE_CONTENT_SOURCE`, or
+  `mwt deliver`/`mwt prune`) an existing `mwt` worktree that
+  the agent did not create in the current session and is not
+  tracked in `task-tracker` as the agent's own work, without
+  explicit per-worktree user approval. Ambiguous ownership MUST
+  be resolved by asking the user before any state-changing
+  action.
+- Before invoking `mwt prune` or any equivalent worktree-
+  deletion path, the agent MUST ensure no process (current
+  shell, background shell, spawned child, editor language
+  server) holds the target worktree as its current working
+  directory. On Windows, a directory cannot be removed while
+  any process holds it as CWD; leaving this state unresolved
+  leaves empty locked residue. The agent MUST return the shell
+  CWD to the seed checkout or workspace root before prune, and
+  MUST terminate any background/sleep processes it spawned
+  whose CWD is inside the worktree.
+- `mwt prune` (and any worktree-deletion entry point in
+  `managed-worktree-system`) MUST refuse to delete a worktree
+  while any process holds it as CWD, listing the offending PIDs
+  and paths in the error message. This mechanised backstop
+  enforces the CWD discipline rule above and MUST be
+  implemented in the same change set when this rule lands.
 
 ## Post-change deployment verification
 
