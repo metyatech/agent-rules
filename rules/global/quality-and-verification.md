@@ -44,6 +44,18 @@ For any state-changing work or any claim of "done", "fixed",
   MUST follow a failing-test-to-passing-test loop.
 - On a failing security audit, attempt the documented automated
   fix. If it succeeds and verification passes, commit and push.
+- Long-running verification gates (pre-commit verify, full test
+  suite, CI pipeline) are final confirmation, not inner-loop
+  debugging tools. When such a gate surfaces a failure, the
+  agent MUST verify successive hypotheses against the smallest
+  reproducer that can settle them (single failing test, targeted
+  build, isolated command) before re-running the full gate.
+- When a test fails after a dependency bump or environment
+  change, the agent MUST first reproduce the same test against
+  the pre-change state (prior SHA / pre-bump seed) before
+  attributing the failure to the change. A test that fails only
+  after the change narrows the cause; a test that fails in both
+  states rules the change out.
 
 ## Runtime verification
 

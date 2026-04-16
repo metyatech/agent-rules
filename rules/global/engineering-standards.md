@@ -74,6 +74,12 @@
   `.mwt/config.toml` first, leave no untracked `.mwt/` residue,
   and keep the seed clean. If `mwt init` or `mwt create` cannot
   complete safely, stop tracked edits and report the blocker.
+- Before `mwt create`, the agent MUST fast-forward the seed's
+  main branch from its configured remote (`mwt sync` or
+  equivalent) so the new worktree is based on current main. A
+  worktree based on a stale seed silently diverges from
+  upstream and may miss fixes that make its pre-commit/verify
+  chain fail for reasons unrelated to the current change.
 - Run `mwt deliver` before completion; then run
   `mwt prune --merged --with-branches` for owned worktrees unless
   asked to keep them. Do not report completion while delivered
