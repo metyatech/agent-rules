@@ -84,6 +84,10 @@
   `mwt prune --merged --with-branches` for owned worktrees unless
   asked to keep them. Do not report completion while delivered
   worktrees remain.
+- When `mwt deliver` succeeds and the user did not explicitly ask to
+  keep the worktree, the agent MUST immediately continue to
+  `mwt prune --merged --with-branches` as part of the same delivery
+  chain instead of waiting for a separate reminder.
 - The agent MUST NOT operate on (including `cd` into, file
   edits, commands that set the shell CWD to, indirect
   references such as `.env` `COURSE_CONTENT_SOURCE`, or
