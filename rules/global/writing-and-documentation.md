@@ -34,6 +34,14 @@
 - For CLI tools, document every parameter with a description
   and at least one example invocation, plus at least one
   end-to-end example command.
+- For CLI tools, top-level `--help` and `-h` MUST be sufficient
+  for first-run discoverability without requiring external
+  documentation. When the tool has subcommands, the top-level
+  help MUST show the primary workflow, shared flags, and the
+  exact command form for command-specific help such as
+  `<tool> <command> -h`.
+- For CLI tools, unknown-command and invalid-usage output MUST
+  point users back to the authoritative help entry point.
 - The agent MUST NOT include user-specific local paths, fixed
   workspace directories, drive letters, or personal data in
   documentation examples; prefer repository-relative paths and
