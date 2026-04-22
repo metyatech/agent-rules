@@ -21,9 +21,23 @@
 
 - The agent MUST NOT block async APIs or use sync I/O where
   responsiveness is expected.
+- The agent MUST NOT introduce implementations whose correctness
+  depends on timing luck, partial staging state, non-deterministic
+  ordering, or loosely bounded waits when a deterministic design is
+  available.
 - Prefer push, event, or signal synchronization; use polling only
   when no authoritative event path exists; document why and bound
   cadence/retries.
+- When the agent finds flaky, timing-sensitive, or non-deterministic
+  behavior, it MUST treat it as a defect to reduce or remove, not as
+  an acceptable quirk to document away.
+- For async, queue, retry, and timeout-driven flows, the agent MUST
+  prefer explicit state transitions, authoritative events,
+  idempotent reconciliation, and diagnostics that make stalled
+  states directly inspectable.
+- The agent MUST NOT dismiss an unexplained intermittent failure as
+  "just flaky" before identifying whether the instability comes from
+  the test, the implementation, or their interaction.
 
 ## API surfaces
 
