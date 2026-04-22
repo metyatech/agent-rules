@@ -42,8 +42,8 @@
   task tools MUST NOT replace it.
 - In `mwt` repos, run `task-tracker add` and updates from the
   owning task worktree. The agent MUST NOT write tracked task
-  state from the seed checkout except for read-only inspection or
-  after delivery.
+  state from the seed checkout. Seed checkout access is limited to
+  read-only inspection.
 - Add a `--from user` thread message for any substantive user
   interaction (decisions, preferences, directions, questions,
   feedback, approvals); status auto-sets to `waiting`. Err on
@@ -59,6 +59,14 @@
   before `git add` and `git commit` so `.tasks.jsonl` is included
   in that commit. The agent MUST NOT create tracker-only
   follow-up commits.
+- In `mwt` repos, the agent MUST NOT run `task-tracker update`
+  from the seed checkout after `mwt deliver` or otherwise dirty
+  `.tasks.jsonl` there.
+- In `mwt` repos, if delivery introduces no new tracked changes
+  after the commit that recorded `committed`, the repo-tracked
+  task stage MUST remain at the last committed value. The agent
+  MUST NOT write a post-delivery `done` update from the seed
+  checkout.
 - State the lifecycle stage explicitly when reporting completion.
   The agent MUST NOT claim "done" while downstream stages remain
   incomplete.
