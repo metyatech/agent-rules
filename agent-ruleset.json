@@ -1,7 +1,7 @@
 {
   "source": ".",
   "global": false,
-  "domains": ["exam", "node", "unreal", "web"],
+  "domains": ["education", "exam", "node", "unreal", "web"],
   "extra": [],
   "claude": {
     "enabled": true,

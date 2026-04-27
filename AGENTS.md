@@ -12,6 +12,24 @@
 - Before applying any rule updates, present the planned changes first with an ANSI-colored diff-style preview, ask for explicit approval, then make the edits.
 - These tool rules live in tools/tool-rules.md in the compose-agentsmd repository; do not duplicate them in other rule modules.
 
+Source: rules/domains/education/question-authoring.md
+
+# Educational Question Authoring
+
+- Educational questions MUST align with the intended learning target, learner
+  level, and already-taught scope.
+- Each question MUST focus on one concept, skill, judgment, or misconception.
+- Prompts MUST be answerable from the question context without relying on
+  hidden classroom-event memory.
+- Questions MUST have a single defensible answer, or explicitly state the
+  accepted answer range.
+- Multiple-choice distractors MUST be plausible and based on likely
+  misconceptions or mistakes.
+- Fill-in questions MUST specify the expected answer format and any forbidden or
+  equivalent answers when ambiguity is likely.
+- Explanations MUST state the reasoning, concept, procedure, or misconception
+  behind the answer.
+
 Source: rules/domains/exam/exam-markdown-format.md
 
 # Exam Markdown

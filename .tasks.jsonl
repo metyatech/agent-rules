@@ -20,3 +20,4 @@
 {"id":"PxHr3RQ7","description":"agent-rules: align size budget wording with compose-agentsmd token-based budgets","stage":"done","createdAt":"2026-04-02T05:00:01.673Z","updatedAt":"2026-04-02T05:34:56.515Z"}
 {"id":"dYEivpr1","description":"Clarify GUI wording rule to prefer self-revealing UI and allow precise operator vocabulary","stage":"committed","createdAt":"2026-04-09T05:12:01.283Z","updatedAt":"2026-04-09T05:21:26.295Z","committedEventId":"2WhKLJwRdpLhMtgs"}
 {"id":"-Xa2ZCGO","description":"Require task-tracker writes in mwt repos to happen from the owning task worktree","stage":"committed","createdAt":"2026-04-14T14:18:04.108Z","updatedAt":"2026-04-14T14:19:21.602Z","committedEventId":"7Gdu5_E5RJ8UWqO8"}
+{"id":"XJuD8mMb","description":"Add education question authoring domain rule","stage":"committed","createdAt":"2026-04-27T11:15:00.277Z","updatedAt":"2026-04-27T11:18:51.014Z","committedEventId":"vSVMwzCYD7VSIOxE"}
