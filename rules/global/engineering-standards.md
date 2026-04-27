@@ -63,8 +63,7 @@
 - GitHub Actions repos MUST configure Dependabot for all
   applicable ecosystems, including `github-actions`, unless no
   external update surface exists.
-- Repos MUST enable dependency scanning, secret scanning, and
-  CodeQL.
+- Repos MUST enable dependency scanning and secret scanning.
 - Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability
