@@ -58,6 +58,25 @@
 - CI MUST run formatting/lint checks on every pull request and
   treat warnings as errors.
 
+## GitHub Actions runtime currency
+
+- GitHub Actions workflows authored or modified by the agent MUST
+  run JavaScript actions on GitHub's current GA Node major.
+- During GitHub's migration window, when the runner default is still
+  an older Node major, the agent MUST set GitHub's documented opt-in
+  environment variable at workflow scope. For the Node 20 to Node 24
+  migration, set `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"` under
+  top-level workflow `env`.
+- The agent MUST treat GitHub Actions runtime deprecation annotations
+  as defects to fix in the same change set, not as warnings to merely
+  report.
+- The agent MUST NOT pin workflows, action metadata, or setup actions
+  to deprecated runtime majors unless the user explicitly requests the
+  deprecated runtime and the risk is documented.
+- When GitHub promotes the newer Node major to the default runner
+  runtime, the agent MUST remove obsolete temporary opt-in variables
+  in the same change set that updates the affected workflow.
+
 ## Dependency and security scanning
 
 - GitHub Actions repos MUST configure Dependabot for all
