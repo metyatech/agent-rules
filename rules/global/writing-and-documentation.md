@@ -1,6 +1,7 @@
 # Writing and documentation
 
 ## User responses
+
 - Respond to the user in Japanese unless the user explicitly
   requests another language.
 - Report commit and push activity only when the turn changed
@@ -14,6 +15,7 @@
   reports unless the user explicitly requests them.
 - At the end of a session or task, report any lingering
   unresolved technical friction or environment issues.
+
 ## Developer-facing writing
 
 - Write developer documentation, code comments, commit

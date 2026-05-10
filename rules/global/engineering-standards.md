@@ -15,7 +15,19 @@
 - Keep code, docs, tests, and config DRY. Fix root causes and
   remove obsolete code in the same change set.
 - Failure paths MUST tear down resources, leave no partial state,
-  and verify cleanup.
+  verify cleanup, and preserve the last known-good authoritative
+  state until replacement state is fully prepared and validated.
+- For updates, syncs, migrations, self-update flows, and generated-
+  runtime replacement, the agent MUST prepare and validate
+  replacement state off the authoritative path and switch to it
+  only through a narrow final cutover.
+- Multi-step state transitions MUST persist enough durable state to
+  distinguish completed work from interrupted or failed attempts
+  and to reconcile deterministically on the next safe trigger.
+- When superseded or failed staged artifacts cannot be deleted
+  immediately, the agent MUST keep them outside the authoritative
+  path, bound their retention, and retry cleanup on later safe
+  execution paths.
 
 ## Runtime and async behavior
 

@@ -23,3 +23,4 @@
 {"id":"XJuD8mMb","description":"Add education question authoring domain rule","stage":"committed","createdAt":"2026-04-27T11:15:00.277Z","updatedAt":"2026-04-27T11:18:51.014Z","committedEventId":"vSVMwzCYD7VSIOxE"}
 {"id":"ysastaNH","description":"Commonize question authoring rules","stage":"committed","createdAt":"2026-04-27T13:08:32.084Z","updatedAt":"2026-04-27T13:09:38.411Z","committedEventId":"XNQQyU2R3vxW-7cZ"}
 {"id":"znLhk12N","description":"Add GitHub Actions runtime currency global rule","stage":"committed","createdAt":"2026-05-09T13:29:31.365Z","updatedAt":"2026-05-09T13:30:04.449Z","committedEventId":"PqpvAJltYBOYTOb3"}
+{"id":"IrSDHcM5","description":"Strengthen global transactional update invariants for staged cutover, deterministic reconcile, and bounded cleanup","stage":"committed","createdAt":"2026-05-10T04:24:59.611Z","updatedAt":"2026-05-10T04:26:39.999Z","committedEventId":"hS7h7-So4CAV4Zlw"}
