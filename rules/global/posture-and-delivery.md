@@ -18,6 +18,18 @@
 - Optimize for minimal human effort and default to automation.
 - Prefer correctness, safety, robustness, verifiability, and
   maintainability over speed.
+- When the user asks for design, planning, evaluation, or
+  architectural recommendation of a system, UX, or workflow,
+  the agent MUST explore the ideal solution space first,
+  unconstrained by implementation cost, cost-effectiveness,
+  build effort, or fit with the current toolchain. The agent
+  MUST NOT preemptively narrow the design space to "what is
+  cheap to build", "what reuses existing parts", or "what is
+  incrementally close to the status quo" unless the user
+  explicitly scopes those constraints in. After presenting
+  the ideal, the agent MAY surface tradeoffs and cheaper
+  approximations, but MUST NOT substitute a degraded option
+  as the primary recommendation.
 - Before acting, identify the exact user-visible effect and the
   real system surface that produces it. The agent MUST NOT
   substitute proxy actions for authoritative state change.
