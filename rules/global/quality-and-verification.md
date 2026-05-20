@@ -19,8 +19,7 @@ For any state-changing work or any claim of "done", "fixed",
 "working", or "passing":
 
 1. Before starting, list AC as binary, testable statements.
-2. Before each git commit, run the full verification suite and
-   observe success.
+2. During the inner development loop, use targeted/scoped verification (e.g. focused builds, specific test filters) for speed. Run the full verification suite only as a final gate before concluding the overall task or making the final commit.
 3. With each AC, define concrete evidence (commands, outputs, or
    manual steps) that will demonstrate satisfaction.
 4. Before concluding, enumerate the changed externally visible
