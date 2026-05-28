@@ -71,6 +71,15 @@ compose-agentsmd
 `AGENTS.md` files are generated output; edit the modules in `rules/global/` or
 `rules/domains/` instead.
 
+## Question and exam Markdown
+
+Question, quiz, exam, and preparation-set authoring rules live in
+`rules/domains/exam/exam-markdown-format.md`. The current common format uses
+Markdown question files plus a manifest as the editable sources,
+`markdown-to-qti` as the only supported Markdown parser/compiler, and QTI
+packages as the shared output artifact. Legacy `convert-exam-md-to-html`
+workflows are deprecated for new question authoring.
+
 ## Public vs private
 
 This repository is intended for rules that are safe to keep public. For private
