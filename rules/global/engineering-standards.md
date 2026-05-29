@@ -64,6 +64,20 @@
   primary language, pinned in manifests or lockfiles.
 - The agent MUST NOT disable lint rules globally. Suppressions
   MUST be narrow, justified inline, and time-bounded.
+- Every new repository MUST configure formatter automation before
+  being reported complete.
+- When working in an existing repository, the agent MUST preserve
+  or add formatter automation when the repository lacks it and the
+  task changes formatter-managed files.
+- Formatter automation MUST use a three-layer model:
+  1. editor/agent edit flows run the repository formatter in write
+     mode immediately after creating or modifying formatter-managed
+     files;
+  2. pre-commit hooks run the repository formatter in write mode on
+     changed formatter-managed files and stage the resulting changes;
+  3. CI runs formatter checks in check-only mode and fails on drift.
+- CI formatter checks MUST NOT write, commit, push, or otherwise
+  mutate repository contents.
 
 ## CI enforcement
 
