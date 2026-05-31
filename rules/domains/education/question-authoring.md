@@ -35,3 +35,24 @@
 - When authoring a short question set, order items from lower intrinsic load to
   higher intrinsic load and cover multiple important taught targets rather than
   repeating one surface pattern.
+
+## Course exam question authoring
+
+- When creating course exam questions, check the syllabus and course materials
+  specified by the user, and limit questions to the taught scope at the time of
+  the exam.
+- For beginner course exams, write questions that students can answer when they
+  can solve the course exercises for the taught scope.
+- When the user specifies that certain skills are more important for continuing
+  later classes, assign higher scoring weight to those skills.
+- Before writing each question, decide its `出題意図`. Write the question so
+  that it tests that intent.
+- Put `出題意図` at the beginning of `## Explanation`.
+- When creating a preparation set for a regular exam:
+  - match each preparation question one-to-one with the regular exam question;
+  - keep the same assessed skill;
+  - use exactly the same `## Scoring` text;
+  - change surface details so the student must apply the skill rather than copy
+    the preparation answer.
+- Write shared scoring text abstractly enough to apply to both the preparation
+  question and the paired regular exam question.
