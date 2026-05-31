@@ -41,6 +41,11 @@
 - When creating course exam questions, check the syllabus and course materials
   specified by the user, and limit questions to the taught scope at the time of
   the exam.
+- Confirm the exam's full score and time limit before finalizing the question
+  set.
+- Match the total scoring points to the exam's full score.
+- For midterm exams in this course context, use 20 points unless the user
+  specifies otherwise.
 - For beginner course exams, write questions that students can answer when they
   can solve the course exercises for the taught scope.
 - When the user specifies that certain skills are more important for continuing
