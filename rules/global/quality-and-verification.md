@@ -19,7 +19,9 @@ For any state-changing work or any claim of "done", "fixed",
 "working", or "passing":
 
 1. Before starting, list AC as binary, testable statements.
-2. During the inner development loop, use targeted/scoped verification (e.g. focused builds, specific test filters) for speed. Run the full verification suite only as a final gate before concluding the overall task or making the final commit.
+2. Use targeted/scoped verification in the inner loop and run the
+   full suite only as the final gate before concluding or the final
+   commit. Procedure: `quality-workflow`.
 3. With each AC, define concrete evidence (commands, outputs, or
    manual steps) that will demonstrate satisfaction.
 4. Before concluding, enumerate the changed externally visible
@@ -43,18 +45,12 @@ For any state-changing work or any claim of "done", "fixed",
   MUST follow a failing-test-to-passing-test loop.
 - On a failing security audit, attempt the documented automated
   fix. If it succeeds and verification passes, commit and push.
-- Long-running verification gates (pre-commit verify, full test
-  suite, CI pipeline) are final confirmation, not inner-loop
-  debugging tools. When such a gate surfaces a failure, the
-  agent MUST verify successive hypotheses against the smallest
-  reproducer that can settle them (single failing test, targeted
-  build, isolated command) before re-running the full gate.
-- When a test fails after a dependency bump or environment
-  change, the agent MUST first reproduce the same test against
-  the pre-change state (prior SHA / pre-bump seed) before
-  attributing the failure to the change. A test that fails only
-  after the change narrows the cause; a test that fails in both
-  states rules the change out.
+- Long-running gates (pre-commit verify, full suite, CI) are final
+  confirmation, not inner-loop debuggers: the agent MUST settle each
+  hypothesis against the smallest reproducer and, after a dependency
+  or environment change, MUST reproduce against the pre-change state
+  before attributing failure to the change. Procedure:
+  `quality-workflow`.
 
 ## Runtime verification
 

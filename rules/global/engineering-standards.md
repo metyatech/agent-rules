@@ -69,15 +69,10 @@
 - When working in an existing repository, the agent MUST preserve
   or add formatter automation when the repository lacks it and the
   task changes formatter-managed files.
-- Formatter automation MUST use a three-layer model:
-  1. editor/agent edit flows run the repository formatter in write
-     mode immediately after creating or modifying formatter-managed
-     files;
-  2. pre-commit hooks run the repository formatter in write mode on
-     changed formatter-managed files and stage the resulting changes;
-  3. CI runs formatter checks in check-only mode and fails on drift.
-- CI formatter checks MUST NOT write, commit, push, or otherwise
-  mutate repository contents.
+- Repositories MUST run formatter automation across the editor,
+  pre-commit, and CI layers; CI formatter checks MUST NOT write,
+  commit, push, or otherwise mutate repository contents. Layer
+  procedure: `code-quality-setup`.
 
 ## CI enforcement
 
@@ -86,22 +81,15 @@
 
 ## GitHub Actions runtime currency
 
-- GitHub Actions workflows authored or modified by the agent MUST
-  run JavaScript actions on GitHub's current GA Node major.
-- During GitHub's migration window, when the runner default is still
-  an older Node major, the agent MUST set GitHub's documented opt-in
-  environment variable at workflow scope. For the Node 20 to Node 24
-  migration, set `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"` under
-  top-level workflow `env`.
-- The agent MUST treat GitHub Actions runtime deprecation annotations
-  as defects to fix in the same change set, not as warnings to merely
-  report.
-- The agent MUST NOT pin workflows, action metadata, or setup actions
-  to deprecated runtime majors unless the user explicitly requests the
-  deprecated runtime and the risk is documented.
-- When GitHub promotes the newer Node major to the default runner
-  runtime, the agent MUST remove obsolete temporary opt-in variables
-  in the same change set that updates the affected workflow.
+- GitHub Actions JavaScript actions MUST run on GitHub's current GA
+  Node major; during a migration window the agent MUST set the
+  documented workflow-scope opt-in variable and remove it once that
+  major becomes the runner default. Migration procedure:
+  `code-quality-setup`.
+- The agent MUST treat runtime deprecation annotations as defects to
+  fix in the same change set, and MUST NOT pin workflows, action
+  metadata, or setup actions to deprecated runtime majors unless the
+  user explicitly requests it and documents the risk.
 
 ## Accessibility checks
 
@@ -125,6 +113,6 @@
 
 - After code changes, determine whether deployment beyond
   commit/push is needed. Procedures: `post-deploy`.
-- For globally linked packages, rebuild and verify the global
-  binary. For running services, rebuild, restart, and verify.
-  Tear down temp resources before concluding.
+- For globally linked packages and running services, rebuild,
+  restart where applicable, verify the live instance, and tear down
+  temp resources before concluding.
