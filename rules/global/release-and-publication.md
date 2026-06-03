@@ -13,7 +13,6 @@ Detailed release procedures live in the `release-publish` skill.
 - Define a SemVer policy and document what counts as a
   breaking change.
 - Keep the package version and the Git tag consistent.
-- Run dependency security checks before every release.
 
 ## Trusted publishing
 

@@ -103,12 +103,8 @@
   runtime, the agent MUST remove obsolete temporary opt-in variables
   in the same change set that updates the affected workflow.
 
-## Dependency and security scanning
+## Accessibility checks
 
-- GitHub Actions repos MUST configure Dependabot for all
-  applicable ecosystems, including `github-actions`, unless no
-  external update surface exists.
-- Repos MUST enable dependency scanning and secret scanning.
 - Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability
