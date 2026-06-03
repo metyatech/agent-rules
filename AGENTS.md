@@ -52,6 +52,32 @@ Source: rules/domains/education/question-authoring.md
   higher intrinsic load and cover multiple important taught targets rather than
   repeating one surface pattern.
 
+## Course exam question authoring
+
+- When creating course exam questions, check the syllabus and course materials
+  specified by the user, and limit questions to the taught scope at the time of
+  the exam.
+- Confirm the exam's full score and time limit before finalizing the question
+  set.
+- Match the total scoring points to the exam's full score.
+- For midterm exams in this course context, use 20 points unless the user
+  specifies otherwise.
+- For beginner course exams, write questions that students can answer when they
+  can solve the course exercises for the taught scope.
+- When the user specifies that certain skills are more important for continuing
+  later classes, assign higher scoring weight to those skills.
+- Before writing each question, decide its `出題意図`. Write the question so
+  that it tests that intent.
+- Put `出題意図` at the beginning of `## Explanation`.
+- When creating a preparation set for a regular exam:
+  - match each preparation question one-to-one with the regular exam question;
+  - keep the same assessed skill;
+  - use exactly the same `## Scoring` text;
+  - change surface details so the student must apply the skill rather than copy
+    the preparation answer.
+- Write shared scoring text abstractly enough to apply to both the preparation
+  question and the paired regular exam question.
+
 Source: rules/domains/exam/exam-markdown-format.md
 
 # Exam Markdown
@@ -106,6 +132,31 @@ time_budget_seconds: 90
 - `${...}` MUST NOT be used for cloze answers or any other answer placeholder.
 - Keep educational quality rules in the education domain separate from this
   operational Markdown/QTI format rule.
+
+## Preparation and regular exam pairing
+
+- When creating a preparation question set for a regular exam, pair each
+  preparation question with the corresponding regular exam question one-to-one.
+  - Example: `1preparation/q1.q.md` corresponds to `2regular` question 1.
+  - Example: `1preparation/q2.q.md` corresponds to `2regular` question 2.
+  - When the user explicitly requests a different structure, follow the user's
+    requested structure.
+- When using a note such as `本試験では`, write it for the paired regular exam
+  question and clearly describe what changes in that paired regular exam
+  question.
+- Write preparation questions as surface-varied versions of the paired regular
+  exam questions when students may view preparation materials during the exam.
+  Change surface details such as values, strings, prompt text, conditions,
+  ranges, examples, or output text while keeping the same assessed skill.
+- Use exactly the same `## Scoring` text for each paired preparation and regular
+  exam question.
+- When the same scoring text needs to apply to both a preparation question and a
+  regular exam question, write the scoring text abstractly enough to apply to
+  both.
+  - Use wording such as `指定された値`, `指定された文字列`,
+    `要求通りの出力`, `下限値以上`, and `上限値以下`.
+- Put the question intent at the beginning of `## Explanation`.
+  - Example: `出題意図: ...`
 
 ## Manifest format
 
