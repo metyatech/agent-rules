@@ -24,8 +24,18 @@
   explicitly asks for an extension-level assessment.
 - Questions MUST have a single defensible answer, or explicitly state the
   accepted answer range.
-- Multiple-choice distractors MUST be plausible and based on likely
-  misconceptions or mistakes.
+- Multiple-choice distractors MUST be plausible, close to the correct answer,
+  and based on likely misconceptions or mistakes.
+- Each multiple-choice distractor MUST differ from the correct answer by one
+  meaningful concept, target, condition, order, or effect.
+- Multiple-choice distractors MUST NOT be obviously unrelated options from a
+  different feature area when the question assesses specific technical
+  understanding.
+- For technical workflow questions, multiple-choice distractors SHOULD remain
+  within the same tool, editor, panel, node family, command family, or
+  operation category as the correct answer.
+- Multiple-choice distractors MAY be obviously wrong only when the learning
+  objective is basic vocabulary recognition for first exposure.
 - Fill-in questions MUST specify the expected answer format and any forbidden or
   equivalent answers when ambiguity is likely.
 - Explanations MUST state the reasoning, concept, procedure, or misconception
