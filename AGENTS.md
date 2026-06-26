@@ -36,12 +36,21 @@ Source: rules/domains/education/question-authoring.md
 - Prompts, answers, and explanations MUST stand alone without referring to
   "this material", "the attached document", "lesson N", or other external
   source context unless that source context is included in the prompt itself.
-- Questions MUST NOT require untaught or extension-only content unless the task
-  explicitly asks for an extension-level assessment.
+- Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce, require, or casually reference untaught concepts, features, parameters, APIs, syntax, techniques, tools, or extension-only content unless the user explicitly requests extension-level assessment.
 - Questions MUST have a single defensible answer, or explicitly state the
   accepted answer range.
-- Multiple-choice distractors MUST be plausible and based on likely
-  misconceptions or mistakes.
+- Multiple-choice distractors MUST be plausible, close to the correct answer,
+  and based on likely misconceptions or mistakes.
+- Each multiple-choice distractor MUST differ from the correct answer by one
+  meaningful concept, target, condition, order, or effect.
+- Multiple-choice distractors MUST NOT be obviously unrelated options from a
+  different feature area when the question assesses specific technical
+  understanding.
+- For technical workflow questions, multiple-choice distractors SHOULD remain
+  within the same tool, editor, panel, node family, command family, or
+  operation category as the correct answer.
+- Multiple-choice distractors MAY be obviously wrong only when the learning
+  objective is basic vocabulary recognition for first exposure.
 - Fill-in questions MUST specify the expected answer format and any forbidden or
   equivalent answers when ambiguity is likely.
 - Explanations MUST state the reasoning, concept, procedure, or misconception
@@ -130,6 +139,9 @@ time_budget_seconds: 90
 - Cloze answers MUST use `{{answer}}` for exact answers or `{{/regex/}}` for
   regular-expression answers.
 - `${...}` MUST NOT be used for cloze answers or any other answer placeholder.
+- Cloze answer markers are active only in `question_type: cloze`.
+- In descriptive and choice questions, `{{...}}` is ordinary text and MAY appear in language examples or code snippets.
+- Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer marker.
 - Keep educational quality rules in the education domain separate from this
   operational Markdown/QTI format rule.
 
