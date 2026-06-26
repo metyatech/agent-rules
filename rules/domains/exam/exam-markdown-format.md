@@ -48,6 +48,11 @@ time_budget_seconds: 90
 - Cloze answers MUST use `{{answer}}` for exact answers or `{{/regex/}}` for
   regular-expression answers.
 - `${...}` MUST NOT be used for cloze answers or any other answer placeholder.
+- Cloze answer markers are active only in `question_type: cloze`.
+- In descriptive and choice questions, `{{...}}` is ordinary text and MAY appear
+  in language examples or code snippets.
+- Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer
+  marker.
 - Keep educational quality rules in the education domain separate from this
   operational Markdown/QTI format rule.
 

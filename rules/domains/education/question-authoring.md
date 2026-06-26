@@ -20,8 +20,7 @@
 - Prompts, answers, and explanations MUST stand alone without referring to
   "this material", "the attached document", "lesson N", or other external
   source context unless that source context is included in the prompt itself.
-- Questions MUST NOT require untaught or extension-only content unless the task
-  explicitly asks for an extension-level assessment.
+- Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce, require, or casually reference untaught concepts, features, parameters, APIs, syntax, techniques, tools, or extension-only content unless the user explicitly requests extension-level assessment.
 - Questions MUST have a single defensible answer, or explicitly state the
   accepted answer range.
 - Multiple-choice distractors MUST be plausible, close to the correct answer,

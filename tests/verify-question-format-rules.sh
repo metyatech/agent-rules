@@ -45,6 +45,16 @@ do
   require_contains "$file" '`time_estimate_seconds` MUST NOT be used'
   require_contains "$file" 'Manifest `type: quiz` and `type: exam` MUST NOT be used'
   require_contains "$file" "Do not apply weekly quiz-specific fixed-window rules"
+  require_contains "$file" 'Cloze answer markers are active only in `question_type: cloze`.'
+  require_contains "$file" 'In descriptive and choice questions, `{{...}}` is ordinary text'
+  require_contains "$file" 'Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer marker.'
+done
+
+for file in \
+  rules/domains/education/question-authoring.md \
+  AGENTS.md
+do
+  require_contains "$file" "Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce"
 done
 
 require_contains README.md "Question and exam Markdown"
