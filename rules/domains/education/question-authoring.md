@@ -59,6 +59,7 @@
   can solve the course exercises for the taught scope.
 - When the user specifies that certain skills are more important for continuing
   later classes, assign higher scoring weight to those skills.
+- Distribute exam points across the important taught targets and avoid overrepresenting one surface pattern unless the user explicitly prioritizes it.
 - Before writing each question, decide its `出題意図`. Write the question so
   that it tests that intent.
 - Put `出題意図` at the beginning of `## Explanation`.

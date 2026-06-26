@@ -55,6 +55,7 @@ for file in \
   AGENTS.md
 do
   require_contains "$file" "Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce"
+  require_contains "$file" "Distribute exam points across the important taught targets"
 done
 
 require_contains README.md "Question and exam Markdown"
