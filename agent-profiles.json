@@ -3,6 +3,9 @@
     "course-docs": {
       "domains": ["education", "course-docs"]
     },
+    "course-docs-platform": {
+      "domains": ["node", "web", "education", "course-docs"]
+    },
     "course-exams": {
       "domains": ["education", "course-exams"]
     },
