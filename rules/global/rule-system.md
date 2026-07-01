@@ -1,4 +1,4 @@
-# Rule and skill system
+# Rule system
 
 ## Compliance vocabulary
 
@@ -7,13 +7,13 @@ keywords mean MUST.
 
 ## Composition
 
-- The agent MUST NOT edit `AGENTS.md` directly; it is composed
-  output and MUST be self-contained at the repository root.
-- A new repository MUST include `agent-ruleset.json`, compose
-  AGENTS.md, and satisfy the required global standards before
-  being reported complete.
-- compose-agentsmd procedures live in
-  `compose-agentsmd/tools/tool-rules.md`.
+- The agent MUST NOT edit `AGENTS.md` or `CLAUDE.md` directly; they are composed outputs.
+- A repository using this rule system MUST include `agent-ruleset.json` with `sources` and `profile`.
+- A consuming repository MUST select a profile; it MUST NOT list domains or extra/local rule files directly.
+- Profiles MUST be defined in `agent-profiles.json` at the rules source root.
+- Domains under `rules/domains/<domain>/` are internal rule groupings selected by profiles.
+- Project-specific rule files under `agent-rules-local/` MUST NOT be used. A rule that is reusable belongs in `agent-rules`; a truly private rule belongs in a private rules source.
+- compose-agentsmd procedures live in `compose-agentsmd/tools/tool-rules.md`.
 
 ## Authoring rules
 
@@ -23,9 +23,7 @@ keywords mean MUST.
   compliance keywords, and be testable as a yes/no check without
   outside context. Rules MUST NOT contain hedges such as
   "ideally", "reasonable", or "perhaps".
-- Placement: `rules/global/` for any-workspace rules;
-  `rules/domains/<domain>/` for opt-in domains;
-  `agent-rules-local/` for single-repo rules.
+- Placement: `rules/global/` for any-workspace rules; `rules/domains/<domain>/` for profile-selected rules; `agent-profiles.json` for mapping profiles to domains.
 - When updating a rule, encode the underlying general principle,
   not the surface example. Trace the update back to the reasoning
   error that permitted the original mistake.
@@ -47,26 +45,3 @@ keywords mean MUST.
   checkable; if so, ship the check in the same change set. When
   editing a rule, migrate any mechanically checkable subset into a
   system check in the same change set.
-
-## Authoring skills
-
-- A skill MUST follow the Agent Skills open standard. `SKILL.md`
-  frontmatter MUST contain only `name` and `description`; `name`
-  MUST be lowercase alphanumeric with hyphens, at most 64
-  characters; `description` MUST explain trigger conditions.
-- `SKILL.md` MUST be platform-agnostic and use intent-level
-  wording; platform-specific examples MUST live in `README.md`.
-  `SKILL.md` and `README.md` SHOULD be in English.
-- Skill instructions MUST be concise and action-oriented. A skill
-  MUST NOT duplicate AGENTS.md global rules; reference the rule
-  module by name instead.
-
-## Skill packaging and updates
-
-- Each skill MUST live in its own `metyatech/skill-<name>`
-  repository with `SKILL.md` at the root, a LICENSE file
-  (MIT preferred), and public visibility.
-- The GitHub repository is the canonical source of truth.
-  The agent MUST NOT edit installed copies under
-  `~/.agents/skills/<name>`; push to the source and re-install
-  via `npx skills add metyatech/skill-<name> --yes --global`.

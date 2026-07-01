@@ -2,14 +2,12 @@
 
 ## Browser automation
 
-- For web automation, use the agent-browser Skill.
-- If browser launch fails due to missing Playwright binaries, run npx playwright
-  install chromium and retry.
+- For web automation or UI verification, use the browser automation tooling available in the current agent environment.
+- If browser launch fails due to missing Playwright binaries, run `npx playwright install chromium` and retry.
 
 ## UI verification and E2E
 
-- For user-visible UI changes, verify in a real browser using agent-browser; if
-  not possible, explain and provide manual steps.
+- For user-visible UI changes, verify in a real browser; if not possible, explain and provide manual steps.
 - Always add E2E tests for user-visible changes; if no harness exists, add one.
 - Run E2E in CI and require it for PR merges; do not defer correctness coverage
   to scheduled runs.

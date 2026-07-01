@@ -1,0 +1,24 @@
+# Weekly Quiz Quality
+
+- Weekly quizzes MUST help students retrieve taught lesson content, check whether they understand it, and identify knowledge gaps.
+- A weekly quiz for `wX` MUST assess the content of lesson `X-1` unless the course workflow explicitly defines a different mapping.
+- Before drafting or revising a weekly quiz, the agent MUST identify the target week, schedule entry, syllabus scope, and relevant taught material.
+- The agent MUST check both the syllabus and the actual lesson materials, textbook pages, worked examples, exercises, or instructor notes for the target lesson.
+- Syllabus entries MUST be used only to identify the lesson scope.
+- Quiz prompts, answers, distractors, and explanations MUST be grounded in actual taught material, not general subject knowledge.
+- If the actual materials cannot be found, the agent MUST report the missing source instead of fabricating a quiz from the syllabus alone.
+- Each quiz item MUST use only concepts, terms, operations, and syntax explicitly taught up to and including the target lesson.
+- Quiz items MUST NOT depend on later-lesson content, untaught vocabulary, external general knowledge, or one-off classroom events.
+- Prompts MUST NOT ask what happened in a specific lesson, such as `第N回で何をしましたか`.
+- A question based on an in-class task MUST be rewritten as a content, scenario, or procedure question answerable without remembering that class event.
+- A quiz bundle SHOULD cover multiple important topics from the relevant lesson instead of repeating one topic.
+- Each multiple-choice question MUST have one defensible correct answer.
+- Multiple-choice distractors MUST be credible near-misses based on taught misconceptions, likely learner mistakes, procedure-order errors, vocabulary confusions, code/API mix-ups, or plausible alternatives from the covered material.
+- Multiple-choice distractors MUST NOT be joke answers, obviously unrelated actions, absurd options, untaught content, or choices that can be eliminated without understanding the lesson.
+- Multiple-choice prompts and choices MUST be written in parallel forms so the correct answer is not revealed by wording differences.
+- Multiple-choice quiz bundles MUST vary the correct option position when item constraints allow it.
+- Individual questions SHOULD normally take 30-60 seconds for Track-familiar learners.
+- Exported quiz bundles MUST remain within the 3-7 minute duration window unless the schedule marks the week as no-quiz.
+- Every question SHOULD include concise feedback suitable for short Track review.
+- Before reporting a quiz bundle as ready, the agent MUST audit every item for answer uniqueness, answer-format clarity, plausible distractors, non-overlapping choices, and absence of wording giveaways.
+- Before reporting a weekly quiz change as complete, the agent MUST run the relevant question validation command, export the affected week, inspect the export result for Track-facing issues, and run the repository-standard verification command.

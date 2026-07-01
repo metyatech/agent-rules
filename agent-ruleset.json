@@ -1,8 +1,7 @@
 {
-  "source": ".",
+  "sources": ["."],
+  "profile": "agent-rules",
   "global": false,
-  "domains": ["education", "exam", "node", "unreal", "web"],
-  "extra": [],
   "claude": {
     "enabled": true,
     "output": "CLAUDE.md"

@@ -1,0 +1,49 @@
+{
+  "profiles": {
+    "course-docs": {
+      "domains": ["education", "course-docs"]
+    },
+    "course-exams": {
+      "domains": ["education", "course-exams"]
+    },
+    "syllabus-data": {
+      "domains": ["education", "syllabus"]
+    },
+    "weekly-quiz": {
+      "domains": ["education", "weekly-quiz"]
+    },
+    "node-cli": {
+      "domains": ["node", "agent-tooling"]
+    },
+    "node-web": {
+      "domains": ["node", "web"]
+    },
+    "agent-rules": {
+      "domains": ["agent-tooling"]
+    },
+    "compose-agentsmd": {
+      "domains": ["node", "agent-tooling", "compose-agentsmd"]
+    },
+    "agent-runner": {
+      "domains": ["node", "agent-tooling", "agent-runner"]
+    },
+    "task-tracker": {
+      "domains": ["node", "agent-tooling"]
+    },
+    "agent-dotfiles": {
+      "domains": ["dotfiles", "agent-tooling"]
+    },
+    "workspace-agent-hub": {
+      "domains": ["workspace", "agent-tooling"]
+    },
+    "unreal": {
+      "domains": ["unreal"]
+    },
+    "xroidverse": {
+      "domains": ["unreal", "xroidverse"]
+    },
+    "skill": {
+      "domains": ["skill"]
+    }
+  }
+}

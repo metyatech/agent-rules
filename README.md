@@ -1,87 +1,58 @@
 # Agent Rules
 
-This repository stores modular rule files that are composed into per-project
-`AGENTS.md` files. It is intended to be added as a git submodule at each project
-root.
-
-The compose tool is published as the npm package `compose-agentsmd`.
+This repository stores public rule modules consumed by `compose-agentsmd`.
 
 ## Structure
 
-- `rules/`: reusable rule modules (Markdown)
-  - `rules/global/`: rules applied to all projects
-  - `rules/domains/`: rules for specific domains
-- `agent-ruleset.json`: a per-project ruleset file stored at each project root
+- `agent-profiles.json`: maps profile names to domain lists.
+- `rules/global/`: user-global rules shared across agent environments.
+- `rules/domains/`: profile-selected repository-facing rules.
+- `tests/`: repository checks for rule content invariants.
 
-## Ruleset format
+## Consuming repository ruleset
+
+Consuming repositories use `sources` and `profile`.
 
 ```json
 {
-  "output": "AGENTS.md",
-  "domains": ["unreal"],
-  "rules": ["agent-rules-local/custom.md"]
+  "sources": ["github:metyatech/agent-rules"],
+  "profile": "course-docs",
+  "output": "AGENTS.md"
 }
 ```
 
-- `output` is resolved relative to the ruleset file.
-- Global rules are always included from `rules/global/`.
-- `domains` selects domain folders under `rules/domains/`.
-- Each `rules` entry is resolved relative to the ruleset JSON file.
-  - For project-specific rules, add modules in the project itself (e.g.
-    `agent-rules-local/`) and reference them from `agent-ruleset.json`.
+Consuming repositories MUST NOT list domains directly and MUST NOT use `extra` or `agent-rules-local`.
 
-## Install (global CLI)
+## Profiles
 
-```sh
-npm install -g compose-agentsmd
-```
+Profiles are defined in `agent-profiles.json`.
 
-## Compose
+Domains are internal groupings under `rules/domains/<domain>/`.
 
-From each project root:
+## Updating rules
 
-```sh
-compose-agentsmd
-```
+Edit `agent-profiles.json`, `rules/global/`, or `rules/domains/`.
 
-Optional arguments:
+Do not edit generated `AGENTS.md` or `CLAUDE.md` directly.
 
-- `--root <path>`: project root (defaults to current working directory)
-- `--ruleset <path>`: only compose a single ruleset
-- `--ruleset-name <name>`: override the ruleset filename (default:
-  `agent-ruleset.json`)
-- `--rules-root <path>`: override the rules root for all rulesets
+## Skills
 
-### Rules root resolution (important for global installs)
+This repository does not install, resolve, or trigger skills.
 
-When the tool is installed globally and this repository is _not_ a submodule of
-the target project, point the tool at the rules directory:
+Skill behavior belongs in each `skill-*` repository's `SKILL.md`.
 
-```sh
-compose-agentsmd --rules-root "C:/path/to/agent-rules/rules"
-```
+The `skill` domain only contains repository rules for skill repositories.
 
-Or via environment variable:
+## Private rules
 
-```sh
-set AGENT_RULES_ROOT=C:/path/to/agent-rules/rules
-compose-agentsmd
-```
+General reusable rules belong in this public repository.
 
-`AGENTS.md` files are generated output; edit the modules in `rules/global/` or
-`rules/domains/` instead.
+`agent-rules-private` is reserved only for future rules that contain genuinely private, user-specific, or organization-private information.
 
 ## Question and exam Markdown
 
-Question, quiz, exam, and preparation-set authoring rules live in
-`rules/domains/exam/exam-markdown-format.md`. The current common format uses
-Markdown question files plus a manifest as the editable sources,
-`markdown-to-qti` as the only supported Markdown parser/compiler, and QTI
-packages as the shared output artifact. Legacy `convert-exam-md-to-html`
-workflows are deprecated for new question authoring.
+Question, quiz, exam, and preparation-set authoring rules live in `rules/domains/course-exams/markdown-qti-format.md`.
 
-## Public vs private
+The current common format uses Markdown question files plus a manifest as editable sources, `markdown-to-qti` as the only supported Markdown parser/compiler, and QTI packages as the shared output artifact.
 
-This repository is intended for rules that are safe to keep public. For private
-repositories, use a separate rules repository that includes additional
-confidentiality rules.
+Legacy `convert-exam-md-to-html` workflows are deprecated for new question authoring.

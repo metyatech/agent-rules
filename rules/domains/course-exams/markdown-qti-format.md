@@ -1,4 +1,4 @@
-# Exam Markdown
+# Course Exam Markdown and QTI Format
 
 ## Common question format
 
@@ -71,8 +71,8 @@ time_budget_seconds: 90
   ranges, examples, or output text while keeping the same assessed skill.
 - Use exactly the same `## Scoring` text for each paired preparation and regular
   exam question.
-- When the same scoring text needs to apply to both a preparation question and a
-  regular exam question, write the scoring text abstractly enough to apply to
+- When the same scoring text needs to apply to both a preparation question and
+  a regular exam question, write the scoring text abstractly enough to apply to
   both.
   - Use wording such as `指定された値`, `指定された文字列`,
     `要求通りの出力`, `下限値以上`, and `上限値以下`.

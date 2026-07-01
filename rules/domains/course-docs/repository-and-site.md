@@ -1,0 +1,22 @@
+# Course Docs Repository and Site Architecture
+
+- `metyatech/course-docs-site` is the only runnable Next.js/Nextra course site app.
+- `course-docs-site` owns routing, layouts, middleware, site runtime wiring, and end-to-end tests for the site runtime.
+- `metyatech/course-docs-platform` owns shared MDX components, remark/rehype configuration, webpack asset rules, and shared course site behavior.
+- `<course>-course-docs` repositories are content-only repositories.
+- Course content repositories MUST keep only course content, static assets, and course-specific configuration such as `content/**`, `public/img/**`, and `site.config.ts`.
+- Course content repositories MUST NOT add Next.js/Nextra app runtime files such as `next.config.js`, `src/app`, app package files, or site runtime implementations.
+- `public/img/favicon.ico` is expected by `site.config.ts` when `faviconHref` references it.
+- Framework boilerplate assets MUST NOT be kept unless referenced by content.
+- Secrets MUST NOT be stored in course content repositories.
+- `.env.local` is local-only and belongs in `course-docs-site`, not in content repositories.
+- Course content MUST be previewed through `course-docs-site` by setting `COURSE_CONTENT_SOURCE`.
+- Shared rendering/runtime behavior that applies to multiple courses MUST be implemented in `course-docs-platform`, not duplicated in `course-docs-site` or content repositories.
+- `course-docs-site` MUST remain composition/wiring only for platform-owned behavior.
+- Vercel deployment for course sites MUST use GitHub Actions with the Vercel CLI, not Vercel's GitHub integration.
+- Generic tool-agnostic specs MUST remain in their dedicated repositories.
+- Course Docs Site-specific presentation conventions MUST be documented in `course-docs-platform` or the `course-docs` domain, not in generic specs.
+- Course docs pages MUST define page titles in frontmatter.
+- `_meta.ts` MUST be used for grouping-only folder labels, not for overriding ordinary page titles.
+- Default sidebar collapse behavior MUST be controlled through `theme.config.tsx` sidebar settings.
+- `theme.collapsed` MUST be used only for true exceptions.

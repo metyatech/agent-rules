@@ -23,43 +23,50 @@ require_not_contains() {
   fi
 }
 
-for file in \
-  rules/domains/exam/exam-markdown-format.md \
-  AGENTS.md
+# Common Markdown/QTI format lives in the course-exams domain.
+for pattern in \
+  "markdown-to-qti is the only supported Markdown parser/compiler" \
+  "question_type" \
+  "time_budget_seconds" \
+  "descriptive" \
+  "choice" \
+  "cloze" \
+  "{{answer}}" \
+  "{{/regex/}}" \
+  "title" \
+  "time_limit_seconds" \
+  "items" \
+  "convert-exam-md-to-html" \
+  "legacy/deprecated" \
+  '`${...}` MUST NOT be used' \
+  '`## Type` MUST NOT be used' \
+  '`time_estimate_seconds` MUST NOT be used' \
+  'Manifest `type: quiz` and `type: exam` MUST NOT be used' \
+  "Do not apply weekly quiz-specific fixed-window rules" \
+  'Cloze answer markers are active only in `question_type: cloze`.' \
+  'In descriptive and choice questions, `{{...}}` is ordinary text' \
+  'Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer marker.'
 do
-  require_contains "$file" "markdown-to-qti is the only supported Markdown parser/compiler"
-  require_contains "$file" "question_type"
-  require_contains "$file" "time_budget_seconds"
-  require_contains "$file" "descriptive"
-  require_contains "$file" "choice"
-  require_contains "$file" "cloze"
-  require_contains "$file" "{{answer}}"
-  require_contains "$file" "{{/regex/}}"
-  require_contains "$file" "title"
-  require_contains "$file" "time_limit_seconds"
-  require_contains "$file" "items"
-  require_contains "$file" "convert-exam-md-to-html"
-  require_contains "$file" "legacy/deprecated"
-  require_contains "$file" '`${...}` MUST NOT be used'
-  require_contains "$file" '`## Type` MUST NOT be used'
-  require_contains "$file" '`time_estimate_seconds` MUST NOT be used'
-  require_contains "$file" 'Manifest `type: quiz` and `type: exam` MUST NOT be used'
-  require_contains "$file" "Do not apply weekly quiz-specific fixed-window rules"
-  require_contains "$file" 'Cloze answer markers are active only in `question_type: cloze`.'
-  require_contains "$file" 'In descriptive and choice questions, `{{...}}` is ordinary text'
-  require_contains "$file" 'Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer marker.'
+  require_contains rules/domains/course-exams/markdown-qti-format.md "$pattern"
 done
 
-for file in \
-  rules/domains/education/question-authoring.md \
-  AGENTS.md
+# General educational question quality lives in the education domain.
+for pattern in \
+  "Multiple-choice distractors MUST NOT be obviously unrelated options" \
+  "Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce"
 do
-  require_contains "$file" "Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce"
-  require_contains "$file" "Distribute exam points across the important taught targets"
+  require_contains rules/domains/education/question-authoring.md "$pattern"
 done
 
+# Course-exam-specific scoring/scope rules live in course-exams domain.
+require_contains rules/domains/course-exams/question-authoring.md \
+  "Distribute exam points across the important taught targets"
+
+# README still surfaces the common format and tool name.
 require_contains README.md "Question and exam Markdown"
 require_contains README.md "markdown-to-qti"
 require_contains README.md "convert-exam-md-to-html"
 
-require_not_contains rules/domains/exam/exam-markdown-format.md "markdown-to-qti/markdown-question-spec.md"
+# Common Markdown/QTI format file must not reference the legacy exam path.
+require_not_contains rules/domains/course-exams/markdown-qti-format.md \
+  "markdown-to-qti/markdown-question-spec.md"
