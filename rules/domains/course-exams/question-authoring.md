@@ -10,5 +10,6 @@
 - Before writing each question, decide its `出題意図`. Write the question so that it tests that intent.
 - Put `出題意図` at the beginning of `## Explanation`.
 - When creating a preparation set for a regular exam, pair each preparation question one-to-one with the regular exam question.
-- Preparation questions MUST keep the same assessed skill and scoring text as the paired regular exam question.
-- Write shared scoring text abstractly enough to apply to both the preparation question and the paired regular exam question.
+- Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list as the paired regular exam question.
+- Write the shared `## Scoring` bullet list abstractly enough to apply to both the preparation question and the paired regular exam question.
+- The `## Scoring` bullet list carries no inline points; points are assigned per assessment in the manifest item `points` array.

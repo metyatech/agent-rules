@@ -21,6 +21,8 @@
   "this material", "the attached document", "lesson N", or other external
   source context unless that source context is included in the prompt itself.
 - Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce, require, or casually reference untaught concepts, features, parameters, APIs, syntax, techniques, tools, or extension-only content unless the user explicitly requests extension-level assessment.
+- Scoring criteria (also called rubric criteria) are the individual bullet items of a question's `## Scoring` section, each describing one thing the answer must demonstrate.
+- The number of scoring criteria and their ordering determine the assessment manifest `points` array: the `points` length MUST equal the criterion count, and each `points` entry maps to the criterion at the same index.
 - Questions MUST have a single defensible answer, or explicitly state the
   accepted answer range.
 - Multiple-choice distractors MUST be plausible, close to the correct answer,

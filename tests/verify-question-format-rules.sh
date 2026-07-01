@@ -38,6 +38,20 @@ for pattern in \
   "items" \
   "convert-exam-md-to-html" \
   "legacy/deprecated" \
+  "## Scoring" \
+  "question-bank/imported" \
+  "points:" \
+  "id:" \
+  "ref:" \
+  "id" \
+  "ref" \
+  "points" \
+  '/^[A-Za-z0-9][A-Za-z0-9_.:-]*$/' \
+  "A string item is FORBIDDEN." \
+  "Item order in the manifest is the assessment-test order." \
+  '`points` is REQUIRED when the referenced question has a `## Scoring` section.' \
+  '`points` is FORBIDDEN when the referenced question does NOT have a `## Scoring`' \
+  "Scoring criterion IDs are FORBIDDEN." \
   '`${...}` MUST NOT be used' \
   '`## Type` MUST NOT be used' \
   '`time_estimate_seconds` MUST NOT be used' \
@@ -70,3 +84,11 @@ require_contains README.md "convert-exam-md-to-html"
 # Common Markdown/QTI format file must not reference the legacy exam path.
 require_not_contains rules/domains/course-exams/markdown-qti-format.md \
   "markdown-to-qti/markdown-question-spec.md"
+
+# The old inline-point scoring example (`- 2: ...`) must be gone from the spec.
+require_not_contains rules/domains/course-exams/markdown-qti-format.md \
+  "- 2:"
+
+# Preparation/regular pairing now shares the `## Scoring` bullet list.
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  "Use exactly the same \`## Scoring\` bullet list"
