@@ -1,7 +1,5 @@
 # Release and publication
 
-Detailed release procedures live in the `release-publish` skill.
-
 ## Packaging hygiene
 
 - Every published artifact MUST include a LICENSE file with
@@ -24,9 +22,8 @@ Detailed release procedures live in the `release-publish` skill.
 
 ## GitHub repository metadata
 
-- For every public repository, set the GitHub Description,
-  Topics, and Homepage fields. Topics MUST be assigned from the
-  standard set defined in the `release-publish` skill.
+- For every public repository, set the GitHub Description, Topics, and Homepage fields.
+- Topics MUST be relevant, stable, lowercase GitHub topics that describe the repository's language, platform, domain, and artifact type.
 
 ## Verification of published artifacts
 

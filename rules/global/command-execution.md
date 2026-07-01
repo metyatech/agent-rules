@@ -1,8 +1,5 @@
 # Command execution
 
-Platform-aware execution procedures live in the
-`command-execution` skill.
-
 ## General execution rules
 
 - Prefer repository-standard scripts and commands (from
@@ -65,6 +62,6 @@ Platform-aware execution procedures live in the
   absolute target path first, normalize file attributes when
   needed, and prefer explicit PowerShell or .NET deletion APIs
   over alias-driven shell deletion.
-- Use explicit `agent-browser` session names on Windows. If the
-  default session bind fails, retry with a different name.
-  Close all task-owned agent-browser sessions before concluding.
+- Use explicit browser automation session names on Windows when the environment supports named sessions.
+- If the default browser automation session bind fails, retry with a different task-specific session name.
+- Close all task-owned browser automation sessions before concluding.
