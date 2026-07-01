@@ -45,6 +45,18 @@
     "xroidverse": {
       "domains": ["unreal", "xroidverse"]
     },
+    "generic": {
+      "domains": ["generic"]
+    },
+    "python": {
+      "domains": ["python"]
+    },
+    "markdown-to-qti": {
+      "domains": ["node", "agent-tooling", "markdown-to-qti"]
+    },
+    "opencode": {
+      "domains": ["agent-tooling", "opencode"]
+    },
     "skill": {
       "domains": ["skill"]
     }
