@@ -36,6 +36,9 @@
     "agent-dotfiles": {
       "domains": ["dotfiles", "agent-tooling"]
     },
+    "ghws-workspace": {
+      "domains": ["workspace"]
+    },
     "workspace-agent-hub": {
       "domains": ["workspace", "agent-tooling"]
     },
