@@ -2,8 +2,6 @@
 
 ## Repository workflow
 
-- The default branch in this repository is `dev`.
-- Local `main` may not exist; use `dev` or `origin/dev` for diffs when no other branch is specified.
 - To regenerate the JavaScript SDK, run `./packages/sdk/js/script/build.ts`.
 - Prefer automation: execute requested actions without confirmation unless blocked by missing information, safety, or irreversibility.
 - Repository-local OpenCode workflows MUST live in `.opencode/commands/`.
