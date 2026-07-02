@@ -5,8 +5,14 @@
 - When creating or editing Markdown questions, quizzes, exams, or preparation
   question sets, use the common Markdown question format below. Small quizzes,
   exams, and preparation question collections share this format.
-- Markdown question files live under
+- Markdown question files live under `courses/<slug>/question-bank/`.
+
+  Reusable weekly quiz questions live under
+  `courses/<slug>/question-bank/quiz-bank/**/*.q.md`.
+
+  Migrated historical questions live under
   `courses/<slug>/question-bank/imported/...`.
+
 - markdown-to-qti is the only supported Markdown parser/compiler for question
   Markdown.
 - The authoritative human/AI-edited sources are the question-bank Markdown
@@ -124,7 +130,9 @@ items:
 ## Question-bank layout
 
 - `courses/<slug>/question-bank/` is the course question bank.
-- Migrated questions live under
+- Reusable weekly quiz questions live under
+  `courses/<slug>/question-bank/quiz-bank/**/*.q.md`.
+- Migrated historical questions live under
   `courses/<slug>/question-bank/imported/<year>/<semester>/<kind>/<assessment-relative-path>/<qN>.q.md`.
 - Assessment directories MUST NOT keep question Markdown locally. They hold
   `assessment.yaml`, `assessment-run.json`, and `result/` only.
