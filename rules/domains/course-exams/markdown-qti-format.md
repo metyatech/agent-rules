@@ -133,12 +133,10 @@ items:
 
 ## Preparation and regular exam pairing
 
-- When creating a preparation question set for a regular exam, pair each
-  preparation question with the corresponding regular exam question one-to-one.
-  - Example: `1preparation/q1.q.md` corresponds to `2regular` question 1.
-  - Example: `1preparation/q2.q.md` corresponds to `2regular` question 2.
-  - When the user explicitly requests a different structure, follow the user's
-    requested structure.
+- Pair preparation and regular exam questions by manifest item order.
+  - Example: the first item in `1preparation/assessment.yaml` corresponds to the first item in `2regular/assessment.yaml`.
+  - Example: the second item in `1preparation/assessment.yaml` corresponds to the second item in `2regular/assessment.yaml`.
+- The paired manifest items MAY use different `id` and `ref` values, but their referenced questions MUST assess the same skill.
 - Pair preparation and regular exam questions one-to-one; their item counts and
   their `## Scoring` criterion counts MUST match.
 - When using a note such as `本試験では`, write it for the paired regular exam
@@ -154,7 +152,7 @@ items:
   a preparation question and the paired regular exam question (for example
   `指定された値`, `指定された文字列`, `要求通りの出力`, `下限値以上`, and
   `上限値以下`).
-- Points live in the assessment manifest item `points` array. When the paired
+- Points live in each assessment manifest item `points` array. When the paired
   preparation and regular exam share the same points, set `points` to the same
   array in both manifests.
 - Put the question intent at the beginning of `## Explanation`.

@@ -1,6 +1,6 @@
 {
-  "sources": ["."],
-  "profile": "agent-rules",
+  "source": ".",
+  "domains": ["agent-tooling"],
   "global": false,
   "claude": {
     "enabled": true,

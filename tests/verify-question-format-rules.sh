@@ -23,6 +23,26 @@ require_not_contains() {
   fi
 }
 
+require_matches() {
+  local file="$1"
+  local pattern="$2"
+
+  if ! grep -Eq -- "$pattern" "$repo_root/$file"; then
+    printf 'Expected %s to match regex: %s\n' "$file" "$pattern" >&2
+    return 1
+  fi
+}
+
+require_not_matches() {
+  local file="$1"
+  local pattern="$2"
+
+  if grep -Eq -- "$pattern" "$repo_root/$file"; then
+    printf 'Expected %s not to match regex: %s\n' "$file" "$pattern" >&2
+    return 1
+  fi
+}
+
 # Common Markdown/QTI format lives in the course-exams domain.
 for pattern in \
   "markdown-to-qti is the only supported Markdown parser/compiler" \
@@ -89,6 +109,23 @@ require_not_contains rules/domains/course-exams/markdown-qti-format.md \
 require_not_contains rules/domains/course-exams/markdown-qti-format.md \
   "- 2:"
 
+# Preparation/regular pairing must use manifest item order, not old qN path
+# examples or `2regular` question-number phrasing.
+require_not_contains rules/domains/course-exams/markdown-qti-format.md \
+  "1preparation/q1.q.md"
+require_not_matches rules/domains/course-exams/markdown-qti-format.md \
+  '2regular.*question 1'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'Pair preparation and regular exam questions by manifest item order.'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'the first item in `1preparation/assessment.yaml` corresponds to the first item in `2regular/assessment.yaml`.'
+
 # Preparation/regular pairing now shares the `## Scoring` bullet list.
 require_contains rules/domains/course-exams/markdown-qti-format.md \
   "Use exactly the same \`## Scoring\` bullet list"
+
+# Rule-system composition docs must use the singular compose-agentsmd source key.
+require_contains rules/global/rule-system.md \
+  'with `source` and `domains`'
+require_not_contains rules/global/rule-system.md \
+  'with `sources` and `profile`'

@@ -8,8 +8,8 @@ keywords mean MUST.
 ## Composition
 
 - The agent MUST NOT edit `AGENTS.md` or `CLAUDE.md` directly; they are composed outputs.
-- A repository using this rule system MUST include `agent-ruleset.json` with `sources` and `profile`.
-- A consuming repository MUST select a profile; it MUST NOT list domains or extra/local rule files directly.
+- A repository using this rule system MUST include `agent-ruleset.json` with `source` and `domains`.
+- A consuming repository MUST list only profile-selected domains in its ruleset; it MUST NOT list extra/local rule files directly.
 - Profiles MUST be defined in `agent-profiles.json` at the rules source root.
 - Domains under `rules/domains/<domain>/` are internal rule groupings selected by profiles.
 - Project-specific rule files under `agent-rules-local/` MUST NOT be used. A rule that is reusable belongs in `agent-rules`; a truly private rule belongs in a private rules source.
