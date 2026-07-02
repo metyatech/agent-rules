@@ -129,3 +129,25 @@ require_contains rules/global/rule-system.md \
   'with `source` and `domains`'
 require_not_contains rules/global/rule-system.md \
   'with `sources` and `profile`'
+
+# Agent-tooling composition rule must align with current source + domains ruleset.
+require_contains rules/domains/agent-tooling/composition.md \
+  'reproducible from `agent-ruleset.json` and the selected `domains`'
+require_contains rules/domains/agent-tooling/composition.md \
+  "A consuming repository's \`agent-ruleset.json\` MUST select the complete set of domains"
+require_not_contains rules/domains/agent-tooling/composition.md \
+  'selected profile'
+require_not_contains rules/domains/agent-tooling/composition.md \
+  'A profile MUST'
+require_not_contains rules/domains/agent-tooling/composition.md \
+  'agent-profiles.json'
+
+# Rule-system docs must not require the retired profile schema.
+require_not_contains rules/global/rule-system.md \
+  'selected profile'
+require_not_contains rules/global/rule-system.md \
+  'profile-selected domains'
+require_not_contains rules/global/rule-system.md \
+  'Profiles MUST'
+require_not_contains rules/global/rule-system.md \
+  'mapping profiles to domains'

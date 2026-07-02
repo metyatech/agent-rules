@@ -9,9 +9,8 @@ keywords mean MUST.
 
 - The agent MUST NOT edit `AGENTS.md` or `CLAUDE.md` directly; they are composed outputs.
 - A repository using this rule system MUST include `agent-ruleset.json` with `source` and `domains`.
-- A consuming repository MUST list only profile-selected domains in its ruleset; it MUST NOT list extra/local rule files directly.
-- Profiles MUST be defined in `agent-profiles.json` at the rules source root.
-- Domains under `rules/domains/<domain>/` are internal rule groupings selected by profiles.
+- A consuming repository MUST list only domains from the rules source in its ruleset; it MUST NOT list extra/local rule files directly.
+- Domains under `rules/domains/<domain>/` are internal rule groupings selected by consuming repositories.
 - Project-specific rule files under `agent-rules-local/` MUST NOT be used. A rule that is reusable belongs in `agent-rules`; a truly private rule belongs in a private rules source.
 - compose-agentsmd procedures live in `compose-agentsmd/tools/tool-rules.md`.
 
@@ -23,7 +22,7 @@ keywords mean MUST.
   compliance keywords, and be testable as a yes/no check without
   outside context. Rules MUST NOT contain hedges such as
   "ideally", "reasonable", or "perhaps".
-- Placement: `rules/global/` for any-workspace rules; `rules/domains/<domain>/` for profile-selected rules; `agent-profiles.json` for mapping profiles to domains.
+- Placement: `rules/global/` for any-workspace rules; `rules/domains/<domain>/` for domain-selected rules.
 - When updating a rule, encode the underlying general principle,
   not the surface example. Trace the update back to the reasoning
   error that permitted the original mistake.
