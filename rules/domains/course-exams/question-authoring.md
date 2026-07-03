@@ -1,9 +1,18 @@
 # Course Exam Question Authoring
 
 - When creating course exam questions, check the syllabus and course materials specified by the user, and limit questions to the taught scope at the time of the exam.
+- Before drafting or revising exam questions, identify the exam type, target exam lesson, covered lesson range, syllabus entries for that range, and the actual material files referenced by those syllabus entries.
+- Check the `syllabus-data` repository and the actual course material repository files referenced by the relevant syllabus entries before creating exam questions.
+- If the required syllabus entries or actual material files cannot be found, report the missing source instead of creating questions from general subject knowledge.
+- In this course context, a midterm exam is held in lesson 7 and assesses lessons 1 through 6.
+- In this course context, a regular term exam is held in lesson 14 and assesses lessons 1 through 13.
+- A regular term exam MUST emphasize lessons 7 through 13 more than lessons 1 through 6 unless the user explicitly specifies a different weighting.
 - Confirm the exam's full score and time limit before finalizing the question set.
 - Match the total scoring points to the exam's full score.
-- For midterm exams in this course context, use 20 points unless the user specifies otherwise.
+- For midterm exams in this course context, use 20 points unless the user explicitly specifies otherwise.
+- For regular term exams in this course context, use 80 points unless the user explicitly specifies otherwise.
+- For midterm exams, the time limit MUST be no more than 20 minutes multiplied by the number of class periods allocated to the exam.
+- For regular term exams, the time limit MUST be no more than 80 minutes.
 - For beginner course exams, write questions that students can answer when they can solve the course exercises for the taught scope.
 - When the user specifies that certain skills are more important for continuing later classes, assign higher scoring weight to those skills.
 - Distribute exam points across the important taught targets and avoid overrepresenting one surface pattern unless the user explicitly prioritizes it.
