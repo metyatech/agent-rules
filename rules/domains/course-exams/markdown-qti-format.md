@@ -8,10 +8,15 @@
 - Markdown question files live under `courses/<slug>/question-bank/`.
 
   Reusable weekly quiz questions live under
-  `courses/<slug>/question-bank/quiz-bank/**/*.q.md`.
+  `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
 
-  Migrated historical questions live under
-  `courses/<slug>/question-bank/imported/...`.
+  Reusable exam (regular, preparation, retake) questions live under
+  `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
+
+  Each `<topic>` folder groups related reusable questions under the taught
+  material they target. The folder name is the same as the last segment of
+  the `資料.path` value (`basename(dirname(material.path))`) so each folder
+  maps to one lesson or topic.
 
 - markdown-to-qti is the only supported Markdown parser/compiler for question
   Markdown.
@@ -118,22 +123,30 @@ title: 2026 JavaScript 中間試験
 time_limit_seconds: 1200
 items:
   - id: q1
-    ref: ../../../../question-bank/imported/2026/1semester/exams/1midterm-exam/2regular/q1.q.md
+    ref: ../../../../question-bank/exams/variables-comments-assignment/console-log-regular.q.md
     points: [2, 2, 1]
   - id: q2
-    ref: ../../../../question-bank/imported/2026/1semester/exams/1midterm-exam/2regular/q2.q.md
+    ref: ../../../../question-bank/exams/variables-comments-assignment/execution-order-regular.q.md
     points: [3, 2, 2]
   - id: q3
-    ref: ../../../../question-bank/imported/2026/1semester/exams/1midterm-exam/2regular/q3.q.md
+    ref: ../../../../question-bank/exams/variables-comments-assignment/debug-error-regular.q.md
 ```
 
 ## Question-bank layout
 
 - `courses/<slug>/question-bank/` is the course question bank.
 - Reusable weekly quiz questions live under
-  `courses/<slug>/question-bank/quiz-bank/**/*.q.md`.
-- Migrated historical questions live under
-  `courses/<slug>/question-bank/imported/<year>/<semester>/<kind>/<assessment-relative-path>/<qN>.q.md`.
+  `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
+- Reusable exam (regular, preparation, retake) questions live under
+  `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
+- The `<topic>` folder name MUST equal `basename(dirname(資料.path))` so
+  each folder maps to one lesson or topic in the taught material.
+- Quiz assessment manifests MUST reference questions under
+  `question-bank/quizzes/`.
+- Exam assessment manifests MUST reference questions under
+  `question-bank/exams/`.
+- Validation MUST refuse cross-kind refs (a quiz ref pointing at
+  `question-bank/exams/` or an exam ref pointing at `question-bank/quizzes/`).
 - Assessment directories MUST NOT keep question Markdown locally. They hold
   `assessment.yaml`, `assessment-run.json`, and `result/` only.
 - The `ref`-referenced question-bank Markdown is the only source of truth for
