@@ -7,7 +7,7 @@
       "domains": ["node", "web", "education", "course-docs"]
     },
     "course-exams": {
-      "domains": ["education", "course-exams"]
+      "domains": ["education", "course-exams", "weekly-quiz"]
     },
     "syllabus-data": {
       "domains": ["education", "syllabus"]
