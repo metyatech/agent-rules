@@ -1,7 +1,7 @@
 # Weekly Quiz Quality
 
 - Weekly quizzes MUST help students retrieve taught lesson content, check whether they understand it, and identify knowledge gaps.
-- A weekly quiz for `wX` MUST assess the content of lesson `X-1` unless the course workflow explicitly defines a different mapping.
+- A weekly quiz for `wX` MUST assess the content of lesson `X` unless the course workflow explicitly defines a different mapping.
 - Before drafting or revising a weekly quiz, the agent MUST identify the target week, schedule entry, syllabus scope, and relevant taught material.
 - The agent MUST check both the syllabus and the actual lesson materials, textbook pages, worked examples, exercises, or instructor notes for the target lesson.
 - Syllabus entries MUST be used only to identify the lesson scope.
