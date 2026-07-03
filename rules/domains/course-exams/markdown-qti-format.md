@@ -14,9 +14,10 @@
   `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
 
   Each `<topic>` folder groups related reusable questions under the taught
-  material they target. The folder name is the same as the last segment of
-  the `資料.path` value (`basename(dirname(material.path))`) so each folder
-  maps to one lesson or topic.
+  material they target. The folder name MUST match the topic derived from
+  `資料.path`:
+    - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
+    - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
 
 - markdown-to-qti is the only supported Markdown parser/compiler for question
   Markdown.
@@ -139,8 +140,17 @@ items:
   `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
 - Reusable exam (regular, preparation, retake) questions live under
   `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
-- The `<topic>` folder name MUST equal `basename(dirname(資料.path))` so
-  each folder maps to one lesson or topic in the taught material.
+- The `<topic>` folder name MUST match the topic derived from `資料.path`:
+    - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
+    - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
+- `.q.md` files MUST live directly under `courses/<slug>/question-bank/quizzes/<topic>/`
+  or `courses/<slug>/question-bank/exams/<topic>/` — no nested subdirectories
+  under a `<topic>` folder, no flat `<question>.q.md` directly under `quizzes/`
+  or `exams/`, no `imported/` or other intermediate directories.
+- When `資料.path` cannot be parsed into a topic (for example, an EPUB path like
+  `OEBPS/pages/{225..273}/page.xhtml` or any other non-topic-shaped path),
+  validation MUST fail with a clear message. Fix the path to match the
+  course's established convention rather than introducing an exception.
 - Quiz assessment manifests MUST reference questions under
   `question-bank/quizzes/`.
 - Exam assessment manifests MUST reference questions under
