@@ -65,8 +65,11 @@
   to deprecated runtime majors unless the user explicitly requests it
   and documents the risk.
 
-## Accessibility checks
+## Visual verification
 
+- When a change affects UI, layout, generated documents, images,
+  screenshots, slides, PDFs, or other rendered output, the agent MUST
+  visually verify the result before concluding.
 - Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability
