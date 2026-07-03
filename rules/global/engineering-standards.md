@@ -48,6 +48,12 @@
 
 - CI MUST run formatting/lint checks on every pull request and treat
   warnings as errors.
+- GitHub Actions jobs triggered by `push` or `pull_request` MUST set
+  `timeout-minutes: 10`.
+- If 10 minutes is insufficient, optimize the CI first. Extending the
+  timeout requires user approval and MUST NOT exceed 15 minutes.
+- Checks that need more than 15 minutes MUST NOT run from `push` or
+  `pull_request`; move them to a manual trigger such as `workflow_dispatch`.
 
 ## GitHub Actions runtime currency
 
