@@ -40,9 +40,16 @@
 - New repos MUST configure formatter automation before completion;
   existing repos MUST preserve/add it when changing formatter-managed
   files.
-- Repositories MUST run formatter automation across editor,
-  pre-commit, and CI layers; CI formatter checks MUST NOT mutate
-  repository contents. Layer procedure: `code-quality-setup`.
+- Repository quality automation MUST separate responsibilities:
+  editor/save hooks and pre-commit hooks MAY mutate working files;
+  CI checks MUST NOT mutate repository contents. Procedure:
+  `code-quality-setup`.
+- Pre-commit hooks MUST stay lightweight and operate only on staged
+  files when formatting or auto-fixing. They MUST NOT run the full test
+  suite, full typecheck, production build, integration tests, or other
+  long-running verification gates.
+- CI MUST run non-mutating format, lint, typecheck, and test checks
+  using repository-standard commands.
 
 ## CI enforcement
 
