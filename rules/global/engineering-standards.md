@@ -40,14 +40,27 @@
 - New repos MUST configure formatter automation before completion;
   existing repos MUST preserve/add it when changing formatter-managed
   files.
-- Repositories MUST run formatter automation across editor,
-  pre-commit, and CI layers; CI formatter checks MUST NOT mutate
-  repository contents. Layer procedure: `code-quality-setup`.
+- Repository quality automation MUST separate responsibilities:
+  editor/save hooks and pre-commit hooks MAY mutate working files;
+  CI checks MUST NOT mutate repository contents. Procedure:
+  `code-quality-setup`.
+- Pre-commit hooks MUST stay lightweight and operate only on staged
+  files when formatting or auto-fixing. They MUST NOT run the full test
+  suite, full typecheck, production build, integration tests, or other
+  long-running verification gates.
+- CI MUST run non-mutating format, lint, typecheck, and test checks
+  using repository-standard commands.
 
 ## CI enforcement
 
 - CI MUST run formatting/lint checks on every pull request and treat
   warnings as errors.
+- GitHub Actions jobs triggered by `push` or `pull_request` MUST set
+  `timeout-minutes: 10`.
+- If 10 minutes is insufficient, optimize the CI first. Extending the
+  timeout requires user approval and MUST NOT exceed 15 minutes.
+- Checks that need more than 15 minutes MUST NOT run from `push` or
+  `pull_request`; move them to a manual trigger such as `workflow_dispatch`.
 
 ## GitHub Actions runtime currency
 
@@ -59,8 +72,11 @@
   to deprecated runtime majors unless the user explicitly requests it
   and documents the risk.
 
-## Accessibility checks
+## Visual verification
 
+- When a change affects UI, layout, generated documents, images,
+  screenshots, slides, PDFs, or other rendered output, the agent MUST
+  visually verify the result before concluding.
 - Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability

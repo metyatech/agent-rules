@@ -41,11 +41,13 @@ For any state-changing work or any claim of "done", "fixed",
 - The agent MUST NOT swallow errors. Fail fast with explicit
   context. Validate configuration and external inputs at system
   boundaries.
-- CI and commit hooks MUST enforce full verification. Code fixes
-  MUST follow a failing-test-to-passing-test loop.
+- CI MUST enforce repository-standard verification. Commit hooks are
+  early local safeguards and MUST NOT be treated as the final quality
+  gate.
+- Code fixes MUST follow a failing-test-to-passing-test loop.
 - On a failing security audit, attempt the documented automated
   fix. If it succeeds and verification passes, commit and push.
-- Long-running gates (pre-commit verify, full suite, CI) are final
+- Long-running gates such as the full suite and CI are final
   confirmation, not inner-loop debuggers: the agent MUST settle each
   hypothesis against the smallest reproducer and, after a dependency
   or environment change, MUST reproduce against the pre-change state
