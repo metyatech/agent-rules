@@ -13,9 +13,12 @@
   Reusable exam (regular, preparation, retake) questions live under
   `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
 
-  Each `<topic>` folder groups related reusable questions under the taught
-  material they target. The folder name MUST match the topic derived from
-  `資料.path`:
+  Reusable submission questions live under
+  `courses/<slug>/question-bank/submissions/<topic>/<question>.q.md`.
+
+  For quizzes and exams, each `<topic>` folder groups related reusable
+  questions under the taught material they target. The folder name MUST match
+  the topic derived from `資料.path`:
     - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
     - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
 
@@ -53,7 +56,8 @@ time_budget_seconds: 180
 ## Question frontmatter and sections
 
 - `question_type` MUST be one of `descriptive`, `choice`, or `cloze`.
-- `time_budget_seconds` MUST be present and MUST be a positive integer.
+- `time_budget_seconds` MAY be omitted. When present, it MUST be a positive
+  integer.
 - `time_estimate_seconds` MUST NOT be used.
 - `## Type` MUST NOT be used. Put the type in `question_type` frontmatter
   instead.
@@ -109,10 +113,16 @@ time_budget_seconds: 180
 - The manifest `id` of an item is the QTI item XML filename and the QTI item
   identifier.
 - Item order in the manifest is the assessment-test order.
-- When `time_limit_seconds` is present, it is the time limit for the entire
-  question set.
-- When `time_limit_seconds` is absent, the set time budget is the sum of each
-  referenced question's `time_budget_seconds`.
+- When `time_limit_seconds` is present, it is the question set's time limit
+  and takes precedence over every referenced question's
+  `time_budget_seconds`.
+- When `time_limit_seconds` is absent and every referenced question has a
+  `time_budget_seconds`, the set time budget is their sum.
+- When `time_limit_seconds` is absent and every referenced question omits
+  `time_budget_seconds`, the QTI assessment test MUST omit
+  `qti-time-limits`.
+- When `time_limit_seconds` is absent, a mix of present and omitted
+  `time_budget_seconds` values is an error.
 - Do not apply weekly quiz-specific fixed-window rules such as
   `DEFAULT_WINDOW_SECONDS` checks to the common format. Keep weekly quiz
   scheduling/publication policy in weekly quiz-specific rules only.
@@ -140,27 +150,59 @@ items:
   `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
 - Reusable exam (regular, preparation, retake) questions live under
   `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
-- The `<topic>` folder name MUST match the topic derived from `資料.path`:
+- Reusable submission questions live under
+  `courses/<slug>/question-bank/submissions/<topic>/<question>.q.md`.
+- For quizzes and exams, the `<topic>` folder name MUST match the topic
+  derived from `資料.path`:
     - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
     - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
-- `.q.md` files MUST live directly under `courses/<slug>/question-bank/quizzes/<topic>/`
-  or `courses/<slug>/question-bank/exams/<topic>/` — no nested subdirectories
-  under a `<topic>` folder, no flat `<question>.q.md` directly under `quizzes/`
-  or `exams/`, no `imported/` or other intermediate directories.
-- When `資料.path` cannot be parsed into a topic (for example, an EPUB path like
-  `OEBPS/pages/{225..273}/page.xhtml` or any other non-topic-shaped path),
-  validation MUST fail with a clear message. Fix the path to match the
-  course's established convention rather than introducing an exception.
+- `.q.md` files MUST live directly under
+  `courses/<slug>/question-bank/quizzes/<topic>/`,
+  `courses/<slug>/question-bank/exams/<topic>/`, or
+  `courses/<slug>/question-bank/submissions/<topic>/` — no nested
+  subdirectories under a `<topic>` folder, no flat `<question>.q.md` directly
+  under a kind directory, no `imported/` or other intermediate directories.
+- When a required or present `資料.path` cannot be parsed into a topic (for
+  example, an EPUB path like `OEBPS/pages/{225..273}/page.xhtml` or any other
+  non-topic-shaped path), validation MUST fail with a clear message. Fix the
+  path to match the course's established convention rather than introducing an
+  exception.
 - Quiz assessment manifests MUST reference questions under
   `question-bank/quizzes/`.
 - Exam assessment manifests MUST reference questions under
   `question-bank/exams/`.
-- Validation MUST refuse cross-kind refs (a quiz ref pointing at
-  `question-bank/exams/` or an exam ref pointing at `question-bank/quizzes/`).
+- Submission assessment manifests MUST reference questions under
+  `question-bank/submissions/`.
+- Validation MUST refuse cross-kind refs: quizzes may reference only
+  `question-bank/quizzes/`, exams only `question-bank/exams/`, and submissions
+  only `question-bank/submissions/`.
 - Assessment directories MUST NOT keep question Markdown locally. They hold
-  `assessment.yaml`, `assessment-run.json`, and `result/` only.
+  `assessment.yaml`, an optional `assessment-run.json`, an optional
+  `track-map.yaml`, and `result/` only.
 - The `ref`-referenced question-bank Markdown is the only source of truth for
   question content.
+
+## Assessment-kind requirements
+
+- The supported assessment kinds are `quizzes`, `exams`, and `submissions`.
+- All kinds support only the `descriptive`, `choice`, and `cloze`
+  `question_type` values.
+- Quiz and exam question-bank and assessment validation MUST require a
+  positive-integer `time_budget_seconds`, a `資料` object, a `資料.path` whose
+  derived topic matches the question-bank topic, and a non-empty
+  `## Explanation` section.
+- Quiz scoring and manifest `points` requirements remain as defined by the
+  common scoring rules above.
+- Exam validation MUST continue to require `## Scoring` and the corresponding
+  manifest item `points` array.
+- Submission question-bank and assessment validation MUST allow omitted
+  `time_budget_seconds`, `資料`, and `## Explanation`. When a submission has a
+  `time_budget_seconds`, it MUST be a positive integer. When it has `資料`, the
+  existing `資料` shape validation and derived-topic match apply. When it has
+  `## Explanation`, the section MUST be non-empty.
+- Submission questions MUST NOT contain `## Scoring`, and submission manifest
+  items MUST NOT contain `points`.
+- Submission manifests MUST contain `time_limit_seconds`.
 
 ## Preparation and regular exam pairing
 
