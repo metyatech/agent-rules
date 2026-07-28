@@ -8,19 +8,19 @@
 - Markdown question files live under `courses/<slug>/question-bank/`.
 
   Reusable weekly quiz questions live under
-  `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
+  `courses/<slug>/question-bank/quizzes/<group>/<question>.q.md`.
 
   Reusable exam (regular, preparation, retake) questions live under
-  `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
+  `courses/<slug>/question-bank/exams/<group>/<question>.q.md`.
 
   Reusable submission questions live under
-  `courses/<slug>/question-bank/submissions/<topic>/<question>.q.md`.
+  `courses/<slug>/question-bank/submissions/<group>/<question>.q.md`.
 
-  For quizzes and exams, each `<topic>` folder groups related reusable
-  questions under the taught material they target. The folder name MUST match
-  the topic derived from `資料.path`:
-    - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
-    - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
+  For quizzes and exams, each `<group>` folder is an internal
+  `course-exams` organizational unit for grouping related reusable questions.
+  The group is independent of `資料.repo` and `資料.path` and MUST NOT be
+  derived from them. `資料.path` records the actual repository-relative path
+  of the material and is not limited to a particular file extension.
 
 - markdown-to-qti is the only supported Markdown parser/compiler for question
   Markdown.
@@ -147,26 +147,25 @@ items:
 
 - `courses/<slug>/question-bank/` is the course question bank.
 - Reusable weekly quiz questions live under
-  `courses/<slug>/question-bank/quizzes/<topic>/<question>.q.md`.
+  `courses/<slug>/question-bank/quizzes/<group>/<question>.q.md`.
 - Reusable exam (regular, preparation, retake) questions live under
-  `courses/<slug>/question-bank/exams/<topic>/<question>.q.md`.
+  `courses/<slug>/question-bank/exams/<group>/<question>.q.md`.
 - Reusable submission questions live under
-  `courses/<slug>/question-bank/submissions/<topic>/<question>.q.md`.
-- For quizzes and exams, the `<topic>` folder name MUST match the topic
-  derived from `資料.path`:
-    - For `.../<topic>/index.md` or `.../<topic>/index.mdx`, the topic is `<topic>`.
-    - For `.../<topic>.md` or `.../<topic>.mdx`, the topic is `<topic>` (extension stripped).
+  `courses/<slug>/question-bank/submissions/<group>/<question>.q.md`.
+- A one-level `<group>` folder MUST be present. The group is an internal
+  `course-exams` organizational unit and is independent of `資料.repo` and
+  `資料.path`; it MUST NOT be derived from or matched against `資料.path`.
 - `.q.md` files MUST live directly under
-  `courses/<slug>/question-bank/quizzes/<topic>/`,
-  `courses/<slug>/question-bank/exams/<topic>/`, or
-  `courses/<slug>/question-bank/submissions/<topic>/` — no nested
-  subdirectories under a `<topic>` folder, no flat `<question>.q.md` directly
+  `courses/<slug>/question-bank/quizzes/<group>/`,
+  `courses/<slug>/question-bank/exams/<group>/`, or
+  `courses/<slug>/question-bank/submissions/<group>/` — no nested
+  subdirectories under a `<group>` folder, no flat `<question>.q.md` directly
   under a kind directory, no `imported/` or other intermediate directories.
-- When a required or present `資料.path` cannot be parsed into a topic (for
-  example, an EPUB path like `OEBPS/pages/{225..273}/page.xhtml` or any other
-  non-topic-shaped path), validation MUST fail with a clear message. Fix the
-  path to match the course's established convention rather than introducing an
-  exception.
+- `資料.path` MUST be the actual material location within the material
+  repository. It is independent of the question-bank `<group>` and MUST NOT
+  be parsed to derive or validate the group. Any safe repository-relative,
+  slash-separated path is allowed, including `.md`, `.mdx`, `.xhtml`, and
+  other extensions.
 - Quiz assessment manifests MUST reference questions under
   `question-bank/quizzes/`.
 - Exam assessment manifests MUST reference questions under
@@ -188,9 +187,9 @@ items:
 - All kinds support only the `descriptive`, `choice`, and `cloze`
   `question_type` values.
 - Quiz and exam question-bank and assessment validation MUST require a
-  positive-integer `time_budget_seconds`, a `資料` object, a `資料.path` whose
-  derived topic matches the question-bank topic, and a non-empty
-  `## Explanation` section.
+  positive-integer `time_budget_seconds`, a `資料` object, and a non-empty
+  `## Explanation` section. The question-bank `<group>` is independent of
+  `資料.path`; no group/path correspondence is required.
 - Quiz scoring and manifest `points` requirements remain as defined by the
   common scoring rules above.
 - Exam validation MUST continue to require `## Scoring` and the corresponding
@@ -198,7 +197,7 @@ items:
 - Submission question-bank and assessment validation MUST allow omitted
   `time_budget_seconds`, `資料`, and `## Explanation`. When a submission has a
   `time_budget_seconds`, it MUST be a positive integer. When it has `資料`, the
-  existing `資料` shape validation and derived-topic match apply. When it has
+  existing `資料` shape and safe relative-path validation apply. When it has
   `## Explanation`, the section MUST be non-empty.
 - Submission questions MUST NOT contain `## Scoring`, and submission manifest
   items MUST NOT contain `points`.
