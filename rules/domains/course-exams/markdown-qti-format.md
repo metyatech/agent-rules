@@ -18,9 +18,10 @@
 
   For quizzes and exams, each `<group>` folder is an internal
   `course-exams` organizational unit for grouping related reusable questions.
-  The group is independent of `資料.repo` and `資料.path` and MUST NOT be
-  derived from them. `資料.path` records the actual repository-relative path
-  of the material and is not limited to a particular file extension.
+  The group is independent of the optional `資料.repo` and `資料.path` metadata
+  and MUST NOT be derived from them. When `資料` is present, `資料.path`
+  records the actual repository-relative path of the material and is not
+  limited to a particular file extension.
 
 - markdown-to-qti is the only supported Markdown parser/compiler for question
   Markdown.
@@ -161,11 +162,13 @@ items:
   `courses/<slug>/question-bank/submissions/<group>/` — no nested
   subdirectories under a `<group>` folder, no flat `<question>.q.md` directly
   under a kind directory, no `imported/` or other intermediate directories.
-- `資料.path` MUST be the actual material location within the material
-  repository. It is independent of the question-bank `<group>` and MUST NOT
-  be parsed to derive or validate the group. Any safe repository-relative,
-  slash-separated path is allowed, including `.md`, `.mdx`, `.xhtml`, and
-  other extensions.
+- `資料` MAY be omitted. When present, it MUST contain exactly `repo` and
+  `path`.
+- When `資料` is present, `資料.repo` MUST use the `owner/name` form.
+- When `資料` is present, `資料.path` MUST identify the actual material
+  location and MUST pass the existing safe repository-relative,
+  slash-separated path validation.
+- The question-bank `<group>` remains independent of optional `資料` metadata.
 - Quiz assessment manifests MUST reference questions under
   `question-bank/quizzes/`.
 - Exam assessment manifests MUST reference questions under
@@ -187,17 +190,18 @@ items:
 - All kinds support only the `descriptive`, `choice`, and `cloze`
   `question_type` values.
 - Quiz and exam question-bank and assessment validation MUST require a
-  positive-integer `time_budget_seconds`, a `資料` object, and a non-empty
-  `## Explanation` section. The question-bank `<group>` is independent of
-  `資料.path`; no group/path correspondence is required.
+  positive-integer `time_budget_seconds` and a non-empty `## Explanation`
+  section.
+- `資料` MAY be omitted for quizzes, exams, and submissions. When present, it
+  MUST contain exactly `repo` and `path`; the existing `owner/name` repository
+  validation and safe relative-path validation apply.
 - Quiz scoring and manifest `points` requirements remain as defined by the
   common scoring rules above.
 - Exam validation MUST continue to require `## Scoring` and the corresponding
   manifest item `points` array.
 - Submission question-bank and assessment validation MUST allow omitted
-  `time_budget_seconds`, `資料`, and `## Explanation`. When a submission has a
-  `time_budget_seconds`, it MUST be a positive integer. When it has `資料`, the
-  existing `資料` shape and safe relative-path validation apply. When it has
+  `time_budget_seconds` and `## Explanation`. When a submission has a
+  `time_budget_seconds`, it MUST be a positive integer. When it has
   `## Explanation`, the section MUST be non-empty.
 - Submission questions MUST NOT contain `## Scoring`, and submission manifest
   items MUST NOT contain `points`.

@@ -59,7 +59,7 @@ for pattern in \
   "convert-exam-md-to-html" \
   "legacy/deprecated" \
   "## Scoring" \
-  "question-bank/imported" \
+  'no `imported/` or other intermediate directories' \
   "points:" \
   "id:" \
   "ref:" \
@@ -83,6 +83,11 @@ for pattern in \
 do
   require_contains rules/domains/course-exams/markdown-qti-format.md "$pattern"
 done
+
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  '`資料` MAY be omitted for quizzes, exams, and submissions.'
+require_not_contains rules/domains/course-exams/markdown-qti-format.md \
+  'a `資料` object'
 
 # General educational question quality lives in the education domain.
 for pattern in \
@@ -130,17 +135,13 @@ require_contains rules/global/rule-system.md \
 require_not_contains rules/global/rule-system.md \
   'with `sources` and `profile`'
 
-# Agent-tooling composition rule must align with current source + domains ruleset.
+# Agent-tooling composition rule must align with the current sources + profile ruleset.
 require_contains rules/domains/agent-tooling/composition.md \
-  'reproducible from `agent-ruleset.json` and the selected `domains`'
+  'reproducible from `agent-ruleset.json` and the selected `profile`'
 require_contains rules/domains/agent-tooling/composition.md \
-  "A consuming repository's \`agent-ruleset.json\` MUST select the complete set of domains"
-require_not_contains rules/domains/agent-tooling/composition.md \
-  'selected profile'
-require_not_contains rules/domains/agent-tooling/composition.md \
-  'A profile MUST'
-require_not_contains rules/domains/agent-tooling/composition.md \
-  'agent-profiles.json'
+  'MUST declare the complete ordered `sources` list and `profile`'
+require_contains rules/domains/agent-tooling/composition.md \
+  'Profiles in `agent-profiles.json` MUST select the complete set'
 
 # Rule-system docs must not require the retired profile schema.
 require_not_contains rules/global/rule-system.md \
