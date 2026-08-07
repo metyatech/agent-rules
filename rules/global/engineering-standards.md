@@ -31,6 +31,17 @@
 - The agent MUST NOT commit build artifacts; keep artifact dirs and
   `.gitignore` aligned.
 
+## Repository hygiene
+
+- The agent MUST NOT add or commit verification evidence whose sole purpose is
+  to prove task completion, review, build, or verification, including
+  `review-verification`, `build-evidence`, review screenshots, one-off logs,
+  verification-result JSON, and review reports; tests and CI MUST NOT require it.
+- Verification-only files MUST remain under the OS temp directory or another
+  untracked temporary area. This does not prohibit source code, ordinary
+  automated tests, configuration, reproducibility fixtures, or product/
+  distribution artifacts that form part of the repository contract.
+
 ## Linters, formatters, and static analysis
 
 - Every repo MUST have one pinned formatter and one pinned
