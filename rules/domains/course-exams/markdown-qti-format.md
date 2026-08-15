@@ -84,6 +84,19 @@ time_budget_seconds: 180
 - Keep educational quality rules in the education domain separate from this
   operational Markdown/QTI format rule.
 
+## Rich presentation authoring and QTI/Track preservation
+
+- Markdown and normal raw HTML MAY be mixed in `## Prompt`, `## Options`, `## Scoring`, and `## Explanation`. Raw HTML is the generic first-class mechanism for authored presentation; do not invent special one-off markup syntax where ordinary HTML can express it.
+- Ordinary generated QTI presentation MUST use standard HTML element names where representable by the QTI 3 content model. Reserve `qti-*` names for actual QTI structures and interactions.
+- Retired qti-prefixed presentation aliases are FORBIDDEN. Do not restore or add backward-compatibility shims for them.
+- Preserve representable authored hierarchy, nesting, preformatted whitespace, and attributes including `style`, `class`, `id`, `title`, `aria-*`, and `data-*`, subject to QTI/XML/content-model constraints. HTML comments are source-only notes and MUST be omitted from generated QTI.
+- Markdown fenced code remains literal: HTML-looking source inside a fence is escaped and is not interpreted as raw HTML. Use raw `<pre><code>` when intentionally authoring nested rich markup inside displayed code; literal source markup inside that raw code MUST be entity-escaped while intentional nested presentation elements remain real HTML structure, and preformatted whitespace MUST remain exact.
+- For choice questions, `## Options` task-list order determines choice order and checked state determines correctness. Do not manually prefix option text with display ordinals solely for numbering. Rich choice content MUST remain structured HTML.
+- Use ordinary HTML, such as `span`, for styled inline markers or blanks instead of custom syntax.
+- Scoring rubric criteria MUST use ordinary HTML `p` elements inside `qti-rubric-block view="scorer"`; `qti-p` is FORBIDDEN.
+- Generated QTI is the presentation source for Track. QTI-to-Track conversion MUST remain structured and HTML-native, with no Markdown intermediate or Markdown reparsing; it MUST preserve rich choices, nested pre/code markup, images, tables, lists, links, headings, and preformatted whitespace where representable.
+- QTI-to-Track entity handling MUST decode XML entities once to semantic text and escape once for Track HTML. It MUST NOT double-escape code text.
+
 ## Manifest format
 
 - The manifest is `assessment.yaml`.
@@ -245,5 +258,7 @@ items:
 
 - There is no backward compatibility with the old `- N: ...` inline-point
   scoring form or the old string-item manifest format.
+- There is no backward compatibility requirement for retired qti-prefixed
+  presentation aliases.
 - Validation MUST hard-fail on the old `- N: ...` scoring form, on string
   manifest items, and on a root `type` field.

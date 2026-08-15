@@ -152,3 +152,33 @@ require_not_contains rules/global/rule-system.md \
   'Profiles MUST'
 require_not_contains rules/global/rule-system.md \
   'mapping profiles to domains'
+
+# Markdown-to-QTI must retain the canonical HTML-native presentation contract.
+require_contains rules/domains/markdown-to-qti/project.md \
+  'MDAST to HAST, parsed raw HTML merged into that HAST'
+require_contains rules/domains/markdown-to-qti/project.md \
+  'Ordinary presentation MUST use standard HTML element names'
+require_contains rules/domains/markdown-to-qti/project.md \
+  'Reserve `qti-*` names for actual QTI-specific structures and interactions.'
+require_contains rules/domains/markdown-to-qti/project.md \
+  'Retired qti-prefixed presentation aliases are FORBIDDEN'
+require_contains rules/domains/markdown-to-qti/project.md \
+  'Authored raw `<pre><code>` MAY contain intentional nested rich HTML.'
+require_contains rules/domains/markdown-to-qti/project.md \
+  'ordinary standard HTML `p` criteria; `qti-p` is FORBIDDEN.'
+require_not_contains rules/domains/markdown-to-qti/project.md \
+  'Golden tests MUST preserve parity with historical Kotlin fixture outputs'
+
+# Course-exams authoring and Track delivery share the same canonical contract.
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'Raw HTML is the generic first-class mechanism for authored presentation'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'Do not manually prefix option text with display ordinals solely for numbering.'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'with no Markdown intermediate or Markdown reparsing'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'decode XML entities once to semantic text and escape once for Track HTML.'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'no backward compatibility requirement for retired qti-prefixed'
+require_contains rules/domains/course-exams/markdown-qti-format.md \
+  'nested pre/code markup'
