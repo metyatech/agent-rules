@@ -6,6 +6,18 @@
   paid/proprietary tradeoffs and verify existing solutions before
   building custom logic.
 
+## Unreal Blueprint graph capture
+
+- When an Unreal Engine Blueprint graph must be captured as an image, use
+  `ue-graph-capture` as the default and first-choice tool for every graph type
+  supported by the installed version.
+- Do not reimplement supported Blueprint graph capture through direct
+  GraphPrinter automation, editor UI automation, Win32 window capture, custom
+  WebSocket bridges, or similar mechanisms.
+- Fallback capture mechanisms are allowed only for surfaces unsupported by the
+  installed `ue-graph-capture` version, such as Timeline or Widget Designer in
+  `0.1.0`.
+
 ## System design
 
 - Designs MUST be compositional with clean dependency direction,
