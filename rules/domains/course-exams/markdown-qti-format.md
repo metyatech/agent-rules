@@ -192,8 +192,9 @@ items:
   `question-bank/quizzes/`, exams only `question-bank/exams/`, and submissions
   only `question-bank/submissions/`.
 - Assessment directories MUST NOT keep question Markdown locally. They hold
-  `assessment.yaml`, an optional `assessment-run.json`, an optional
-  `track-map.yaml`, and `result/` only.
+  `assessment.yaml`, an optional `track-map.yaml`, and `result/` only.
+- Assessment-local runtime configuration files such as `assessment-run.json` are
+  not supported.
 - The `ref`-referenced question-bank Markdown is the only source of truth for
   question content.
 
