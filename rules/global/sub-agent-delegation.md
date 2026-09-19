@@ -13,7 +13,14 @@
 
 ## Tier classification
 
-- Tier routing: `sub-agent-dispatch`.
+- Classify delegated work as one of:
+  - **Light** — bounded lookup/read-only work or a trivial,
+    low-blast-radius change.
+  - **Standard** — normal implementation, review, or refactor
+    requiring multiple steps or verification.
+  - **Heavy** — cross-system or high-blast-radius work; release,
+    production, or security-sensitive work; migration; or materially
+    ambiguous work.
 
 ## Spawning a delegated agent
 
@@ -24,7 +31,7 @@
 - The delegating prompt MUST NOT restate rules already present
   in AGENTS.md.
 - Two or more agents MAY write in the same repository only
-  with isolated checkouts and one integration owner.
+  with isolated checkouts or worktrees and one integration owner.
   Otherwise run sequentially.
 
 ## Delegated-agent obligations
@@ -43,31 +50,36 @@
 
 ## Dispatch tooling
 
-- Sub-agents MUST use `agents-mcp`; the agent MUST NOT use
-  platform built-in subagent spawners.
-- Before spawning, run `ai-quota`. If it is unavailable or
-  fails, report and MUST NOT spawn.
-- When spawning a sub-agent, explicitly specify both `model`
-  and `effort` from the `sub-agent-dispatch` skill. The agent
-  MUST NOT rely on defaults.
-- Implementation sub-agents MUST use `mode: 'edit'`; default
-  `mode: 'plan'` is read-only.
-- After spawning, return to the user immediately and use
-  background or non-blocking monitoring; the agent MUST NOT
-  block waiting for completion.
-- Dispatch details live in `sub-agent-dispatch`.
+- Use platform-native sub-agent functionality when it is available.
+  Do not use or install an external dispatcher.
+- Do not require a separate quota-check command before spawning.
+- Specify write/edit mode only when the platform exposes and requires
+  it; do not assume a particular parameter.
+- Independent read-only investigations MAY run in parallel.
+- If native delegation is unavailable, continue without delegation
+  where possible; otherwise report the limitation.
 
-## Orchestrator model selection
+## Model and effort selection
 
-- Orchestrator model defaults live in `sub-agent-dispatch`. The
-  agent MUST NOT use elevated effort to improve rule
-  compliance.
+- Specify model and effort only when the platform exposes those
+  selectors.
+- For Standard and Heavy implementation or review, the agent MUST NOT
+  automatically choose a model clearly weaker than the delegator's
+  selected model to reduce cost.
+- For Light work, lower effort MAY be selected when accuracy is not
+  reduced.
+- When model or effort selectors are unavailable, use platform-native
+  defaults. The absence of a selector MUST NOT be treated as dispatch
+  failure.
 
 ## Verification of sub-agent results
 
 - The agent MUST NOT trust completion claims without evidence.
   Implementation sub-agents MUST return AC, evidence, files
   changed, assumptions, and risks.
+- Collect and verify delegated results before the final response. The
+  agent MUST NOT promise that delegated work will complete after the
+  response.
 - After implementation, run repo verify.
 - If verification fails, cannot run, or the task is Heavy or
   release/production, spawn a separate reviewer with the AC
@@ -76,15 +88,12 @@
   status is `PASS`. Standard tier MAY skip reviewer with
   passing verify and clear AC evidence.
 
-## Cost, execution, and lifecycle
+## Execution and lifecycle
 
-- Use the minimum reasoning effort that reliably works. Prefer
-  newer models at lower effort and MUST NOT use Heavy-tier
-  models for Light or Standard work.
 - The agent MUST NOT rapidly respawn sub-agents for the same
   task while one is still running without errors.
 - After a team completes, shut down all team agents and clean
   up resources. If a sub-agent fails, retry or escalate.
-- If a delegated task fails repeatedly because of quota limits,
-  update the `task-tracker` stage so work resumes from the
-  last successful stage.
+- If platform limits repeatedly block delegated work, update the
+  `task-tracker` stage so work resumes from the last successful
+  stage.
