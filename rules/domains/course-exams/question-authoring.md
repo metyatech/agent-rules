@@ -1,5 +1,10 @@
 # Course Exam Question Authoring
 
+- Before creating a new weekly quiz question, search the owning course's existing `question-bank/quizzes/` for questions that assess the same taught target.
+- Prefer quiz-question reuse in this order: (1) reuse an existing question unchanged when appropriate, (2) create a revised/derived question from an existing question when the original is too specific or has already been used with the same learners, and (3) create a wholly new question only when no suitable reusable question exists.
+- Reuse or derived reuse MUST still match the current syllabus, actual referenced course materials, learner level, and taught scope.
+- Do not modify an existing question-bank question when that change would retroactively alter a past assessment that already references it. Create a new derived question file instead, unless the user explicitly requests changing the historical assessment.
+- When the same learners have already answered an existing question, avoid repeating it verbatim unless deliberate repetition is pedagogically intended; prefer a derived version that assesses the same skill with different incidental names, values, examples, or context.
 - When creating course exam questions, check the syllabus and course materials specified by the user, and limit questions to the taught scope at the time of the exam.
 - Before drafting or revising exam questions, identify the exam type, target exam lesson, covered lesson range, syllabus entries for that range, and the actual material files referenced by those syllabus entries.
 - Check the `syllabus-data` repository and the actual course material repository files referenced by the relevant syllabus entries before creating exam questions.
