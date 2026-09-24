@@ -2,6 +2,7 @@
 
 ## Baseline
 
+- Every Fab Unreal plugin MUST have a persistent manual test/demo project; temporary automation host projects do not count.
 - Implement in C++ when possible; avoid Blueprint Event Graphs.
 - Use Slate for widgets.
 - Follow the UE coding standard and the C++ Core Guidelines:
