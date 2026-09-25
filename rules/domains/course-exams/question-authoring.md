@@ -1,7 +1,8 @@
 # Course Exam Question Authoring
 
 - Before creating a new weekly quiz question, search the owning course's existing `question-bank/quizzes/` for questions that assess the same taught target.
-- A weekly quiz stored under `quizzes/wXX/` MUST assess lesson `XX`, and its `assessment.yaml` title MUST use the form `<year> <official course name> 第XX回小テスト`, with the quiz number matching `wXX` (for example, `w01` uses `第1回小テスト`). Do not use an off-by-one quiz number, and do not omit the year or official course name.
+- A weekly quiz stored under `quizzes/wXX/` MUST assess lesson `XX`. Its system-derived title MUST be `<year> <official course name> ?XX?????`, with the quiz number matching `wXX` (for example, `w01` uses `?1?????`). Do not use an off-by-one quiz number.
+- Standard exam titles MUST be system-derived as `<year> <official course name> <individual title><optional section>`, where the individual title is `????????`, `????????`, `?????????`, `????????`, `????????`, or `?????????` according to the canonical assessment path. Optional exam sections such as `????` or `????` are appended only when the course metadata defines that section.
 - Prefer quiz-question reuse in this order: (1) reuse an existing question unchanged when appropriate, (2) create a revised/derived question from an existing question when the original is too specific or has already been used with the same learners, and (3) create a wholly new question only when no suitable reusable question exists.
 - Reuse or derived reuse MUST still match the current syllabus, actual referenced course materials, learner level, and taught scope.
 - Do not modify an existing question-bank question when that change would retroactively alter a past assessment that already references it. Create a new derived question file instead, unless the user explicitly requests changing the historical assessment.

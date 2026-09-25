@@ -100,10 +100,11 @@ time_budget_seconds: 180
 ## Manifest format
 
 - The manifest is `assessment.yaml`.
-- Manifests MUST contain `title` and `items`.
+- Manifests MUST contain `items`.
 - Manifests MAY contain `time_limit_seconds`.
-- The manifest root MUST contain only `title`, optional `time_limit_seconds`,
-  and `items`.
+- Standard weekly-quiz and exam assessment titles MUST be derived by the assessment system from the canonical assessment path and course metadata; their manifests MUST NOT contain `title`.
+- Assessments outside the standard weekly-quiz / midterm / regular-term exam naming model MAY contain an explicit non-empty `title`.
+- The manifest root MUST otherwise contain only optional `title`, optional `time_limit_seconds`, and `items`.
 - A root `type` field is FORBIDDEN. Manifest `type: quiz` and `type: exam` MUST NOT be used. Distinguish quiz,
   exam, and preparation-set behavior outside the common manifest schema.
 - `items` MUST be an array of objects. A string item is FORBIDDEN.
