@@ -1,29 +1,67 @@
 # Course Docs Repository and Site Architecture
 
-- `metyatech/course-docs-site` is the Course Docs monorepo and the only runnable Next.js/Nextra course site app.
-- The runnable site remains at the repository root.
-- `packages/platform` is the internal workspace package named `@metyatech/course-docs-platform`.
-- The Course Docs monorepo MUST keep a single root `package-lock.json`; workspace packages MUST NOT contain their own lockfiles.
-- `packages/platform` owns shared MDX components, remark/rehype configuration, webpack asset rules, reusable Next app factories/routes, and shared course-site behavior.
-- The root site owns content synchronization, site composition, deployment wiring, development tooling, and end-to-end tests.
-- Shared behavior that applies to multiple courses belongs in `packages/platform`.
-- Root site code MUST remain composition/wiring for platform-owned behavior.
-- Site/platform cross-boundary changes MUST be committed and verified atomically in the same repository.
-- Platform, site, course build, and end-to-end verification MUST run together for changes that cross the site/platform boundary.
+- `metyatech/course-docs-site` is the Course Docs monorepo and the only runnable
+  Next.js/Nextra course site app. The runnable site remains at the repository
+  root.
+- `packages/platform` is the internal workspace package named
+  `@metyatech/course-docs-platform`.
+- The monorepo MUST keep a single root `package-lock.json`; workspace packages
+  MUST NOT contain their own lockfiles.
+- `packages/platform` owns shared MDX components, remark/rehype configuration,
+  webpack asset rules, reusable Next app factories/routes, and shared
+  course-site behavior.
+- The root site owns content synchronization, site composition, deployment
+  wiring, development tooling, and end-to-end tests. Root site code MUST remain
+  composition/wiring for platform-owned behavior.
+- Shared behavior that applies to multiple courses belongs in
+  `packages/platform`.
+- Site/platform cross-boundary changes MUST be committed and verified atomically
+  in the same repository. Platform, site, course build, and end-to-end
+  verification MUST run together for changes crossing this boundary.
 - The archived `metyatech/course-docs-platform` repository is historical only.
-- Active code MUST NOT depend on the archived repository through Git, GitHub SHA dependencies, submodules, or subtree synchronization.
-- Content repositories remain content-only repositories.
-- Course content repositories MUST keep only course content, static assets, and course-specific configuration such as `content/**`, `public/img/**`, and `site.config.ts`.
-- Course content repositories MUST NOT add Next.js/Nextra app runtime files such as `next.config.js`, `src/app`, app package files, or site runtime implementations.
-- `public/img/favicon.ico` is expected by `site.config.ts` when `faviconHref` references it.
-- Framework boilerplate assets MUST NOT be kept unless referenced by content.
-- Secrets MUST NOT be stored in course content repositories.
-- `.env.local` is local-only and belongs in `course-docs-site`, not in content repositories.
-- Course content MUST be previewed through `course-docs-site` by setting `COURSE_CONTENT_SOURCE`.
-- Vercel deployment for course sites MUST use GitHub Actions with the Vercel CLI, not Vercel's GitHub integration.
+  Active code MUST NOT depend on it through Git, GitHub SHA dependencies,
+  submodules, or subtree synchronization.
+
+## Course content repositories
+
+- Course content repositories are content-only. They MAY contain `content/**`,
+  static assets such as `public/img/**`, `site.config.ts`, and course-specific
+  data such as `learning-units.yaml`.
+- `learning-units.yaml` MUST be at the course root when used. It is the
+  canonical course-specific Learning Unit/objective model, not site or runtime
+  implementation. Require it when MDX uses Learning System Event metadata or
+  components such as `<Evidence>`; do not require it for legacy content that has
+  not adopted the Learning System.
+- Course content repositories MUST NOT add Next.js/Nextra app runtime files such
+  as `next.config.js`, `src/app`, app package files, or site runtime
+  implementations.
+- `public/img/favicon.ico` is expected by `site.config.ts` when `faviconHref`
+  references it. Framework boilerplate assets MUST NOT be kept unless referenced
+  by content.
+- Secrets MUST NOT be stored in course content repositories. `.env.local` is
+  local-only and belongs in `course-docs-site`, not in content repositories.
+- Preview course content through `course-docs-site` by setting
+  `COURSE_CONTENT_SOURCE`.
+- Vercel deployment for course sites MUST use GitHub Actions with the Vercel
+  CLI, not Vercel's GitHub integration.
+
+## Course structure and navigation
+
+- A Page is a display/distribution unit, not a pedagogical Learning Unit.
+  Learning Event order is the source for actual course material progression; do
+  not treat a page, Nextra navigation entry, or file path as a Learning Unit or
+  substitute it for Event order.
+- Course Docs MAY use Nextra navigation order where it represents material
+  progression. If navigation order is incomplete, progression may be uncertain;
+  a path-based fallback MUST NOT be described as lesson order.
+- Do not require a separate session plan or teacher lesson graph when Learning
+  Events already express progression.
 - Generic tool-agnostic specs MUST remain in their dedicated repositories.
-- Course Docs Site-specific presentation conventions MUST be documented in `course-docs-platform` or the `course-docs` domain, not in generic specs.
+  Course Docs Site-specific presentation conventions belong in
+  `course-docs-platform` or the `course-docs` domain, not generic specs.
 - Course docs pages MUST define page titles in frontmatter.
-- `_meta.ts` MUST be used for grouping-only folder labels, not for overriding ordinary page titles.
-- Default sidebar collapse behavior MUST be controlled through `theme.config.tsx` sidebar settings.
-- `theme.collapsed` MUST be used only for true exceptions.
+- `_meta.ts` MUST be used for grouping-only folder labels, not for overriding
+  ordinary page titles.
+- Default sidebar collapse behavior MUST be controlled through
+  `theme.config.tsx` sidebar settings. `theme.collapsed` MUST be used only for
+  true exceptions.
