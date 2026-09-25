@@ -8,7 +8,7 @@
 - Before broad semantic code exploration, use `jev_rank`/`jev_pick` to reduce model reads.
 - After non-trivial implementation, use `jev_review`/`jev_gate` before a full model review.
 - For supported multi-step action-oriented browser work, use `jev_navigate` first; fall back on failure, low confidence, or unsupported tasks.
-- If an applicable Jev tool is unloaded, find it in the tool catalog; do not treat it as unavailable.
+- If an applicable Jev tool is unloaded, find it in the tool catalog.
 - Skip Jev for deterministic one-step work or when a cheaper direct tool exists.
 
 ## Unreal Blueprint graph capture
