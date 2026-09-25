@@ -145,7 +145,6 @@ time_budget_seconds: 180
 Example manifest:
 
 ```yaml
-title: 2026 JavaScript 中間試験
 time_limit_seconds: 1200
 items:
   - id: q1
