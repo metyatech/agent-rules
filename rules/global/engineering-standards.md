@@ -5,9 +5,10 @@
 - Prefer official, maintained, latest-stable free-tier tools; document
   paid/proprietary tradeoffs and verify existing solutions before
   building custom logic.
-- Use available Jev ranking/picking before broad semantic code exploration to reduce model reads.
-- Use available Jev review/gate as the first pass after non-trivial implementation before a full model review.
-- Use Jev Browser first for supported multi-step action-oriented browser work; fall back on failure, low confidence, or unsupported tasks.
+- Before broad semantic code exploration, use `jev_rank`/`jev_pick` to reduce model reads.
+- After non-trivial implementation, use `jev_review`/`jev_gate` before a full model review.
+- For supported multi-step action-oriented browser work, use `jev_navigate` first; fall back on failure, low confidence, or unsupported tasks.
+- When an applicable Jev tool is not loaded, discover it from the tool catalog before proceeding; do not treat unloaded as unavailable.
 - Skip Jev for deterministic one-step work or when a cheaper direct tool exists.
 
 ## Unreal Blueprint graph capture
