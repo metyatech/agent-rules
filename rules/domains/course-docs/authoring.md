@@ -98,11 +98,13 @@
   backtracking: establish the need or context, name and explain the concept,
   then use it (`Need / Context → Name + meaning → Use`). Do not rely on an
   unexplained concept as already known.
-- A term may first appear where it is explicitly introduced and defined.
-  Headings and titles follow the same rule: they may name a concept when the
-  heading itself introduces it, its meaning is clear there, or the needed
-  meaning has already been established. Do not require a glossary or predefine
-  every term.
+- A new term may first appear in a heading or title; its name alone does not
+  introduce the concept. When first named there, the heading/title and its
+  immediately following explanation MUST work together to make the meaning
+  explicit before the learner is expected to use it. Do not assume the learner
+  already knows the term. Prefer `Need / Context → Name + meaning → Use` while
+  allowing the name to appear before its explanation. Do not require a glossary
+  or predefine every term.
 - Exact literal values, identifiers, and metaphors may appear before their
   meaning is explained; explain them before relying on the learner to know what
   they mean. Judge cold-read clarity by whether a learner reading downward from
@@ -111,9 +113,9 @@
 - Introduce only concepts and elements learners will use or engage with; do not
   add later-use realism without a learning need.
 - Before choosing representation or assistance, identify whether the intended
-  goal is immediate task performance, later retention, transfer, or a deliberate
-  combination. Do not optimize only first-attempt speed when retention or
-  transfer is an explicit goal.
+  goal is initial performance, learning (including retention), transfer, or a
+  deliberate combination. Do not optimize only initial performance when
+  learning or transfer is an explicit goal.
 - Choose the most efficient primary representation for the task and goal: visual
   for spatial UI/layout information, code or CodePreview for code authoring,
   text for short non-spatial operations, and diagrams/visuals for structural
