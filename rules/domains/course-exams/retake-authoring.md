@@ -12,4 +12,5 @@
   one-to-one with the original.
 - If a preparation question marks the allowed variation scope, the retake
   question MUST vary only within that scope.
-- Retake authoring MUST keep repository layout and workflow rules aligned with the `course-exams` domain rules.
+- Retake authoring MUST keep repository layout and workflow rules aligned with
+  the `course-exams` domain rules.

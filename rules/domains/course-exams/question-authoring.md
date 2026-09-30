@@ -1,31 +1,75 @@
 # Course Exam Question Authoring
 
-- Before creating a new weekly quiz question, search the owning course's existing `question-bank/quizzes/` for questions that assess the same taught target.
-- A weekly quiz stored under `quizzes/wXX/` MUST assess lesson `XX`. Its system-derived title MUST be `<year> <official course name> 第XX回小テスト`, with the quiz number matching `wXX` (for example, `w01` uses `第1回小テスト`). Do not use an off-by-one quiz number.
-- Standard exam titles MUST be system-derived as `<year> <official course name> <individual title><optional section>`, where the individual title is `【本番】中間試験`, `【練習】中間試験`, `【再試験】中間試験`, `【本番】定期試験`, `【練習】定期試験`, or `【再試験】定期試験` according to the canonical assessment path. Optional exam sections such as `（学科）` or `（実技）` are appended only when the course metadata defines that section.
-- Prefer quiz-question reuse in this order: (1) reuse an existing question unchanged when appropriate, (2) create a revised/derived question from an existing question when the original is too specific or has already been used with the same learners, and (3) create a wholly new question only when no suitable reusable question exists.
-- Reuse or derived reuse MUST still match the current syllabus, actual referenced course materials, learner level, and taught scope.
-- Do not modify an existing question-bank question when that change would retroactively alter a past assessment that already references it. Create a new derived question file instead, unless the user explicitly requests changing the historical assessment.
-- When the same learners have already answered an existing question, avoid repeating it verbatim unless deliberate repetition is pedagogically intended; prefer a derived version that assesses the same skill with different incidental names, values, examples, or context.
-- When creating course exam questions, check the syllabus and course materials specified by the user, and limit questions to the taught scope at the time of the exam.
-- Before drafting or revising exam questions, identify the exam type, target exam lesson, covered lesson range, syllabus entries for that range, and the actual material files referenced by those syllabus entries.
-- Check the `syllabus-data` repository and the actual course material repository files referenced by the relevant syllabus entries before creating exam questions.
-- If the required syllabus entries or actual material files cannot be found, report the missing source instead of creating questions from general subject knowledge.
-- In this course context, a midterm exam is held in lesson 7 and assesses lessons 1 through 6.
-- In this course context, a regular term exam is held in lesson 14 and assesses lessons 1 through 13.
-- A regular term exam MUST emphasize lessons 7 through 13 more than lessons 1 through 6 unless the user explicitly specifies a different weighting.
+- Before creating a new weekly quiz question, search the owning course's
+  existing `question-bank/quizzes/` for questions that assess the same taught
+  target.
+- A weekly quiz stored under `quizzes/wXX/` MUST assess lesson `XX`. Its
+  system-derived title MUST be `<year> <official course name> 第XX回小テスト`, with
+  the quiz number matching `wXX` (for example, `w01` uses `第1回小テスト`). Do not use
+  an off-by-one quiz number.
+- Standard exam titles MUST be system-derived as
+  `<year> <official course name> <individual title><optional section>`, where
+  the individual title is `【本番】中間試験`, `【練習】中間試験`, `【再試験】中間試験`, `【本番】定期試験`,
+  `【練習】定期試験`, or `【再試験】定期試験` according to the canonical assessment path.
+  Optional exam sections such as `（学科）` or `（実技）` are appended only when the
+  course metadata defines that section.
+- Prefer quiz-question reuse in this order: (1) reuse an existing question
+  unchanged when appropriate, (2) create a revised/derived question from an
+  existing question when the original is too specific or has already been used
+  with the same learners, and (3) create a wholly new question only when no
+  suitable reusable question exists.
+- Reuse or derived reuse MUST still match the current syllabus, actual
+  referenced course materials, learner level, and taught scope.
+- Do not modify an existing question-bank question when that change would
+  retroactively alter a past assessment that already references it. Create a new
+  derived question file instead, unless the user explicitly requests changing
+  the historical assessment.
+- When the same learners have already answered an existing question, avoid
+  repeating it verbatim unless deliberate repetition is pedagogically intended;
+  prefer a derived version that assesses the same skill with different
+  incidental names, values, examples, or context.
+- When creating course exam questions, check the syllabus and course materials
+  specified by the user, and limit questions to the taught scope at the time of
+  the exam.
+- Before drafting or revising exam questions, identify the exam type, target
+  exam lesson, covered lesson range, syllabus entries for that range, and the
+  actual material files referenced by those syllabus entries.
+- Check the `syllabus-data` repository and the actual course material repository
+  files referenced by the relevant syllabus entries before creating exam
+  questions.
+- If the required syllabus entries or actual material files cannot be found,
+  report the missing source instead of creating questions from general subject
+  knowledge.
+- In this course context, a midterm exam is held in lesson 7 and assesses
+  lessons 1 through 6.
+- In this course context, a regular term exam is held in lesson 14 and assesses
+  lessons 1 through 13.
+- A regular term exam MUST emphasize lessons 7 through 13 more than lessons 1
+  through 6 unless the user explicitly specifies a different weighting.
 - Confirm the exam's full score and time limit before finalizing the question set.
 - Match the total scoring points to the exam's full score.
-- For midterm exams in this course context, use 20 points unless the user explicitly specifies otherwise.
-- For regular term exams in this course context, use 80 points unless the user explicitly specifies otherwise.
-- For midterm exams, the time limit MUST be no more than 20 minutes multiplied by the number of class periods allocated to the exam.
+- For midterm exams in this course context, use 20 points unless the user
+  explicitly specifies otherwise.
+- For regular term exams in this course context, use 80 points unless the user
+  explicitly specifies otherwise.
+- For midterm exams, the time limit MUST be no more than 20 minutes multiplied
+  by the number of class periods allocated to the exam.
 - For regular term exams, the time limit MUST be no more than 80 minutes.
-- For beginner course exams, write questions that students can answer when they can solve the course exercises for the taught scope.
-- When the user specifies that certain skills are more important for continuing later classes, assign higher scoring weight to those skills.
-- Distribute exam points across the important taught targets and avoid overrepresenting one surface pattern unless the user explicitly prioritizes it.
-- Before writing each question, decide its `出題意図`. Write the question so that it tests that intent.
+- For beginner course exams, write questions that students can answer when they
+  can solve the course exercises for the taught scope.
+- When the user specifies that certain skills are more important for continuing
+  later classes, assign higher scoring weight to those skills.
+- Distribute exam points across the important taught targets and avoid
+  overrepresenting one surface pattern unless the user explicitly prioritizes
+  it.
+- Before writing each question, decide its `出題意図`. Write the question so that it
+  tests that intent.
 - Put `出題意図` at the beginning of `## Explanation`.
-- When creating a preparation set for a regular exam, pair each preparation question one-to-one with the regular exam question.
-- Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list as the paired regular exam question.
-- Write the shared `## Scoring` bullet list abstractly enough to apply to both the preparation question and the paired regular exam question.
-- The `## Scoring` bullet list carries no inline points; points are assigned per assessment in the manifest item `points` array.
+- When creating a preparation set for a regular exam, pair each preparation
+  question one-to-one with the regular exam question.
+- Preparation questions MUST keep the same assessed skill and the same
+  `## Scoring` bullet list as the paired regular exam question.
+- Write the shared `## Scoring` bullet list abstractly enough to apply to both
+  the preparation question and the paired regular exam question.
+- The `## Scoring` bullet list carries no inline points; points are assigned per
+  assessment in the manifest item `points` array.

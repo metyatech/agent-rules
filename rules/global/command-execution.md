@@ -62,6 +62,8 @@
   absolute target path first, normalize file attributes when
   needed, and prefer explicit PowerShell or .NET deletion APIs
   over alias-driven shell deletion.
-- Use explicit browser automation session names on Windows when the environment supports named sessions.
-- If the default browser automation session bind fails, retry with a different task-specific session name.
+- Use explicit browser automation session names on Windows when the environment
+  supports named sessions.
+- If the default browser automation session bind fails, retry with a different
+  task-specific session name.
 - Close all task-owned browser automation sessions before concluding.

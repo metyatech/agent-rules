@@ -22,8 +22,10 @@
 
 ## GitHub repository metadata
 
-- For every public repository, set the GitHub Description, Topics, and Homepage fields.
-- Topics MUST be relevant, stable, lowercase GitHub topics that describe the repository's language, platform, domain, and artifact type.
+- For every public repository, set the GitHub Description, Topics, and Homepage
+  fields.
+- Topics MUST be relevant, stable, lowercase GitHub topics that describe the
+  repository's language, platform, domain, and artifact type.
 
 ## Verification of published artifacts
 

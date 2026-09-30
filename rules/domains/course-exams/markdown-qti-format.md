@@ -66,7 +66,8 @@ time_budget_seconds: 180
   regular-expression answers.
 - `${...}` MUST NOT be used for cloze answers or any other answer placeholder.
 - Cloze answer markers are active only in `question_type: cloze`.
-- In descriptive and choice questions, `{{...}}` is ordinary text and MAY appear in language examples or code snippets.
+- In descriptive and choice questions, `{{...}}` is ordinary text and MAY appear
+  in language examples or code snippets.
 - Use `question_type: cloze` when `{{...}}` is intended as a fill-in answer marker.
 - `## Scoring`, when present, MUST be a flat bullet list. Each bullet is one
   scoring criterion described in prose.
@@ -86,26 +87,55 @@ time_budget_seconds: 180
 
 ## Rich presentation authoring and QTI/Track preservation
 
-- Markdown and normal raw HTML MAY be mixed in `## Prompt`, `## Options`, `## Scoring`, and `## Explanation`. Raw HTML is the generic first-class mechanism for authored presentation; do not invent special one-off markup syntax where ordinary HTML can express it.
-- Ordinary generated QTI presentation MUST use standard HTML element names where representable by the QTI 3 content model. Reserve `qti-*` names for actual QTI structures and interactions.
-- Retired qti-prefixed presentation aliases are FORBIDDEN. Do not restore or add backward-compatibility shims for them.
-- Preserve representable authored hierarchy, nesting, preformatted whitespace, and attributes including `style`, `class`, `id`, `title`, `aria-*`, and `data-*`, subject to QTI/XML/content-model constraints. HTML comments are source-only notes and MUST be omitted from generated QTI.
-- Markdown fenced code remains literal: HTML-looking source inside a fence is escaped and is not interpreted as raw HTML. Use raw `<pre><code>` when intentionally authoring nested rich markup inside displayed code; literal source markup inside that raw code MUST be entity-escaped while intentional nested presentation elements remain real HTML structure, and preformatted whitespace MUST remain exact.
-- For choice questions, `## Options` task-list order determines choice order and checked state determines correctness. Do not manually prefix option text with display ordinals solely for numbering. Rich choice content MUST remain structured HTML.
-- Use ordinary HTML, such as `span`, for styled inline markers or blanks instead of custom syntax.
-- Scoring rubric criteria MUST use ordinary HTML `p` elements inside `qti-rubric-block view="scorer"`; `qti-p` is FORBIDDEN.
-- Generated QTI is the presentation source for Track. QTI-to-Track conversion MUST remain structured and HTML-native, with no Markdown intermediate or Markdown reparsing; it MUST preserve rich choices, nested pre/code markup, images, tables, lists, links, headings, and preformatted whitespace where representable.
-- QTI-to-Track entity handling MUST decode XML entities once to semantic text and escape once for Track HTML. It MUST NOT double-escape code text.
+- Markdown and normal raw HTML MAY be mixed in `## Prompt`, `## Options`,
+  `## Scoring`, and `## Explanation`. Raw HTML is the generic first-class
+  mechanism for authored presentation; do not invent special one-off markup
+  syntax where ordinary HTML can express it.
+- Ordinary generated QTI presentation MUST use standard HTML element names where
+  representable by the QTI 3 content model. Reserve `qti-*` names for actual QTI
+  structures and interactions.
+- Retired qti-prefixed presentation aliases are FORBIDDEN. Do not restore or add
+  backward-compatibility shims for them.
+- Preserve representable authored hierarchy, nesting, preformatted whitespace,
+  and attributes including `style`, `class`, `id`, `title`, `aria-*`, and
+  `data-*`, subject to QTI/XML/content-model constraints. HTML comments are
+  source-only notes and MUST be omitted from generated QTI.
+- Markdown fenced code remains literal: HTML-looking source inside a fence is
+  escaped and is not interpreted as raw HTML. Use raw `<pre><code>` when
+  intentionally authoring nested rich markup inside displayed code; literal
+  source markup inside that raw code MUST be entity-escaped while intentional
+  nested presentation elements remain real HTML structure, and preformatted
+  whitespace MUST remain exact.
+- For choice questions, `## Options` task-list order determines choice order and
+  checked state determines correctness. Do not manually prefix option text with
+  display ordinals solely for numbering. Rich choice content MUST remain
+  structured HTML.
+- Use ordinary HTML, such as `span`, for styled inline markers or blanks instead
+  of custom syntax.
+- Scoring rubric criteria MUST use ordinary HTML `p` elements inside
+  `qti-rubric-block view="scorer"`; `qti-p` is FORBIDDEN.
+- Generated QTI is the presentation source for Track. QTI-to-Track conversion
+  MUST remain structured and HTML-native, with no Markdown intermediate or
+  Markdown reparsing; it MUST preserve rich choices, nested pre/code markup,
+  images, tables, lists, links, headings, and preformatted whitespace where
+  representable.
+- QTI-to-Track entity handling MUST decode XML entities once to semantic text
+  and escape once for Track HTML. It MUST NOT double-escape code text.
 
 ## Manifest format
 
 - The manifest is `assessment.yaml`.
 - Manifests MUST contain `items`.
 - Manifests MAY contain `time_limit_seconds`.
-- Standard weekly-quiz and exam assessment titles MUST be derived by the assessment system from the canonical assessment path and course metadata; their manifests MUST NOT contain `title`.
-- Assessments outside the standard weekly-quiz / midterm / regular-term exam naming model MAY contain an explicit non-empty `title`.
-- The manifest root MUST otherwise contain only optional `title`, optional `time_limit_seconds`, and `items`.
-- A root `type` field is FORBIDDEN. Manifest `type: quiz` and `type: exam` MUST NOT be used. Distinguish quiz,
+- Standard weekly-quiz and exam assessment titles MUST be derived by the
+  assessment system from the canonical assessment path and course metadata;
+  their manifests MUST NOT contain `title`.
+- Assessments outside the standard weekly-quiz / midterm / regular-term exam
+  naming model MAY contain an explicit non-empty `title`.
+- The manifest root MUST otherwise contain only optional `title`, optional
+  `time_limit_seconds`, and `items`.
+- A root `type` field is FORBIDDEN. Manifest `type: quiz` and `type: exam` MUST
+  NOT be used. Distinguish quiz,
   exam, and preparation-set behavior outside the common manifest schema.
 - `items` MUST be an array of objects. A string item is FORBIDDEN.
 - Each item MUST contain `id` and `ref`, and MAY contain `points`.
@@ -224,9 +254,12 @@ items:
 ## Preparation and regular exam pairing
 
 - Pair preparation and regular exam questions by manifest item order.
-  - Example: the first item in `1preparation/assessment.yaml` corresponds to the first item in `2regular/assessment.yaml`.
-  - Example: the second item in `1preparation/assessment.yaml` corresponds to the second item in `2regular/assessment.yaml`.
-- The paired manifest items MAY use different `id` and `ref` values, but their referenced questions MUST assess the same skill.
+  - Example: the first item in `1preparation/assessment.yaml` corresponds to the
+    first item in `2regular/assessment.yaml`.
+  - Example: the second item in `1preparation/assessment.yaml` corresponds to
+    the second item in `2regular/assessment.yaml`.
+- The paired manifest items MAY use different `id` and `ref` values, but their
+  referenced questions MUST assess the same skill.
 - Pair preparation and regular exam questions one-to-one; their item counts and
   their `## Scoring` criterion counts MUST match.
 - When using a note such as `本試験では`, write it for the paired regular exam
