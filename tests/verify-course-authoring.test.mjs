@@ -32,3 +32,16 @@ test('course purpose is normative and support follows the learner', async () => 
   assert.match(authoring, /context-dependent heuristic, not a required or default authoring sequence/);
   assert.match(authoring, /accidental difficulty/);
 });
+
+test('task assistance permits taught information and concise useful feedback', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /first Hint SHOULD avoid unnecessarily revealing the answer immediately/);
+  assert.match(authoring, /Multiple Hints MAY become progressively stronger or more explicit/);
+  assert.match(authoring, /Hints SHOULD default to material already covered/);
+  assert.match(authoring, /Hints MAY explicitly teach new information/);
+  assert.match(authoring, /MUST NOT require unfamiliar information as already known without explaining it/);
+  assert.match(authoring, /Answers MUST provide feedback that lets learners understand correctness/);
+  assert.match(authoring, /Answers MAY be concise for simple, self-explanatory tasks when additional explanation adds no learning value/);
+  assert.doesNotMatch(authoring, /MUST use material already covered/);
+  assert.doesNotMatch(authoring, /Answers MUST explain why they are correct/);
+});

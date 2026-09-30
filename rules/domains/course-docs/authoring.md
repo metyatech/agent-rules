@@ -52,10 +52,16 @@
 ## Tasks and aligned evidence
 
 - Exercise and QuickCheck tasks MUST present the problem, then zero or more
-  `<Hint>` blocks, then exactly one `<Answer>` block. Hints MUST NOT reveal the
-  answer first and MUST use material already covered in this or a guaranteed
-  earlier lesson. Answers MUST explain why they are correct and address a likely
-  misconception only when one genuinely exists.
+  `<Hint>` blocks, then exactly one `<Answer>` block.
+- The first Hint SHOULD avoid unnecessarily revealing the answer immediately.
+  Multiple Hints MAY become progressively stronger or more explicit.
+- Hints SHOULD default to material already covered in this or a guaranteed
+  earlier lesson. Hints MAY explicitly teach new information; they MUST NOT
+  require unfamiliar information as already known without explaining it.
+- Answers MUST provide feedback that lets learners understand correctness.
+  Answers MAY be concise for simple, self-explanatory tasks when additional
+  explanation adds no learning value. Explain the reasoning or address a likely
+  misconception when it helps the learner; do not invent a misconception.
 - When present, Hints MUST be non-empty direct children of the task before its
   final Answer; they MAY provide progressively stronger support.
 - Exercise is a task/container format, not a learning phase. Near-copy and
