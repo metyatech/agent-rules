@@ -35,6 +35,14 @@ Edit `agent-profiles.json`, `rules/global/`, or `rules/domains/`.
 
 Do not edit generated `AGENTS.md` or `CLAUDE.md` directly.
 
+## Verification
+
+The canonical verification command is in [.mwt/config.toml](.mwt/config.toml).
+It runs course-authoring regressions, Markdown validation, and composition.
+For a focused authoring check, run
+`node --test tests/verify-course-authoring.test.mjs`.
+Use `compose-agentsmd check` to verify generated instruction synchronization.
+
 ## Skills
 
 This repository does not install, resolve, or trigger skills.
