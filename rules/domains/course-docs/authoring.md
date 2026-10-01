@@ -120,6 +120,17 @@
   they mean. Use cold-read review to detect accidental difficulty: unexplained
   prerequisites, ambiguous instructions, missing state, unnecessary backtracking,
   undefined assumptions, terminology gaps, and visual/prose mismatches.
+- As a bounded Course Docs quality heuristic, review whether a learner-facing
+  heading, its immediate explanation, the task statement, and relevant UI cues
+  ask for the same learner action at the same stage. Treat a mismatch as a
+  learner-facing defect when it leaves the learner unsure whether to look,
+  write, choose, fix, try, check, answer, or create. Natural paraphrases are
+  fine when they describe the same action; do not enforce identical words.
+  Multiple actions are fine when their order is explicit and each stage is
+  clear. Cold-read question: “Does the next action the learner expects from this
+  heading match the action actually required next?” This applies signaling and
+  coherence research as a local review heuristic; it is not a directly tested
+  rule about particular verb pairs.
 - Review learner-facing orientation (including page introductions, prerequisite
   callouts, objective summaries, Section goals, previews, and sequence
   announcements) for concrete value to the current activity, structure, or

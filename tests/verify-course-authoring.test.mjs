@@ -60,3 +60,14 @@ test('task assistance permits taught information and concise useful feedback', a
   assert.doesNotMatch(authoring, /MUST use material already covered/);
   assert.doesNotMatch(authoring, /Answers MUST explain why they are correct/);
 });
+
+test('course cold-read checks learner-action consistency without exact-word matching', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /heading, its immediate explanation, the task statement, and relevant UI cues/);
+  assert.match(authoring, /Treat a mismatch as a learner-facing defect/);
+  assert.match(authoring, /Natural paraphrases are fine/);
+  assert.match(authoring, /Multiple actions are fine when their order is explicit/);
+  assert.match(authoring, /Does the next action the learner expects from this heading match the action actually required next\?/);
+  assert.match(authoring, /not a directly tested rule about particular verb pairs/);
+  assert.doesNotMatch(authoring, /MUST use the same (word|verb)/i);
+});
