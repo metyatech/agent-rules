@@ -33,6 +33,21 @@ test('course purpose is normative and support follows the learner', async () => 
   assert.match(authoring, /accidental difficulty/);
 });
 
+test('orientation and guided observation are reviewed without banning useful guidance', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /concrete value to the current activity, structure, or decision/);
+  assert.match(authoring, /guaranteed course sequence/);
+  assert.match(authoring, /canonical Unit objective/);
+  assert.match(authoring, /name-only list is not pre-training/);
+  assert.match(authoring, /term may appear in orientation or a heading before it is explained/);
+  assert.match(authoring, /fully guided action\/code → observable result → explanation/);
+  assert.match(authoring, /bounded quality heuristic, not a retrieval-rule extension or a universal sequencing law/);
+  assert.match(authoring, /does not require discovery/);
+  assert.match(authoring, /does not.*weaken worked examples or explicit guidance/);
+  assert.match(authoring, /no actionable preparation, re-entry, or recovery value/);
+  assert.match(authoring, /This review does not reject objectives or advance organizers/);
+});
+
 test('task assistance permits taught information and concise useful feedback', async () => {
   const authoring = await readRule('course-docs/authoring');
   assert.match(authoring, /first Hint SHOULD avoid unnecessarily revealing the answer immediately/);

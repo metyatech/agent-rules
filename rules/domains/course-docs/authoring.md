@@ -120,6 +120,32 @@
   they mean. Use cold-read review to detect accidental difficulty: unexplained
   prerequisites, ambiguous instructions, missing state, unnecessary backtracking,
   undefined assumptions, terminology gaps, and visual/prose mismatches.
+- Review learner-facing orientation (including page introductions, prerequisite
+  callouts, objective summaries, Section goals, previews, and sequence
+  announcements) for concrete value to the current activity, structure, or
+  decision at that point. Rework or remove candidates that only restate a
+  heading or adjacent prose, a guaranteed course sequence, a canonical Unit
+  objective, or information the learner cannot yet use. This review does not
+  reject objectives or advance organizers: they may help orient attention or
+  structure when useful ([Hamilton, 1985](https://doi.org/10.3102/00346543055001047);
+  [Luiten, Ames, & Ackerson, 1980](https://doi.org/10.3102/00028312017002211)).
+- A term may appear in orientation or a heading before it is explained. If the
+  learner needs its meaning to understand or act, explain the name and relevant
+  characteristics or relations before relying on that understanding; a
+  name-only list is not pre-training. Use pre-training when needed to teach the
+  parts a learner must coordinate, consistent with Mayer's pre-training
+  principle. Do not require explanation before every first appearance.
+- For guided demonstration, when observing or comparing the result is itself
+  meaningful learner processing, review whether stating the exact consequence
+  beforehand removes that observation. Consider `fully guided action/code →
+  observable result → explanation`. This is a bounded quality heuristic, not a
+  retrieval-rule extension or a universal sequencing law: actions and code may
+  be fully supplied, and it does not require discovery, weaken worked examples
+  or explicit guidance, or apply to every instruction.
+- Prior knowledge being important does not make a prerequisite callout useful
+  on every page. In a guaranteed linear progression, do not add one mechanically
+  when it adds no actionable preparation, re-entry, or recovery value; retain it
+  when it helps learners make a relevant decision or act on a real use.
 - Preserve intended retrieval effort, problem solving, decision making,
   productive struggle, and changed-condition transfer during cold-read review.
 - When a task is intended to elicit retrieval or learner generation, the
