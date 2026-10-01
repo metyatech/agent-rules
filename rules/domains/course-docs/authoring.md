@@ -126,15 +126,26 @@
   decision at that point. Rework or remove candidates that only restate a
   heading or adjacent prose, a guaranteed course sequence, a canonical Unit
   objective, or information the learner cannot yet use. This review does not
-  reject objectives or advance organizers: they may help orient attention or
-  structure when useful ([Hamilton, 1985](https://doi.org/10.3102/00346543055001047);
-  [Luiten, Ames, & Ackerson, 1980](https://doi.org/10.3102/00028312017002211)).
+  reject objectives or advance organizers. Klauer (1984) found that presenting
+  behavioral objectives, learning directions, or questions before instructional
+  text improved goal-relevant learning, reduced goal-irrelevant learning, and
+  slightly improved overall learning; effects depended on text/task conditions
+  ([Klauer, 1984](https://doi.org/10.3102/00028312021002323)). Hamilton (1985)
+  provides a context-sensitive framework for evaluating adjunct questions and
+  objectives that accounts for text structure and learner characteristics; it
+  is not direct evidence that objectives are effective
+  ([Hamilton, 1985](https://doi.org/10.3102/00346543055001047)). Advance
+  organizers may facilitate learning and retention
+  ([Luiten, Ames, & Ackerson, 1980](https://doi.org/10.3102/00028312017002211)).
 - A term may appear in orientation or a heading before it is explained. If the
-  learner needs its meaning to understand or act, explain the name and relevant
-  characteristics or relations before relying on that understanding; a
-  name-only list is not pre-training. Use pre-training when needed to teach the
-  parts a learner must coordinate, consistent with Mayer's pre-training
-  principle. Do not require explanation before every first appearance.
+  learner needs its meaning to understand or act, explain it before relying on
+  that understanding; a name-only list is not pre-training. Mayer's multimedia
+  pre-training principle concerns learning the names and characteristics of
+  main concepts before a complex multimedia lesson. Applying it to Course Docs
+  text/code tutorials by explaining a needed relation before an activity depends
+  on it is a bounded application, not a finding directly established by Mayer.
+  Use pre-training when the later activity needs it; do not require explanation
+  before every first appearance or pre-training in every lesson.
 - For guided demonstration, when observing or comparing the result is itself
   meaningful learner processing, review whether stating the exact consequence
   beforehand removes that observation. Consider `fully guided action/code →
