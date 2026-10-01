@@ -122,6 +122,16 @@
   undefined assumptions, terminology gaps, and visual/prose mismatches.
 - Preserve intended retrieval effort, problem solving, decision making,
   productive struggle, and changed-condition transfer during cold-read review.
+- When a task is intended to elicit retrieval or learner generation, the
+  learner-visible prompt and default pre-attempt material MUST NOT reveal the
+  target response or a decisive cue in a way that removes the intended
+  retrieval or generation before the learner's first attempt. If the response
+  is deliberately supplied as worked or guided instruction, do not count that
+  attempt as evidence of unaided retrieval or generation. This narrow principle
+  is supported by research on classroom retrieval practice and the generation
+  effect ([Agarwal, Nunes, & Blunt, 2021](https://doi.org/10.1007/s10648-021-09595-9);
+  [Bertsch, Pesta, Wiscott, & McDaniel, 2007](https://doi.org/10.3758/BF03193441));
+  it does not prescribe withholding answers in other task types.
 - Prioritize clarity over brevity; retain needed causal relations, UI/state
   correspondence, action purpose, state transitions, and term meanings.
 - Introduce only concepts and elements learners will use or engage with; do not

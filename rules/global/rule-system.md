@@ -40,6 +40,28 @@ keywords mean MUST.
 - Session memory resets between sessions. Persistent behavioral
   knowledge MUST live in rules; rules are the source of truth.
 
+## Research provenance
+
+- Before adding or materially strengthening general prescriptive guidance in
+  any rule or skill, identify the provenance for each general claim.
+- A general claim that a practice improves human outcomes, learning, usability,
+  quality, productivity, decision making, or behavior MUST have directly
+  relevant empirical research before it is encoded as a general prescription.
+- Prefer systematic reviews or meta-analyses. When these are unavailable, the
+  evidence MUST include strong, converging direct findings.
+- Match the evidence to the prescription's scope, population, task, outcome, and
+  strength. Record material boundary conditions and contrary evidence.
+- Logical derivation, intuition, analogy, convention, or an existing rule alone
+  MUST NOT support a new general empirical prescription.
+- When evidence is indirect, mixed, or insufficient, do not encode the guidance
+  as a general evidence-backed prescription.
+- Explicit user-specific policy MAY be encoded without empirical support when
+  it is identified as chosen policy rather than an empirical claim.
+- Objective external constraints, including platform, API, and tool contracts,
+  deterministic invariants, law, safety requirements, and repository contracts,
+  MAY be encoded from authoritative sources; do not represent them as
+  research-backed claims.
+
 ## Mechanisation of rules
 
 - When a rule's compliance can be verified deterministically from
