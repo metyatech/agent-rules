@@ -127,10 +127,9 @@
   write, choose, fix, try, check, answer, or create. Natural paraphrases are
   fine when they describe the same action; do not enforce identical words.
   Multiple actions are fine when their order is explicit and each stage is
-  clear. Cold-read question: “Does the next action the learner expects from this
-  heading match the action actually required next?” This applies signaling and
-  coherence research as a local review heuristic; it is not a directly tested
-  rule about particular verb pairs.
+  clear. Cold-read question: “この見出しを読んで learner が予想する次の行動と、実際に次に要求される行動は一致しているか”
+  This applies signaling and coherence research as a local review heuristic;
+  it is not a directly tested rule about particular verb pairs.
 - Review learner-facing orientation (including page introductions, prerequisite
   callouts, objective summaries, Section goals, previews, and sequence
   announcements) for concrete value to the current activity, structure, or

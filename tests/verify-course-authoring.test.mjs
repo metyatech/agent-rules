@@ -67,7 +67,7 @@ test('course cold-read checks learner-action consistency without exact-word matc
   assert.match(authoring, /Treat a mismatch as a learner-facing defect/);
   assert.match(authoring, /Natural paraphrases are fine/);
   assert.match(authoring, /Multiple actions are fine when their order is explicit/);
-  assert.match(authoring, /Does the next action the learner expects from this heading match the action actually required next\?/);
+  assert.match(authoring, /この見出しを読んで learner が予想する次の行動と、実際に次に要求される行動は一致しているか/);
   assert.match(authoring, /not a directly tested rule about particular verb pairs/);
   assert.doesNotMatch(authoring, /MUST use the same (word|verb)/i);
 });
