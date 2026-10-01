@@ -155,11 +155,11 @@
   instructional path rather than relying on a Hint, collapsed content, or an
   optional callout. Review whether a Verify belongs near the operation whose
   result it checks; when appropriate, consider `operation → result check →
-  generalization`. For example, if a broad `p` selector changes every price
-  when the goal is to style only the 180-yen price, use that result to motivate
-  targeting it with `class="nedan"` / `.nedan`, verify that only the intended
-  price changed, then explain the `class="name"` ↔ `.name` rule and check
-  understanding. This illustrates the heuristic; it does not mandate this
+  generalization`. For example, if a broad `p` selector changes every `<p>`
+  element when the goal is to style only the 180-yen price, use that result to
+  motivate targeting it with `class="nedan"` / `.nedan`, verify that only the
+  intended price changed, then explain the `class="name"` ↔ `.name` rule and
+  check understanding. This illustrates the heuristic; it does not mandate this
   sequence for every example.
 - Review learner-facing orientation (including page introductions, prerequisite
   callouts, objective summaries, Section goals, previews, and sequence
