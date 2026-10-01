@@ -130,6 +130,37 @@
   clear. Cold-read question: “この見出しを読んで learner が予想する次の行動と、実際に次に要求される行動は一致しているか”
   This applies signaling and coherence research as a local review heuristic;
   it is not a directly tested rule about particular verb pairs.
+- Review sequence / discourse continuity as a broader cold-read question than
+  learner-action consistency. Especially in novice-oriented initial
+  instruction, make it clear from the learner's current state why the next
+  topic, operation, or concept appears now. A concise bridge may connect a
+  learner goal, an observed result, a limitation of the current method, the
+  need for a next concept or operation, or an explicit transition. Do not make
+  learners infer a logical bridge that the material can state briefly.
+  Cold-read questions:
+  - “この部分は、直前まで読んだ learner にとって『なぜ今この話？』にならないか”
+  - “新しい概念・道具・操作は、その必要性が生じてから導入されているか”
+  - “見出しだけ先に読んだとき、learner state より先の結論へ飛んでいないか”
+  - “前の結果 → 次の説明・操作の因果や目的が自然につながっているか”
+  This is a bounded sequence / discourse continuity heuristic for novice
+  initial instruction, not a requirement to add transitions between every
+  paragraph or to maximize coherence for every learner. Preserve intentional
+  inference in retrieval and problem-solving activities; do not impose this as
+  a universal high-coherence rule for learners with substantial prior knowledge.
+- When a concrete example introduces a new principle, review
+  `concrete need → example operation → result check → principle / general rule
+  → understanding check` as one possible progression. This is a bounded
+  Course Docs heuristic, not a fixed template or universal order. Keep an
+  explanation needed for a later QuickCheck or operation on the main
+  instructional path rather than relying on a Hint, collapsed content, or an
+  optional callout. Review whether a Verify belongs near the operation whose
+  result it checks; when appropriate, consider `operation → result check →
+  generalization`. For example, if a broad `p` selector changes every price
+  when the goal is to style only the 180-yen price, use that result to motivate
+  targeting it with `class="nedan"` / `.nedan`, verify that only the intended
+  price changed, then explain the `class="name"` ↔ `.name` rule and check
+  understanding. This illustrates the heuristic; it does not mandate this
+  sequence for every example.
 - Review learner-facing orientation (including page introductions, prerequisite
   callouts, objective summaries, Section goals, previews, and sequence
   announcements) for concrete value to the current activity, structure, or

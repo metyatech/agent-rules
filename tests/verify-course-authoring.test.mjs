@@ -71,3 +71,20 @@ test('course cold-read checks learner-action consistency without exact-word matc
   assert.match(authoring, /not a directly tested rule about particular verb pairs/);
   assert.doesNotMatch(authoring, /MUST use the same (word|verb)/i);
 });
+
+test('course cold-read reviews local continuity with bounded sequencing heuristics', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /sequence \/ discourse continuity as a broader cold-read question than learner-action consistency/);
+  assert.match(authoring, /novice-oriented initial instruction/);
+  for (const question of [
+    /なぜ今この話/,
+    /新しい概念・道具・操作は、その必要性が生じてから導入されているか/,
+    /見出しだけ先に読んだとき、learner state より先の結論へ飛んでいないか/,
+    /前の結果 → 次の説明・操作の因果や目的が自然につながっているか/
+  ]) assert.match(authoring, question);
+  assert.match(authoring, /not a fixed template or universal order/);
+  assert.match(authoring, /Preserve intentional inference in retrieval and problem-solving activities/);
+  assert.match(authoring, /do not impose this as a universal high-coherence rule for learners with substantial prior knowledge/);
+  assert.match(authoring, /needed for a later QuickCheck or operation on the main instructional path/);
+  assert.match(authoring, /operation → result check → generalization/);
+});
