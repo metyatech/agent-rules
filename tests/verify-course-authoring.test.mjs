@@ -29,23 +29,23 @@ test('course purpose is normative and support follows the learner', async () => 
   assert.match(purpose, /Do not equate enjoyment with ease/);
   assert.doesNotMatch(purpose, /happiness is the highest-level goal/);
   assert.match(authoring, /guidance minimization is not an objective/);
-  assert.match(authoring, /context-dependent heuristic, not a required or default authoring sequence/);
+  assert.match(authoring, /do not impose a fixed local sequence for doing so/);
   assert.match(authoring, /accidental difficulty/);
 });
 
-test('orientation and guided observation are reviewed without banning useful guidance', async () => {
+test('orientation is useful and result withholding is limited to intended retrieval or generation', async () => {
   const authoring = await readRule('course-docs/authoring');
   assert.match(authoring, /concrete value to the current activity, structure, or decision/);
   assert.match(authoring, /guaranteed course sequence/);
   assert.match(authoring, /canonical Unit objective/);
   assert.match(authoring, /name-only list is not pre-training/);
   assert.match(authoring, /term may appear in orientation or a heading before it is explained/);
-  assert.match(authoring, /fully guided action\/code → observable result → explanation/);
-  assert.match(authoring, /bounded quality heuristic, not a retrieval-rule extension or a universal sequencing law/);
-  assert.match(authoring, /does not require discovery/);
-  assert.match(authoring, /does not.*weaken worked examples or explicit guidance/);
+  assert.match(authoring, /task is intended to elicit retrieval or learner generation/);
+  assert.match(authoring, /MUST NOT reveal the target response or a decisive cue/);
+  assert.match(authoring, /does not prescribe withholding answers in other task types/);
   assert.match(authoring, /no actionable preparation, re-entry, or recovery value/);
   assert.match(authoring, /This review does not reject objectives or advance organizers/);
+  assert.doesNotMatch(authoring, /fully guided action\/code → observable result → explanation/);
 });
 
 test('task assistance permits taught information and concise useful feedback', async () => {
@@ -72,7 +72,7 @@ test('course cold-read checks learner-action consistency without exact-word matc
   assert.doesNotMatch(authoring, /MUST use the same (word|verb)/i);
 });
 
-test('course cold-read reviews local continuity with bounded sequencing heuristics', async () => {
+test('course cold-read reviews local continuity without fixed sequence heuristics', async () => {
   const authoring = await readRule('course-docs/authoring');
   assert.match(authoring, /sequence \/ discourse continuity as a broader cold-read question than learner-action consistency/);
   assert.match(authoring, /novice-oriented initial instruction/);
@@ -82,9 +82,23 @@ test('course cold-read reviews local continuity with bounded sequencing heuristi
     /見出しだけ先に読んだとき、learner state より先の結論へ飛んでいないか/,
     /前の結果 → 次の説明・操作の因果や目的が自然につながっているか/
   ]) assert.match(authoring, question);
-  assert.match(authoring, /not a fixed template or universal order/);
   assert.match(authoring, /Preserve intentional inference in retrieval and problem-solving activities/);
   assert.match(authoring, /do not impose this as a universal high-coherence rule for learners with substantial prior knowledge/);
   assert.match(authoring, /needed for a later QuickCheck or operation on the main instructional path/);
-  assert.match(authoring, /operation → result check → generalization/);
+  assert.match(authoring, /mutually dependent operations, results, and explanations close enough to integrate/);
+  assert.doesNotMatch(authoring, /concrete need → example operation → result check/);
+  assert.doesNotMatch(authoring, /operation → result check → generalization/);
+});
+
+
+test('course rules separate research provenance from local contracts and unresolved choices', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /`R` — supported.*multiple independent studies or research syntheses/);
+  assert.match(authoring, /`S` — a multi-study research synthesis/);
+  assert.match(authoring, /`L` — a local, normative, product, authoring, or platform decision/);
+  assert.match(authoring, /`U` — unresolved by the available research/);
+  assert.match(authoring, /Do not promote a claim to `R` or `S` by combining one research result with unaudited design intuition/);
+  assert.match(authoring, /For the local Course Docs `phase="transfer"`/);
+  assert.match(authoring, /not a universal scientific definition of transfer/);
+  assert.match(authoring, /Do not infer an exact colour, border, radius, or size from signaling research/);
 });
