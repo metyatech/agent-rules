@@ -5,14 +5,27 @@
 - Prefer official, maintained, latest-stable free-tier tools; document
   paid/proprietary tradeoffs and verify existing solutions before
   building custom logic.
-- Before broad semantic code exploration, use `jev_rank`/`jev_pick` to reduce
-  model reads.
-- After non-trivial implementation, use `jev_review`/`jev_gate` before a full
-  model review.
+- Whenever an applicable Jev tool can materially reduce model reading,
+  reasoning, or browser work, MUST use it; do not skip it because the main
+  model could do the work itself.
+- For semantic code exploration across multiple plausible files/candidates,
+  use `jev_rank`; when choosing from an existing candidate list, use
+  `jev_pick`.
+- Use `jev_next_step` before guessing after ambiguous/failing results,
+  repeated attempts, or uncertainty about the next action.
+- Before declaring non-trivial implementation complete, use exactly one
+  primary completion review: `jev_gate` when concrete completion claims and
+  supporting evidence exist; otherwise `jev_review`. Do not routinely call
+  both on the same unchanged patch.
 - For supported multi-step action-oriented browser work, use `jev_navigate`
-  first; fall back on failure, low confidence, or unsupported tasks.
-- If an applicable Jev tool is unloaded, find it in the tool catalog.
-- Skip Jev for deterministic one-step work or when a cheaper direct tool exists.
+  first.
+- If an applicable Jev tool is unloaded, discover it from the tool catalog.
+- Fall back to normal model/browser work only when Jev is unsupported, fails,
+  or returns insufficient confidence.
+- Skip Jev only when it adds no material value, such as deterministic one-step
+  work or a cheaper direct deterministic tool path.
+- Avoid repeated Jev calls on an unchanged diff/result; rerun only after a
+  material change or new evidence.
 
 ## Unreal Blueprint graph capture
 
