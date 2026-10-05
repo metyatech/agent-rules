@@ -149,18 +149,23 @@
   task language over authoring/meta labels. In responsive layouts, do not use
   viewport-dependent positions as the sole identifier; use stable names such as
   `index.html`, `style.css`, a browser result, or a section title. When a cloze
-  response is shown back, show the complete meaningful sentence when that helps
-  comparison. These exact phrasing and representation choices are local quality
-  conventions; exact Japanese wording is not a uniquely research-optimal form.
+  response is shown back, prefer the complete semantic sentence over only the
+  inserted fragment when that helps comparison. These exact phrasing and
+  representation choices are local quality conventions; exact Japanese wording
+  is not a uniquely research-optimal form.
 - Learner-facing prompts MUST make clear what content is being asked about,
   what action or answer is required, and the expected response form, using only
-  context already introduced. Do not leave a referent or baseline such as “it,”
+  context already introduced. The prompt, nearby instructions, and control
+  labels MAY establish these together. Do not leave a referent or baseline such
+  as “it,”
   “that,” “all three,” “where,” “change,” “same,” or “different” unresolved
   unless its referent is explicit and unique. For choice items, keep the central
   idea in the stem and make options natural answers to that stem. Reduce prompt
   decoding that would add difficulty unrelated to the target knowledge or skill;
-  this is not a mandate to minimize words or remove needed causal detail. The
-  clarity/elaboration evidence is bounded to STEM text, and item-writing flaw
+  this is not a mandate to minimize words or remove needed causal detail. Exact
+  Japanese-copy checks and option phrasing are local Course Docs conventions,
+  not universal research laws. Clarity/elaboration evidence is bounded to STEM
+  text, and item-writing flaw
   evidence is bounded to multiple-choice items (Strohmaier et al., 2023,
   [DOI](https://doi.org/10.1016/j.edurev.2023.100533); Breakall, Randles, &
   Tasker, 2019, [DOI](https://doi.org/10.1039/C8RP00262B)).
@@ -182,12 +187,6 @@
   learner goal, an observed result, a limitation of the current method, the
   need for a next concept or operation, or an explicit transition. Do not make
   learners infer a logical bridge that the material can state briefly.
-  Sentences in novice initial instruction SHOULD normally be interpretable
-  from information introduced up to that point; do not depend on future
-  content to make earlier prose meaningful. When it fits the lesson's causal
-  structure, prefer current/known state → need/problem → new concept → use;
-  this is a local sequencing heuristic, not a research-established or
-  universally optimal order.
   Cold-read questions:
   - “この部分は、直前まで読んだ learner にとって『なぜ今この話？』にならないか”
   - “新しい概念・道具・操作は、その必要性が生じてから導入されているか”
@@ -198,24 +197,12 @@
   coherence for every learner. Preserve intentional
   inference in retrieval and problem-solving activities; do not impose this as
   a universal high-coherence rule for learners with substantial prior knowledge.
-- Learner-facing prompts MUST make clear at the point of asking the object or
-  content, the judgment/action required, and the expected response form. The
-  prompt, nearby instructions, and control labels MAY establish these together.
-  Do not require learners to infer a missing referent or baseline from vague
-  wording unless it is already unambiguous. Selection options SHOULD complete or
-  answer the stem naturally; do not make decoding awkward wording an accidental
-  extra task or presuppose the target category in a way that cues the answer.
-  Treat exact Japanese-copy checks and option phrasing as local Course Docs
-  conventions, not universal research laws. Preserve the pre-attempt
-  retrieval/generation boundary below.
-- Prefer direct learner-facing task language to authoring/meta labels when the
-  task can be stated plainly. When showing a sentence-completion response back
-  for comparison, prefer the complete semantic sentence over only the inserted
-  fragment; this is a bounded local convention, not a directly tested rule.
-- Use stable names or identifiers to refer to responsive-layout targets; do
-  not rely on viewport-dependent locations such as left, right, above, or below
-  as the sole identifier when layout can move the target. This is a local
-  responsive-content convention.
+  Sentences in novice initial instruction SHOULD normally be interpretable
+  from information introduced up to that point; do not depend on future
+  content to make earlier prose meaningful. When it fits the lesson's causal
+  structure, prefer current/known state → need/problem → new concept → use;
+  this is a local sequencing heuristic, not a research-established or
+  universally optimal order.
 - Keep an explanation needed for a later QuickCheck or operation on the main
   instructional path rather than relying only on a Hint, collapsed content, or
   optional callout. Keep mutually dependent operations, results, and
@@ -264,6 +251,125 @@
   effect ([Agarwal, Nunes, & Blunt, 2021](https://doi.org/10.1007/s10648-021-09595-9);
   [Bertsch, Pesta, Wiscott, & McDaniel, 2007](https://doi.org/10.3758/BF03193441));
   it does not prescribe withholding answers in other task types.
+- Prediction/prequestion activities SHOULD present the object, code, or content
+  clearly and ask for a concrete result or relation immediately about to be
+  learned. Preserve the pre-attempt state so the answer is not disclosed.
+  After an attempt, give concrete, task-focused feedback about the actual
+  outcome or relation and useful causal/elaborated feedback, not only a
+  correct/incorrect judgment. For exploratory prediction, supportive comparison
+  wording MAY be preferable to punitive wrong-labelling; exact wording, colour,
+  and icon choices are local decisions, not research-derived requirements.
+  Prequestion benefits apply to tested content, not automatically to unrelated
+  content (St Hilaire, Chan, & Ahn, 2024,
+  [DOI](https://doi.org/10.3758/s13423-023-02353-8)); code-output prediction
+  before explanation is supported for novices in the studied programming
+  context, not as a universal requirement (Tucker et al., 2024,
+  [DOI](https://doi.org/10.1016/j.learninstruc.2023.101871)).
+- When self-explanation is useful, scaffold toward a causal or relational idea
+  instead of assuming a generic “Why?” is best. Non-empty free text is not
+  evidence of correctness, and never fake semantic correctness for ungraded free
+  text. If a full explanation would leak a planned self-explanation or generation
+  target, stage the feedback as verification plus the concrete observed result,
+  then learner generation/self-explanation, then the canonical causal or
+  elaborated explanation. For reflection that is not semantically assessed, do
+  not create a false correctness gate; offer an explicit “I don't know” or show
+  an answer route when appropriate. Where useful, show the learner's complete
+  generated statement beside a canonical explanation. Use self-explanation
+  selectively at conceptual transitions, not mechanically after each action.
+  The reported evidence supports explanation quality, error correction, and near
+  transfer in the studied problem-solving context, not far transfer (Zhang &
+  Fiorella, 2024, [DOI](https://doi.org/10.1016/j.cedpsych.2024.102326)).
+- Useful verification is not UI-state narration. If a response is objectively or
+  checkably scorable and verification resolves learner uncertainty, retain that
+  performance feedback even when the result is visually apparent; do not delete
+  it merely as “redundant narration”. Verification alone is not sufficient when
+  corrective or explanatory information would help: connect feedback to the
+  actual result, correct information, a causal explanation, or a progressively
+  useful hint as appropriate. Correctness-only feedback MUST NOT end the loop
+  when elaboration would help.
+- Remove status narration such as “recorded”, “added”, or “result shown below”
+  when it adds no learning, action, recovery, orientation, or accessibility
+  value. Do not repeat the exact same visible result sentence when the second
+  instance has no distinct role. Do not mechanically treat a visual result plus
+  concise text mapping or accessibility equivalent as gratuitous duplication.
+  These coherence/redundancy rules remove pointless narration, not useful
+  verification or performance feedback.
+- Feedback findings from Shute (2008) and Van der Kleij, Feskens, and Eggen
+  (2015) are R-level guidance within their stated boundary conditions. The
+  staged verification → generation/self-explanation → canonical explanation
+  sequence is an S Course Docs synthesis; exact wording, tone, colour, and icon
+  styling are L local decisions.
+- Divide material at meaningful semantic or causal boundaries rather than by
+  arbitrary screen-sized chunks. Separate simultaneous changes when needed to
+  show which change caused which result; preserve meaningful unchanged states
+  (for example, adding `class="nedan"` alone does not change appearance while
+  CSS still selects `p`). Show one causal change at a time when it materially
+  improves attribution. For novices, worked example → completion/guided
+  variation → independent application is a useful progression when appropriate,
+  not a required page structure. Segmenting evidence supports meaningful
+  segments, not extra screens or cards for their own sake. Applying this
+  evidence to exact Course Docs cut points or separating simultaneous changes
+  is a local design decision (Rey et al., 2019,
+  [DOI](https://doi.org/10.1007/s10648-018-9456-4)).
+- Future information MAY be withheld until useful, especially when it would
+  leak an answer or overload novices; do not unnecessarily remove previously
+  learned information needed later. A guided forward path can keep completed
+  material easy to revisit. Treat cumulative presentation as a strong,
+  research-constrained candidate, not a universal or uniquely optimal pattern.
+  Exact tabs, accordions, compaction/collapse, and layout are local
+  implementation choices: preserve easy re-entry and information needed for
+  cognitive offloading. A compact post-activity
+  reference can help when later lookup is likely. When reviewing earlier steps,
+  preserve answers and learner state where practical; make any intended reset
+  clear. Ito and Ichikawa (2026) studied one narrated biology slideshow with 40
+  Japanese university students; Chen et al. (2026) provide review-level support
+  connecting offloading with transient information, not a direct UI comparison
+  ([Ito and Ichikawa](https://doi.org/10.1002/jcal.70286);
+  [Chen et al.](https://doi.org/10.1007/s10648-026-10132-9)).
+- In sequential tutorials, newly revealed instructional content SHOULD
+  normally appear at or after its trigger/current reading position so learners
+  can continue forward. Do not silently change upstream prose after an action
+  and expect learners to rediscover or reread it. Align semantic reading order,
+  visual order, DOM order, and keyboard focus order when order affects meaning.
+  Place step-transition feedback near the current position; top-level progress
+  alone is not a sufficient primary cue. The goal is predictable, normally
+  top-to-bottom flow in this tutorial context, not a universal left-to-right
+  rule. This is an explicit Course Docs synthesis, not a claim that WCAG
+  mandates an exact layout.
+- When an instructional state change matters, do not rely on transient motion
+  alone: retain a changed line/value, old-to-new comparison, causal note, or
+  coordinated cue long enough to inspect. Motion is supplementary. Respect
+  `prefers-reduced-motion` and do not create temporary low-contrast attention
+  states. Exact animation duration and style remain local implementation and
+  usability choices. Baudisch et al. (2006) studied HCI change-awareness cues;
+  this is not direct evidence for learning outcomes or a mandated style
+  ([DOI](https://doi.org/10.1145/1166253.1166280)).
+- When learners connect code, explanation, interface, diagram, or rendered
+  output, explicitly support mapping among corresponding elements. Keep related
+  representations close enough or use stable signaling to avoid unnecessary
+  search. Do not add notation that itself needs decoding to explain an existing
+  relation. Define or label rendered panels in learner language, such as
+  “browser result,” before relying on that concept; prefer stable object names
+  over layout positions. Signaling meta-analysis supports relevant mappings,
+  especially for learners with lower prior knowledge, not decorative cues
+  (Richter, Scheiter, & Eitel, 2016,
+  [DOI](https://doi.org/10.1016/j.edurev.2015.12.003)). A separate meta-analysis
+  supports integrating related text and visual information; applying it to
+  code/UI/output mapping is a bounded Course Docs synthesis, not evidence for a
+  particular layout (Schroeder & Cenkci, 2018,
+  [DOI](https://doi.org/10.1007/s10648-018-9435-9)).
+- For visible learner-facing prose, ask whether each sentence changes
+  understanding, a decision, the next action, the causal model, error recovery,
+  or needed orientation/accessibility. If not, it is a deletion candidate.
+  Avoid status narration whose state is already obvious and whose wording adds
+  no instructional value; do not classify objectively scorable verification or
+  useful performance feedback as that narration merely because a result is also
+  visible. Keep causal explanation, misconception prevention, error feedback,
+  genuinely needed orientation, and accessibility/status text.
+  Visible instructional prose and screen-reader status announcements have
+  different purposes; do not force invisible status text into visible prose.
+  This coherence/redundancy test is an S synthesis, not “shorter is always
+  better”; retain clarity and useful elaboration.
 - Prioritize clarity over brevity; retain needed causal relations, UI/state
   correspondence, action purpose, state transitions, and term meanings.
 - Introduce only concepts and elements learners will use or engage with; do not
@@ -283,16 +389,6 @@
   real semantic grouping when learners must integrate related information.
   Treat the exact visual encoding as a local design choice unless directly
   supported by applicable evidence.
-- When learners must connect code, interface, diagram, or rendered output, make
-  their semantic relationship explicit and use proximity or selective mapping
-  cues where useful. A meta-analysis supports integrating related text and
-  visual information in multimedia learning; applying that evidence to
-  code/UI/output mapping is a local Course Docs heuristic, not evidence for a
-  particular layout
-  ([Schroeder & Cenkci, 2018](https://doi.org/10.1007/s10648-018-9435-9)).
-  Do not assume novices infer which code state produced a nearby preview.
-  Explain auxiliary notation rather than making symbols an extra decoding
-  task. Exact placement/layout remains local or experimental.
 - Keep task-action mappings and cues consistent when they represent the same
   meaning or operation. Do not treat surface uniformity by itself as a learning
   principle.
@@ -310,58 +406,6 @@
   text-equivalent route.
 - Preserve accessibility-equivalent instructions; avoid competing duplicate
   paths when the platform can expose an equivalent accessibly or on demand.
-- A meta-analysis supports meaningful/coherent learner-paced segments in
-  multimedia procedures. Applying semantic/causal boundaries to Course Docs,
-  including whether simultaneous changes should be separated, is a local design
-  heuristic; exact cut points remain a local decision
-  ([Rey et al., 2019](https://doi.org/10.1007/s10648-018-9456-4)). Segment by
-  meaningful semantic/causal boundaries, not screen count. Separate simultaneous
-  changes when doing so makes each causal contribution observable; preserve an
-  intentional “no visible change yet” state when it clarifies a role or mental
-  model. Do not split mechanically when integration cost rises.
-- When later learning requires comparison or integration with earlier material,
-  keep covered information available or easy to reopen. Guided forward
-  progression may coexist with reviewable prior content. Cumulative
-  presentation is a promising candidate, not a proven universal or uniquely
-  optimal UI. This is a local support heuristic; exact tabs, accordions,
-  collapsing, and layout remain local or experimental. A compact re-entry
-  reference may help when learners need it, but is not required on every page.
-- In sequential dynamic tutorials, newly revealed instruction SHOULD normally
-  appear at or after its triggering action in meaningful reading/focus order.
-  Keep semantic, visual, programmatic reading, and keyboard focus order aligned
-  when order affects meaning, consistent with WCAG meaningful sequence and focus
-  order ([WCAG 2.2 SC 1.3.2](https://www.w3.org/TR/WCAG22/#meaningful-sequence),
-  [SC 2.4.3](https://www.w3.org/TR/WCAG22/#focus-order)). Placing new content
-  after its trigger and showing a major step change near the learner's current
-  attention are local defaults, not universal tutorial laws; a remote progress
-  indicator may supplement the nearby cue.
-- After a meaningful state-changing action, identify the changed source,
-  target, or result without requiring comparison from memory. Do not rely on
-  transient animation alone; retain a changed value, line marker, result text,
-  or equivalent cue until it can be inspected. Animation is supplemental;
-  respect reduced-motion preferences and preserve text/UI contrast. When the
-  change functions as a status message, make it programmatically determinable
-  for assistive technologies as applicable under WCAG 2.2 SC 4.1.2/4.1.3
-  ([Status Messages](https://www.w3.org/TR/WCAG22/#status-messages)). Do not narrate
-  changes when direct signaling already makes them clear and prose adds no
-  learning value; this is a local content convention.
-- Apply a visible-prose value test: a learner-facing sentence that does not
-  materially aid understanding, a decision, the next action, error
-  prevention/recovery, state interpretation, reference, or accessibility is a
-  candidate for removal or revision. UI narration that only repeats an obvious
-  interaction/result is normally unnecessary. Retain useful causal explanation,
-  misconception prevention, task instructions, status/accessibility messages,
-  and clarifying elaboration. This local editorial heuristic does not mean
-  shorter is always better; accessibility-equivalent content is not gratuitous
-  redundancy.
-- For a single-line interactive response with one primary submit/confirm action,
-  prefer native form semantics so Enter and the visible submit control share
-  their meaning where applicable (HTML Standard: [Implicit submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission)).
-  Do not apply this to multiline inputs or controls with different standard
-  keyboard behavior. Avoid custom Enter handlers that submit during IME
-  composition unless composition is handled; Enter used to confirm Japanese,
-  Chinese, or Korean IME composition must not prematurely submit the response
-  ([Chrome IME-safe form guidance](https://github.com/GoogleChrome/modern-web-guidance/blob/main/skills/modern-web-guidance/guides/forms/ime-safe-enter-submit.md)).
 - For a new procedure with low or unestablished prior knowledge, provide enough
   worked or guided support before substantial independent construction. Fade,
   retain, or restore assistance based on established prior knowledge and learner
@@ -395,8 +439,9 @@
 - For a single-line learner response with one confirm/apply action, prefer
   native form semantics so Enter submits through the same validation and state
   transition as the visible submit button. Do not hand-roll Enter handling that
-  submits during IME composition; if custom handling is needed, account for
-  composition. Do not generalize this rule to multiline textareas or standard
-  checkbox/radio interactions. This is web-platform/usability guidance, not a
-  learning-science rule (WHATWG HTML Standard,
+  submits during IME composition; Enter used to confirm Japanese, Chinese, or
+  Korean IME composition must not prematurely submit the response. If custom
+  handling is needed, account for composition. Do not generalize this rule to
+  multiline textareas or standard checkbox/radio interactions. This is
+  web-platform/usability guidance, not a learning-science rule (WHATWG HTML Standard,
   [implicit form submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission)).
