@@ -279,10 +279,11 @@
   supported by applicable evidence.
 - When learners must connect code, interface, diagram, or rendered output, make
   their semantic relationship explicit and use proximity or selective mapping
-  cues where useful. Meta-analyses support integrating related text and visual
-  information in multimedia learning; applying that evidence to code/UI/output
-  mapping is a bounded Course Docs synthesis, not evidence for a particular
-  layout ([Schroeder & Cenkci, 2018](https://doi.org/10.1007/s10648-018-9435-9)).
+  cues where useful. A meta-analysis supports integrating related text and
+  visual information in multimedia learning; applying that evidence to
+  code/UI/output mapping is a local Course Docs heuristic, not evidence for a
+  particular layout
+  ([Schroeder & Cenkci, 2018](https://doi.org/10.1007/s10648-018-9435-9)).
   Do not assume novices infer which code state produced a nearby preview.
   Explain auxiliary notation rather than making symbols an extra decoding
   task. Exact placement/layout remains local or experimental.
@@ -303,14 +304,15 @@
   text-equivalent route.
 - Preserve accessibility-equivalent instructions; avoid competing duplicate
   paths when the platform can expose an equivalent accessibly or on demand.
-- In multimedia procedures, meaningful/coherent learner-paced segments have
-  research support; applying semantic/causal boundaries to Course Docs is a
-  bounded synthesis, while exact cut points and separating simultaneous
-  changes are local design decisions ([Rey et al., 2019](https://doi.org/10.1007/s10648-018-9456-4)).
-  Segment by meaningful semantic/causal boundaries, not screen count. Separate
-  simultaneous changes when doing so makes each causal contribution observable;
-  preserve an intentional “no visible change yet” state when it clarifies a
-  role or mental model. Do not split mechanically when integration cost rises.
+- A meta-analysis supports meaningful/coherent learner-paced segments in
+  multimedia procedures. Applying semantic/causal boundaries to Course Docs,
+  including whether simultaneous changes should be separated, is a local design
+  heuristic; exact cut points remain a local decision
+  ([Rey et al., 2019](https://doi.org/10.1007/s10648-018-9456-4)). Segment by
+  meaningful semantic/causal boundaries, not screen count. Separate simultaneous
+  changes when doing so makes each causal contribution observable; preserve an
+  intentional “no visible change yet” state when it clarifies a role or mental
+  model. Do not split mechanically when integration cost rises.
 - When later learning requires comparison or integration with earlier material,
   keep covered information available or easy to reopen. Guided forward
   progression may coexist with reviewable prior content. Cumulative
