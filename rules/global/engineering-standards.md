@@ -11,12 +11,19 @@
 - For semantic code exploration across multiple plausible files/candidates,
   use `jev_rank`; when choosing from an existing candidate list, use
   `jev_pick`.
+- Do not pass Jev server root-external paths as `jev_rank` path candidates.
+  If candidate contents are already available or a path is outside that root,
+  rank or pick with the candidate id/text form supported by the live schema.
 - Use `jev_next_step` before guessing after ambiguous/failing results,
   repeated attempts, or uncertainty about the next action.
 - Before declaring non-trivial implementation complete, use exactly one
   primary completion review: `jev_gate` when concrete completion claims and
   supporting evidence exist; otherwise `jev_review`. Do not routinely call
   both on the same unchanged patch.
+- When a multi-file completion patch may exceed the current whole-diff context
+  limit, use `jev_gate`'s `files` per-file mode when supported by the live
+  schema; follow its limits and do not intentionally send a known-over-limit
+  whole `diff`.
 - For supported multi-step action-oriented browser work, use `jev_navigate`
   first.
 - If an applicable Jev tool is unloaded, discover it from the tool catalog.
