@@ -133,7 +133,7 @@ test('new learner guidance keeps research claims bounded and local choices expli
   assert.match(authoring, /scaffolded prompts.*not universal superiority over generic prompts/);
   assert.match(authoring, /If reflection is not semantically graded, this local assessment convention says not to make it a fake required gate/);
   assert.match(authoring, /connect code, interface, diagram, or rendered output, make their semantic relationship explicit/);
-  assert.match(authoring, /applying that evidence to code\/UI\/output mapping is a bounded Course Docs synthesis/);
+  assert.match(authoring, /applying that evidence to code\/UI\/output mapping is a local Course Docs heuristic/);
   assert.match(authoring, /Segment by meaningful semantic\/causal boundaries, not screen count/);
   assert.match(authoring, /keep covered information available or easy to reopen/);
   assert.match(authoring, /cumulative presentation is a promising candidate, not a proven universal or uniquely optimal UI/i);
@@ -151,7 +151,7 @@ test('new learner guidance preserves retrieval, prior-knowledge, and accessibili
   assert.match(authoring, /does not prescribe withholding answers in other task types/);
   assert.match(authoring, /Preserve intentional inference in retrieval and problem-solving activities/);
   assert.match(authoring, /do not impose this as a universal high-coherence rule for learners with substantial prior knowledge/);
-  assert.match(authoring, /exact cut points and separating simultaneous changes are local design decisions/);
+  assert.match(authoring, /Applying semantic\/causal boundaries to Course Docs, including whether simultaneous changes should be separated, is a local design heuristic/);
   assert.match(authoring, /exact tabs, accordions, collapsing, and layout remain local or experimental/);
   assert.match(authoring, /do not rely on viewport-dependent locations such as left, right, above, or below as the sole identifier/);
   assert.match(authoring, /This local editorial heuristic does not mean shorter is always better/);
