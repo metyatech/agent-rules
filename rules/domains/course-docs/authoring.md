@@ -243,23 +243,51 @@
 - Prediction/prequestion activities SHOULD present the object, code, or content
   clearly and ask for a concrete result or relation immediately about to be
   learned. Preserve the pre-attempt state so the answer is not disclosed.
-  After an attempt, show the actual result and useful causal/elaborated feedback,
-  not only a correct/incorrect judgment. Prequestion benefits apply to tested
-  content, not automatically to unrelated content (St Hilaire, Chan, & Ahn,
-  2024, [DOI](https://doi.org/10.3758/s13423-023-02353-8)); code-output
-  prediction before explanation is supported for novices in the studied
-  programming context, not as a universal requirement (Tucker et al., 2024,
+  After an attempt, give concrete, task-focused feedback about the actual
+  outcome or relation and useful causal/elaborated feedback, not only a
+  correct/incorrect judgment. For exploratory prediction, supportive comparison
+  wording MAY be preferable to punitive wrong-labelling; exact wording, colour,
+  and icon choices are local decisions, not research-derived requirements.
+  Prequestion benefits apply to tested content, not automatically to unrelated
+  content (St Hilaire, Chan, & Ahn, 2024,
+  [DOI](https://doi.org/10.3758/s13423-023-02353-8)); code-output prediction
+  before explanation is supported for novices in the studied programming
+  context, not as a universal requirement (Tucker et al., 2024,
   [DOI](https://doi.org/10.1016/j.learninstruc.2023.101871)).
 - When self-explanation is useful, scaffold toward a causal or relational idea
   instead of assuming a generic “Why?” is best. Non-empty free text is not
-  evidence of correctness. For reflection that is not semantically assessed, do
+  evidence of correctness, and never fake semantic correctness for ungraded free
+  text. If a full explanation would leak a planned self-explanation or generation
+  target, stage the feedback as verification plus the concrete observed result,
+  then learner generation/self-explanation, then the canonical causal or
+  elaborated explanation. For reflection that is not semantically assessed, do
   not create a false correctness gate; offer an explicit “I don't know” or show
-  answer route when appropriate. Where useful, show the learner's complete
+  an answer route when appropriate. Where useful, show the learner's complete
   generated statement beside a canonical explanation. Use self-explanation
   selectively at conceptual transitions, not mechanically after each action.
   The reported evidence supports explanation quality, error correction, and near
   transfer in the studied problem-solving context, not far transfer (Zhang &
   Fiorella, 2024, [DOI](https://doi.org/10.1016/j.cedpsych.2024.102326)).
+- Useful verification is not UI-state narration. If a response is objectively or
+  checkably scorable and verification resolves learner uncertainty, retain that
+  performance feedback even when the result is visually apparent; do not delete
+  it merely as “redundant narration”. Verification alone is not sufficient when
+  corrective or explanatory information would help: connect feedback to the
+  actual result, correct information, a causal explanation, or a progressively
+  useful hint as appropriate. Correctness-only feedback MUST NOT end the loop
+  when elaboration would help.
+- Remove status narration such as “recorded”, “added”, or “result shown below”
+  when it adds no learning, action, recovery, orientation, or accessibility
+  value. Do not repeat the exact same visible result sentence when the second
+  instance has no distinct role. Do not mechanically treat a visual result plus
+  concise text mapping or accessibility equivalent as gratuitous duplication.
+  These coherence/redundancy rules remove pointless narration, not useful
+  verification or performance feedback.
+- Feedback findings from Shute (2008) and Van der Kleij, Feskens, and Eggen
+  (2015) are R-level guidance within their stated boundary conditions. The
+  staged verification → generation/self-explanation → canonical explanation
+  sequence is an S Course Docs synthesis; exact wording, tone, colour, and icon
+  styling are L local decisions.
 - Divide material at meaningful semantic or causal boundaries rather than by
   arbitrary screen-sized chunks. Separate simultaneous changes when needed to
   show which change caused which result; preserve meaningful unchanged states
@@ -315,9 +343,11 @@
 - For visible learner-facing prose, ask whether each sentence changes
   understanding, a decision, the next action, the causal model, error recovery,
   or needed orientation/accessibility. If not, it is a deletion candidate.
-  Avoid UI narration whose state is already obvious and whose wording adds no
-  instructional value. Keep causal explanation, misconception prevention,
-  error feedback, genuinely needed orientation, and accessibility/status text.
+  Avoid status narration whose state is already obvious and whose wording adds
+  no instructional value; do not classify objectively scorable verification or
+  useful performance feedback as that narration merely because a result is also
+  visible. Keep causal explanation, misconception prevention, error feedback,
+  genuinely needed orientation, and accessibility/status text.
   Visible instructional prose and screen-reader status announcements have
   different purposes; do not force invisible status text into visible prose.
   This coherence/redundancy test is an S synthesis, not “shorter is always
