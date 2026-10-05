@@ -141,6 +141,29 @@
   they mean. Use cold-read review to detect accidental difficulty: unexplained
   prerequisites, ambiguous instructions, missing state, unnecessary backtracking,
   undefined assumptions, terminology gaps, and visual/prose mismatches.
+- For novice-facing text, check that each sentence can be understood from
+  information introduced up to that point; do not make later material necessary
+  to decode it. When it fits the causal structure, a useful introduction may
+  move from the current state to a need/problem, then a concept and its use.
+  This sequence is a heuristic, not a mandatory template. Prefer learner-facing
+  task language over authoring/meta labels. In responsive layouts, do not use
+  viewport-dependent positions as the sole identifier; use stable names such as
+  `index.html`, `style.css`, a browser result, or a section title. When a cloze
+  response is shown back, show the complete meaningful sentence when that helps
+  comparison. These exact phrasing and representation choices are local quality
+  conventions; exact Japanese wording is not a uniquely research-optimal form.
+- Learner-facing prompts MUST make clear what content is being asked about,
+  what action or answer is required, and the expected response form, using only
+  context already introduced. Do not leave a referent or baseline such as “it,”
+  “that,” “all three,” “where,” “change,” “same,” or “different” unresolved
+  unless its referent is explicit and unique. For choice items, keep the central
+  idea in the stem and make options natural answers to that stem. Reduce prompt
+  decoding that would add difficulty unrelated to the target knowledge or skill;
+  this is not a mandate to minimize words or remove needed causal detail. The
+  clarity/elaboration evidence is bounded to STEM text, and item-writing flaw
+  evidence is bounded to multiple-choice items (Strohmaier et al., 2023,
+  [DOI](https://doi.org/10.1016/j.edurev.2023.100533); Breakall, Randles, &
+  Tasker, 2019, [DOI](https://doi.org/10.1039/C8RP00262B)).
 - As a Course Docs research synthesis, review whether a learner-facing
   heading, its immediate explanation, the task statement, and relevant UI cues
   ask for the same learner action at the same stage. Treat a mismatch as a
@@ -217,6 +240,88 @@
   effect ([Agarwal, Nunes, & Blunt, 2021](https://doi.org/10.1007/s10648-021-09595-9);
   [Bertsch, Pesta, Wiscott, & McDaniel, 2007](https://doi.org/10.3758/BF03193441));
   it does not prescribe withholding answers in other task types.
+- Prediction/prequestion activities SHOULD present the object, code, or content
+  clearly and ask for a concrete result or relation immediately about to be
+  learned. Preserve the pre-attempt state so the answer is not disclosed.
+  After an attempt, show the actual result and useful causal/elaborated feedback,
+  not only a correct/incorrect judgment. Prequestion benefits apply to tested
+  content, not automatically to unrelated content (St Hilaire, Chan, & Ahn,
+  2024, [DOI](https://doi.org/10.3758/s13423-023-02353-8)); code-output
+  prediction before explanation is supported for novices in the studied
+  programming context, not as a universal requirement (Tucker et al., 2024,
+  [DOI](https://doi.org/10.1016/j.learninstruc.2023.101871)).
+- When self-explanation is useful, scaffold toward a causal or relational idea
+  instead of assuming a generic “Why?” is best. Non-empty free text is not
+  evidence of correctness. For reflection that is not semantically assessed, do
+  not create a false correctness gate; offer an explicit “I don't know” or show
+  answer route when appropriate. Where useful, show the learner's complete
+  generated statement beside a canonical explanation. Use self-explanation
+  selectively at conceptual transitions, not mechanically after each action.
+  The reported evidence supports explanation quality, error correction, and near
+  transfer in the studied problem-solving context, not far transfer (Zhang &
+  Fiorella, 2024, [DOI](https://doi.org/10.1016/j.cedpsych.2024.102326)).
+- Divide material at meaningful semantic or causal boundaries rather than by
+  arbitrary screen-sized chunks. Separate simultaneous changes when needed to
+  show which change caused which result; preserve meaningful unchanged states
+  (for example, adding `class="nedan"` alone does not change appearance while
+  CSS still selects `p`). Show one causal change at a time when it materially
+  improves attribution. For novices, worked example → completion/guided
+  variation → independent application is a useful progression when appropriate,
+  not a required page structure. Segmenting evidence supports meaningful
+  segments, not extra screens or cards for their own sake (Rey et al., 2019,
+  [DOI](https://doi.org/10.1007/s10648-018-9456-4)).
+- Future information MAY be withheld until useful, especially when it would
+  leak an answer or overload novices; do not unnecessarily remove previously
+  learned information needed later. A guided forward path can keep completed
+  material easy to revisit. Treat cumulative presentation as a strong,
+  research-constrained candidate, not a universal or uniquely optimal pattern.
+  Compaction/collapse is a local implementation choice: preserve easy re-entry
+  and information needed for cognitive offloading. A compact post-activity
+  reference can help when later lookup is likely. When reviewing earlier steps,
+  preserve answers and learner state where practical; make any intended reset
+  clear. Ito and Ichikawa (2026) studied one narrated biology slideshow with 40
+  Japanese university students; Chen et al. (2026) provide review-level support
+  connecting offloading with transient information, not a direct UI comparison
+  ([Ito and Ichikawa](https://doi.org/10.1002/jcal.70286);
+  [Chen et al.](https://doi.org/10.1007/s10648-026-10132-9)).
+- In sequential tutorials, newly revealed instructional content SHOULD
+  normally appear at or after its trigger/current reading position so learners
+  can continue forward. Do not silently change upstream prose after an action
+  and expect learners to rediscover or reread it. Align semantic reading order,
+  visual order, DOM order, and keyboard focus order when order affects meaning.
+  Place step-transition feedback near the current position; top-level progress
+  alone is not a sufficient primary cue. The goal is predictable, normally
+  top-to-bottom flow in this tutorial context, not a universal left-to-right
+  rule. This is an explicit Course Docs synthesis, not a claim that WCAG
+  mandates an exact layout.
+- When an instructional state change matters, do not rely on transient motion
+  alone: retain a changed line/value, old-to-new comparison, causal note, or
+  coordinated cue long enough to inspect. Motion is supplementary. Respect
+  `prefers-reduced-motion` and do not create temporary low-contrast attention
+  states. Exact animation duration and style remain local implementation and
+  usability choices. Baudisch et al. (2006) studied HCI change-awareness cues;
+  this is not direct evidence for learning outcomes or a mandated style
+  ([DOI](https://doi.org/10.1145/1166253.1166280)).
+- When learners integrate code, explanation, and rendered output, explicitly
+  support mapping among corresponding elements. Keep related representations
+  close enough or use stable signaling to avoid unnecessary search. Do not add
+  notation that itself needs decoding to explain an existing relation. Define
+  or label rendered panels in learner language, such as “browser result,”
+  before relying on that concept; prefer stable object names over layout
+  positions. Signaling meta-analysis supports relevant mappings, especially
+  for learners with lower prior knowledge, not decorative cues (Richter,
+  Scheiter, & Eitel, 2016,
+  [DOI](https://doi.org/10.1016/j.edurev.2015.12.003)).
+- For visible learner-facing prose, ask whether each sentence changes
+  understanding, a decision, the next action, the causal model, error recovery,
+  or needed orientation/accessibility. If not, it is a deletion candidate.
+  Avoid UI narration whose state is already obvious and whose wording adds no
+  instructional value. Keep causal explanation, misconception prevention,
+  error feedback, genuinely needed orientation, and accessibility/status text.
+  Visible instructional prose and screen-reader status announcements have
+  different purposes; do not force invisible status text into visible prose.
+  This coherence/redundancy test is an S synthesis, not “shorter is always
+  better”; retain clarity and useful elaboration.
 - Prioritize clarity over brevity; retain needed causal relations, UI/state
   correspondence, action purpose, state transitions, and term meanings.
 - Introduce only concepts and elements learners will use or engage with; do not
@@ -279,3 +384,15 @@
   contrast: 4.5:1 for normal text and 3:1 for large text. Meaningful non-text
   callout shapes and UI-state indicators MUST meet the applicable 3:1 non-text
   contrast requirement. Prefer real text over images of text when practical.
+- When a dynamic action changes a status without moving focus, make applicable
+  status messages programmatically available under WCAG 2.2 SC 4.1.3. This does
+  not require narrating the same state in visible prose when the interface
+  already communicates it and the sentence adds no instructional value.
+- For a single-line learner response with one confirm/apply action, prefer
+  native form semantics so Enter submits through the same validation and state
+  transition as the visible submit button. Do not hand-roll Enter handling that
+  submits during IME composition; if custom handling is needed, account for
+  composition. Do not generalize this rule to multiline textareas or standard
+  checkbox/radio interactions. This is web-platform/usability guidance, not a
+  learning-science rule (WHATWG HTML Standard,
+  [implicit form submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission)).
