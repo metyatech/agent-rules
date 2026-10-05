@@ -6,6 +6,19 @@ const readRule = async (name) =>
   (await readFile(new URL(`../rules/domains/${name}.md`, import.meta.url), 'utf8'))
     .replace(/\s+/g, ' ');
 
+const overclaimedCourseRules = [
+  /always use current state.{0,100}(?:need|problem).{0,80}concept.{0,60}use/i,
+  /cumulative presentation (?:is|has been proven|is proven to be) optimal/i,
+  /all feedback must explain why/i,
+  /all reflection must be required/i,
+  /animation (?:alone|by itself) is sufficient/i,
+  /shorter text is always better/i,
+];
+
+const assertNoCourseAuthoringOverclaims = (authoring) => {
+  for (const claim of overclaimedCourseRules) assert.doesNotMatch(authoring, claim);
+};
+
 test('course rules keep optional presentation separate from Unit evidence', async () => {
   const authoring = await readRule('course-docs/authoring');
   assert.match(authoring, /Section `goal` is optional.*at every depth/);
@@ -101,4 +114,69 @@ test('course rules separate research provenance from local contracts and unresol
   assert.match(authoring, /For the local Course Docs `phase="transfer"`/);
   assert.match(authoring, /not a universal scientific definition of transfer/);
   assert.match(authoring, /Do not infer an exact colour, border, radius, or size from signaling research/);
+});
+
+test('new learner guidance keeps research claims bounded and local choices explicit', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /current\/known state → need\/problem → new concept → use/);
+  assert.match(authoring, /local sequencing heuristic, not a research-established or universally optimal order/);
+  assert.match(authoring, /prompts MUST make clear at the point of asking the object or content, the judgment\/action required, and the expected response form/);
+  assert.match(authoring, /prompt, nearby instructions, and control labels MAY establish these together/);
+  assert.match(authoring, /options SHOULD complete or answer the stem naturally/);
+  assert.match(authoring, /exact Japanese-copy checks and option phrasing as local Course Docs conventions/);
+  assert.match(authoring, /complete semantic sentence over only the inserted fragment/);
+  assert.match(authoring, /stable names or identifiers to refer to responsive-layout targets/);
+  assert.match(authoring, /Prediction\/prequestion activities SHOULD ask about a concrete upcoming relation or outcome/);
+  assert.match(authoring, /effects may be tied to prequestioned content and should not be assumed for unrelated material/);
+  assert.match(authoring, /supports code-output prediction as an option.*not a mandatory pattern/);
+  assert.match(authoring, /When self-explanation is useful, scaffold what relation, error, or concept to explain/);
+  assert.match(authoring, /scaffolded prompts.*not universal superiority over generic prompts/);
+  assert.match(authoring, /If reflection is not semantically graded, this local assessment convention says not to make it a fake required gate/);
+  assert.match(authoring, /connect code, interface, diagram, or rendered output, make their semantic relationship explicit/);
+  assert.match(authoring, /applying that evidence to code\/UI\/output mapping is a bounded Course Docs synthesis/);
+  assert.match(authoring, /Segment by meaningful semantic\/causal boundaries, not screen count/);
+  assert.match(authoring, /keep covered information available or easy to reopen/);
+  assert.match(authoring, /cumulative presentation is a promising candidate, not a proven universal or uniquely optimal UI/i);
+  assert.match(authoring, /newly revealed instruction SHOULD normally appear at or after its triggering action/);
+  assert.match(authoring, /When the change functions as a status message, make it programmatically determinable/);
+  assert.match(authoring, /visible-prose value test/);
+  assert.match(authoring, /single-line interactive response with one primary submit\/confirm action/);
+  assert.match(authoring, /Do not apply this to multiline inputs/);
+  assert.match(authoring, /Enter used to confirm Japanese, Chinese, or Korean IME composition must not prematurely submit/);
+});
+
+test('new learner guidance preserves retrieval, prior-knowledge, and accessibility boundaries', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  assert.match(authoring, /task is intended to elicit retrieval or learner generation/);
+  assert.match(authoring, /does not prescribe withholding answers in other task types/);
+  assert.match(authoring, /Preserve intentional inference in retrieval and problem-solving activities/);
+  assert.match(authoring, /do not impose this as a universal high-coherence rule for learners with substantial prior knowledge/);
+  assert.match(authoring, /exact cut points and separating simultaneous changes are local design decisions/);
+  assert.match(authoring, /exact tabs, accordions, collapsing, and layout remain local or experimental/);
+  assert.match(authoring, /do not rely on viewport-dependent locations such as left, right, above, or below as the sole identifier/);
+  assert.match(authoring, /This local editorial heuristic does not mean shorter is always better/);
+  assert.match(authoring, /accessibility-equivalent content is not gratuitous redundancy/);
+  assert.match(authoring, /Do not rely on transient animation alone/);
+  assert.match(authoring, /When the change functions as a status message, make it programmatically determinable/);
+  assert.match(authoring, /controls with different standard keyboard behavior/);
+  assert.match(authoring, /unless composition is handled/);
+  assertNoCourseAuthoringOverclaims(authoring);
+});
+
+test('overclaim guard rejects unsafe research and interaction generalizations', async () => {
+  const authoring = await readRule('course-docs/authoring');
+  const invalidClaims = [
+    'Always use current state → problem → concept → use.',
+    'Cumulative presentation is optimal.',
+    'All feedback must explain why.',
+    'All reflection must be required.',
+    'Animation alone is sufficient.',
+    'Shorter text is always better.',
+  ];
+  for (const claim of invalidClaims) {
+    assert.throws(
+      () => assertNoCourseAuthoringOverclaims(`${authoring} ${claim}`),
+      (error) => error instanceof assert.AssertionError,
+    );
+  }
 });
