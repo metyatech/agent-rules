@@ -33,6 +33,19 @@ test('large multi-file completion uses the selected primary Jev tool files mode'
   assert.match(normalized, /Do not repeat the primary review on unchanged evidence/);
 });
 
+test('delegation rules do not depend on undefined tier labels', async () => {
+  const content = await readFile(path.join(globalRulesPath, 'sub-agent-delegation.md'), 'utf8');
+
+  assert.doesNotMatch(content, /\bLight work\b/u);
+  assert.doesNotMatch(content, /\bStandard(?: work| implementation| review)\b/u);
+  assert.doesNotMatch(content, /\bHeavy(?: work| implementation| review)\b/u);
+  assert.doesNotMatch(content, /\btask is Heavy\b/u);
+
+  assert.match(content, /Non-trivial implementation or review/);
+  assert.match(content, /cross-system, high-blast-radius/);
+  assert.match(content, /require an independent review with `PASS`/);
+});
+
 test('global rules stay within the hard 8000-token budget', async () => {
   const projectRoot = await mkdtemp(path.join(os.tmpdir(), 'agent-rules-budget-'));
   try {

@@ -18,9 +18,9 @@
 ## Model and effort
 
 - Specify model or effort only when the platform exposes those selectors.
-  Standard or Heavy implementation/review MUST NOT use a clearly weaker model
-  solely to reduce cost. Light work MAY use lower effort when accuracy is not
-  reduced.
+  Non-trivial implementation or review MUST NOT use a clearly weaker model
+  solely to reduce cost. Bounded lookup, read-only work, or trivial
+  low-blast-radius work MAY use lower effort when accuracy is not reduced.
 
 ## Verification and lifecycle
 
@@ -28,9 +28,10 @@
   results MUST identify changed files, verification evidence, assumptions, and
   residual risks.
 - Verify delegated results before adopting them. If verification fails or
-  cannot run, or the task is Heavy, release-, production-, or
-  security-sensitive, require an independent review with `PASS` before
-  completion. Standard work MAY omit that extra reviewer when repository
-  verification passes and evidence is clear.
+  cannot run, or the task is cross-system, high-blast-radius, release-,
+  production-, security-sensitive, a migration, or materially ambiguous,
+  require an independent review with `PASS` before completion. Other work MAY
+  omit that extra reviewer when repository verification passes and evidence is
+  clear.
 - Do not repeatedly respawn the same task while an agent is still running.
   After completion, shut down task-owned agents and clean up their resources.
