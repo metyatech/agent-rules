@@ -2,37 +2,21 @@
 
 ## Tooling and dependencies
 
-- Prefer official, maintained, latest-stable free-tier tools; document
-  paid/proprietary tradeoffs and verify existing solutions before
-  building custom logic.
-- Whenever an applicable Jev tool can materially reduce model reading,
-  reasoning, or browser work, MUST use it; do not skip it because the main
-  model could do the work itself.
-- For semantic code exploration across multiple plausible files/candidates,
-  use `jev_rank`; when choosing from an existing candidate list, use
-  `jev_pick`.
-- Do not pass Jev server root-external paths as `jev_rank` path candidates.
-  If candidate contents are already available or a path is outside that root,
-  rank or pick with the candidate id/text form supported by the live schema.
-- Use `jev_next_step` before guessing after ambiguous/failing results,
-  repeated attempts, or uncertainty about the next action.
+- Prefer official, maintained, latest-stable tools and verify existing
+  solutions before building custom logic.
+- Use applicable Jev tools when they materially reduce model reading,
+  reasoning, or browser work: `jev_rank`/`jev_pick` for semantic selection,
+  `jev_next_step` after ambiguous or failing results, and `jev_navigate` for
+  supported multi-step browser work. Follow the live schema, including path
+  and context limits.
 - Before declaring non-trivial implementation complete, use exactly one
   primary completion review: `jev_gate` when concrete completion claims and
-  supporting evidence exist; otherwise `jev_review`. Do not routinely call
-  both on the same unchanged patch.
-- When a multi-file completion patch may exceed the current whole-diff context
-  limit, use the selected primary completion tool's supported `files` per-file
-  mode, following the live schema limits; do not intentionally send a
-  known-over-limit whole `diff`.
-- For supported multi-step action-oriented browser work, use `jev_navigate`
-  first.
-- If an applicable Jev tool is unloaded, discover it from the tool catalog.
-- Fall back to normal model/browser work only when Jev is unsupported, fails,
-  or returns insufficient confidence.
-- Skip Jev only when it adds no material value, such as deterministic one-step
-  work or a cheaper direct deterministic tool path.
-- Avoid repeated Jev calls on an unchanged diff/result; rerun only after a
-  material change or new evidence.
+  supporting evidence exist; otherwise `jev_review`. For an over-limit
+  multi-file patch, use that tool's supported per-file mode. Do not repeat the
+  primary review on unchanged evidence.
+- Fall back to normal tools when Jev is inapplicable, unavailable, fails, or
+  returns insufficient confidence; skip it for deterministic one-step work
+  with a cheaper direct path.
 
 ## Unreal Blueprint graph capture
 

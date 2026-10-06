@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -26,6 +28,38 @@ test('large multi-file completion uses the selected primary Jev tool files mode'
   const normalized = content.replace(/\s+/g, ' ');
 
   assert.match(normalized, /exactly one primary completion review: `jev_gate` when concrete completion claims and supporting evidence exist; otherwise `jev_review`/);
-  assert.match(normalized, /use the selected primary completion tool's supported `files` per-file mode, following the live schema limits; do not intentionally send a known-over-limit whole `diff`/);
-  assert.doesNotMatch(normalized, /use `jev_gate`'s `files` per-file mode/);
+  assert.match(normalized, /For an over-limit multi-file patch, use that tool's supported per-file mode/);
+  assert.match(normalized, /Follow the live schema, including path and context limits/);
+  assert.match(normalized, /Do not repeat the primary review on unchanged evidence/);
+});
+
+test('global rules stay within the hard 8000-token budget', async () => {
+  const projectRoot = await mkdtemp(path.join(os.tmpdir(), 'agent-rules-budget-'));
+  try {
+    await writeFile(path.join(projectRoot, 'agent-ruleset.json'), JSON.stringify({
+      sources: [repoRoot],
+      profile: 'agent-rules',
+      global: true,
+    }));
+
+    const result = spawnSync('compose-agentsmd', [
+      '--root', projectRoot,
+      '--dry-run',
+      '--json',
+    ], {
+      encoding: 'utf8',
+      maxBuffer: 10 * 1024 * 1024,
+      shell: process.platform === 'win32',
+    });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const report = JSON.parse(result.stdout);
+    assert.equal(report.budget.totalExceeded, false);
+    assert.ok(
+      report.budget.totalTokens <= 8000,
+      `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
+    );
+  } finally {
+    await rm(projectRoot, { recursive: true, force: true });
+  }
 });
