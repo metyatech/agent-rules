@@ -21,9 +21,9 @@
   supporting evidence exist; otherwise `jev_review`. Do not routinely call
   both on the same unchanged patch.
 - When a multi-file completion patch may exceed the current whole-diff context
-  limit, use `jev_gate`'s `files` per-file mode when supported by the live
-  schema; follow its limits and do not intentionally send a known-over-limit
-  whole `diff`.
+  limit, use the selected primary completion tool's supported `files` per-file
+  mode, following the live schema limits; do not intentionally send a
+  known-over-limit whole `diff`.
 - For supported multi-step action-oriented browser work, use `jev_navigate`
   first.
 - If an applicable Jev tool is unloaded, discover it from the tool catalog.

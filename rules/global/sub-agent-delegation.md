@@ -94,6 +94,5 @@
   task while one is still running without errors.
 - After a team completes, shut down all team agents and clean
   up resources. If a sub-agent fails, retry or escalate.
-- If platform limits repeatedly block delegated work, update the
-  `task-tracker` stage so work resumes from the last successful
-  stage.
+- If platform limits repeatedly block delegated work, report the last
+  successful stage and remaining work to the delegator.
