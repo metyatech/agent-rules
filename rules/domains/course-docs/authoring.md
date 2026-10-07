@@ -15,11 +15,13 @@
   XHTML-style trailing slashes, such as `<input>` rather than `<input />`. This
   applies to HTML code fences and sample/complete files, not MDX/JSX components.
 - Course docs MUST NOT use `<Solution>` or `authoringMode`.
-- Treat learner-visible content as Course Docs content regardless of storage format or path.
-  Prompts, labels, code context, feedback, explanations, and visible state text in
-  JSON/YAML/TypeScript fixtures, Bundle source, test fixtures, or generated source
-  MUST follow the same learner-facing authoring rules as MDX. A file under a test
-  directory is not exempt merely because it is also used as fixture data.
+- Treat learner-visible content as Course Docs content regardless of storage
+  format or path.
+  Prompts, labels, code context, feedback, explanations, and visible state text
+  in JSON/YAML/TypeScript fixtures, Bundle source, test fixtures, or generated
+  source MUST follow the same learner-facing authoring rules as
+  MDX. A file under a test directory is not exempt merely because it is also
+  used as fixture data.
 
 ## Research provenance
 
@@ -306,12 +308,14 @@
   concise text mapping or accessibility equivalent as gratuitous duplication.
   These coherence/redundancy rules remove pointless narration, not useful
   verification or performance feedback.
-- After commitment, preserve the learner's response in place or in an immediately
-  comparable representation when comparison is instructionally useful. Do not
-  replace it with a detached summary merely for renderer uniformity. Do not repeat
+- After commitment, preserve the learner's response in place or in an
+  immediately comparable representation when comparison is instructionally
+  useful. Do not replace it with a detached summary merely for renderer
+  uniformity. Do not repeat
   an identical canonical answer immediately after an already-visible correct
-  learner answer unless the second representation adds a distinct instructional or
-  accessibility role such as explanation, normalization, or explicit comparison.
+  learner answer unless the second representation adds a distinct
+  instructional or accessibility role such as explanation, normalization, or
+  explicit comparison.
 - Feedback findings from Shute (2008) and Van der Kleij, Feskens, and Eggen
   (2015) are R-level guidance within their stated boundary conditions. The
   staged verification → generation/self-explanation → canonical explanation
