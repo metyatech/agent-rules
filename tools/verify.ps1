@@ -28,6 +28,8 @@ Write-Host 'Checking generated instruction freshness.'
 compose-agentsmd check --refresh --quiet
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Generated instruction freshness check failed with exit code $LASTEXITCODE."
-    exit $LASTEXITCODE
+    $checkExitCode = $LASTEXITCODE
+    Write-Host "Generated instruction freshness check failed with exit code $checkExitCode. Details:"
+    compose-agentsmd check --refresh
+    exit $checkExitCode
 }
