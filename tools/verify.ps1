@@ -30,6 +30,13 @@ compose-agentsmd check --refresh --quiet
 if ($LASTEXITCODE -ne 0) {
     $checkExitCode = $LASTEXITCODE
     Write-Host "Generated instruction freshness check failed with exit code $checkExitCode. Details:"
+    $composeCommand = Get-Command compose-agentsmd -ErrorAction Stop
+    $composePackagePath = Join-Path (Split-Path -Parent $composeCommand.Source) 'node_modules/compose-agentsmd'
+    Write-Host "Resolved compose-agentsmd shim: $($composeCommand.Source)"
+    if (Test-Path -LiteralPath $composePackagePath) {
+        $composePackage = Get-Item -Force -LiteralPath $composePackagePath
+        Write-Host "Resolved compose-agentsmd package: $($composePackage.Target)"
+    }
     compose-agentsmd check --refresh
     exit $checkExitCode
 }
