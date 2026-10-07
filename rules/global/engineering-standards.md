@@ -2,21 +2,24 @@
 
 ## Tooling and dependencies
 
-- Prefer official, maintained, latest-stable tools and verify existing
-  solutions before building custom logic.
-- Use applicable Jev tools when they materially reduce model reading,
-  reasoning, or browser work: `jev_rank`/`jev_pick` for semantic selection,
-  `jev_next_step` after ambiguous or failing results, and `jev_navigate` for
-  supported multi-step browser work. Follow the live schema, including path
-  and context limits.
-- Before declaring non-trivial implementation complete, use exactly one
-  primary completion review: `jev_gate` when concrete completion claims and
-  supporting evidence exist; otherwise `jev_review`. For an over-limit
-  multi-file patch, use that tool's supported per-file mode. Do not repeat the
-  primary review on unchanged evidence.
-- Fall back to normal tools when Jev is inapplicable, unavailable, fails, or
-  returns insufficient confidence; skip it for deterministic one-step work
-  with a cheaper direct path.
+- Prefer maintained upstream tools and verify existing solutions before
+  building custom logic.
+- Prefer deterministic checks and ordinary search for exact paths, symbols,
+  or strings. Use `jev_rank` with paths or globs when at least 12 discovered
+  source candidates need semantic narrowing; use `jev_pick` to select by
+  relevance from a supplied candidate list.
+- Use `jev_decide` only for a bounded choice among 2–6 plausible options when
+  evidence and user priorities are available and the outcome changes the plan.
+  Keep its `ask_user`, `investigate`, and `none` outcomes.
+- Use `jev_verify` for specific claims against direct evidence, and
+  `jev_navigate` for supported multi-step browser work. Do not use Jev for
+  generation, multi-hop reasoning, or deep patch correctness review.
+- Do not send deterministic facts such as test, build, Git, version, hash, or
+  CI results to Jev for judgment. Do not repeat a decision with unchanged
+  evidence to seek endorsement.
+- Do not make Jev completion review or generic next-step judgments mandatory.
+  On low confidence, invalid results, escape outcomes, or service failure,
+  continue with a stronger reasoner or ask a person as appropriate.
 
 ## Unreal Blueprint graph capture
 

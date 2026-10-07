@@ -23,14 +23,22 @@ test('retired tracking tools are absent from active global rules', async () => {
   }
 });
 
-test('large multi-file completion uses the selected primary Jev tool files mode', async () => {
+test('Jev use is limited to retrieval and bounded semantic judgments', async () => {
   const content = await readFile(path.join(globalRulesPath, 'engineering-standards.md'), 'utf8');
   const normalized = content.replace(/\s+/g, ' ');
 
-  assert.match(normalized, /exactly one primary completion review: `jev_gate` when concrete completion claims and supporting evidence exist; otherwise `jev_review`/);
-  assert.match(normalized, /For an over-limit multi-file patch, use that tool's supported per-file mode/);
-  assert.match(normalized, /Follow the live schema, including path and context limits/);
-  assert.match(normalized, /Do not repeat the primary review on unchanged evidence/);
+  assert.match(normalized, /deterministic checks and ordinary search for exact paths, symbols, or strings/);
+  assert.match(normalized, /at least 12 discovered source candidates need semantic narrowing/);
+  assert.match(normalized, /use `jev_pick` to select by relevance from a supplied candidate list/);
+  assert.match(normalized, /`jev_decide` only for a bounded choice among 2–6 plausible options when evidence and user priorities are available/);
+  assert.match(normalized, /`jev_verify` for specific claims against direct evidence/);
+  assert.match(normalized, /`jev_navigate` for supported multi-step browser work/);
+  assert.match(normalized, /Do not use Jev for generation, multi-hop reasoning, or deep patch correctness review/);
+  assert.match(normalized, /Do not send deterministic facts such as test, build, Git, version, hash, or CI results to Jev for judgment/);
+  assert.match(normalized, /Do not make Jev completion review or generic next-step judgments mandatory/);
+  assert.match(normalized, /On low confidence, invalid results, escape outcomes, or service failure, continue with a stronger reasoner or ask a person/);
+  assert.doesNotMatch(normalized, /Before declaring non-trivial implementation complete, use exactly one primary completion review/);
+  assert.doesNotMatch(normalized, /jev_next_step/);
 });
 
 test('delegation rules do not depend on undefined tier labels', async () => {
