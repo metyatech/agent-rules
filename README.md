@@ -38,8 +38,12 @@ Do not edit generated `AGENTS.md` or `CLAUDE.md` directly.
 
 ## Verification
 
-The canonical verification command is in [.mwt/config.toml](.mwt/config.toml).
-It runs course-authoring regressions, Markdown validation, and composition.
+Run the canonical verification command with
+`pwsh -NoProfile -File tools/verify.ps1`.
+It runs the course-authoring and global-rule tests, `markdownlint-cli@0.49.1`,
+and the non-mutating compose-agentsmd check.
+The command in [.mwt/config.toml](.mwt/config.toml) and CI both use the same
+canonical verifier.
 For a focused authoring check, run
 `node --test tests/verify-course-authoring.test.mjs`.
 Use `compose-agentsmd check` to verify generated instruction synchronization.

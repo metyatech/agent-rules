@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout agent-rules
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Checkout compose-agentsmd
+        uses: actions/checkout@v7
+        with:
+          repository: metyatech/compose-agentsmd
+          ref: main
+          path: .ci/compose-agentsmd
+
+      - name: Install compose-agentsmd dependencies
+        working-directory: .ci/compose-agentsmd
+        run: npm ci
+
+      - name: Build compose-agentsmd
+        working-directory: .ci/compose-agentsmd
+        run: npm run build
+
+      - name: Link compose-agentsmd
+        working-directory: .ci/compose-agentsmd
+        run: npm link
+
+      - name: Verify
+        run: pwsh -NoProfile -File tools/verify.ps1
