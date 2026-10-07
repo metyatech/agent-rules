@@ -15,9 +15,18 @@
   composition/wiring for platform-owned behavior.
 - Shared behavior that applies to multiple courses belongs in
   `packages/platform`.
+- Shared Course Docs runtime/components MUST NOT derive domain-specific learner-facing
+  prompts, labels, explanations, or feedback from generic response/evaluator kinds.
+  Required instructional meaning belongs in validated authored content; generic
+  runtime fallbacks must remain semantically neutral.
 - Site/platform cross-boundary changes MUST be committed and verified atomically
   in the same repository. Platform, site, course build, and end-to-end
   verification MUST run together for changes crossing this boundary.
+- When a learner-facing instructional runtime has an explicit visual/reference
+  acceptance contract, automated tests are necessary but not sufficient for final
+  acceptance. Inspect the required rendered states in a real browser against the
+  reference. Until the designated visual reviewer accepts them, report
+  `RESULT=WAITING_FOR_HUMAN_VISUAL_ACCEPTANCE` rather than final `RESULT=PASS`.
 - The archived `metyatech/course-docs-platform` repository is historical only.
   Active code MUST NOT depend on it through Git, GitHub SHA dependencies,
   submodules, or subtree synchronization.

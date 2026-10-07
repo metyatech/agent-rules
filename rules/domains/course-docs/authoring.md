@@ -15,6 +15,11 @@
   XHTML-style trailing slashes, such as `<input>` rather than `<input />`. This
   applies to HTML code fences and sample/complete files, not MDX/JSX components.
 - Course docs MUST NOT use `<Solution>` or `authoringMode`.
+- Treat learner-visible content as Course Docs content regardless of storage format or path.
+  Prompts, labels, code context, feedback, explanations, and visible state text in
+  JSON/YAML/TypeScript fixtures, Bundle source, test fixtures, or generated source
+  MUST follow the same learner-facing authoring rules as MDX. A file under a test
+  directory is not exempt merely because it is also used as fixture data.
 
 ## Research provenance
 
@@ -169,6 +174,13 @@
   evidence is bounded to multiple-choice items (Strohmaier et al., 2023,
   [DOI](https://doi.org/10.1016/j.edurev.2023.100533); Breakall, Randles, &
   Tasker, 2019, [DOI](https://doi.org/10.1039/C8RP00262B)).
+- Runtime or shared UI fallback copy MUST NOT invent domain-specific instructional
+  meaning that authoring omitted. A response-bearing task must make clear, from
+  authored visible context and control semantics together, what the learner is
+  responding about, what action is required, and the expected response form.
+  Neutral platform/accessibility fallback wording is allowed only when it cannot
+  misstate the task. Missing or mismatched task meaning is an authoring/validation
+  defect, not a renderer convenience.
 - As a Course Docs research synthesis, review whether a learner-facing
   heading, its immediate explanation, the task statement, and relevant UI cues
   ask for the same learner action at the same stage. Treat a mismatch as a
@@ -294,6 +306,12 @@
   concise text mapping or accessibility equivalent as gratuitous duplication.
   These coherence/redundancy rules remove pointless narration, not useful
   verification or performance feedback.
+- After commitment, preserve the learner's response in place or in an immediately
+  comparable representation when comparison is instructionally useful. Do not
+  replace it with a detached summary merely for renderer uniformity. Do not repeat
+  an identical canonical answer immediately after an already-visible correct
+  learner answer unless the second representation adds a distinct instructional or
+  accessibility role such as explanation, normalization, or explicit comparison.
 - Feedback findings from Shute (2008) and Van der Kleij, Feskens, and Eggen
   (2015) are R-level guidance within their stated boundary conditions. The
   staged verification → generation/self-explanation → canonical explanation
