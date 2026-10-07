@@ -36,7 +36,8 @@
   acceptance. Inspect the required rendered states in a real browser against the
   reference. Where size, spacing, clipping, or responsive behavior is part of
   the instructional relation, acceptance MUST inspect the actual rendered
-  geometry/environment rather than only DOM structure or screenshots of labels. Until the designated visual reviewer accepts them, report
+  geometry/environment rather than only DOM structure or screenshots of labels.
+  Until the designated visual reviewer accepts them, report
   `RESULT=WAITING_FOR_HUMAN_VISUAL_ACCEPTANCE` rather than final `RESULT=PASS`.
 - The archived `metyatech/course-docs-platform` repository is historical only.
   Active code MUST NOT depend on it through Git, GitHub SHA dependencies,
