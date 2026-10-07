@@ -11,8 +11,47 @@ permissions:
 
 jobs:
   verify:
+    name: Verify with pinned compose-agentsmd
     runs-on: windows-latest
     timeout-minutes: 10
+
+    steps:
+      - name: Checkout agent-rules
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Checkout compose-agentsmd
+        uses: actions/checkout@v7
+        with:
+          repository: metyatech/compose-agentsmd
+          # compose-agentsmd v7.2.0 release commit
+          ref: ade39fc513f02f7e84927074387a4bc7bc2a7011
+          path: .ci/compose-agentsmd
+
+      - name: Install compose-agentsmd dependencies
+        working-directory: .ci/compose-agentsmd
+        run: npm ci
+
+      - name: Build compose-agentsmd
+        working-directory: .ci/compose-agentsmd
+        run: npm run build
+
+      - name: Link compose-agentsmd
+        working-directory: .ci/compose-agentsmd
+        run: npm link
+
+      - name: Verify
+        run: pwsh -NoProfile -File tools/verify.ps1
+
+  compatibility-compose-main:
+    name: Compatibility with compose-agentsmd main
+    runs-on: windows-latest
+    timeout-minutes: 10
+    continue-on-error: true
 
     steps:
       - name: Checkout agent-rules

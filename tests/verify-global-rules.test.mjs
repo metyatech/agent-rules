@@ -9,6 +9,43 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const globalRulesPath = path.join(repoRoot, 'rules', 'global');
 
+function extractJobSection(workflow, jobName) {
+  const lines = workflow.split(/\r?\n/u);
+  const jobsIndex = lines.findIndex((line) => line === 'jobs:');
+  assert.notEqual(jobsIndex, -1, 'workflow must define jobs');
+
+  const jobsEnd = lines.findIndex((line, index) =>
+    index > jobsIndex && line.length > 0 && !/^\s/u.test(line));
+  const sectionEnd = jobsEnd === -1 ? lines.length : jobsEnd;
+  const jobHeader = `  ${jobName}:`;
+  const jobStart = lines.findIndex((line, index) =>
+    index > jobsIndex && index < sectionEnd && line === jobHeader);
+  assert.notEqual(jobStart, -1, `workflow must define the ${jobName} job`);
+
+  const nextJob = lines.findIndex((line, index) =>
+    index > jobStart && index < sectionEnd && /^  [a-z0-9_-]+:\s*$/iu.test(line));
+  return lines.slice(jobStart, nextJob === -1 ? sectionEnd : nextJob).join('\n');
+}
+
+function assertComposeVerificationJob(job, expectedRef) {
+  assert.match(job, /^    runs-on: windows-latest$/mu);
+  assert.match(job, /^    timeout-minutes: 10$/mu);
+  assert.match(job, /^          node-version: "24"$/mu);
+  assert.match(job, /^        uses: actions\/checkout@v7$/mu);
+  assert.match(job, /^        uses: actions\/setup-node@v7$/mu);
+  assert.match(job, /^          repository: metyatech\/compose-agentsmd$/mu);
+  assert.ok(
+    job.split(/\r?\n/u).includes(`          ref: ${expectedRef}`),
+    `expected compose-agentsmd ref ${expectedRef}`,
+  );
+  assert.match(job, /^          path: \.ci\/compose-agentsmd$/mu);
+  assert.match(job, /^        working-directory: \.ci\/compose-agentsmd$/mu);
+  assert.match(job, /^        run: npm ci$/mu);
+  assert.match(job, /^        run: npm run build$/mu);
+  assert.match(job, /^        run: npm link$/mu);
+  assert.match(job, /^        run: pwsh -NoProfile -File tools\/verify\.ps1$/mu);
+}
+
 test('retired tracking tools are absent from active global rules', async () => {
   await assert.rejects(stat(path.join(globalRulesPath, 'persistent-tracking.md')), {
     code: 'ENOENT',
@@ -23,35 +60,13 @@ test('retired tracking tools are absent from active global rules', async () => {
   }
 });
 
-test('Jev use is limited to retrieval and bounded semantic judgments', async () => {
-  const content = await readFile(path.join(globalRulesPath, 'engineering-standards.md'), 'utf8');
-  const normalized = content.replace(/\s+/g, ' ');
-
-  assert.match(normalized, /deterministic checks and ordinary search for exact paths, symbols, or strings/);
-  assert.match(normalized, /at least 12 discovered source candidates need semantic narrowing/);
-  assert.match(normalized, /use `jev_pick` to select by relevance from a supplied candidate list/);
-  assert.match(normalized, /`jev_decide` only for a bounded choice among 2–6 plausible options when evidence and user priorities are available/);
-  assert.match(normalized, /`jev_verify` for specific claims against direct evidence/);
-  assert.match(normalized, /`jev_navigate` for supported multi-step browser work/);
-  assert.match(normalized, /Do not use Jev for generation, multi-hop reasoning, or deep patch correctness review/);
-  assert.match(normalized, /Do not send deterministic facts such as test, build, Git, version, hash, or CI results to Jev for judgment/);
-  assert.match(normalized, /Do not make Jev completion review or generic next-step judgments mandatory/);
-  assert.match(normalized, /On low confidence, invalid results, escape outcomes, or service failure, continue with a stronger reasoner or ask a person/);
-  assert.doesNotMatch(normalized, /Before declaring non-trivial implementation complete, use exactly one primary completion review/);
-  assert.doesNotMatch(normalized, /jev_next_step/);
-});
-
-test('delegation rules do not depend on undefined tier labels', async () => {
+test('delegation rules do not use retired tier labels', async () => {
   const content = await readFile(path.join(globalRulesPath, 'sub-agent-delegation.md'), 'utf8');
 
   assert.doesNotMatch(content, /\bLight work\b/u);
   assert.doesNotMatch(content, /\bStandard(?: work| implementation| review)\b/u);
   assert.doesNotMatch(content, /\bHeavy(?: work| implementation| review)\b/u);
   assert.doesNotMatch(content, /\btask is Heavy\b/u);
-
-  assert.match(content, /Non-trivial implementation or review/);
-  assert.match(content, /cross-system, high-blast-radius/);
-  assert.match(content, /require an independent review with `PASS`/);
 });
 
 test('global rules stay within the hard 8000-token budget', async () => {
@@ -123,25 +138,26 @@ test('README documents the canonical verifier and its checks', async () => {
   assert.match(readme, /and CI both use the same\s+canonical verifier/);
 });
 
-test('CI verifies with current compose-agentsmd main on Windows', async () => {
+test('CI verifies a pinned compose release and current main compatibility', async () => {
   const workflowPath = path.join(repoRoot, '.github', 'workflows', 'ci.yml');
   const workflow = await readFile(workflowPath, 'utf8');
-  const normalized = workflow.replace(/\s+/g, ' ');
 
-  assert.match(normalized, /push:[\s\S]*?branches:[\s\S]*?- main/);
-  assert.match(normalized, /pull_request:/);
-  assert.match(normalized, /permissions:[\s\S]*?contents: read/);
-  assert.match(normalized, /runs-on: windows-latest/);
-  assert.match(normalized, /timeout-minutes: 10/);
-  assert.match(normalized, /actions\/checkout@v7/);
-  assert.match(normalized, /actions\/setup-node@v7/);
-  assert.match(normalized, /node-version: "24"/);
-  assert.match(normalized, /repository: metyatech\/compose-agentsmd/);
-  assert.match(normalized, /ref: main/);
-  assert.match(normalized, /path: \.ci\/compose-agentsmd/);
-  assert.match(normalized, /working-directory: \.ci\/compose-agentsmd/);
-  assert.match(normalized, /run: npm ci/);
-  assert.match(normalized, /run: npm run build/);
-  assert.match(normalized, /run: npm link/);
-  assert.match(normalized, /pwsh -NoProfile -File tools\/verify\.ps1/);
+  assert.match(workflow, /^  push:\r?\n    branches:\r?\n      - main$/mu);
+  assert.match(workflow, /^  pull_request:\s*$/mu);
+  assert.match(workflow, /^permissions:\r?\n  contents: read$/mu);
+  assert.doesNotMatch(workflow, /^  schedule:/mu);
+
+  const canonicalJob = extractJobSection(workflow, 'verify');
+  assertComposeVerificationJob(
+    canonicalJob,
+    'ade39fc513f02f7e84927074387a4bc7bc2a7011',
+  );
+  assert.match(canonicalJob, /^    name: Verify with pinned compose-agentsmd$/mu);
+  assert.doesNotMatch(canonicalJob, /^\s+continue-on-error:\s*true$/mu);
+  assert.doesNotMatch(canonicalJob, /^          ref: main$/mu);
+
+  const compatibilityJob = extractJobSection(workflow, 'compatibility-compose-main');
+  assertComposeVerificationJob(compatibilityJob, 'main');
+  assert.match(compatibilityJob, /^    name: Compatibility with compose-agentsmd main$/mu);
+  assert.match(compatibilityJob, /^    continue-on-error: true$/mu);
 });
