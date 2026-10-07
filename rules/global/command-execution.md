@@ -25,7 +25,9 @@
 
 ## Git and identity flows
 
-- When directly running a repository-scoped Git command, the agent MUST explicitly select its target repository independently of the shell working directory or preceding directory changes.
+- When directly running a repository-scoped Git command, the agent MUST explicitly
+  select its target repository independently of the shell working directory or
+  preceding directory changes.
 - Avoid interactive git prompts (pass `--no-edit` or set
   `GIT_EDITOR=true`).
 - When no branch is specified, work on the current branch.
