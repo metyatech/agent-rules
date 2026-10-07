@@ -183,6 +183,13 @@
   Neutral platform/accessibility fallback wording is allowed only when it cannot
   misstate the task. Missing or mismatched task meaning is an authoring/validation
   defect, not a renderer convenience.
+- Learner-facing structure SHOULD distinguish document/lesson identity,
+  meaningful activity or task headings, task prompts, response surfaces, and
+  results/feedback when those roles are present. Do not flatten these roles into
+  visually equivalent body paragraphs or generic cards merely because a shared
+  runtime renders them. A heading SHOULD orient the learner to the current
+  purpose/action without mechanically repeating the prompt. Exact typography,
+  level choice, and grouping are local design decisions.
 - As a Course Docs research synthesis, review whether a learner-facing
   heading, its immediate explanation, the task statement, and relevant UI cues
   ask for the same learner action at the same stage. Treat a mismatch as a
@@ -321,6 +328,15 @@
   staged verification → generation/self-explanation → canonical explanation
   sequence is an S Course Docs synthesis; exact wording, tone, colour, and icon
   styling are L local decisions.
+- In a controlled visual comparison, preserve not only authored content
+  invariants but also presentation conditions that affect the observed result,
+  such as preview/container width, scale, zoom, clipping, or viewport. Do not
+  force a universal side-by-side layout when putting states into columns changes
+  the thing being compared. Stack or otherwise preserve an equivalent rendering
+  environment when needed. When rendered size/space carries instructional
+  meaning, browser review SHOULD inspect actual geometry rather than only the
+  existence of two panels. This is a local Course Docs visual-validity contract;
+  exact layout is not a research-prescribed form.
 - Divide material at meaningful semantic or causal boundaries rather than by
   arbitrary screen-sized chunks. Separate simultaneous changes when needed to
   show which change caused which result; preserve meaningful unchanged states

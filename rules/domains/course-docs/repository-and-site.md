@@ -19,13 +19,24 @@
   prompts, labels, explanations, or feedback from generic response/evaluator kinds.
   Required instructional meaning belongs in validated authored content; generic
   runtime fallbacks must remain semantically neutral.
+- Shared learner-facing runtimes MUST preserve explicit semantic hierarchy for
+  lesson/page identity, meaningful activity/task headings, prompts, responses,
+  and results rather than deriving hierarchy from internal IDs or flattening all
+  roles into generic body text.
+- Shared comparison renderers MUST NOT force one layout on every controlled
+  contrast. When viewport/container width, scale, clipping, or another
+  presentation condition affects the observed behavior, preserve that
+  environment across compared states; use stacking or another layout when
+  columns would invalidate the comparison.
 - Site/platform cross-boundary changes MUST be committed and verified atomically
   in the same repository. Platform, site, course build, and end-to-end
   verification MUST run together for changes crossing this boundary.
 - When a learner-facing instructional runtime has an explicit visual/reference
   acceptance contract, automated tests are necessary but not sufficient for final
   acceptance. Inspect the required rendered states in a real browser against the
-  reference. Until the designated visual reviewer accepts them, report
+  reference. Where size, spacing, clipping, or responsive behavior is part of
+  the instructional relation, acceptance MUST inspect the actual rendered
+  geometry/environment rather than only DOM structure or screenshots of labels. Until the designated visual reviewer accepts them, report
   `RESULT=WAITING_FOR_HUMAN_VISUAL_ACCEPTANCE` rather than final `RESULT=PASS`.
 - The archived `metyatech/course-docs-platform` repository is historical only.
   Active code MUST NOT depend on it through Git, GitHub SHA dependencies,
