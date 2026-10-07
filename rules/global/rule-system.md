@@ -9,8 +9,8 @@ keywords mean MUST.
   directly.
 - A consuming repository MUST declare its ordered `sources` and `profile` in
   `agent-ruleset.json`; source-side `agent-profiles.json` selects the domains.
-  Legacy `source`, `domains`, `extra`, and `agent-rules-local` configuration
-  MUST NOT be used.
+  Legacy `source`, `domains`, and `extra` configuration and
+  `agent-rules-local` files MUST NOT be used.
 - Reusable rules belong in the appropriate shared rules source; truly private
   rules belong in a private source. compose-agentsmd procedures live in
   `compose-agentsmd/tools/tool-rules.md`.
@@ -25,8 +25,9 @@ keywords mean MUST.
   rules in `rules/domains/<domain>/`.
 - Encode the underlying general principle rather than a surface example.
 - Persistent user instructions MUST be encoded in the appropriate rule module
-  unless scoped to the current task. In delegated mode, do not modify rules;
-  report the gap to the delegator.
+  unless scoped to the current task. In delegated mode, do not modify rules
+  unless the rule change was explicitly delegated; otherwise report the gap to
+  the delegator.
 - Rules are the source of truth across sessions.
 
 ## Research provenance

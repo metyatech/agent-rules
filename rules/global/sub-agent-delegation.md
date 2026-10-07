@@ -8,10 +8,10 @@
 - A delegation prompt MUST state delegated mode, scope, approval state,
   acceptance criteria, verification requirements, and necessary task context.
   It MUST NOT restate rules already present in `AGENTS.md`.
-- A delegated agent inherits the delegator's scope, MUST NOT modify rules, and
-  MUST NOT expand scope. Rule changes, repository creation/deletion, release,
-  deployment, merge/close operations, force-push, or published-history rewrite
-  require explicit per-call delegation.
+- A delegated agent inherits the delegator's scope and MUST NOT expand scope.
+  Rule changes, repository creation/deletion, release, deployment, merge/close
+  operations, force-push, or published-history rewrite require explicit
+  per-call delegation.
 - Multiple writing agents MAY work concurrently only in isolated checkouts or
   worktrees with one integration owner; otherwise run them sequentially.
 
