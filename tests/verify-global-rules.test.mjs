@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const globalRulesPath = path.join(repoRoot, 'rules', 'global');
+const profilesPath = path.join(repoRoot, 'agent-profiles.json');
 
 function extractJobSection(workflow, jobName) {
   const lines = workflow.split(/\r?\n/u);
@@ -58,6 +59,13 @@ test('retired tracking tools are absent from active global rules', async () => {
     assert.equal(content.includes('task-tracker'), false, `${file} references task-tracker`);
     assert.equal(content.includes('thread-inbox'), false, `${file} references thread-inbox`);
   }
+});
+
+test('mixed Node and Python repositories exclude agent tooling rules', async () => {
+  const { profiles } = JSON.parse(await readFile(profilesPath, 'utf8'));
+
+  assert.deepEqual(profiles['node-python']?.domains, ['node', 'python']);
+  assert.equal(profiles['node-python'].domains.includes('agent-tooling'), false);
 });
 
 test('delegation rules do not use retired tier labels', async () => {

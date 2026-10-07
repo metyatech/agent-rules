@@ -18,6 +18,9 @@
     "node-cli": {
       "domains": ["node", "agent-tooling"]
     },
+    "node-python": {
+      "domains": ["node", "python"]
+    },
     "node-web": {
       "domains": ["node", "web"]
     },
