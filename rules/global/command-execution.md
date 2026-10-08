@@ -23,6 +23,26 @@
   latest stable release; if it still reproduces, record the
   verified limitation and use a deterministic workaround.
 
+## Process lifecycle safety
+
+- System diagnostics MUST be read-only by default.
+- The agent MUST NOT terminate, force-kill, restart, or otherwise disrupt
+  pre-existing processes, shared daemons, or services without explicit user
+  authorization for that specific action.
+- A process started by the agent solely as an isolated, temporary test fixture
+  MAY be cleaned up without additional approval only when its ownership and
+  identity are verified. A PID alone is insufficient; use a retained process
+  handle or verify executable identity and creation time before termination.
+- Starting or discovering a managed/shared daemon during diagnostics does not
+  make it an agent-owned disposable test process.
+- Managed services MUST use their official lifecycle interface when an
+  authorized stop or restart is necessary. Force termination requires separate
+  explicit authorization after the managed shutdown path has failed.
+- The agent MUST NOT use broad process-name matching, unverified PID lists, or
+  process-tree termination for diagnostic cleanup.
+- When process ownership or identity is uncertain, the agent MUST leave the
+  process running and report the uncertainty.
+
 ## Git and identity flows
 
 - When directly running a repository-scoped Git command, the agent MUST explicitly

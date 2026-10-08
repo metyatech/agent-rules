@@ -61,6 +61,24 @@ test('retired tracking tools are absent from active global rules', async () => {
   }
 });
 
+test('process lifecycle safety protects pre-existing and managed processes', async () => {
+  const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
+  const section = content.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];
+
+  assert.ok(section, 'command-execution.md must define Process lifecycle safety');
+  for (const requirement of [
+    'System diagnostics MUST be read-only by default.',
+    'without explicit user\n  authorization for that specific action.',
+    'A PID alone is insufficient;',
+    'verify executable identity and creation time before termination.',
+    'does not\n  make it an agent-owned disposable test process.',
+    'Managed services MUST use their official lifecycle interface',
+    'Force termination requires separate\n  explicit authorization',
+    'broad process-name matching, unverified PID lists, or',
+    'leave the\n  process running and report the uncertainty.',
+  ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
+});
+
 test('mixed Node and Python repositories exclude agent tooling rules', async () => {
   const { profiles } = JSON.parse(await readFile(profilesPath, 'utf8'));
 
