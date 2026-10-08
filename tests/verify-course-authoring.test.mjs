@@ -6,6 +6,27 @@ const readRule = async (name) =>
   (await readFile(new URL(`../rules/domains/${name}.md`, import.meta.url), 'utf8'))
     .replace(/\s+/g, ' ');
 
+test('assessment rules reject inferred targets and missing decisive conditions', async () => {
+  const authoring = await readRule('education/question-authoring');
+  assert.match(authoring, /follows from stated conditions, shown code\/data, or guaranteed domain behavior/);
+  assert.match(authoring, /variable named `heading` does not establish an `h1` element/);
+  assert.match(authoring, /Do not silently import facts from the teaching example/);
+  assert.match(authoring, /plausible counterexample that satisfies all stated conditions/);
+  assert.match(authoring, /child with an overriding text color/);
+  assert.match(authoring, /state the missing decisive condition or narrow the claim/);
+});
+
+test('weekly quiz acceptance separates semantic review from structural checks', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  assert.match(quality, /Review each changed question in isolation/);
+  assert.match(quality, /prompt and options before the intended answer or explanation/);
+  assert.match(quality, /grounding of claimed target identity, state, and behavior/);
+  assert.match(quality, /actively search for counterexamples/);
+  assert.match(quality, /Validation, Track export, and CI check structure, not educational correctness/);
+  assert.match(quality, /MUST NOT report educational-quality PASS without a semantic review/);
+  assert.match(quality, /environment-dependent behavior that was not verified/);
+});
+
 const overclaimedCourseRules = [
   /always use current state.{0,100}(?:need|problem).{0,80}concept.{0,60}use/i,
   /cumulative presentation (?:is|has been proven|is proven to be) optimal/i,

@@ -45,6 +45,15 @@
 - Before reporting a quiz bundle as ready, the agent MUST audit every item for
   answer uniqueness, answer-format clarity, plausible distractors,
   non-overlapping choices, and absence of wording giveaways.
+- Review each changed question in isolation: read its Track-facing (when
+  applicable) prompt and options before the intended answer or explanation,
+  without other questions, source lessons, or answer metadata. Check the
+  grounding of claimed target identity, state, and behavior; actively search
+  for counterexamples before confirming the answer key and explanation.
+- Validation, Track export, and CI check structure, not educational correctness.
+  The agent MUST NOT report educational-quality PASS without a semantic review
+  of the affected questions. Identify any environment-dependent behavior that
+  was not verified rather than implying it was.
 - Before reporting a weekly quiz change as complete, the agent MUST run the
   relevant question validation command, export the affected week, inspect the
   export result for Track-facing issues, and run the repository-standard
