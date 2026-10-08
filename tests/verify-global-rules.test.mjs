@@ -61,9 +61,20 @@ test('retired tracking tools are absent from active global rules', async () => {
   }
 });
 
+const extractProcessLifecycleSection = (content) => {
+  const normalized = content.replace(/\r\n/gu, '\n');
+  return normalized.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];
+};
+
+test('process lifecycle section extraction works with LF and CRLF', () => {
+  const sample = '## Before\n## Process lifecycle safety\n- Keep running\n## After\n';
+  assert.equal(extractProcessLifecycleSection(sample), '- Keep running');
+  assert.equal(extractProcessLifecycleSection(sample.replace(/\n/gu, '\r\n')), '- Keep running');
+});
+
 test('process lifecycle safety protects pre-existing and managed processes', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
-  const section = content.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];
+  const section = extractProcessLifecycleSection(content);
 
   assert.ok(section, 'command-execution.md must define Process lifecycle safety');
   for (const requirement of [
