@@ -40,7 +40,7 @@ test('weekly quiz quality caps item count and favors quickly answered formats', 
 test('weekly quiz reuse follows current quality and permits direct improvement', async () => {
   const quality = await readRule('weekly-quiz/quality');
   assert.match(quality, /current quiz quality standards MUST take priority over past quiz practice/i);
-  assert.match(quality, /search.*existing.*questions.*reuse/i);
+  assert.match(quality, /Apply this reuse order when creating or revising a weekly quiz/);
   assert.match(quality, /reuse.*unchanged.*when.*current quality standards/i);
   assert.match(quality, /directly revise.*existing question.*when.*revision.*meet.*current quality standards/i);
   assert.match(quality, /create.*new question.*when.*no suitable existing question.*or revision would not make it suitable/i);
@@ -83,6 +83,31 @@ test('weekly quiz grounding, lesson scope, and semantic quality requirements rem
     /answer uniqueness, answer-format clarity, plausible distractors/,
     /semantic review of the affected questions/,
   ]) assert.match(quality, preserved);
+});
+
+test('weekly quiz quality and course-specific authoring rules have separate owners', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  const authoring = await readRule('course-exams/question-authoring');
+
+  assert.match(quality, /A weekly quiz for `wXX` MUST assess the content of lesson `XX`/);
+  assert.match(quality, /Apply this reuse order when creating or revising a weekly quiz/);
+  assert.match(quality, /MUST contain no more than 4 questions/);
+  assert.match(quality, /Current quiz quality standards MUST take priority/);
+  assert.doesNotMatch(quality, /Searching the question bank exists to find suitable questions for reuse/);
+
+  assert.match(authoring, /search the owning course's existing `question-bank\/quizzes\/`/);
+  assert.match(authoring, /The system-derived title of a weekly quiz/);
+  assert.match(authoring, /<year> <official course name> 第XX回小テスト/);
+  assert.doesNotMatch(authoring, /MUST assess lesson `XX`/);
+  assert.doesNotMatch(authoring, /weekly-quiz\/quality\.md/);
+  assert.doesNotMatch(authoring, /Apply this reuse order/);
+  assert.doesNotMatch(authoring, /Directly revise a suitable existing question/);
+  assert.doesNotMatch(authoring, /learner attempts|answer history|past assessment impact/i);
+  assert.doesNotMatch(authoring, /derived question file/i);
+
+  assert.match(authoring, /For midterm exams in this course context, use 20 points/);
+  assert.match(authoring, /For regular term exams in this course context, use 80 points/);
+  assert.match(authoring, /Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list/);
 });
 
 const overclaimedCourseRules = [

@@ -3,23 +3,16 @@
 - Before creating a new weekly quiz question, search the owning course's
   existing `question-bank/quizzes/` for questions that assess the same taught
   target.
-- A weekly quiz stored under `quizzes/wXX/` MUST assess lesson `XX`. Its
-  system-derived title MUST be `<year> <official course name> 第XX回小テスト`, with
-  the quiz number matching `wXX` (for example, `w01` uses `第1回小テスト`). Do not use
-  an off-by-one quiz number.
+- The system-derived title of a weekly quiz stored under `quizzes/wXX/`
+  MUST be `<year> <official course name> 第XX回小テスト`, with the quiz number
+  matching `wXX` (for example, `w01` uses `第1回小テスト`). Do not use an
+  off-by-one quiz number in the title.
 - Standard exam titles MUST be system-derived as
   `<year> <official course name> <individual title><optional section>`, where
   the individual title is `【本番】中間試験`, `【練習】中間試験`, `【再試験】中間試験`, `【本番】定期試験`,
   `【練習】定期試験`, or `【再試験】定期試験` according to the canonical assessment path.
   Optional exam sections such as `（学科）` or `（実技）` are appended only when the
   course metadata defines that section.
-- For weekly quizzes, apply the current quality standards and reuse order in
-  `weekly-quiz/quality.md`. Search the question bank to find reusable questions,
-  not to follow past question patterns. Existing questions MAY be directly
-  revised to meet current quality standards, and a question MAY be reused even
-  if it has appeared before. Past use, learner attempts, answer history, and
-  effects on past assessments MUST NOT constrain quiz-question reuse or revision.
-  A derived question file is not required solely to preserve a past assessment.
 - When creating course exam questions, check the syllabus and course materials
   specified by the user, and limit questions to the taught scope at the time of
   the exam.

@@ -50,8 +50,7 @@
   the schedule marks the week as no-quiz.
 - Current quiz quality standards MUST take priority over past quiz practice.
   Past trends, formats, question counts, and difficulty levels do not need to be
-  followed. Searching the question bank exists to find suitable questions for
-  reuse, not to reproduce past patterns.
+  followed.
 - Apply this reuse order when creating or revising a weekly quiz:
   1. Reuse an existing question unchanged when it meets the current quality
      standards and fits the taught scope.
