@@ -24,6 +24,13 @@
 - Prompts MUST NOT ask what happened in a specific lesson, such as `第N回で何をしましたか`.
 - A question based on an in-class task MUST be rewritten as a content, scenario,
   or procedure question answerable without remembering that class event.
+- Weekly quizzes MUST contain no more than 4 questions. Apply this cap when
+  creating or revising a quiz; do not bulk-change existing quiz data as part of
+  this authoring rule.
+- Choice and cloze questions SHOULD be the default formats for weekly quizzes.
+  Descriptive questions MAY be used when they can be answered quickly, normally
+  within the existing 30-60 second per-question guideline. Questions requiring
+  extended written responses MUST NOT be used in a weekly quiz.
 - A quiz bundle SHOULD cover multiple important topics from the relevant lesson
   instead of repeating one topic.
 - Each multiple-choice question MUST have one defensible correct answer.
@@ -41,6 +48,21 @@
 - Individual questions SHOULD normally take 30-60 seconds for Track-familiar learners.
 - Exported quiz bundles MUST remain within the 3-7 minute duration window unless
   the schedule marks the week as no-quiz.
+- Current quiz quality standards MUST take priority over past quiz practice.
+  Past trends, formats, question counts, and difficulty levels do not need to be
+  followed. Searching the question bank exists to find suitable questions for
+  reuse, not to reproduce past patterns.
+- Apply this reuse order when creating or revising a weekly quiz:
+  1. Reuse an existing question unchanged when it meets the current quality
+     standards and fits the taught scope.
+  2. Directly revise a suitable existing question when revision can make it
+     meet the current quality standards.
+  3. Create a new question when no suitable existing question exists or
+     revision would not make it suitable.
+- The same current quality standards MUST apply to new and revised questions.
+  A question that has appeared before MAY be reused. Do not check past use,
+  learner attempts, or answer history, and do not make past assessment impact a
+  condition of reuse or revision.
 - Every question SHOULD include concise feedback suitable for short Track review.
 - Before reporting a quiz bundle as ready, the agent MUST audit every item for
   answer uniqueness, answer-format clarity, plausible distractors,

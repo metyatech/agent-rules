@@ -13,21 +13,13 @@
   `【練習】定期試験`, or `【再試験】定期試験` according to the canonical assessment path.
   Optional exam sections such as `（学科）` or `（実技）` are appended only when the
   course metadata defines that section.
-- Prefer quiz-question reuse in this order: (1) reuse an existing question
-  unchanged when appropriate, (2) create a revised/derived question from an
-  existing question when the original is too specific or has already been used
-  with the same learners, and (3) create a wholly new question only when no
-  suitable reusable question exists.
-- Reuse or derived reuse MUST still match the current syllabus, actual
-  referenced course materials, learner level, and taught scope.
-- Do not modify an existing question-bank question when that change would
-  retroactively alter a past assessment that already references it. Create a new
-  derived question file instead, unless the user explicitly requests changing
-  the historical assessment.
-- When the same learners have already answered an existing question, avoid
-  repeating it verbatim unless deliberate repetition is pedagogically intended;
-  prefer a derived version that assesses the same skill with different
-  incidental names, values, examples, or context.
+- For weekly quizzes, apply the current quality standards and reuse order in
+  `weekly-quiz/quality.md`. Search the question bank to find reusable questions,
+  not to follow past question patterns. Existing questions MAY be directly
+  revised to meet current quality standards, and a question MAY be reused even
+  if it has appeared before. Past use, learner attempts, answer history, and
+  effects on past assessments MUST NOT constrain quiz-question reuse or revision.
+  A derived question file is not required solely to preserve a past assessment.
 - When creating course exam questions, check the syllabus and course materials
   specified by the user, and limit questions to the taught scope at the time of
   the exam.

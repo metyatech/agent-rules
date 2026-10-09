@@ -27,6 +27,64 @@ test('weekly quiz acceptance separates semantic review from structural checks', 
   assert.match(quality, /environment-dependent behavior that was not verified/);
 });
 
+test('weekly quiz quality caps item count and favors quickly answered formats', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  assert.match(quality, /weekly quizzes MUST contain no more than 4 questions/i);
+  assert.match(quality, /choice and cloze questions SHOULD be the default formats/i);
+  assert.match(quality, /descriptive questions MAY be used when they can be answered quickly/i);
+  assert.match(quality, /questions requiring extended written responses MUST NOT be used/i);
+  assert.match(quality, /30-60 seconds/);
+  assert.match(quality, /3-7 minute duration window/);
+});
+
+test('weekly quiz reuse follows current quality and permits direct improvement', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  assert.match(quality, /current quiz quality standards MUST take priority over past quiz practice/i);
+  assert.match(quality, /search.*existing.*questions.*reuse/i);
+  assert.match(quality, /reuse.*unchanged.*when.*current quality standards/i);
+  assert.match(quality, /directly revise.*existing question.*when.*revision.*meet.*current quality standards/i);
+  assert.match(quality, /create.*new question.*when.*no suitable existing question.*or revision would not make it suitable/i);
+  assert.match(quality, /question that has appeared before MAY be reused/i);
+  assert.match(quality, /same current quality standards MUST apply to new and revised questions/i);
+  assert.doesNotMatch(quality, /match past (?:question )?trends|follow past (?:quiz )?formats|match past difficulty/i);
+  assert.doesNotMatch(quality, /check (?:whether|if) (?:the )?question has been used before|review (?:past )?(?:attempt|answer|use) history/i);
+});
+
+test('weekly quiz reuse does not protect past assessments or require derivative files', async () => {
+  const authoring = await readRule('course-exams/question-authoring');
+  const weeklyQuizRules = authoring.split(/- When creating course exam questions/)[0];
+  assert.match(weeklyQuizRules, /search.*existing.*question-bank\/quizzes/i);
+  assert.doesNotMatch(weeklyQuizRules, /Do not modify an existing question-bank question.*past assessment/i);
+  assert.doesNotMatch(weeklyQuizRules, /same learners have already answered.*avoid repeating/i);
+  assert.doesNotMatch(weeklyQuizRules, /prefer a derived version/i);
+  assert.doesNotMatch(weeklyQuizRules, /derived question file (?:MUST|is required)/i);
+  assert.doesNotMatch(weeklyQuizRules, /past assessment.*protect|protect.*past assessment/i);
+  assert.match(authoring, /Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list/);
+  assert.match(authoring, /The `## Scoring` bullet list carries no inline points/);
+  assert.match(authoring, /For midterm exams in this course context, use 20 points/);
+  assert.match(authoring, /For regular term exams in this course context, use 80 points/);
+});
+
+test('submission question and manifest requirements remain unchanged', async () => {
+  const format = await readRule('course-exams/markdown-qti-format');
+  assert.match(format, /Submission questions MUST NOT contain `## Scoring`/i);
+  assert.match(format, /Submission manifest items MUST NOT contain `points`/i);
+  assert.match(format, /Submission manifests MUST contain `time_limit_seconds`/i);
+});
+
+test('weekly quiz grounding, lesson scope, and semantic quality requirements remain', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  for (const preserved of [
+    /identify the target week, matching lesson number, schedule entry, syllabus scope, and relevant taught material/,
+    /check both the syllabus and the actual lesson materials/,
+    /Syllabus entries MUST be used only to identify the lesson scope/,
+    /MUST be grounded in actual taught material/,
+    /If the actual materials cannot be found, the agent MUST report the missing source/,
+    /answer uniqueness, answer-format clarity, plausible distractors/,
+    /semantic review of the affected questions/,
+  ]) assert.match(quality, preserved);
+});
+
 const overclaimedCourseRules = [
   /always use current state.{0,100}(?:need|problem).{0,80}concept.{0,60}use/i,
   /cumulative presentation (?:is|has been proven|is proven to be) optimal/i,
