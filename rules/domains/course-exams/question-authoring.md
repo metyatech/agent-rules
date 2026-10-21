@@ -39,7 +39,7 @@
   explicitly specifies otherwise.
 - For midterm exams, the time limit MUST be no more than 20 minutes multiplied
   by the number of class periods allocated to the exam.
-- For regular term exams, the time limit MUST be no more than 80 minutes.
+- For regular term exams, the time limit MUST be no more than 60 minutes.
 - For beginner course exams, write questions that students can answer when they
   can solve the course exercises for the taught scope.
 - When the user specifies that certain skills are more important for continuing
