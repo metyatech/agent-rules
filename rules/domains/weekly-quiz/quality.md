@@ -9,6 +9,33 @@
 - Before drafting or revising a weekly quiz, the agent MUST identify the target
   week, matching lesson number, schedule entry, syllabus scope, and relevant
   taught material.
+- When a quiz request names a course and lesson, the agent MUST first resolve
+  its year, semester, and lesson, then inspect that syllabus entry, any matching
+  `progress.yaml` record, existing lesson notes, and the actual source material
+  needed to establish the taught scope. For multiple courses, resolve and
+  confirm each course separately. Do not draft or edit quiz questions during
+  this scope check. Inspect only the material sections needed to establish the
+  scope; the presence of a whole material file does not mean all of it was taught.
+- When confirmed progress exists, show its saved scope and ask the teacher to
+  confirm it before authoring. When no progress record exists, show the planned
+  syllabus scope and any existing lesson notes, clearly treating the notes as
+  unconfirmed, and ask whether that scope was taught. Existing lesson notes MUST
+  NOT be migrated or treated as confirmed progress automatically.
+- If the teacher says the scope is different or cannot confirm it, ask only for
+  the missing details and request scope confirmation again. Do not generate or
+  edit questions until the teacher explicitly approves the taught scope.
+- After scope approval, save any changed confirmed progress before drafting,
+  read the saved `progress.yaml` back, and validate it against the matching
+  syllabus. If saving, reading, or validation fails, stop without drafting or
+  editing quiz questions. When the confirmed record is unchanged, do not rewrite
+  `progress.yaml`. Scope approval is sufficient to begin authoring after this
+  gate; do not ask for a second, separate permission to create the quiz.
+- Never infer taught progress from the schedule, lesson notes, or available
+  materials alone. A syllabus describes the plan and MUST NOT be changed
+  automatically to match actual progress; do not automatically request a
+  syllabus update when progress differs.
+- Publishing a quiz to Track requires explicit teacher approval; authoring,
+  validation, or export alone does not authorize publication.
 - The agent MUST check both the syllabus and the actual lesson materials,
   textbook pages, worked examples, exercises, or instructor notes for the target
   lesson.

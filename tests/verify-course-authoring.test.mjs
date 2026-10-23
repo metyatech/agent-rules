@@ -27,6 +27,28 @@ test('weekly quiz acceptance separates semantic review from structural checks', 
   assert.match(quality, /environment-dependent behavior that was not verified/);
 });
 
+test('weekly quiz authoring confirms taught scope before drafting and gates progress writes', async () => {
+  const quality = await readRule('weekly-quiz/quality');
+  const syllabus = await readRule('syllabus/authoring');
+  for (const requirement of [
+    /resolve its year, semester, and lesson/,
+    /When confirmed progress exists, show its saved scope and ask the teacher to confirm it/,
+    /When no progress record exists, show the planned syllabus scope and any existing lesson notes.*ask whether that scope was taught/,
+    /Existing lesson notes MUST NOT be migrated or treated as confirmed progress automatically/,
+    /Do not generate or edit questions until the teacher explicitly approves the taught scope/,
+    /If the teacher says the scope is different or cannot confirm it, ask only for the missing details and request scope confirmation again/,
+    /save any changed confirmed progress before drafting, read the saved `progress\.yaml` back, and validate it against the matching syllabus/,
+    /If saving, reading, or validation fails, stop without drafting or editing quiz questions/,
+    /When the confirmed record is unchanged, do not rewrite `progress\.yaml`/,
+    /Scope approval is sufficient to begin authoring.*do not ask for a second, separate permission to create the quiz/,
+    /the presence of a whole material file does not mean all of it was taught/,
+    /Publishing a quiz to Track requires explicit teacher approval/,
+    /Never infer taught progress from the schedule, lesson notes, or available materials alone/,
+  ]) assert.match(quality, requirement);
+  assert.match(syllabus, /A syllabus is the planned schedule[\s\S]*?Do not automatically change it to match actual progress/);
+  assert.match(syllabus, /Do not automatically migrate them to progress records or treat them as confirmation/);
+});
+
 test('weekly quiz quality caps item count and favors quickly answered formats', async () => {
   const quality = await readRule('weekly-quiz/quality');
   assert.match(quality, /weekly quizzes MUST contain no more than 4 questions/i);
