@@ -33,6 +33,9 @@
   affected doc in the same change set so documentation matches
   behavior. Omit no-op documentation notes from normal
   completion reports.
+- When a repository's documentation and its existing code disagree, follow the
+  conventions used in the existing code, and in your final reply point out each
+  inconsistency you found between the documentation and the code.
 - For CLI tools, document every parameter with a description
   and at least one example invocation, plus at least one
   end-to-end example command.
