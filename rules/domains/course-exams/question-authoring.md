@@ -78,3 +78,12 @@
   `points` MAY differ.
 - The `## Scoring` bullet list carries no inline points; points are assigned per
   assessment in the manifest item `points` array.
+- When an exam task requires a browser-viewable completed example, provide a
+  working demo with behavior equivalent to the assessed result. Treat published
+  HTML, CSS, JavaScript, WebAssembly, and other client assets as inspectable;
+  do not publish the assessed answer script or a solution that can be copied
+  directly into the assessment starter. Use a separate implementation or DOM
+  boundary so the demo demonstrates the result without serving as the answer.
+- Verify that the published demo behaves as specified, and that paired
+  preparation and regular-exam starters resist direct answer-script copying
+  while still assessing the same intended skill.
