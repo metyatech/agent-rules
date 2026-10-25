@@ -81,7 +81,7 @@ test('weekly quiz reuse does not protect past assessments or require derivative 
   assert.doesNotMatch(weeklyQuizRules, /prefer a derived version/i);
   assert.doesNotMatch(weeklyQuizRules, /derived question file (?:MUST|is required)/i);
   assert.doesNotMatch(weeklyQuizRules, /past assessment.*protect|protect.*past assessment/i);
-  assert.match(authoring, /Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list/);
+  assert.match(authoring, /Preparation and paired regular exam questions MUST assess the same skill, but their `## Scoring` bullet wording, criterion counts, and manifest `points` MAY differ\./);
   assert.match(authoring, /The `## Scoring` bullet list carries no inline points/);
   assert.match(authoring, /For midterm exams in this course context, use 20 points/);
   assert.match(authoring, /For regular term exams in this course context, use 80 points/);
@@ -129,7 +129,7 @@ test('weekly quiz quality and course-specific authoring rules have separate owne
 
   assert.match(authoring, /For midterm exams in this course context, use 20 points/);
   assert.match(authoring, /For regular term exams in this course context, use 80 points/);
-  assert.match(authoring, /Preparation questions MUST keep the same assessed skill and the same `## Scoring` bullet list/);
+  assert.match(authoring, /Preparation and paired regular exam questions MUST assess the same skill, but their `## Scoring` bullet wording, criterion counts, and manifest `points` MAY differ\./);
 });
 
 const overclaimedCourseRules = [

@@ -78,3 +78,34 @@
 - When authoring a short question set, order items from lower intrinsic load to
   higher intrinsic load and cover multiple important taught targets rather than
   repeating one surface pattern.
+
+## Multi-step hands-on and creation assessments
+
+- For hands-on or creation tasks involving multiple steps,
+  order the steps so learners can implement a small part,
+  run or preview it, and confirm its behavior before
+  proceeding whenever practical. Prepare the starter
+  accordingly so later steps are not required to verify
+  earlier ones.
+
+- When a starter is provided, assume learners have only
+  the starter and the question text. Clearly identify the
+  relevant files or assets and their locations, what is
+  already implemented, what learners must create or
+  modify, any required connections between provided
+  components, and the expected observable behavior.
+  Verify that these descriptions match the actual starter.
+
+- Keep scoring criteria few, independently assessable,
+  and focused on meaningful achievements. Avoid
+  unnecessary implementation constraints, excessive
+  precision, and distinctions that do not materially
+  affect the intended learning outcome. Treat minor
+  deviations as acceptable when the intended result is
+  substantially achieved.
+
+- Evaluate each scoring criterion independently as
+  either met or unmet. Award its full assigned points
+  when met and zero when unmet. The total score is the
+  sum of the awarded criterion points. Do not
+  penalize the same defect repeatedly across criteria.
