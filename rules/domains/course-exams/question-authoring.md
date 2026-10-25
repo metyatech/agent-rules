@@ -32,6 +32,13 @@
 - A regular term exam MUST emphasize lessons 7 through 13 more than lessons 1
   through 6 unless the user explicitly specifies a different weighting.
 - Confirm the exam's full score and time limit before finalizing the question set.
+- A question's `time_budget_seconds` estimates the time needed to answer that
+  individual question. When reusing an existing question in another assessment,
+  retain its value if the prompt and difficulty remain essentially unchanged.
+  Change it only when the answer workload materially changes, and base the new
+  estimate on that workload; changing the assessment kind alone is insufficient.
+  The assessment manifest's `time_limit_seconds` overrides question budgets and
+  need not equal their sum.
 - Match the total scoring points to the exam's full score.
 - For midterm exams in this course context, use 20 points unless the user
   explicitly specifies otherwise.
@@ -58,6 +65,12 @@
   identifier, or specific expected output. Prefer abstract, observable wording
   such as `適切なセレクタを選んでいる`, `位置の基準となる要素を特定できている`,
   or `位置関係を正しく説明している`.
+- For a single-correct-answer multiple-choice question (`question_type: choice`),
+  `## Scoring` MUST contain exactly one bullet with the exact wording
+  `正しい選択肢を選んでいる`. Award all item points for a correct choice and
+  zero for an incorrect choice. The scoring bullet MUST NOT reveal the correct
+  option. Apply this rule to new or modified questions; do not rewrite existing
+  questions solely to standardize this rubric.
 - Put the correct answer and its reasoning in `## Explanation`, not in
   student-visible `## Scoring` bullets.
 - Preparation and paired regular exam questions MUST assess the same skill,
