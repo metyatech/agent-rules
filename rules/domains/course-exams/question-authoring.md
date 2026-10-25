@@ -52,9 +52,16 @@
 - Put `出題意図` at the beginning of `## Explanation`.
 - When creating a preparation set for a regular exam, pair each preparation
   question one-to-one with the regular exam question.
-- Preparation questions MUST keep the same assessed skill and the same
-  `## Scoring` bullet list as the paired regular exam question.
-- Write the shared `## Scoring` bullet list abstractly enough to apply to both
-  the preparation question and the paired regular exam question.
+- When `## Scoring` is disclosed to examinees, each bullet MUST name one concise,
+  independently gradeable achievement. It MUST NOT reveal the concrete correct
+  answer by itself, such as the correct option, code, property or value,
+  identifier, or specific expected output. Prefer abstract, observable wording
+  such as `適切なセレクタを選んでいる`, `位置の基準となる要素を特定できている`,
+  or `位置関係を正しく説明している`.
+- Put the correct answer and its reasoning in `## Explanation`, not in
+  student-visible `## Scoring` bullets.
+- Preparation and paired regular exam questions MUST assess the same skill,
+  but their `## Scoring` bullet wording, criterion counts, and manifest
+  `points` MAY differ.
 - The `## Scoring` bullet list carries no inline points; points are assigned per
   assessment in the manifest item `points` array.

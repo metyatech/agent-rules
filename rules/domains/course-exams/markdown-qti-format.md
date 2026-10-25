@@ -260,8 +260,11 @@ items:
     the second item in `2regular/assessment.yaml`.
 - The paired manifest items MAY use different `id` and `ref` values, but their
   referenced questions MUST assess the same skill.
-- Pair preparation and regular exam questions one-to-one; their item counts and
-  their `## Scoring` criterion counts MUST match.
+- Pair preparation and regular exam questions one-to-one by manifest item order;
+  their item counts MUST match, and each pair MUST assess the same skill. Their
+  `## Scoring` bullet wording and criterion counts MAY differ. Each question's
+  manifest `points` array MUST independently match that question's own scoring
+  bullet count.
 - When using a note such as `本試験では`, write it for the paired regular exam
   question and clearly describe what changes in that paired regular exam
   question.
@@ -269,15 +272,8 @@ items:
   exam questions when students may view preparation materials during the exam.
   Change surface details such as values, strings, prompt text, conditions,
   ranges, examples, or output text while keeping the same assessed skill.
-- Use exactly the same `## Scoring` bullet list for each paired preparation and
-  regular exam question.
-- Scoring criterion text in `## Scoring` MUST be abstract enough to apply to both
-  a preparation question and the paired regular exam question (for example
-  `指定された値`, `指定された文字列`, `要求通りの出力`, `下限値以上`, and
-  `上限値以下`).
-- Points live in each assessment manifest item `points` array. When the paired
-  preparation and regular exam share the same points, set `points` to the same
-  array in both manifests.
+- Points live in each assessment manifest item `points` array and MAY differ
+  between paired preparation and regular exam questions.
 - Put the question intent at the beginning of `## Explanation`.
   - Example: `出題意図: ...`
 
