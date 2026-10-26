@@ -95,7 +95,7 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
   ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
 });
 
-test('general OS and sandbox permission failures use one approved retry', async () => {
+test('OS administrator and sandbox permission failures use distinct routes', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
   const section = content.split('## General execution rules\n')[1]?.split('\n## ')[0];
 
@@ -104,24 +104,29 @@ test('general OS and sandbox permission failures use one approved retry', async 
   for (const [requirement, pattern] of [
     ['EPERM and EACCES', /`EPERM`.*`EACCES`/u],
     ['filesystem and Git permission operations', /read\/write, create, rename, install, or Git operations/u],
-    ['target and ownership checks', /verify the target, ownership, active conflicts, and side effects/u],
-    ['same operation, one approved retry', /retry the same failed command or operation once through the approved sandbox or host route/u],
-    ['no retry for HTTP authorization failures', /Do not treat HTTP 401\/403, authentication failures, timeouts, process locks, or configuration errors as OS permission failures/u],
-    ['preserve approval gates', /Preserve other approval gates and prohibitions/u],
-    ['report unresolved failures', /If the approved retry is unavailable or refused, or fails without evidence that OS administrator privileges are required, report and continue safe diagnosis.*If the administrator retry is unavailable, refused, or fails, do the same/u],
-    ['do not overstate verification', /Do not claim full verification unless all required checks ran/u],
+    ['target and ownership checks', /verify target, ownership, conflicts, and side effects/u],
+    ['ambiguous failures use one approved retry', /If ambiguous, retry the same operation once through the approved sandbox or host route/u],
+    ['intrinsic OS-admin bypasses futile sandbox retry', /If clearly OS-administrator-only, use scoped administration directly without a futile sandbox retry/u],
+    ['known MXC follows native route', /For known MXC signatures, use the native approval route below first/u],
+    ['no retry for HTTP authentication failures', /HTTP 401\/403, authentication errors, timeouts, locks, and configuration errors are not OS permission failures/u],
+    ['preserve approval gates', /Preserve approval gates/u],
+    ['report unresolved failures', /If retry is unavailable, refused, or fails, report the gap/u],
+    ['do not overstate verification', /never claim full verification unless all required checks ran/u],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
 
   const privilegeSection = content.split('## Privilege elevation\n')[1]?.split('\n## ')[0];
   assert.ok(privilegeSection, 'command-execution.md must define privilege elevation');
   const normalizedPrivilegeSection = privilegeSection.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
-    ['OS admin only after approved retry requires it', /only after the approved sandbox or host retry still fails because the operation genuinely requires those privileges/u],
-    ['authorized sudo and Windows administrator route', /Use `sudo` or Windows administrator execution for the exact target with narrow side effects/u],
-    ['honor existing explicit authorization without reprompting', /when the request or existing standing authorization permits it.*Do not ask again when that authorization is explicit/u],
+    ['intrinsic OS-admin route permits direct sudo', /For an operation within the existing task scope that clearly requires OS administrator privileges, the agent MAY invoke `sudo` directly/u],
+    ['no separate per-command authorization or confirmation', /without separate per-command authorization or confirmation/u],
+    ['Windows administrator route is narrow', /On Windows, use the narrowest available administrator execution for the exact operation/u],
+    ['standing permission does not expand scope', /This standing permission does not expand the task scope, authorize new destructive operations, override explicit prohibitions, or permit broad security changes/u],
+    ['ambiguous failure keeps sandbox or host retry first', /For ambiguous permission failures, follow the approved sandbox or host diagnostic retry first/u],
+    ['MXC keeps native sandbox approval first', /For MXC-specific sandbox signatures, use the native Codex sandbox approval route first; do not substitute `sudo` for sandbox approval/u],
     ['no broad security shortcut', /Do not use broad security changes or disable sandbox protections as a shortcut/u],
   ]) assert.match(normalizedPrivilegeSection, pattern, `missing ${requirement} requirement`);
-  assert.doesNotMatch(normalizedPrivilegeSection, /Do not .*`sudo`|Do not .*Windows administrator/iu, 'genuine OS-admin execution must not be categorically prohibited');
+  assert.doesNotMatch(normalizedPrivilegeSection, /(?:^|[.!?]\s+)Do not (?:invoke|use) `sudo`(?:[.!?]| under any circumstances)/iu, 'genuine OS-admin execution must not be categorically prohibited');
 });
 
 test('Windows sandbox permission guidance preserves the reviewed junction procedure and assertions', async () => {

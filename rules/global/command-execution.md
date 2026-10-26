@@ -22,26 +22,17 @@
 - When diagnosing a third-party tool failure, first check the
   latest stable release; if it still reproduces, record the
   verified limitation and use a deterministic workaround.
-- For an OS or sandbox permission failure (for example `EPERM`,
-  `EACCES`, access denied, permission denied, or denied file
-  read/write, create, rename, install, or Git operations), verify
-  the target, ownership, active conflicts, and side effects, then
-  retry the same failed command or operation once through the
-  approved sandbox or host route before skipping
-  it or changing approach. If that retry still fails specifically
-  because actual OS administrator privileges are required, use the
-  narrowest `sudo` or Windows administrator execution for the same
-  operation when the request or existing standing authorization
-  permits it; do not ask again when that authorization is explicit.
-  Verify the exact target and narrow side effects before this retry.
-  Do not treat HTTP 401/403, authentication failures, timeouts,
-  process locks, or configuration errors as OS permission failures.
-  Preserve other approval gates and prohibitions. If the approved
-  retry is unavailable or refused, or fails without evidence that OS
-  administrator privileges are required, report and
-  continue safe diagnosis. If the administrator retry is unavailable,
-  refused, or fails, do the same. Do not claim full verification
-  unless all required checks ran.
+- For OS/sandbox permission failures (`EPERM`, `EACCES`, access denied,
+  or denied file read/write, create, rename, install, or Git operations),
+  verify target, ownership, conflicts, and side effects. If ambiguous,
+  retry the same operation once through the approved sandbox or host
+  route. If clearly OS-administrator-only, use scoped administration
+  directly without a futile sandbox retry. For known MXC signatures,
+  use the native approval route below first. HTTP 401/403, authentication
+  errors, timeouts, locks, and configuration errors are not OS permission
+  failures. Preserve approval gates. If retry is unavailable, refused,
+  or fails, report the gap; never claim full verification unless all
+  required checks ran.
 
 ## Process lifecycle safety
 
@@ -101,13 +92,18 @@
 
 ## Privilege elevation
 
-- Use OS administrator execution only after the approved sandbox or
-  host retry still fails because the operation genuinely requires
-  those privileges, and only when the request or existing standing
-  authorization permits it. Use `sudo` or Windows administrator
-  execution for the exact target with narrow side effects. Do not ask
-  again when that authorization is explicit. Do not use broad
-  security changes or disable sandbox protections as a shortcut.
+- For an operation within the existing task scope that clearly
+  requires OS administrator privileges, the agent MAY invoke `sudo`
+  directly without separate per-command authorization or confirmation.
+  On Windows, use the narrowest available administrator execution for
+  the exact operation. This standing permission does not expand the
+  task scope, authorize new destructive operations, override explicit
+  prohibitions, or permit broad security changes. Keep the command and
+  target narrow. For ambiguous permission failures, follow the approved
+  sandbox or host diagnostic retry first. For MXC-specific sandbox
+  signatures, use the native Codex sandbox approval route first; do not
+  substitute `sudo` for sandbox approval. Do not use broad security
+  changes or disable sandbox protections as a shortcut.
 
 ## Windows and PowerShell environment
 
