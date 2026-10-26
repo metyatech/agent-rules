@@ -104,13 +104,24 @@ test('general OS and sandbox permission failures use one approved retry', async 
   for (const [requirement, pattern] of [
     ['EPERM and EACCES', /`EPERM`.*`EACCES`/u],
     ['filesystem and Git permission operations', /read\/write, create, rename, install, or Git operations/u],
-    ['target and ownership checks', /verify the target, ownership or active conflicts, and side effects/u],
-    ['same operation, one approved retry', /retry the same failed command or operation once through an available approved host or elevated execution route/u],
+    ['target and ownership checks', /verify the target, ownership, active conflicts, and side effects/u],
+    ['same operation, one approved retry', /retry the same failed command or operation once through the approved sandbox or host route/u],
     ['no retry for HTTP authorization failures', /Do not treat HTTP 401\/403, authentication failures, timeouts, process locks, or configuration errors as OS permission failures/u],
-    ['preserve approval gates', /Preserve existing approval gates and prohibitions/u],
-    ['report unresolved failures', /If no approved route is available, it is refused, or the retry fails, report the failure and continue safe diagnosis/u],
-    ['do not overstate verification', /do not claim full verification unless all required checks ran/u],
+    ['preserve approval gates', /Preserve other approval gates and prohibitions/u],
+    ['report unresolved failures', /If the approved retry is unavailable or refused, or fails without evidence that OS administrator privileges are required, report and continue safe diagnosis.*If the administrator retry is unavailable, refused, or fails, do the same/u],
+    ['do not overstate verification', /Do not claim full verification unless all required checks ran/u],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
+
+  const privilegeSection = content.split('## Privilege elevation\n')[1]?.split('\n## ')[0];
+  assert.ok(privilegeSection, 'command-execution.md must define privilege elevation');
+  const normalizedPrivilegeSection = privilegeSection.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['OS admin only after approved retry requires it', /only after the approved sandbox or host retry still fails because the operation genuinely requires those privileges/u],
+    ['authorized sudo and Windows administrator route', /Use `sudo` or Windows administrator execution for the exact target with narrow side effects/u],
+    ['honor existing explicit authorization without reprompting', /when the request or existing standing authorization permits it.*Do not ask again when that authorization is explicit/u],
+    ['no broad security shortcut', /Do not use broad security changes or disable sandbox protections as a shortcut/u],
+  ]) assert.match(normalizedPrivilegeSection, pattern, `missing ${requirement} requirement`);
+  assert.doesNotMatch(normalizedPrivilegeSection, /Do not .*`sudo`|Do not .*Windows administrator/iu, 'genuine OS-admin execution must not be categorically prohibited');
 });
 
 test('Windows sandbox permission guidance preserves the reviewed junction procedure and assertions', async () => {
@@ -172,12 +183,11 @@ test('Windows sandbox permission guidance preserves the reviewed junction proced
     ['skips are not passes', /A skipped test is not a pass/iu],
     ['separate OS-level symlink capability case', /genuine Windows OS-level symbolic-link creation failures separately/iu],
     ['Developer Mode example', /Developer Mode/u],
-    ['no OS administrator rights', /Do not use OS administrator rights/iu],
-    ['no sudo', /`sudo`/u],
+    ['OS-admin execution remains scoped', /Keep any authorized OS administrator execution scoped as described in Privilege elevation/iu],
     ['no legacy elevated Windows sandbox', /legacy `elevated` Windows sandbox/iu],
     ['no danger-full-access', /`danger-full-access`/u],
     ['no global sandbox disablement', /global sandbox disablement/iu],
-    ['no configuration or security changes as an alternative', /configuration or system security changes as a substitute for the approved escalation route/iu],
+    ['no broad configuration or security shortcut', /broad configuration or system security changes as a shortcut/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
   assert.doesNotMatch(normalizedSection, /legacy `elevated` sandbox/iu, 'obsolete legacy elevated comparison must not return');
   assert.doesNotMatch(normalizedSection, /Windows CI/iu, 'obsolete Windows CI workaround must not return');
@@ -220,7 +230,11 @@ test('global rules stay within the hard 8000-token budget', async () => {
 
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const report = JSON.parse(result.stdout);
-    assert.equal(report.budget.totalExceeded, false);
+    assert.equal(
+      report.budget.totalExceeded,
+      false,
+      `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
+    );
     assert.ok(
       report.budget.totalTokens <= 8000,
       `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,

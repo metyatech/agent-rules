@@ -25,15 +25,23 @@
 - For an OS or sandbox permission failure (for example `EPERM`,
   `EACCES`, access denied, permission denied, or denied file
   read/write, create, rename, install, or Git operations), verify
-  the target, ownership or active conflicts, and side effects, then
-  retry the same failed command or operation once through an
-  available approved host or elevated execution route before
-  skipping it or changing approach. Do not treat HTTP 401/403,
-  authentication failures, timeouts, process locks, or configuration
-  errors as OS permission failures. Preserve existing approval gates
-  and prohibitions. If no approved route is available, it is refused,
-  or the retry fails, report the failure and continue safe diagnosis;
-  do not claim full verification unless all required checks ran.
+  the target, ownership, active conflicts, and side effects, then
+  retry the same failed command or operation once through the
+  approved sandbox or host route before skipping
+  it or changing approach. If that retry still fails specifically
+  because actual OS administrator privileges are required, use the
+  narrowest `sudo` or Windows administrator execution for the same
+  operation when the request or existing standing authorization
+  permits it; do not ask again when that authorization is explicit.
+  Verify the exact target and narrow side effects before this retry.
+  Do not treat HTTP 401/403, authentication failures, timeouts,
+  process locks, or configuration errors as OS permission failures.
+  Preserve other approval gates and prohibitions. If the approved
+  retry is unavailable or refused, or fails without evidence that OS
+  administrator privileges are required, report and
+  continue safe diagnosis. If the administrator retry is unavailable,
+  refused, or fails, do the same. Do not claim full verification
+  unless all required checks ran.
 
 ## Process lifecycle safety
 
@@ -93,12 +101,13 @@
 
 ## Privilege elevation
 
-- For permission failures, use only the approved sandbox escalation
-  or host execution route specified above. Do not request Windows
-  UAC or Administrator rights, invoke `sudo`, or change user or
-  system permissions for this purpose. If the approved route is
-  unavailable, refused, or fails, report the error and continue
-  safe diagnosis.
+- Use OS administrator execution only after the approved sandbox or
+  host retry still fails because the operation genuinely requires
+  those privileges, and only when the request or existing standing
+  authorization permits it. Use `sudo` or Windows administrator
+  execution for the exact target with narrow side effects. Do not ask
+  again when that authorization is explicit. Do not use broad
+  security changes or disable sandbox protections as a shortcut.
 
 ## Windows and PowerShell environment
 
@@ -156,8 +165,9 @@
   test is not a pass.
 - Classify genuine Windows OS-level symbolic-link creation failures separately
   as a Windows capability or privilege issue, such as Developer Mode, after
-  distinguishing them from the MXC junction signature. Do not use OS
-  administrator rights, `sudo`, the legacy `elevated` Windows sandbox,
-  `danger-full-access`, global sandbox disablement, or configuration or system
-  security changes as a substitute for the approved escalation route. Report
-  unresolved coverage when the required assertion cannot be verified.
+  distinguishing them from the MXC junction signature. Keep any authorized OS
+  administrator execution scoped as described in Privilege elevation. Do not
+  use the legacy `elevated` Windows sandbox, `danger-full-access`, global
+  sandbox disablement, or broad configuration or system security changes as a
+  shortcut. Report unresolved coverage when the required assertion cannot be
+  verified.
