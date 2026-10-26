@@ -95,7 +95,7 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
   ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
 });
 
-test('Windows sandbox capability failures preserve assertions and bound recovery', async () => {
+test('Windows sandbox capability failures use one reviewed native escalation and preserve assertions', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
   const section = extractWindowsSandboxSection(content);
 
@@ -111,20 +111,36 @@ test('Windows sandbox capability failures preserve assertions and bound recovery
     ['atomic file replacement', /atomically replacing a file/iu],
     ['temporary path class', /%TEMP%/u],
     ['local application data path class', /%LOCALAPPDATA%/u],
-    ['legacy elevated route', /legacy\s+`elevated`\s+sandbox/iu],
-    ['one-time comparison limit', /at most one minimal comparison/iu],
-    ['no repeated diagnosis for unchanged evidence', /Do not repeat broad diagnosis or an unchanged probe/iu],
-    ['preservation of tests and assertions', /Preserve all tests and assertions/iu],
+    ['MXC-specific escalation scope', /For this MXC-specific signature/iu],
+    ['native sandbox escalation', /Codex native sandbox\s+escalation/iu],
+    ['version-equivalent escalation option', /`require_escalated` or its version-equivalent/iu],
+    ['same already-in-scope command', /same already-in-scope command/iu],
+    ['same working directory', /same working directory/iu],
+    ['brief justification', /brief justification/iu],
+    ['single escalation request', /Make only one escalation request/iu],
+    ['configured approval reviewer', /existing configured approval reviewer/iu],
+    ['auto-review when available', /`auto_review` when available/iu],
+    ['no approval reviewer bypass', /never bypass that reviewer/iu],
+    ['one rerun after approval', /If the request is approved, rerun the same command once/iu],
+    ['actual exit code and assertion checks', /verify its actual exit code and assertions/iu],
+    ['refusal and unsupported handling', /If escalation is refused, unsupported, or the command fails again/iu],
+    ['no repeated escalation or unchanged diagnosis', /do not request escalation again or repeat diagnosis against unchanged evidence/iu],
+    ['unresolved coverage reporting', /Report the unresolved verification coverage/iu],
+    ['continue independent safe work', /continue independent safe work/iu],
+    ['preservation of tests and assertions', /Preserve every test and assertion/iu],
+    ['no disabled tests', /never weaken or disable them/iu],
     ['skips are not passes', /A skipped test is not a pass/iu],
-    ['separate host symlink capability case', /symbolic-link creation also fails on the host/iu],
+    ['separate OS-level symlink capability case', /genuine Windows OS-level symbolic-link creation failures separately/iu],
     ['Developer Mode example', /Developer Mode/u],
-    ['Windows CI recovery', /Windows CI/iu],
-    ['no global sandbox disablement', /Never disable sandboxing globally/iu],
+    ['no OS administrator rights', /Do not use OS administrator rights/iu],
+    ['no sudo', /`sudo`/u],
+    ['no legacy elevated Windows sandbox', /legacy `elevated` Windows sandbox/iu],
+    ['no danger-full-access', /`danger-full-access`/u],
+    ['no global sandbox disablement', /global sandbox disablement/iu],
+    ['no configuration or security changes as an alternative', /configuration or system security changes as an alternative/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
-  assert.match(normalizedSection, /without approval/u, 'system security settings must not change without approval');
-  assert.match(normalizedSection, /report the exact unverified coverage/u);
-  assert.match(normalizedSection, /Stop only when required verification has no authorized route/u);
-  assert.match(normalizedSection, /danger-full-access/u, 'danger-full-access must not be a generic workaround');
+  assert.doesNotMatch(normalizedSection, /legacy `elevated` sandbox/iu, 'obsolete legacy elevated comparison must not return');
+  assert.doesNotMatch(normalizedSection, /Windows CI/iu, 'obsolete Windows CI workaround must not return');
 });
 
 test('mixed Node and Python repositories exclude agent tooling rules', async () => {
