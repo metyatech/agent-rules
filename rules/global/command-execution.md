@@ -53,12 +53,31 @@
 - When no branch is specified, work on the current branch.
   Direct commits to `main`/`master` are permitted in
   user-controlled repositories.
+- If Git or `gh` fails with an authentication, token, or credential-helper
+  error inside a Codex sandbox, do not treat that result alone as proof that
+  the user's GitHub credentials are invalid. Check the existing host-side
+  authentication state through an authorized read-only route. If it works,
+  retry the same in-scope Git/GitHub operation once through the approved host
+  execution route, preserving the original target repository and safety
+  checks. Never print, copy, export, or inject credentials into the sandbox,
+  bypass an approval boundary, or retry indefinitely. If a trusted host route
+  is unavailable or also fails, stop and report the distinction.
 - For federated identity flows (Google, Apple, Microsoft,
   GitHub) where an automation-launched browser is blocked or
   degraded, hand off only the IdP step to a real browser
   session and resume automation after the redirect. The agent
   MUST NOT attempt to bypass provider anti-automation or
   embedded-browser restrictions.
+- If CGCL reports `lock_active` because another worker owns the canonical
+  task working directory, stop that run immediately; never wait for its lock,
+  terminate its owner, or repeat the same run in that directory. When the
+  task remains necessary, create a separate task-specific Git worktree from
+  a verified repository base and start a new CGCL run using that distinct
+  canonical working directory. Preserve the original checkout, other
+  worktrees, active workers, and their pending changes; use normal Git
+  integration without force-push. Only auto-retry when the original work
+  was definitely not started, and avoid duplicate work on an ambiguous run.
+  If a safe independent worktree cannot be prepared, report the blocker.
 
 ## Privilege elevation
 
