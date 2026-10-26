@@ -68,7 +68,7 @@ const extractProcessLifecycleSection = (content) => {
 
 const extractWindowsSandboxSection = (content) => {
   const normalized = content.replace(/\r\n/gu, '\n');
-  return normalized.split('## Windows sandbox capability failures\n')[1]?.split('\n## ')[0];
+  return normalized.split('## Windows sandbox and permission failures\n')[1]?.split('\n## ')[0];
 };
 
 test('process lifecycle section extraction works with LF and CRLF', () => {
@@ -95,11 +95,29 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
   ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
 });
 
-test('Windows sandbox capability failures use one reviewed native escalation and preserve assertions', async () => {
+test('general OS and sandbox permission failures use one approved retry', async () => {
+  const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
+  const section = content.split('## General execution rules\n')[1]?.split('\n## ')[0];
+
+  assert.ok(section, 'command-execution.md must define general execution rules');
+  const normalizedSection = section.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['EPERM and EACCES', /`EPERM`.*`EACCES`/u],
+    ['filesystem and Git permission operations', /read\/write, create, rename, install, or Git operations/u],
+    ['target and ownership checks', /verify the target, ownership or active conflicts, and side effects/u],
+    ['same operation, one approved retry', /retry the same failed command or operation once through an available approved host or elevated execution route/u],
+    ['no retry for HTTP authorization failures', /Do not treat HTTP 401\/403, authentication failures, timeouts, process locks, or configuration errors as OS permission failures/u],
+    ['preserve approval gates', /Preserve existing approval gates and prohibitions/u],
+    ['report unresolved failures', /If no approved route is available, it is refused, or the retry fails, report the failure and continue safe diagnosis/u],
+    ['do not overstate verification', /do not claim full verification unless all required checks ran/u],
+  ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
+});
+
+test('Windows sandbox permission guidance preserves the reviewed junction procedure and assertions', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
   const section = extractWindowsSandboxSection(content);
 
-  assert.ok(section, 'command-execution.md must define Windows sandbox capability failures');
+  assert.ok(section, 'command-execution.md must define Windows sandbox and permission failures');
   const normalizedSection = section.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
     ['MXC sandbox signature', /\bMXC\b/u],
@@ -154,13 +172,12 @@ test('Windows sandbox capability failures use one reviewed native escalation and
     ['skips are not passes', /A skipped test is not a pass/iu],
     ['separate OS-level symlink capability case', /genuine Windows OS-level symbolic-link creation failures separately/iu],
     ['Developer Mode example', /Developer Mode/u],
-    ['no unrelated EPERM elevation', /Do not request elevation for unrelated `EPERM` failures without evidence of this MXC signature/iu],
     ['no OS administrator rights', /Do not use OS administrator rights/iu],
     ['no sudo', /`sudo`/u],
     ['no legacy elevated Windows sandbox', /legacy `elevated` Windows sandbox/iu],
     ['no danger-full-access', /`danger-full-access`/u],
     ['no global sandbox disablement', /global sandbox disablement/iu],
-    ['no configuration or security changes as an alternative', /configuration or system security changes as an alternative/iu],
+    ['no configuration or security changes as an alternative', /configuration or system security changes as a substitute for the approved escalation route/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
   assert.doesNotMatch(normalizedSection, /legacy `elevated` sandbox/iu, 'obsolete legacy elevated comparison must not return');
   assert.doesNotMatch(normalizedSection, /Windows CI/iu, 'obsolete Windows CI workaround must not return');

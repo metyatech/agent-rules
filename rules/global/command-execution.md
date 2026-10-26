@@ -22,6 +22,18 @@
 - When diagnosing a third-party tool failure, first check the
   latest stable release; if it still reproduces, record the
   verified limitation and use a deterministic workaround.
+- For an OS or sandbox permission failure (for example `EPERM`,
+  `EACCES`, access denied, permission denied, or denied file
+  read/write, create, rename, install, or Git operations), verify
+  the target, ownership or active conflicts, and side effects, then
+  retry the same failed command or operation once through an
+  available approved host or elevated execution route before
+  skipping it or changing approach. Do not treat HTTP 401/403,
+  authentication failures, timeouts, process locks, or configuration
+  errors as OS permission failures. Preserve existing approval gates
+  and prohibitions. If no approved route is available, it is refused,
+  or the retry fails, report the failure and continue safe diagnosis;
+  do not claim full verification unless all required checks ran.
 
 ## Process lifecycle safety
 
@@ -81,10 +93,12 @@
 
 ## Privilege elevation
 
-- When elevated privileges are required, use `sudo` directly.
-  The agent MUST NOT launch a separate elevated shell such as
-  `Start-Process -Verb RunAs`. Fall back to "Run as
-  Administrator" only when `sudo` is unavailable.
+- For permission failures, use only the approved sandbox escalation
+  or host execution route specified above. Do not request Windows
+  UAC or Administrator rights, invoke `sudo`, or change user or
+  system permissions for this purpose. If the approved route is
+  unavailable, refused, or fails, report the error and continue
+  safe diagnosis.
 
 ## Windows and PowerShell environment
 
@@ -110,7 +124,7 @@
   task-specific session name.
 - Close all task-owned browser automation sessions before concluding.
 
-## Windows sandbox capability failures
+## Windows sandbox and permission failures
 
 - On Windows, treat `EPERM`, `EACCES`, or WinError 5 while creating a Junction
   or hard link, or atomically replacing a file under the MXC sandbox or another
@@ -142,9 +156,8 @@
   test is not a pass.
 - Classify genuine Windows OS-level symbolic-link creation failures separately
   as a Windows capability or privilege issue, such as Developer Mode, after
-  distinguishing them from the MXC junction signature. Do not request elevation
-  for unrelated `EPERM` failures without evidence of this MXC signature. Do not
-  use OS administrator rights, `sudo`, the legacy `elevated` Windows sandbox,
+  distinguishing them from the MXC junction signature. Do not use OS
+  administrator rights, `sudo`, the legacy `elevated` Windows sandbox,
   `danger-full-access`, global sandbox disablement, or configuration or system
-  security changes as an alternative. Report unresolved coverage when the
-  required assertion cannot be verified.
+  security changes as a substitute for the approved escalation route. Report
+  unresolved coverage when the required assertion cannot be verified.
