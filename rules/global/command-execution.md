@@ -116,14 +116,24 @@
   or hard link, or atomically replacing a file under the MXC sandbox or another
   sandboxed or redirected `%TEMP%` or `%LOCALAPPDATA%`, as a known sandbox
   signature, not immediate proof of an application defect.
+- Node `fs.symlinkSync(target, link, 'junction')` creates a directory junction;
+  it is not a standard file or directory symbolic-link privilege probe. Under
+  MXC, `EPERM` from this call is a known MXC capability signature. Do not
+  classify it as host Developer Mode or Windows OS-level symbolic-link denial
+  before trying one native approval.
 - For this MXC-specific signature, first request Codex native sandbox
   escalation (`require_escalated` or its version-equivalent) for the same
   already-in-scope command, in the same working directory, with a brief
-  justification. Make only one escalation request and use the existing
-  configured approval reviewer, including `auto_review` when available; never
-  bypass that reviewer.
-- If the request is approved, rerun the same command once and verify its actual
-  exit code and assertions. Do not infer success from a partial result.
+  justification. If the failure comes from a test run (for example, `npm test`
+  or `node --test`), the command to escalate is the original full test command
+  in that same working directory, preserving the test invocation; do not
+  replace it with a manually extracted junction or link-only probe. Make only
+  one escalation request, using native `require_escalated`, and use the
+  existing configured approval reviewer, including `auto_review` when
+  available; never bypass that reviewer.
+- If the request is approved, rerun the same full command once and verify its
+  actual exit code and all assertions, including the whole test suite when the
+  command was a test run. Do not infer success from a partial result.
 - If escalation is refused, unsupported, or the command fails again, do not
   request escalation again or repeat diagnosis against unchanged evidence.
   Report the unresolved verification coverage and continue independent safe
@@ -131,7 +141,9 @@
 - Preserve every test and assertion; never weaken or disable them. A skipped
   test is not a pass.
 - Classify genuine Windows OS-level symbolic-link creation failures separately
-  as a Windows capability or privilege issue, such as Developer Mode. Do not
+  as a Windows capability or privilege issue, such as Developer Mode, after
+  distinguishing them from the MXC junction signature. Do not request elevation
+  for unrelated `EPERM` failures without evidence of this MXC signature. Do not
   use OS administrator rights, `sudo`, the legacy `elevated` Windows sandbox,
   `danger-full-access`, global sandbox disablement, or configuration or system
   security changes as an alternative. Report unresolved coverage when the
