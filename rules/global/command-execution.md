@@ -90,3 +90,28 @@
 - If the default browser automation session bind fails, retry with a different
   task-specific session name.
 - Close all task-owned browser automation sessions before concluding.
+
+## Windows sandbox capability failures
+
+- On Windows, treat `EPERM`, `EACCES`, or WinError 5 while creating a Junction
+  or hard link, or atomically replacing a file under the MXC sandbox or another
+  sandboxed or redirected `%TEMP%` or `%LOCALAPPDATA%`, as a known sandbox
+  signature, not immediate proof of an application defect.
+- Classify the operation, route, and path once. Run at most one minimal
+  comparison of the same operation for that path class and, when an
+  already-authorized execution route is available, at most one comparison
+  through the legacy `elevated` sandbox or the host. Do not repeat broad
+  diagnosis or an unchanged probe when operation, route, and evidence are
+  unchanged.
+- Preserve all tests and assertions. If the alternate route passes, classify
+  the failure as sandbox-specific and use that route or Windows CI running the
+  same assertion. A skipped test is not a pass; never weaken tests to hide the
+  error.
+- If symbolic-link creation also fails on the host or through the legacy
+  `elevated` sandbox, classify it separately as a Windows capability or
+  privilege issue, such as Developer Mode. Do not keep retrying or change
+  system security settings without approval. Use verified Windows CI or
+  another authorized environment, or report the exact unverified coverage.
+- Continue independent work when safe. Stop only when required verification
+  has no authorized route, and report that exact gap. Never disable sandboxing
+  globally or use `danger-full-access` as a generic workaround.

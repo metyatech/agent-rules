@@ -66,6 +66,11 @@ const extractProcessLifecycleSection = (content) => {
   return normalized.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];
 };
 
+const extractWindowsSandboxSection = (content) => {
+  const normalized = content.replace(/\r\n/gu, '\n');
+  return normalized.split('## Windows sandbox capability failures\n')[1]?.split('\n## ')[0];
+};
+
 test('process lifecycle section extraction works with LF and CRLF', () => {
   const sample = '## Before\n## Process lifecycle safety\n- Keep running\n## After\n';
   assert.equal(extractProcessLifecycleSection(sample), '- Keep running');
@@ -88,6 +93,38 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
     'broad process-name matching, unverified PID lists, or',
     'leave the\n  process running and report the uncertainty.',
   ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
+});
+
+test('Windows sandbox capability failures preserve assertions and bound recovery', async () => {
+  const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
+  const section = extractWindowsSandboxSection(content);
+
+  assert.ok(section, 'command-execution.md must define Windows sandbox capability failures');
+  const normalizedSection = section.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['MXC sandbox signature', /\bMXC\b/u],
+    ['permission error codes', /\bEPERM\b/u],
+    ['access error codes', /\bEACCES\b/u],
+    ['WinError 5', /WinError\s*5/iu],
+    ['Junction creation', /\bJunction\b/iu],
+    ['hard-link creation', /hard link/iu],
+    ['atomic file replacement', /atomically replacing a file/iu],
+    ['temporary path class', /%TEMP%/u],
+    ['local application data path class', /%LOCALAPPDATA%/u],
+    ['legacy elevated route', /legacy\s+`elevated`\s+sandbox/iu],
+    ['one-time comparison limit', /at most one minimal comparison/iu],
+    ['no repeated diagnosis for unchanged evidence', /Do not repeat broad diagnosis or an unchanged probe/iu],
+    ['preservation of tests and assertions', /Preserve all tests and assertions/iu],
+    ['skips are not passes', /A skipped test is not a pass/iu],
+    ['separate host symlink capability case', /symbolic-link creation also fails on the host/iu],
+    ['Developer Mode example', /Developer Mode/u],
+    ['Windows CI recovery', /Windows CI/iu],
+    ['no global sandbox disablement', /Never disable sandboxing globally/iu],
+  ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
+  assert.match(normalizedSection, /without approval/u, 'system security settings must not change without approval');
+  assert.match(normalizedSection, /report the exact unverified coverage/u);
+  assert.match(normalizedSection, /Stop only when required verification has no authorized route/u);
+  assert.match(normalizedSection, /danger-full-access/u, 'danger-full-access must not be a generic workaround');
 });
 
 test('mixed Node and Python repositories exclude agent tooling rules', async () => {
