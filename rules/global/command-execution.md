@@ -90,6 +90,9 @@
   was definitely not started, and avoid duplicate work on an ambiguous run.
   If a safe independent worktree cannot be prepared, report the blocker.
 
+- At task end, remove only verified unused, authorized resources.
+  Preserve pending work and others' resources; report leftovers.
+
 ## Privilege elevation
 
 - For an operation within the existing task scope that clearly
@@ -128,6 +131,8 @@
 - If the default browser automation session bind fails, retry with a different
   task-specific session name.
 - Close all task-owned browser automation sessions before concluding.
+- Windows `.cmd`/`.bat`: BOM-free CRLF and matching code page;
+  Japanese PowerShell 5.1 `.ps1`: UTF-8 BOM.
 
 ## Windows sandbox and permission failures
 

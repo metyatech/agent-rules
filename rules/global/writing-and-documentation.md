@@ -24,11 +24,9 @@
 
 ## README and documentation
 
-- Every repository MUST include a README.md that covers:
-  purpose, supported environments, setup/usage/development
-  commands, required environment variables and configuration,
-  release and deployment steps when applicable, and links to
-  standard companion documents.
+- Every repository MUST provide a README covering purpose, environments,
+  setup/usage/development commands, required variables/configuration,
+  applicable release/deployment steps, and companion doc links.
 - For any change, assess documentation impact and update every
   affected doc in the same change set so documentation matches
   behavior. Omit no-op documentation notes from normal
@@ -39,18 +37,20 @@
 - For CLI tools, document every parameter with a description
   and at least one example invocation, plus at least one
   end-to-end example command.
-- For CLI tools, top-level `--help` and `-h` MUST be sufficient
-  for first-run discoverability without requiring external
-  documentation. When the tool has subcommands, the top-level
-  help MUST show the primary workflow, shared flags, and the
-  exact command form for command-specific help such as
-  `<tool> <command> -h`.
-- For CLI tools, unknown-command and invalid-usage output MUST
-  point users back to the authoritative help entry point.
+- CLI `--help`/`-h` MUST explain first use without external docs;
+  top-level help MUST show workflows, shared flags, and subcommand
+  help syntax (e.g., `<tool> <command> -h`). Invalid usage and
+  unknown commands MUST point to authoritative help.
 - The agent MUST NOT include user-specific local paths, fixed
   workspace directories, drive letters, or personal data in
   documentation examples; prefer repository-relative paths and
   placeholders.
+
+## Reusable findings
+
+- Reuse findings before investigating.
+- Record conclusions, evidence, failed approaches, and unknowns
+  in repository docs; omit secrets and logs.
 
 ## Markdown linking
 
