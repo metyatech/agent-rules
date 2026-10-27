@@ -22,6 +22,19 @@
 - Check the `syllabus-data` repository and the actual course material repository
   files referenced by the relevant syllabus entries before creating exam
   questions.
+- For midterm and regular-term exams, including preparation and retake versions,
+  inspect the matching `progress.yaml` records for the entire covered lesson
+  range and cross-check the actually taught sections, textbook pages, examples,
+  and exercises against the syllabus and source materials before drafting or
+  revising the exam. A syllabus plan or the presence of a source file does not
+  establish that all its content was taught. If actual progress is missing or
+  ambiguous, confirm the relevant taught scope with the teacher instead of
+  assuming the syllabus was completed.
+- Apply the verified taught-scope boundary to every assessed requirement and
+  student-facing artifact: prompts, answer keys and `## Explanation` examples,
+  starter files and TODOs, and `## Scoring` criteria. Check specific APIs,
+  syntax, options, and implementation patterns, not only the broad topic, so
+  that no untaught technique is required or presented as the expected solution.
 - If the required syllabus entries or actual material files cannot be found,
   report the missing source instead of creating questions from general subject
   knowledge.
