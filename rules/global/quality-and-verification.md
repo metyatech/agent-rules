@@ -34,6 +34,10 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## Bug handling
 
+- In defect investigations, distinguish confirmed facts, probable causes, and
+  unverified hypotheses. Do not treat successful retries or temporary
+  non-reproduction as proof that a defect is fixed.
+
 - For every reported bug, identify and strengthen the earliest deterministic
   gate that should have caught it.
 - Address the broader failure pattern so same-pattern defects are prevented by
