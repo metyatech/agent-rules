@@ -310,3 +310,9 @@ test('CI verifies a pinned compose release and current main compatibility', asyn
   assert.match(compatibilityJob, /^    name: Compatibility with compose-agentsmd main$/mu);
   assert.match(compatibilityJob, /^    continue-on-error: true$/mu);
 });
+test('Git worktree placement rules forbid nested worktree directories', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
+  assert.match(rules, /New Git worktrees MUST be created outside every existing Git\s+working-tree root/u);
+  assert.match(rules, /MUST NOT create or move a worktree into a repository's own directory/u);
+  assert.match(rules, /canonical destination before `git worktree add`\s+or `git worktree move`/u);
+});

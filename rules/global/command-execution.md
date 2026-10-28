@@ -2,26 +2,16 @@
 
 ## General execution rules
 
-- Prefer repository-standard scripts and commands (from
-  `package.json`, `Makefile`, README) over ad hoc invocations.
-  The agent MUST NOT add wrappers, redirections, or pipes
-  unless the user explicitly asks.
-- Before proposing a fix for a reported command failure,
-  reproduce the same command (or the closest equivalent) and
-  observe the same failure.
-- Treat any nonzero exit code as a failure unless the specific
-  exit code is explicitly documented AND the agent's code
-  explicitly checks for that documented value. The agent MUST
-  NOT map unknown nonzero exits to benign states.
-- The agent MUST NOT assume agent platform capabilities beyond
-  what is available; fail explicitly when a required capability
-  is unavailable.
-- When expected tools are missing or configuration has changed,
-  verify MCP connectivity, fix or report connection failures,
-  and do not proceed with work that depends on the missing tool.
-- When diagnosing a third-party tool failure, first check the
-  latest stable release; if it still reproduces, record the
-  verified limitation and use a deterministic workaround.
+- Prefer repo-standard scripts (`package.json`, `Makefile`, README).
+  The agent MUST NOT add wrappers, redirections, or pipes unless the user asks.
+- Reproduce a reported command failure (or closest equivalent) before fixing it.
+- Nonzero exit codes are failures unless documented and
+  explicitly checked in code;
+  never reclassify unknown codes.
+- Assume only available agent capabilities. On missing tools or changed config,
+  verify MCP access or report the blocker; stop dependent work.
+- For third-party failures, check the latest stable release; if it still fails,
+  document the limitation and use a deterministic workaround.
 - For OS/sandbox permission failures (`EPERM`, `EACCES`, access denied,
   or denied file read/write, create, rename, install, or Git operations),
   verify target, ownership, conflicts, and side effects. If ambiguous,
@@ -56,6 +46,14 @@
 
 ## Git and identity flows
 
+- New Git worktrees MUST be created outside every existing Git
+  working-tree root.
+  Verify the resolved canonical destination before `git worktree add`
+  or `git worktree move`.
+  MUST NOT create or move a worktree into a repository's own directory,
+  including `.worktrees/` or another nested location. Use a sibling directory
+  outside the repository; if no safe external destination exists, stop.
+
 - When directly running a repository-scoped Git command, the agent MUST explicitly
   select its target repository independently of the shell working directory or
   preceding directory changes.
@@ -64,32 +62,23 @@
 - When no branch is specified, work on the current branch.
   Direct commits to `main`/`master` are permitted in
   user-controlled repositories.
-- If Git or `gh` fails with an authentication, token, or credential-helper
-  error inside a Codex sandbox, do not treat that result alone as proof that
-  the user's GitHub credentials are invalid. Check the existing host-side
-  authentication state through an authorized read-only route. If it works,
-  retry the same in-scope Git/GitHub operation once through the approved host
-  execution route, preserving the original target repository and safety
-  checks. Never print, copy, export, or inject credentials into the sandbox,
-  bypass an approval boundary, or retry indefinitely. If a trusted host route
-  is unavailable or also fails, stop and report the distinction.
-- For federated identity flows (Google, Apple, Microsoft,
-  GitHub) where an automation-launched browser is blocked or
-  degraded, hand off only the IdP step to a real browser
-  session and resume automation after the redirect. The agent
-  MUST NOT attempt to bypass provider anti-automation or
-  embedded-browser restrictions.
-- If CGCL reports `lock_active` because another worker owns the canonical
-  task working directory, stop that run immediately; never wait for its lock,
-  terminate its owner, or repeat the same run in that directory. When the
-  task remains necessary, create a separate task-specific Git worktree from
-  a verified repository base and start a new CGCL run using that distinct
-  canonical working directory. Preserve the original checkout, other
-  worktrees, active workers, and their pending changes; use normal Git
-  integration without force-push. Only auto-retry when the original work
-  was definitely not started, and avoid duplicate work on an ambiguous run.
-  If a safe independent worktree cannot be prepared, report the blocker.
-
+- If Git or `gh` fails authentication, token, or credential-helper checks
+  in a Codex sandbox, verify host authentication read-only; sandbox failure
+  alone does not prove invalid credentials. If host access succeeds, retry
+  the same scoped operation once through the approved host route, keeping
+  repository and safety checks. Never print, copy, export, or inject
+  credentials; never bypass approval,
+  or retry indefinitely; if host access fails, stop and report.
+- For blocked Google, Apple, Microsoft, or GitHub login in an automated
+  browser, hand off only the IdP step to a real browser and resume after
+  redirect. NEVER bypass anti-automation or embedded-browser restrictions.
+- On CGCL `lock_active` from another worker in the task directory, stop:
+  no lock wait, worker termination, or same-directory retry. If still needed,
+  use a task-specific worktree at a distinct canonical path from a verified
+  base. Preserve the original checkout, other worktrees, workers,
+  and pending changes; integrate without
+  force-push. Auto-retry only if work definitely never began; never duplicate
+  ambiguous work. If isolation is unavailable, report the blocker.
 - At task end, remove only verified unused, authorized resources.
   Preserve pending work and others' resources; report leftovers.
 
@@ -110,27 +99,17 @@
 
 ## Windows and PowerShell environment
 
-- This is a Windows/PowerShell environment. The agent MUST NOT
-  invoke Unix-only commands directly; run PowerShell scripts
-  via `pwsh` or `powershell -File`.
-- In PowerShell, the backslash `\` is a literal character.
-  Avoid shadowing PowerShell automatic variables; prefer
-  single-quoted strings. Use `;` for sequential command
-  chaining; the agent MUST NOT use `&&` or `||` as control-flow
-  operators.
-- In headless Windows/PowerShell flows, launch every
-  non-interactive console child process headlessly. The agent
-  MUST NOT use the `&` call operator from a windowless parent
-  to spawn such children.
-- For destructive PowerShell file operations, verify the final
-  absolute target path first, normalize file attributes when
-  needed, and prefer explicit PowerShell or .NET deletion APIs
-  over alias-driven shell deletion.
-- Use explicit browser automation session names on Windows when the environment
-  supports named sessions.
-- If the default browser automation session bind fails, retry with a different
-  task-specific session name.
-- Close all task-owned browser automation sessions before concluding.
+- Use Windows/PowerShell commands, not Unix-only commands; execute PowerShell
+  scripts with `pwsh` or `powershell -File`.
+- Backslash is literal in PowerShell. Prefer single quotes;
+  do not shadow automatic variables;
+  chain with `;`, not `&&` or `||`.
+- Headless Windows console children MUST launch headlessly; do not use the
+  PowerShell `&` call operator from a windowless parent to start them.
+- Before destructive file operations, verify the absolute target, normalize
+  attributes when needed, and prefer explicit PowerShell/.NET APIs over `rm`.
+- Name browser automation sessions when supported; on default bind failure,
+  retry with a different task-scoped name. Close task-owned sessions at end.
 - Windows `.cmd`/`.bat`: BOM-free CRLF and matching code page;
   Japanese PowerShell 5.1 `.ps1`: UTF-8 BOM.
 
