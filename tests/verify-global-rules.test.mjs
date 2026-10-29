@@ -61,6 +61,28 @@ test('retired tracking tools are absent from active global rules', async () => {
   }
 });
 
+test('GitHub Actions billing blocks require direct evidence and passing local gates', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'quality-and-verification.md'), 'utf8');
+  const section = rules.split('## GitHub Actions billing blocks\n')[1]?.split('\n## ')[0];
+
+  assert.ok(section, 'quality-and-verification.md must define GitHub Actions billing blocks');
+  const normalized = section.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['billing or spending-limit annotation', /annotation explicitly stating failed account payments or a spending limit/u],
+    ['unassigned runner and zero steps', /`runner_id=0`, and zero steps/u],
+    ['explicit unrun classification', /`未実行（課金制限）`/u],
+    ['local verification must pass', /repo-standard local gates and applicable tests\/format\/lint\/build pass/u],
+    ['CI unverified status', /record CI unrun\/unverified/u],
+    ['per-job decisions', /Judge jobs independently/u],
+    ['fail-closed uncertainty', /Missing\/empty annotations, API\/tool errors, timeouts, assigned runners, executed steps, unclear causes, test failures, or failed\/unrun local gates block/u],
+    ['no skipped or weakened checks', /Never skip checks or weaken tests\/assertions/u],
+    ['no billing or workflow changes', /Do not change billing settings\/workflows\/branch protection\/runner config/u],
+    ['no pointless billing rerun', /or rerun just to retry billing/u],
+    ['branch protection is not bypassed', /do not bypass it; stop and report/u],
+    ['diagnostic retrieves jobs and annotations', /repos\/\$repo\/actions\/runs\/\$run\/jobs.*repos\/\$repo\/check-runs\/\$id\/annotations/u],
+  ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
+});
+
 const extractProcessLifecycleSection = (content) => {
   const normalized = content.replace(/\r\n/gu, '\n');
   return normalized.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];

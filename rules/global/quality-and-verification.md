@@ -4,43 +4,57 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## Verification gates
 
-- For state-changing work or a claim of completion, define binary acceptance
-  criteria and concrete evidence internally. Use targeted checks in the inner
-  loop, directly verify every changed externally visible contract, and run the
-  repository-standard full verification only as the final gate.
-- Code or runtime changes require automated tests. A code or runtime bug fix
-  MUST include a regression test that fails against the defect and passes
-  after the fix.
-- Run the repository-standard verification command before completion; add one
-  in the same change set if none exists. CI MUST enforce it. Commit hooks are
-  early safeguards and MUST NOT be treated as the final quality gate.
-- On a failing security audit, use the documented automated fix when
-  available; if it succeeds, rerun verification before commit and push.
-- Diagnose failures with the smallest reproducer. After a dependency or
-  environment change, reproduce against the pre-change state before
-  attributing the failure to that change.
-- Fail fast with explicit context; do not swallow errors. Validate
-  configuration and external inputs at system boundaries.
+- Define binary acceptance criteria/evidence; target checks, verify changed
+  contracts, then run full repository verification.
+- Code/runtime changes need automated tests; bug fixes MUST add a regression
+  test failing before and passing after.
+- Run the repository-standard verifier before completion, adding one if absent;
+  CI MUST enforce it. Commit hooks are early safeguards, not final gates.
+- For security audit failures, use the documented automated fix; if it succeeds,
+  rerun verification before commit/push.
+- Reproduce failures minimally; after dependency/environment changes, reproduce
+  on the prior state before attribution. Validate inputs/configuration, fail
+  fast, and never swallow errors.
+
+## GitHub Actions billing blocks
+
+- Mark a job `未実行（課金制限）` only with an annotation explicitly stating
+  failed account payments or a spending limit, `runner_id=0`, and zero steps.
+  Ignore it as a release/commit/push blocker only after repo-standard local
+  gates and applicable tests/format/lint/build pass; record CI unrun/unverified.
+- Judge jobs independently. Missing/empty annotations, API/tool errors,
+  timeouts, assigned runners, executed steps, unclear causes, test failures, or
+  failed/unrun local gates block.
+  Never skip checks or weaken tests/assertions.
+- Do not change billing settings/workflows/branch protection/runner config or
+  rerun just to retry billing. If branch protection requires the check, do
+  not bypass it; stop and report. Keep all other release, deploy, publish,
+  permission/authentication gates.
+
+```powershell
+$repo='OWNER/REPO'; $run=RUN_ID
+gh api "repos/$repo/actions/runs/$run/jobs" `
+  --jq '.jobs[]|[.id,(.runner_id//0),(.steps|length)]|@tsv' |
+  % {
+    $id,$runner,$steps=$_.Split("`t")
+    "$id runner=$runner steps=$steps annotation=$(gh api `
+      "repos/$repo/check-runs/$id/annotations" --jq '.[].message')"
+  }
+```
 
 ## Runtime verification
 
-- For user-facing, multi-client, multi-environment, or persisted-state systems,
-  verify every claimed primary environment and path; leave unverified paths
-  unclaimed.
-- Authentication, billing, authorization, persistence, or other
-  high-consequence user journeys require live or production-like end-to-end
-  verification. Where applicable, cover interruption, retry, reload,
-  invalid-input, and stale-state behavior as well as the happy path.
+- For user-facing multi-client, multi-environment, or persisted-state systems,
+  verify each claimed environment/path; leave unverified paths unclaimed.
+- Verify authentication, billing, authorization, persistence, and other
+  high-consequence journeys end-to-end live/production-like, including interruption,
+  retry, reload, invalid-input, and stale-state cases.
 
 ## Bug handling
 
-- For bugs, distinguish confirmed facts, probable causes, and unverified
-  hypotheses. Neither a successful retry nor temporary non-reproduction
-  proves a fix.
+- Separate confirmed facts, probable causes, and unverified hypotheses; retries
+  or temporary non-reproduction alone do not prove a fix.
 
-- For every reported bug, identify and strengthen the earliest deterministic
-  gate that should have caught it.
-- Address the broader failure pattern so same-pattern defects are prevented by
-  construction or a generalized gate; an instance-only patch is incomplete
-  unless the pattern is irreducible and reported.
+- For each bug, strengthen the earliest deterministic gate and prevent broader
+  patterns; report instance-only fixes.
 - Do not claim bug-free behavior; report verified scope and residual risk.
