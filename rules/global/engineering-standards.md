@@ -58,6 +58,26 @@
 - The agent MUST NOT commit build artifacts; keep artifact dirs and
   `.gitignore` aligned.
 
+## Automated test isolation and user-data protection
+
+- Automated tests, fixtures, and mocked integrations MUST NOT create,
+  overwrite, delete, or otherwise mutate real user data, configuration,
+  credentials, tokens, browser profiles, or authentication/session files.
+  Treat per-user home and application-data default paths as real paths unless
+  explicitly redirected to a test-owned location.
+- Before any test-side write, inject or configure a unique, test-owned
+  temporary directory for stateful paths, including missing-file defaults,
+  fallback paths, and login/retry callbacks. Validate that the resolved
+  destination is inside that directory BEFORE writing. Mocking a read is
+  not sufficient when a callback can still write to a production default.
+- Prefer dependency-injected paths or isolated subprocess environments to
+  mutating shared process-global home/config environment variables when
+  tests may run concurrently. Do not execute a potentially destructive
+  test until its write destinations have been isolated.
+- When fixing an unsafe test or persistence path, add regression coverage
+  for the original fallback/write scenario and verify protected user state
+  is unchanged without logging secrets or sensitive file contents.
+
 ## Repository hygiene
 
 - The agent MUST NOT add or commit verification evidence whose sole purpose is
