@@ -81,12 +81,9 @@
   ambiguous work. If isolation is unavailable, report the blocker.
 - At task end, remove only verified unused, authorized resources.
   Preserve pending work and others' resources; report leftovers.
-- When removing a task-owned Git worktree, verify both that its Git worktree
-  registration is gone and that its directory has been removed. If an otherwise
-  removed worktree leaves behind task-owned `node_modules` junctions or symbolic
-  links, unlink only those verified links without following or deleting their
-  targets, then remove only confirmed empty directories. If unexpected content
-  or uncertain ownership remains, preserve it and report the incomplete cleanup.
+- When removing a task-owned worktree, verify its directory and Git registration
+  are gone; unlink only verified leftover `node_modules` junctions/symlinks (not
+  their targets), remove empty remnants, and preserve/report unexpected content.
 
 ## Privilege elevation
 
