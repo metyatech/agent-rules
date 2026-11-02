@@ -113,11 +113,12 @@
   with a brief reason. For test failures, escalate the original full test
   command, never a link-only probe. Use the configured reviewer (`auto_review`
   when available); never bypass it.
-- If approved, rerun the same full command once; verify its exit code and all
-  suite assertions. If refused, unavailable, or failing,
-  don't repeat escalation/unchanged diagnosis; report uncovered verification
-  and continue independent safe work. Preserve all tests/assertions; never
-  weaken/disable them. Skips aren't passes.
+- If approved, rerun the same full command once; verify its exit code and every
+  assertion, including the whole suite for test commands. Do not infer success
+  from partial results. If refused, unavailable, or failing, don't repeat
+  escalation/unchanged diagnosis; report uncovered verification and continue
+  independent safe work. Preserve all tests/assertions; never weaken/disable
+  them. Skips aren't passes.
 - Classify genuine OS symlink failures as Windows capability/privilege issues
   (e.g. Developer Mode), distinct from MXC; scope admin actions. Never use the
   legacy `elevated` Windows sandbox,

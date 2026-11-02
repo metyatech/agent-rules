@@ -35,60 +35,53 @@
 
 ## System design
 
-- Designs MUST be compositional with clean dependency direction,
-  shallow control flow, intention-revealing names, and centralized
-  change points.
+- Designs MUST compose cleanly: clear dependency direction, shallow control
+  flow, intention-revealing names, centralized change points.
 - Keep code, docs, tests, and config DRY; fix root causes and
   remove obsolete code in the same change set.
 - Failure paths MUST tear down resources, leave no partial state,
   verify cleanup, and preserve last-known-good state until replacement
-  state is validated.
-- Updates, syncs, migrations, self-updates, and generated-runtime
-  replacement MUST validate off-path replacement state and switch via
-  a narrow final cutover.
-- Multi-step state transitions MUST persist durable state for
-  deterministic resume/reconcile; failed staged artifacts MUST stay
-  outside the authoritative path with bounded retention and cleanup
-  retry.
+  state validates.
+- Updates, syncs, migrations, self-updates, and generated-runtime replacements
+  MUST validate replacement state off-path before a narrow final cutover.
+- Multi-step state transitions MUST persist durable state for deterministic
+  resume/reconcile; failed staged artifacts MUST stay off the authoritative
+  path with bounded retention and cleanup retry.
 
 ## API surfaces
 
-- Prefer native SDKs and stable APIs; isolate unavoidable unstable
-  APIs and externalize large strings/templates.
-- The agent MUST NOT commit build artifacts; keep artifact dirs and
-  `.gitignore` aligned.
+- Prefer native SDKs and stable APIs; isolate unavoidable unstable ones;
+  externalize large strings/templates.
+- The agent MUST NOT commit build artifacts; align artifact dirs with
+  `.gitignore`.
 
 ## Automated test isolation and user-data protection
 
-- Tests/fixtures/mocks MUST NOT mutate real user data/config,
-  credentials/tokens,
-  browser profiles, or auth/session files. Treat per-user home/app-data defaults
-  as real until redirected to a test-owned path.
+- Tests/fixtures/mocks MUST NOT mutate real user data/config, credentials/tokens,
+  browser profiles, or auth/session files. Per-user home/app-data defaults are
+  real until redirected to a test-owned path.
 - Before any test write, inject a unique test-owned temp root for stateful paths
-  (missing-file defaults, fallback paths, login/retry callbacks). Validate
-  resolved targets inside it BEFORE writing; mocked reads don't stop callbacks
-  writing to production defaults.
-- In concurrent tests, prefer injected paths/isolated subprocesses over shared
+  (missing-file defaults, fallback paths, login/retry callbacks). Validate resolved
+  targets inside it BEFORE writing; mocked reads don't stop callbacks writing
+  to production defaults.
+- For concurrent tests, prefer injected paths/isolated subprocesses over shared
   home/config changes; isolate targets before destructive tests.
-- Add regression coverage for the original fallback write; verify user state
+- Add regression coverage for original fallback writes; verify user state
   unchanged without exposing secrets or sensitive file contents.
 
 ## Repository hygiene
 
-- The agent MUST NOT add or commit verification evidence whose sole purpose is
-  to prove task completion, review, build, or verification, including
-  `review-verification`, `build-evidence`, review screenshots, one-off logs,
-  verification-result JSON, and review reports; tests and CI MUST NOT require
-  it.
-- Verification-only files MUST remain under the OS temp directory or another
-  untracked temporary area. This does not prohibit source code, ordinary
-  automated tests, configuration, reproducibility fixtures, or product/
-  distribution artifacts that form part of the repository contract.
+- The agent MUST NOT add/commit evidence solely for task completion/review/
+  build/verification (`review-verification`, `build-evidence`, review screenshots,
+  one-off logs, verification-result JSON, review reports); tests/CI MUST NOT
+  require it.
+- Verification-only files MUST stay in OS temp or untracked temp areas. This
+  allows source code, ordinary tests, config, reproducibility fixtures, and
+  product/distribution artifacts in the repo contract.
 
 ## Linters, formatters, and static analysis
 
-- Every repo MUST have one pinned formatter and one pinned
-  linter/analyzer per primary language.
+- Every repo MUST pin a formatter and linter/analyzer per primary language.
 - The agent MUST NOT disable lint rules globally; suppressions MUST be
   narrow, justified inline, and time-bounded.
 - New repos MUST configure formatter automation before completion;
@@ -102,19 +95,17 @@
   files when formatting or auto-fixing. They MUST NOT run the full test
   suite, full typecheck, production build, integration tests, or other
   long-running verification gates.
-- CI MUST run non-mutating format, lint, typecheck, and test checks
-  using repository-standard commands.
+- CI MUST run non-mutating format/lint/typecheck/test checks via
+  repository-standard commands.
 
 ## CI enforcement
 
-- CI MUST run formatting/lint checks on every pull request and treat
-  warnings as errors.
-- GitHub Actions jobs triggered by `push` or `pull_request` MUST set
-  `timeout-minutes: 10`.
-- If 10 minutes is insufficient, optimize the CI first. Extending the
-  timeout requires user approval and MUST NOT exceed 15 minutes.
-- Checks that need more than 15 minutes MUST NOT run from `push` or
-  `pull_request`; move them to a manual trigger such as `workflow_dispatch`.
+- CI MUST check format/lint per PR; warnings fail CI.
+- GitHub Actions `push`/`pull_request` jobs MUST set `timeout-minutes: 10`.
+- If 10 minutes is insufficient, optimize CI first; timeout extensions require
+  user approval and MUST NOT exceed 15 minutes.
+- Checks over 15 minutes MUST NOT run on `push`/`pull_request`; use manual
+  triggers such as `workflow_dispatch`.
 
 ## GitHub Actions runtime currency
 
@@ -135,12 +126,11 @@
 
 ## Environment portability
 
-- The agent MUST NOT introduce machine-specific environments; use
-  relative paths and explicit config.
-- Lifecycle hooks MUST succeed on a clean machine; regenerate
-  lockfiles with manifest changes.
-- Agent-owned temp files MUST live under the OS temp dir unless
-  explicitly approved otherwise.
+- The agent MUST NOT introduce machine-specific environments; use relative
+  paths and explicit config.
+- Lifecycle hooks MUST succeed on clean machines; regenerate lockfiles with
+  manifest changes.
+- Agent-owned temp files MUST stay under OS temp unless explicitly approved.
 
 ## Tool integration
 
