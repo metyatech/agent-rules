@@ -60,30 +60,26 @@
 
 ## Automated test isolation and user-data protection
 
-- Automated tests, fixtures, and mocked integrations MUST NOT create,
-  overwrite, delete, or otherwise mutate real user data, configuration,
-  credentials, tokens, browser profiles, or authentication/session files.
-  Treat per-user home and application-data default paths as real paths unless
-  explicitly redirected to a test-owned location.
-- Before any test-side write, inject or configure a unique, test-owned
-  temporary directory for stateful paths, including missing-file defaults,
-  fallback paths, and login/retry callbacks. Validate that the resolved
-  destination is inside that directory BEFORE writing. Mocking a read is
-  not sufficient when a callback can still write to a production default.
-- Prefer dependency-injected paths or isolated subprocess environments to
-  mutating shared process-global home/config environment variables when
-  tests may run concurrently. Do not execute a potentially destructive
-  test until its write destinations have been isolated.
-- When fixing an unsafe test or persistence path, add regression coverage
-  for the original fallback/write scenario and verify protected user state
-  is unchanged without logging secrets or sensitive file contents.
+- Tests/fixtures/mocks MUST NOT mutate real user data/config,
+  credentials/tokens,
+  browser profiles, or auth/session files. Treat per-user home/app-data defaults
+  as real until redirected to a test-owned path.
+- Before any test write, inject a unique test-owned temp root for stateful paths
+  (missing-file defaults, fallback paths, login/retry callbacks). Validate
+  resolved targets inside it BEFORE writing; mocked reads don't stop callbacks
+  writing to production defaults.
+- In concurrent tests, prefer injected paths/isolated subprocesses over shared
+  home/config changes; isolate targets before destructive tests.
+- Add regression coverage for the original fallback write; verify user state
+  unchanged without exposing secrets or sensitive file contents.
 
 ## Repository hygiene
 
 - The agent MUST NOT add or commit verification evidence whose sole purpose is
   to prove task completion, review, build, or verification, including
   `review-verification`, `build-evidence`, review screenshots, one-off logs,
-  verification-result JSON, and review reports; tests and CI MUST NOT require it.
+  verification-result JSON, and review reports; tests and CI MUST NOT require
+  it.
 - Verification-only files MUST remain under the OS temp directory or another
   untracked temporary area. This does not prohibit source code, ordinary
   automated tests, configuration, reproducibility fixtures, or product/

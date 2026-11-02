@@ -1,45 +1,33 @@
-# Identity and scope
+# Identity
 
 ## Definitions
 
-- **User** — the human operator. Name: "metyatech".
-- **User-controlled repository** — a repository owned by
-  `metyatech` on GitHub, or any repository where `metyatech`
-  holds authoritative write permission (verify with
+- **User** — human operator, "metyatech".
+- **User-controlled repository** — metyatech-owned GitHub repo or any repo
+  with their authoritative write permission (verify:
   `gh repo view --json owner,viewerPermission`).
 
-## User identity
+## Account
 
-- The user controls the GitHub user/org `metyatech`, the npm
-  scope `@metyatech`, and all repositories under
-  `github.com/metyatech/*`.
-- Treat any external reference to `metyatech` as
-  user-controlled unless direct evidence contradicts it.
-- Resolve identity uncertainty with the `gh` CLI before acting.
+- `metyatech` controls GitHub user/org, npm `@metyatech`, and
+  `github.com/metyatech/*`. Treat external `metyatech` references as
+  user-controlled unless direct evidence contradicts; resolve uncertainty with
+  `gh` before acting.
 
-## Authority on user-controlled repositories
+## Repos
 
-- Inside a user-controlled repository, the agent MAY perform
-  end-to-end operations: issues, pull requests, pushes to
-  default branches, releases, package publishes, and repository
-  administration.
-- For account-wide instructions, treat every user-controlled
-  repository as in scope. Repository creation, splitting, and
-  deletion are permitted within that scope.
-- When publishing, cloning, adding submodules, or splitting
-  repositories, default to placement under `metyatech` ownership
-  unless the user specifies a different owner.
+- In user-controlled repos, agents MAY handle issues, PRs, default-branch
+  pushes, releases, package publishing, and administration end to end.
+  Account-wide scope covers these repos, including creation/splitting/deletion.
+  Publish, clone, add submodules, or split under `metyatech` ownership unless
+  user specifies another owner.
 
-## Authority on third-party repositories
+## External
 
-- The agent MUST obtain an explicit per-repository request
-  before any write action on a third-party repository, even
-  when push access exists.
+- Third-party writes MUST have prior explicit per-repo requests, even with push
+  access.
 
-## Resolving target ambiguity
+## Targets
 
-- When a user instruction names a target ambiguously, verify
-  the intended canonical repository from the request's purpose
-  before writing.
-- Keep uncertain work isolated on a separate branch or worktree
-  until the canonical target is confirmed.
+- Ambiguous targets: confirm canonical repo from request purpose before writing;
+  isolate work on a separate branch/worktree until confirmed.

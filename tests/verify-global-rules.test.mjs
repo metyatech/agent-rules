@@ -85,16 +85,16 @@ test('GitHub Actions billing blocks require direct evidence and passing local ga
 
 const extractProcessLifecycleSection = (content) => {
   const normalized = content.replace(/\r\n/gu, '\n');
-  return normalized.split('## Process lifecycle safety\n')[1]?.split('\n## ')[0];
+  return normalized.split('## Processes\n')[1]?.split('\n## ')[0];
 };
 
 const extractWindowsSandboxSection = (content) => {
   const normalized = content.replace(/\r\n/gu, '\n');
-  return normalized.split('## Windows sandbox and permission failures\n')[1]?.split('\n## ')[0];
+  return normalized.split('## Sandbox\n')[1]?.split('\n## ')[0];
 };
 
 test('process lifecycle section extraction works with LF and CRLF', () => {
-  const sample = '## Before\n## Process lifecycle safety\n- Keep running\n## After\n';
+  const sample = '## Before\n## Processes\n- Keep running\n## After\n';
   assert.equal(extractProcessLifecycleSection(sample), '- Keep running');
   assert.equal(extractProcessLifecycleSection(sample.replace(/\n/gu, '\r\n')), '- Keep running');
 });
@@ -103,50 +103,53 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
   const section = extractProcessLifecycleSection(content);
 
-  assert.ok(section, 'command-execution.md must define Process lifecycle safety');
+  assert.ok(section, 'command-execution.md must define process safety');
+  const normalizedSection = section.replace(/\s+/gu, ' ');
   for (const requirement of [
     'System diagnostics MUST be read-only by default.',
-    'without explicit user\n  authorization for that specific action.',
+    'without explicit action-specific user authorization.',
+    'Agent-started isolated temporary test fixtures MAY be cleaned without approval only with verified ownership/identity.',
     'A PID alone is insufficient;',
+    'retain a process handle or verify executable identity and creation time before termination.',
     'verify executable identity and creation time before termination.',
-    'does not\n  make it an agent-owned disposable test process.',
-    'Managed services MUST use their official lifecycle interface',
-    'Force termination requires separate\n  explicit authorization',
-    'broad process-name matching, unverified PID lists, or',
-    'leave the\n  process running and report the uncertainty.',
-  ]) assert.ok(section.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
+    'Starting/discovering managed/shared daemons during diagnostics doesn\'t make them agent-owned disposable test processes.',
+    'Managed services MUST use official lifecycle',
+    'force termination requires separate explicit authorization after managed shutdown fails.',
+    'broad process-name matches, unverified PIDs, or',
+    'If ownership/identity is uncertain, the agent MUST leave it running and report why.',
+  ]) assert.ok(normalizedSection.includes(requirement), `missing process lifecycle requirement: ${requirement}`);
 });
 
 test('OS administrator and sandbox permission failures use distinct routes', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
-  const section = content.split('## General execution rules\n')[1]?.split('\n## ')[0];
+  const section = content.split('# Commands\n')[1]?.split('\n## ')[0];
 
   assert.ok(section, 'command-execution.md must define general execution rules');
   const normalizedSection = section.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
     ['EPERM and EACCES', /`EPERM`.*`EACCES`/u],
-    ['filesystem and Git permission operations', /read\/write, create, rename, install, or Git operations/u],
-    ['target and ownership checks', /verify target, ownership, conflicts, and side effects/u],
-    ['ambiguous failures use one approved retry', /If ambiguous, retry the same operation once through the approved sandbox or host route/u],
-    ['intrinsic OS-admin bypasses futile sandbox retry', /If clearly OS-administrator-only, use scoped administration directly without a futile sandbox retry/u],
-    ['known MXC follows native route', /For known MXC signatures, use the native approval route below first/u],
-    ['no retry for HTTP authentication failures', /HTTP 401\/403, authentication errors, timeouts, locks, and configuration errors are not OS permission failures/u],
+    ['filesystem and Git permission operations', /denied file\/Git operations \(read\/write, create, rename, install\)/u],
+    ['target and ownership checks', /verify target, ownership, conflicts,\s+side effects/u],
+    ['ambiguous failures use one approved retry', /If ambiguous, retry same operation once via approved sandbox\/host/u],
+    ['intrinsic OS-admin bypasses futile sandbox retry', /for clearly OS-admin-only failures, use scoped admin/u],
+    ['known MXC follows native route', /Known MXC signatures require native approval first/u],
+    ['no retry for HTTP authentication failures', /HTTP 401\/403, auth, timeouts, locks, and config errors aren't OS permission failures/u],
     ['preserve approval gates', /Preserve approval gates/u],
-    ['report unresolved failures', /If retry is unavailable, refused, or fails, report the gap/u],
-    ['do not overstate verification', /never claim full verification unless all required checks ran/u],
+    ['report unresolved failures', /report failed\/refused\/unavailable retries/u],
+    ['do not overstate verification', /claim full verification only after all required checks pass/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
 
-  const privilegeSection = content.split('## Privilege elevation\n')[1]?.split('\n## ')[0];
+  const privilegeSection = content.split('## Privilege\n')[1]?.split('\n## ')[0];
   assert.ok(privilegeSection, 'command-execution.md must define privilege elevation');
   const normalizedPrivilegeSection = privilegeSection.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
-    ['intrinsic OS-admin route permits direct sudo', /For an operation within the existing task scope that clearly requires OS administrator privileges, the agent MAY invoke `sudo` directly/u],
+    ['intrinsic OS-admin route permits direct sudo', /For clearly in-scope operations requiring OS-admin rights, MAY run `sudo` directly/u],
     ['no separate per-command authorization or confirmation', /without separate per-command authorization or confirmation/u],
-    ['Windows administrator route is narrow', /On Windows, use the narrowest available administrator execution for the exact operation/u],
-    ['standing permission does not expand scope', /This standing permission does not expand the task scope, authorize new destructive operations, override explicit prohibitions, or permit broad security changes/u],
-    ['ambiguous failure keeps sandbox or host retry first', /For ambiguous permission failures, follow the approved sandbox or host diagnostic retry first/u],
-    ['MXC keeps native sandbox approval first', /For MXC-specific sandbox signatures, use the native Codex sandbox approval route first; do not substitute `sudo` for sandbox approval/u],
-    ['no broad security shortcut', /Do not use broad security changes or disable sandbox protections as a shortcut/u],
+    ['Windows administrator route is narrow', /on Windows use the narrowest available admin execution per operation/u],
+    ['standing permission does not expand scope', /This doesn't expand scope, authorize destructive or hard-to-reverse work, override explicit prohibitions, or allow broad security changes/u],
+    ['ambiguous failure keeps sandbox or host retry first', /Retry ambiguous denials via approved sandbox\/host/u],
+    ['MXC keeps native sandbox approval first', /for MXC use native Codex approval, not `sudo`/u],
+    ['no broad security shortcut', /Never disable sandbox protections as a shortcut/u],
   ]) assert.match(normalizedPrivilegeSection, pattern, `missing ${requirement} requirement`);
   assert.doesNotMatch(normalizedPrivilegeSection, /(?:^|[.!?]\s+)Do not (?:invoke|use) `sudo`(?:[.!?]| under any circumstances)/iu, 'genuine OS-admin execution must not be categorically prohibited');
 });
@@ -155,7 +158,7 @@ test('Windows sandbox permission guidance preserves the reviewed junction proced
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
   const section = extractWindowsSandboxSection(content);
 
-  assert.ok(section, 'command-execution.md must define Windows sandbox and permission failures');
+  assert.ok(section, 'command-execution.md must define sandbox failures');
   const normalizedSection = section.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
     ['MXC sandbox signature', /\bMXC\b/u],
@@ -169,52 +172,51 @@ test('Windows sandbox permission guidance preserves the reviewed junction proced
     ['local application data path class', /%LOCALAPPDATA%/u],
     [
       'Node junction API classification',
-      /`fs\.symlinkSync\(target,\s*link,\s*'junction'\)` creates a directory junction; it is not a standard file or directory symbolic-link privilege probe/iu,
+      /`fs\.symlinkSync\(target,\s*link,\s*'junction'\)` creates a directory junction, not a symlink privilege probe/iu,
     ],
     [
       'junction EPERM as MXC signature',
-      /Under MXC, `EPERM` from this call is a known MXC capability signature/iu,
+      /MXC `EPERM` is a known capability signature/iu,
     ],
     [
       'no host privilege classification before native approval',
-      /Do not classify it as host Developer Mode or Windows OS-level symbolic-link denial before trying one native approval/iu,
+      /Do not attribute it to Developer Mode\/OS denial before native approval/iu,
     ],
     ['MXC-specific escalation scope', /For this MXC-specific signature/iu],
-    ['native sandbox escalation', /Codex native sandbox\s+escalation/iu],
-    ['version-equivalent escalation option', /`require_escalated` or its version-equivalent/iu],
-    ['same already-in-scope command', /same already-in-scope command/iu],
-    ['same working directory', /same working directory/iu],
+    ['native sandbox escalation', /Codex native sandbox escalation/iu],
+    ['version-equivalent escalation option', /`require_escalated` or equivalent/iu],
+    ['same in-scope command and directory', /same in-scope command\/directory/iu],
     [
       'original full test command escalation',
-      /If the failure comes from a test run .* the command to escalate is the original full test command in that same working directory, preserving the test invocation/iu,
+      /For test failures, escalate the original full test command/iu,
     ],
     [
       'no extracted link-only probe',
-      /do not replace it with a manually extracted junction or link-only probe/iu,
+      /never a link-only probe/iu,
     ],
-    ['native require_escalated request', /Make only one escalation request, using native `require_escalated`/iu],
-    ['brief justification', /brief justification/iu],
-    ['single escalation request', /Make only one escalation request/iu],
-    ['configured approval reviewer', /existing configured approval reviewer/iu],
+    ['native require_escalated request', /one Codex native sandbox escalation \(`require_escalated` or equivalent\)/iu],
+    ['brief justification', /with a brief reason/iu],
+    ['single escalation request', /make one Codex native sandbox escalation/iu],
+    ['configured approval reviewer', /configured reviewer/iu],
     ['auto-review when available', /`auto_review` when available/iu],
-    ['no approval reviewer bypass', /never bypass that reviewer/iu],
-    ['one full rerun after approval', /If the request is approved, rerun the same full command once/iu],
-    ['full test suite rerun', /including the whole test suite when the command was a test run/iu],
-    ['actual exit code and all assertion checks', /verify its actual exit code and all assertions/iu],
-    ['refusal and unsupported handling', /If escalation is refused, unsupported, or the command fails again/iu],
-    ['no repeated escalation or unchanged diagnosis', /do not request escalation again or repeat diagnosis against unchanged evidence/iu],
-    ['unresolved coverage reporting', /Report the unresolved verification coverage/iu],
+    ['no approval reviewer bypass', /never bypass it/iu],
+    ['one full rerun after approval', /If approved, rerun the same full command once/iu],
+    ['full test suite rerun', /including the whole suite/iu],
+    ['actual exit code and all assertion checks', /verify exit code and every assertion/iu],
+    ['refusal and unsupported handling', /If refused, unavailable, or failing/iu],
+    ['no repeated escalation or unchanged diagnosis', /don't repeat escalation\/unchanged diagnosis/iu],
+    ['unresolved coverage reporting', /report uncovered verification/iu],
     ['continue independent safe work', /continue independent safe work/iu],
-    ['preservation of tests and assertions', /Preserve every test and assertion/iu],
-    ['no disabled tests', /never weaken or disable them/iu],
-    ['skips are not passes', /A skipped test is not a pass/iu],
-    ['separate OS-level symlink capability case', /genuine Windows OS-level symbolic-link creation failures separately/iu],
+    ['preservation of tests and assertions', /Never weaken\/disable tests/iu],
+    ['no disabled tests', /Never weaken\/disable tests/iu],
+    ['skips are not passes', /count skips as passes/iu],
+    ['separate OS-level symlink capability case', /Classify genuine OS symlink failures as Windows capability\/privilege issues.*distinct from MXC/iu],
     ['Developer Mode example', /Developer Mode/u],
-    ['OS-admin execution remains scoped', /Keep any authorized OS administrator execution scoped as described in Privilege elevation/iu],
+    ['OS-admin execution remains scoped', /scope admin actions/iu],
     ['no legacy elevated Windows sandbox', /legacy `elevated` Windows sandbox/iu],
     ['no danger-full-access', /`danger-full-access`/u],
     ['no global sandbox disablement', /global sandbox disablement/iu],
-    ['no broad configuration or security shortcut', /broad configuration or system security changes as a shortcut/iu],
+    ['no broad configuration or security shortcut', /broad security\/config changes/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
   assert.doesNotMatch(normalizedSection, /legacy `elevated` sandbox/iu, 'obsolete legacy elevated comparison must not return');
   assert.doesNotMatch(normalizedSection, /Windows CI/iu, 'obsolete Windows CI workaround must not return');
@@ -334,7 +336,106 @@ test('CI verifies a pinned compose release and current main compatibility', asyn
 });
 test('Git worktree placement rules forbid nested worktree directories', async () => {
   const rules = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
-  assert.match(rules, /New Git worktrees MUST be created outside every existing Git\s+working-tree root/u);
+  assert.match(rules, /New Git worktrees MUST be outside every existing Git\s+working-tree root/u);
   assert.match(rules, /MUST NOT create or move a worktree into a repository's own directory/u);
   assert.match(rules, /canonical destination before `git worktree add`\s+or `git worktree move`/u);
+});
+
+test('task completion requires safe cleanup and reports blocked leftovers', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
+  const normalizedRules = rules.replace(/\r\n/gu, '\n');
+  const section = normalizedRules.split('## Git\n')[1]?.split('\n## ')[0];
+
+  assert.ok(section, 'command-execution.md must define Git and identity rules');
+  const normalized = section.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['mandatory worktree, branch, and temp/prompt cleanup', /Task completion MUST remove task-owned temp worktrees, local\/remote task branches, and temp\/prompt files/u],
+    ['ownership and unused state', /verifying ownership, unused and clean/u],
+    ['clean and integrated state', /clean \(no uncommitted\/unmerged work\), integration\/commit\/push where relevant/u],
+    ['active reference protection', /no active worker\/PR\/process references/u],
+    ['dirty, shared, unowned, and active preservation', /Preserve dirty\/unmerged, shared, unowned, or active resources/u],
+    ['itemized leftover reporting', /report each unsafe leftover and why/u],
+    ['no false completion', /Unsafe leftovers prevent completion/u],
+    ['active CGCL lock stops same-directory work', /On CGCL `lock_active` from another task-directory worker, stop: no wait, worker termination, or same-dir retry/u],
+    ['lock recovery uses an isolated verified path', /distinct canonical path from a verified base/u],
+    ['lock recovery preserves pending resources', /Preserve the original checkout, other worktrees\/workers, and pending changes/u],
+    ['lock integration avoids force-push', /integrate without force-push/u],
+    ['ambiguous work is never duplicated', /Retry only if work definitely never began; never duplicate ambiguous work/u],
+    ['unavailable isolation is reported', /If isolation is unavailable, report it/u],
+    ['worktree registration and directory verification', /verify directory and Git registration are gone/u],
+    ['junction targets preserved', /Unlink only verified task-owned `node_modules` junctions\/symlinks, never targets/u],
+    ['unexpected worktree content preserved', /remove empty remnants; preserve\/report unexpected content/u],
+  ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
+
+  const fullRules = normalizedRules.replace(/\s+/gu, ' ');
+  assert.match(fullRules, /The agent MUST NOT terminate, force-kill, restart, or otherwise disrupt pre-existing processes/u);
+  assert.match(fullRules, /one Codex native sandbox escalation \(`require_escalated` or equivalent\)/u);
+  assert.match(fullRules, /never bypass it/u);
+});
+
+test('test isolation rules confine fallback and retry writes and protect real user state', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'engineering-standards.md'), 'utf8');
+  const normalizedRules = rules.replace(/\r\n/gu, '\n');
+  const section = normalizedRules.split('## Automated test isolation and user-data protection\n')[1]?.split('\n## ')[0];
+
+  assert.ok(section, 'engineering-standards.md must define test isolation');
+  const normalized = section.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['real user data and sensitive state protected', /Tests\/fixtures\/mocks MUST NOT mutate real user data\/config, credentials\/tokens, browser profiles, or auth\/session files/u],
+    ['per-user defaults treated as real', /Treat per-user home\/app-data defaults as real until redirected to a test-owned path/u],
+    ['unique test-owned root before writes', /Before any test write, inject a unique test-owned temp root/u],
+    ['missing-file defaults included', /missing-file defaults/u],
+    ['fallback and login/retry writes included', /fallback paths, login\/retry callbacks/u],
+    ['resolved target validated before write', /Validate\s+resolved targets inside it BEFORE writing/u],
+    ['mocked reads insufficient', /mocked reads don't stop callbacks writing to production defaults/u],
+    ['shared environment races avoided', /In concurrent tests, prefer injected paths\/isolated subprocesses over shared home\/config changes/u],
+    ['destructive tests require isolated targets', /isolate targets before destructive tests/u],
+    ['fallback regression and unchanged state verified', /Add regression coverage for the original fallback write; verify user state unchanged/u],
+    ['secrets and sensitive contents not exposed', /without exposing secrets or sensitive file contents/u],
+  ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
+});
+
+test('documentation rule compression retains every reporting and authoring obligation', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'writing-and-documentation.md'), 'utf8');
+  const normalized = rules.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['Japanese user replies by default', /Reply in Japanese unless requested otherwise/u],
+    ['commit and push reporting tied to file changes', /Report commits\/pushes only if files changed/u],
+    ['new artifact explanation', /Explain new tools\/features\/artifacts' purpose, use, and key capabilities/u],
+    ['short user-focused progress updates', /Keep progress reports short\/user-focused/u],
+    ['uninterrupted work and requested internals', /prefer long uninterrupted work; explain internals on request/u],
+    ['no unsolicited command transcripts', /Omit command transcripts unless requested/u],
+    ['end-of-task friction report', /Report unresolved technical\/environment issues at task end/u],
+    ['developer-facing English', /Write developer docs\/comments, commit messages, pull-request descriptions, and rule modules in English/u],
+    ['complete README coverage', /Every repo MUST have a README: purpose, environments, setup\/usage\/development commands, required variables\/config, release\/deployment steps, companion doc links/u],
+    ['affected documentation updated with behavior', /Assess doc impact; update every affected doc in the same change set to match behavior/u],
+    ['no-op doc notes omitted', /omit no-op notes/iu],
+    ['code conventions followed and every mismatch reported', /If docs conflict with code, follow code conventions and report each inconsistency/u],
+    ['CLI parameter descriptions and examples', /CLI docs MUST describe every parameter with an example invocation and an end-to-end example command/u],
+    ['first-use and top-level CLI help', /`--help`\/`-h` MUST explain first use without external docs; top-level help MUST show workflows, shared flags, and `<tool> <command> -h` syntax/u],
+    ['invalid CLI usage points to authoritative help', /Invalid usage\/unknown commands MUST point to authoritative help/u],
+    ['documentation examples avoid personal paths', /Documentation examples MUST omit user-specific paths, fixed workspaces, drive letters, and personal data/u],
+    ['repository-relative examples', /use repo-relative paths\/placeholders/u],
+    ['findings reused and recorded without sensitive material', /Reuse findings before investigating\. Record conclusions, evidence, failed approaches, and unknowns in repo docs; omit secrets\/logs/u],
+    ['relative Markdown links', /Local Markdown links MUST be relative to their document/u],
+  ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
+});
+
+test('identity wording compression preserves repository authority and scope', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'identity-and-scope.md'), 'utf8');
+  const normalized = rules.replace(/\s+/gu, ' ');
+  for (const [requirement, pattern] of [
+    ['user identity', /human operator, "metyatech"/u],
+    ['repository ownership definition', /metyatech-owned GitHub repo or any repo with their authoritative write permission/u],
+    ['read-only ownership verification', /verify: `gh repo view --json owner,viewerPermission`/u],
+    ['controlled GitHub/npm ownership scope', /`metyatech` controls GitHub user\/org, npm `@metyatech`, and `github\.com\/metyatech\/\*`/u],
+    ['external identity default and evidence exception', /Treat external `metyatech` references as user-controlled unless direct evidence contradicts/u],
+    ['identity uncertainty resolved with gh', /resolve uncertainty with `gh` before acting/u],
+    ['owned repository end-to-end authority', /agents MAY handle issues, PRs, default-branch pushes, releases, package publishing, and administration end to end/u],
+    ['account-wide and repository lifecycle scope', /Account-wide scope covers these repos, including creation\/splitting\/deletion/u],
+    ['default placement under user ownership', /Publish, clone, add submodules, or split under `metyatech` ownership unless user specifies another owner/u],
+    ['third-party explicit write request', /Third-party writes MUST have prior explicit per-repo requests, even with push access/u],
+    ['ambiguous target verified before writing', /Ambiguous targets: confirm canonical repo from request purpose before writing/u],
+    ['uncertain target kept isolated', /isolate work on a separate branch\/worktree until confirmed/u],
+  ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
 });
