@@ -10,6 +10,15 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const globalRulesPath = path.join(repoRoot, 'rules', 'global');
 const profilesPath = path.join(repoRoot, 'agent-profiles.json');
 
+function normalizeNewlines(content) {
+  return content.replace(/\r\n/gu, '\n');
+}
+
+function extractMarkdownSection(content, heading) {
+  const normalized = normalizeNewlines(content);
+  return normalized.split(`${heading}\n`)[1]?.split('\n## ')[0];
+}
+
 function extractJobSection(workflow, jobName) {
   const lines = workflow.split(/\r?\n/u);
   const jobsIndex = lines.findIndex((line) => line === 'jobs:');
@@ -63,9 +72,13 @@ test('retired tracking tools are absent from active global rules', async () => {
 
 test('GitHub Actions billing blocks require direct evidence and passing local gates', async () => {
   const rules = await readFile(path.join(globalRulesPath, 'quality-and-verification.md'), 'utf8');
-  const section = rules.split('## GitHub Actions billing blocks\n')[1]?.split('\n## ')[0];
+  const section = extractMarkdownSection(rules, '## GitHub Actions billing blocks');
 
   assert.ok(section, 'quality-and-verification.md must define GitHub Actions billing blocks');
+  assertBillingSection(section);
+});
+
+function assertBillingSection(section) {
   const normalized = section.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
     ['billing or spending-limit annotation', /annotation explicitly stating failed account payments or a spending limit/u],
@@ -81,17 +94,51 @@ test('GitHub Actions billing blocks require direct evidence and passing local ga
     ['branch protection is not bypassed', /do not bypass it; stop and report/u],
     ['diagnostic retrieves jobs and annotations', /repos\/\$repo\/actions\/runs\/\$run\/jobs.*repos\/\$repo\/check-runs\/\$id\/annotations/u],
   ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
+}
+
+const extractProcessLifecycleSection = (content) => extractMarkdownSection(content, '## Processes');
+
+const extractWindowsSandboxSection = (content) => extractMarkdownSection(content, '## Sandbox');
+
+test('Markdown section extraction handles LF and CRLF headings and boundaries', () => {
+  for (const [heading, nextHeading, expected] of [
+    ['# Commands', '## Processes', '- Run the command'],
+    ['## GitHub Actions billing blocks', '## Runtime verification', '- Require direct evidence'],
+  ]) {
+    const lfDocument = `${heading}\n${expected}\n${nextHeading}\n- outside the section\n`;
+    const crlfDocument = lfDocument.replace(/\n/gu, '\r\n');
+
+    const lfSection = extractMarkdownSection(lfDocument, heading);
+    const crlfSection = extractMarkdownSection(crlfDocument, heading);
+    assert.ok(lfSection, `${heading} must produce a nonempty LF section`);
+    assert.ok(crlfSection, `${heading} must produce a nonempty CRLF section`);
+    assert.equal(lfSection, expected);
+    assert.equal(crlfSection, lfSection);
+  }
+
+  for (const heading of ['# Commands', '## GitHub Actions billing blocks']) {
+    const document = `${heading}\n- present policy\n## Next section\n`;
+    for (const text of [document, document.replace(/\n/gu, '\r\n')]) {
+      assert.equal(extractMarkdownSection(text, `${heading} typo`), undefined);
+      assert.equal(extractMarkdownSection(text, '## Missing section'), undefined);
+    }
+  }
 });
 
-const extractProcessLifecycleSection = (content) => {
-  const normalized = content.replace(/\r\n/gu, '\n');
-  return normalized.split('## Processes\n')[1]?.split('\n## ')[0];
-};
+test('billing policy assertions still fail when a CRLF section loses a required statement', async () => {
+  const content = await readFile(path.join(globalRulesPath, 'quality-and-verification.md'), 'utf8');
+  const crlfContent = normalizeNewlines(content).replace(/\n/gu, '\r\n');
+  const section = extractMarkdownSection(crlfContent, '## GitHub Actions billing blocks');
 
-const extractWindowsSandboxSection = (content) => {
-  const normalized = content.replace(/\r\n/gu, '\n');
-  return normalized.split('## Sandbox\n')[1]?.split('\n## ')[0];
-};
+  assert.ok(section, 'quality-and-verification.md must define GitHub Actions billing blocks');
+  assertBillingSection(section);
+  const missingStatement = section.replace('Never skip checks or weaken tests/assertions.', '');
+  assert.notEqual(missingStatement, section, 'fixture must remove a required policy statement');
+  assert.throws(() => assertBillingSection(missingStatement), {
+    name: 'AssertionError',
+    message: /missing no skipped or weakened checks requirement/u,
+  });
+});
 
 test('process lifecycle section extraction works with LF and CRLF', () => {
   const sample = '## Before\n## Processes\n- Keep running\n## After\n';
@@ -122,7 +169,7 @@ test('process lifecycle safety protects pre-existing and managed processes', asy
 
 test('OS administrator and sandbox permission failures use distinct routes', async () => {
   const content = await readFile(path.join(globalRulesPath, 'command-execution.md'), 'utf8');
-  const section = content.split('# Commands\n')[1]?.split('\n## ')[0];
+  const section = extractMarkdownSection(content, '# Commands');
 
   assert.ok(section, 'command-execution.md must define general execution rules');
   const normalizedSection = section.replace(/\s+/gu, ' ');
@@ -139,7 +186,7 @@ test('OS administrator and sandbox permission failures use distinct routes', asy
     ['do not overstate verification', /claim full verification only after all required checks pass/iu],
   ]) assert.match(normalizedSection, pattern, `missing ${requirement} requirement`);
 
-  const privilegeSection = content.split('## Privilege\n')[1]?.split('\n## ')[0];
+  const privilegeSection = extractMarkdownSection(content, '## Privilege');
   assert.ok(privilegeSection, 'command-execution.md must define privilege elevation');
   const normalizedPrivilegeSection = privilegeSection.replace(/\s+/gu, ' ');
   for (const [requirement, pattern] of [
