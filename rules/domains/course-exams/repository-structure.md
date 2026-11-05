@@ -21,3 +21,5 @@
 - Operational exceptions for a single course MUST be documented in the course
   content itself or the task prompt, not by creating repo-local agent rule
   files.
+- For future AI grading comparisons or benchmarks in this repository, follow `docs/research/README.md`: write a dated, anonymized aggregate report in `docs/research/` and link it from that index. Include the objective and selection method, exclusions and denominators; methods and input specifications, relevant endpoint and fixed model version; every baseline and variant, failures and unfavorable results; evaluation criteria, aggregate metrics, sample counts, coverage, unknowns and missing data; measured usage and estimated costs with their basis when available; limitations, adoption status, and the local-only evidence path and audit inventory.
+- Keep Git research reports limited to anonymized aggregate methods and findings, and keep raw evidence local-only on the PC. Do not commit names, student IDs, email addresses, student responses, anonymous case keys, request/response payloads, or credentials; do not create a separate recording system.
