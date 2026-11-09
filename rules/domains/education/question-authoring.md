@@ -107,5 +107,21 @@
 - Evaluate each scoring criterion independently as
   either met or unmet. Award its full assigned points
   when met and zero when unmet. The total score is the
-  sum of the awarded criterion points. Do not
-  penalize the same defect repeatedly across criteria.
+  sum of the awarded criterion points. Do not penalize
+  the same defect repeatedly across criteria.
+  A failure in one criterion MUST NOT automatically
+  cause another criterion to be marked unmet.
+  If the implementation of a criterion is correct
+  and would work after correcting unrelated defects,
+  treat that criterion as met even when the overall
+  submission does not run successfully.
+
+- Accept minor typos, formatting differences, or
+  syntax mistakes when the submitted evidence clearly
+  demonstrates the essential understanding required
+  by the criterion. Do not require exact conformity
+  to a model answer when an equivalent implementation
+  satisfies the criterion. However, do not mark a
+  criterion as met when the required behavior or
+  understanding is absent or cannot be established
+  from the submitted evidence.
