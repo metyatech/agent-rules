@@ -49,6 +49,11 @@ gh api "repos/$repo/actions/runs/$run/jobs" `
 - Verify authentication, billing, authorization, persistence, and other
   high-consequence journeys end-to-end live/production-like, including interruption,
   retry, reload, invalid-input, and stale-state cases.
+- After updating a runtime dependency, verify that the code actually
+  loaded or executed in each claimed updated environment matches the
+  intended revision. Manifest, lockfile, and package-manager version
+  reports alone are insufficient. Rebuild dependent artifacts when
+  necessary and run a focused runtime check.
 
 ## Bug handling
 
@@ -58,3 +63,8 @@ gh api "repos/$repo/actions/runs/$run/jobs" `
 - For each bug, strengthen the earliest deterministic gate and prevent broader
   patterns; report instance-only fixes.
 - Do not claim bug-free behavior; report verified scope and residual risk.
+- When fixing a parser, converter, scorer, or generator that has
+  already produced persisted data, determine whether existing
+  outputs were affected. Compare source data with generated
+  artifacts as appropriate to the risk, identify unverified
+  portions, and decide whether repair or regeneration is needed.
