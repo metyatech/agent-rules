@@ -55,6 +55,23 @@
 - The agent MUST NOT commit build artifacts; align artifact dirs with
   `.gitignore`.
 
+## Restriction and diagnostic design
+
+- Before adding an allowlist, suppression, replacement, or restriction on access,
+  display, or processing, state the concrete requirement or failure mode it
+  addresses. Compare its benefit with its implementation, maintenance, testing,
+  and operational costs. Do not add a restriction without a demonstrated need;
+  remove it when that need no longer exists. Preserve validation required for
+  correct behavior, input shape, authorization, or state transitions.
+
+- Preserve structured diagnostic identifiers exactly as received, including
+  unknown non-empty values; do not replace an identifier with a generic error
+  solely because it is unregistered. Keep stored values unchanged. When display
+  escaping is needed, encode actual newlines and literal backslash sequences
+  distinctly in a reversible, line-safe format. Validate known and unknown
+  identifiers, missing identifiers, and control characters. Do not require
+  unconditional disclosure of arbitrary exception messages or sensitive tokens.
+
 ## Automated test isolation and user-data protection
 
 - Tests/fixtures/mocks MUST NOT mutate real user data/config, credentials/tokens,
