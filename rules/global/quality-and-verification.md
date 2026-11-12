@@ -16,6 +16,14 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
   on the prior state before attribution. Validate inputs/configuration, fail
   fast, and never swallow errors.
 
+## Negative-test fixtures
+
+- Tests that reject intentionally invalid input MUST use test-owned fixtures
+  that state the invalid condition. They MUST NOT depend on mutable production
+  data or live content remaining invalid after normal corrections.
+- Tests that verify current production-data or live-content validity MUST be
+  separate from tests that reject intentionally invalid input.
+
 ## GitHub Actions billing blocks
 
 - Mark a job `未実行（課金制限）` only with an annotation explicitly stating
