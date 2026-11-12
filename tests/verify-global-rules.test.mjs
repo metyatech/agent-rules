@@ -487,3 +487,13 @@ test('identity wording compression preserves repository authority and scope', as
     ['uncertain target kept isolated', /isolate work on a separate branch\/worktree until confirmed/u],
   ]) assert.match(normalized, pattern, `missing ${requirement} requirement`);
 });
+test('Unreal game-creation routing stays scoped and preserves the exact trigger', async () => {
+  const rule = await readFile(path.join(globalRulesPath, 'unreal-game-creation.md'), 'utf8');
+  const normalized = rule.replace(/\s+/gu, ' ');
+  const trigger = '今、これは空っぽのプロジェクトです。ここに、良い感じのめっちゃすごい、面白いゲーム作って！ $unreal-mcp';
+
+  assert.ok(trigger.endsWith('$unreal-mcp'), 'the exact request keeps its explicit skill trigger');
+  assert.match(normalized, /active `\.uproject` game creation tagged `\$unreal-mcp`/u);
+  assert.match(normalized, /Use `unreal-game-director`, `router`, and official `unreal-mcp`/u);
+  assert.match(normalized, /Prefer Epic MCP; discover schemas and read-only check/u);
+});
