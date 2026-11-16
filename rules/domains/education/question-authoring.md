@@ -43,12 +43,6 @@
   NOT introduce, require, or casually reference untaught concepts, features,
   parameters, APIs, syntax, techniques, tools, or extension-only content unless
   the user explicitly requests extension-level assessment.
-- Scoring criteria (also called rubric criteria) are the individual bullet items
-  of a question's `## Scoring` section, each describing one thing the answer
-  must demonstrate.
-- The number of scoring criteria and their ordering determine the assessment
-  manifest `points` array: the `points` length MUST equal the criterion count,
-  and each `points` entry maps to the criterion at the same index.
 - Questions MUST have a single defensible answer, or explicitly state the
   accepted answer range.
 - For technical execution or appearance claims, actively seek a plausible
@@ -100,38 +94,4 @@
   and focused on meaningful achievements. Avoid
   unnecessary implementation constraints, excessive
   precision, and distinctions that do not materially
-  affect the intended learning outcome. Treat minor
-  deviations as acceptable when the intended result is
-  substantially achieved.
-
-- Evaluate each scoring criterion independently as
-  either met or unmet. Award its full assigned points
-  when met and zero when unmet. The total score is the
-  sum of the awarded criterion points. Do not penalize
-  the same defect repeatedly across criteria.
-  A failure in one criterion MUST NOT automatically
-  cause another criterion to be marked unmet.
-  If the implementation of a criterion is correct
-  and would work after correcting unrelated defects,
-  treat that criterion as met even when the overall
-  submission does not run successfully.
-
-- Accept minor typos, formatting differences, or
-  syntax mistakes when the submitted evidence clearly
-  demonstrates the essential understanding required
-  by the criterion. Do not require exact conformity
-  to a model answer when an equivalent implementation
-  satisfies the criterion. However, do not mark a
-  criterion as met when the required behavior or
-  understanding is absent or cannot be established
-  from the submitted evidence.
-
-## Grading review reports
-
-- For each proposed grading correction requiring human judgment,
-  identify the assessment, question number and topic, student's
-  name when available, relevant scoring criterion, submitted
-  evidence, proposed change, and reasoning.
-- Do not identify grading cases solely by student IDs, item IDs,
-  or criterion numbers. Present enough concrete information for
-  the user to make an informed decision.
+  affect the intended learning outcome.

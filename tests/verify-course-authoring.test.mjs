@@ -16,6 +16,34 @@ test('assessment rules reject inferred targets and missing decisive conditions',
   assert.match(authoring, /state the missing decisive condition or narrow the claim/);
 });
 
+test('educational authoring separates rubric design, grading execution, and review reporting', async () => {
+  const authoring = await readRule('education/question-authoring');
+  const review = await readRule('education/grading-review');
+  const format = await readRule('course-exams/markdown-qti-format');
+
+  assert.match(authoring, /Questions, prompts, options, answers, scoring criteria, and explanations MUST NOT introduce, require, or casually reference untaught concepts/);
+  assert.match(authoring, /For hands-on or creation tasks involving multiple steps/);
+  assert.match(authoring, /When a starter is provided, assume learners have only the starter and the question text/);
+  assert.match(authoring, /Keep scoring criteria few, independently assessable, and focused on meaningful achievements/);
+  assert.doesNotMatch(authoring, /Evaluate each scoring criterion independently as either met or unmet/);
+  assert.doesNotMatch(authoring, /Accept minor typos, formatting differences, or syntax mistakes/);
+  assert.doesNotMatch(authoring, /Grading review reports/);
+  assert.doesNotMatch(authoring, /The number of scoring criteria and their ordering determine/);
+  assert.doesNotMatch(authoring, /each points entry maps to the criterion at the same index/);
+
+  assert.match(review, /^# Grading Review Reports/);
+  for (const requirement of [
+    /assessment, question number and topic/,
+    /student's name when available/,
+    /relevant scoring criterion, submitted evidence, proposed change, and reasoning/,
+    /Do not identify grading cases solely by student IDs, item IDs, or criterion numbers/,
+    /Present enough concrete information for the user to make an informed decision/,
+  ]) assert.match(review, requirement);
+
+  assert.match(format, /and its length MUST equal the `## Scoring` bullet count/);
+  assert.match(format, /Correspondence between a `## Scoring` bullet and its `points` entry is by array index only/);
+});
+
 test('weekly quiz acceptance separates semantic review from structural checks', async () => {
   const quality = await readRule('weekly-quiz/quality');
   assert.match(quality, /Review each changed question in isolation/);
