@@ -42,20 +42,17 @@
   Verify resolved canonical destination before `git worktree add`
   or `git worktree move`.
   MUST NOT create or move a worktree into a repository's own directory,
-  including `.worktrees/` or another nested location. Use a sibling directory
-  outside the repository; if none is safe, stop.
+  including `.worktrees/` or nested paths. Use an external sibling; otherwise stop.
 
 - Repository-scoped Git commands MUST select their repo explicitly, independent
   of shell directory. Avoid prompts (`--no-edit` or `GIT_EDITOR=true`).
 - Omitted branch defaults to current branch.
   Direct commits to `main`/`master` are permitted in
   user-controlled repositories.
-- On sandbox Git/`gh` auth/token/credential-helper failure, check host auth
-  read-only; sandbox failure alone doesn't prove credentials invalid. If host
-  auth works,
-  retry the same scoped operation once via the approved host route with repo/
-  safety checks. Never expose credentials, bypass approval, or retry again; if
-  host auth fails, stop/report.
+- Sandbox Git/`gh` auth failures don't prove invalid credentials. Check host
+  auth read-only; only then retry the same scoped operation once via approved
+  host route with repo/safety checks. Otherwise stop/report. Never expose
+  credentials or bypass approval.
 - If Google/Apple/Microsoft/GitHub login is blocked, hand off only the IdP step
   to a real browser and resume after redirect. NEVER bypass anti-automation or
   embedded-browser restrictions.
@@ -71,6 +68,8 @@
   no active worker/PR/process references. Preserve dirty/unmerged, shared,
   unowned, or active resources; report each unsafe leftover and why. Unsafe
   leftovers prevent completion.
+- CGCL clean/integrated worktrees/branches: GC-owned, not unfinished; no
+  manual Git deletion. For GC failures, use CGCL.
 - After worktree removal, verify directory and Git registration are gone.
   Unlink only verified task-owned `node_modules` junctions/symlinks, never
   targets; remove empty remnants; preserve/report unexpected content.

@@ -404,6 +404,8 @@ test('task completion requires safe cleanup and reports blocked leftovers', asyn
     ['dirty, shared, unowned, and active preservation', /Preserve dirty\/unmerged, shared, unowned, or active resources/u],
     ['itemized leftover reporting', /report each unsafe leftover and why/u],
     ['no false completion', /Unsafe leftovers prevent completion/u],
+    ['CGCL automatic-GC exception', /CGCL clean\/integrated worktrees\/branches: GC-owned, not unfinished/u],
+    ['CGCL lifecycle cleanup only', /manual Git deletion\. For GC failures, use CGCL/u],
     ['active CGCL lock stops same-directory work', /On CGCL `lock_active` from another task-directory worker, stop: no wait, worker termination, or same-dir retry/u],
     ['lock recovery uses an isolated verified path', /distinct canonical path from a verified base/u],
     ['lock recovery preserves pending resources', /Preserve the original checkout, other worktrees\/workers, and pending changes/u],
