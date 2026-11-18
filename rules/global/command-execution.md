@@ -9,31 +9,16 @@
   failures, check latest stable release; if persistent, document limits and use
   deterministic workarounds.
 
-- Before running commands that require project dependencies,
-  ensure those dependencies are available. If dependencies
-  are missing, prepare them as part of the current task
-  rather than treating their absence as a reason to stop.
-
-- Prefer the project's standard dependency installation
-  method. Before installing, check whether compatible
-  dependencies or caches are already available and can be
-  safely reused. Verify compatibility with the dependency
-  manifest and lockfile.
-
-- If dependency preparation fails, identify the cause and
-  try an appropriate alternative within the same execution.
-  Alternatives may include reusing compatible installed
-  dependencies, using an existing cache, or retrying the
-  required operation through the approved host execution
-  path when the failure is caused by sandbox restrictions.
-
-- Do not stop solely because the first dependency preparation
-  method failed. Stop only when the required dependencies
-  cannot be prepared through available permitted methods,
-  or when continuing would violate an explicit requirement.
-  Never modify shared dependencies unsafely, bypass required
-  approvals, or weaken verification to compensate for missing
-  dependencies.
+- Before dependency-requiring commands, ensure project dependencies are
+  available; if not, prepare them in this task. Prefer the repo-standard
+  installer; first check compatible installed dependencies/caches and verify
+  manifest/lockfile compatibility.
+- If preparation fails, identify why and try a permitted alternative in the same
+  execution: reuse compatible dependencies/cache or, for sandbox restrictions,
+  retry the required operation through the approved host path. Do not stop at the
+  first failed method; stop only when no permitted preparation works or an
+  explicit requirement forbids continuing. Never modify shared dependencies
+  unsafely, bypass approval, or weaken verification.
 - For `EPERM`, `EACCES`, access denied, or denied file/Git operations
   (read/write, create, rename, install), verify target, ownership, conflicts,
   side effects. If ambiguous, retry same operation once via approved
@@ -68,7 +53,8 @@
   Verify resolved canonical destination before `git worktree add`
   or `git worktree move`.
   MUST NOT create or move a worktree into a repository's own directory,
-  including `.worktrees/` or nested paths. Use an external sibling; otherwise stop.
+  including `.worktrees/` or nested paths. Use an external sibling; otherwise
+  stop.
 
 - Repository-scoped Git commands MUST select their repo explicitly, independent
   of shell directory. Avoid prompts (`--no-edit` or `GIT_EDITOR=true`).
@@ -89,11 +75,11 @@
   changes; integrate without force-push. Retry only if work definitely never
   began; never duplicate ambiguous work. If isolation is unavailable, report it.
 - Task completion MUST remove task-owned temp worktrees, local/remote task
-  branches, and temp/prompt files after verifying ownership, unused and clean
-  (no uncommitted/unmerged work), integration/commit/push where relevant, and
-  no active worker/PR/process references. Preserve dirty/unmerged, shared,
-  unowned, or active resources; report each unsafe leftover and why. Unsafe
-  leftovers prevent completion.
+  branches, and temp/prompt files only after verifying ownership, unused and clean
+  (no uncommitted/unmerged work), integration/commit/push where relevant, and no
+  active worker/PR/process references. Preserve dirty/unmerged, shared, unowned,
+  or active resources; report each unsafe leftover and why. Unsafe leftovers
+  prevent completion.
 - CGCL clean/integrated worktrees/branches: GC-owned, not unfinished; no
   manual Git deletion. For GC failures, use CGCL.
 - After worktree removal, verify directory and Git registration are gone.

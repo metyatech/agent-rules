@@ -56,6 +56,32 @@ function assertComposeVerificationJob(job, expectedRef) {
   assert.match(job, /^        run: pwsh -NoProfile -File tools\/verify\.ps1$/mu);
 }
 
+async function composeCanonicalGlobalRulesReport() {
+  const projectRoot = await mkdtemp(path.join(os.tmpdir(), 'agent-rules-budget-'));
+  try {
+    await writeFile(path.join(projectRoot, 'agent-ruleset.json'), JSON.stringify({
+      sources: [repoRoot],
+      profile: 'agent-rules',
+      global: true,
+    }));
+
+    const result = spawnSync('compose-agentsmd', [
+      '--root', projectRoot,
+      '--dry-run',
+      '--json',
+    ], {
+      encoding: 'utf8',
+      maxBuffer: 10 * 1024 * 1024,
+      shell: process.platform === 'win32',
+    });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    return JSON.parse(result.stdout);
+  } finally {
+    await rm(projectRoot, { recursive: true, force: true });
+  }
+}
+
 test('retired tracking tools are absent from active global rules', async () => {
   await assert.rejects(stat(path.join(globalRulesPath, 'persistent-tracking.md')), {
     code: 'ENOENT',
@@ -277,6 +303,24 @@ test('mixed Node and Python repositories exclude agent tooling rules', async () 
   assert.equal(profiles['node-python'].domains.includes('agent-tooling'), false);
 });
 
+test('engineering standards retain upstream verification and replacement-state validation', async () => {
+  const rules = await readFile(path.join(globalRulesPath, 'engineering-standards.md'), 'utf8');
+  const normalized = rules.replace(/\s+/gu, ' ');
+
+  assert.match(
+    normalized,
+    /Prefer maintained upstream tools; verify existing solutions before custom logic\./u,
+  );
+  assert.match(
+    normalized,
+    /Updates, syncs, migrations, self-updates, and generated-runtime replacements MUST validate replacement state off-path before narrow final cutover\./u,
+  );
+  assert.match(normalized, /`jev_pick` by relevance from the supplied candidate list/u);
+  assert.match(normalized, /Use `jev_verify` for specific claims against direct evidence/u);
+  assert.match(normalized, /deep patch correctness review/u);
+  assert.match(normalized, /repeating decisions on unchanged evidence/u);
+});
+
 test('delegation rules do not use retired tier labels', async () => {
   const content = await readFile(path.join(globalRulesPath, 'sub-agent-delegation.md'), 'utf8');
 
@@ -287,38 +331,75 @@ test('delegation rules do not use retired tier labels', async () => {
 });
 
 test('global rules stay within the hard 8000-token budget', async () => {
-  const projectRoot = await mkdtemp(path.join(os.tmpdir(), 'agent-rules-budget-'));
-  try {
-    await writeFile(path.join(projectRoot, 'agent-ruleset.json'), JSON.stringify({
-      sources: [repoRoot],
-      profile: 'agent-rules',
-      global: true,
-    }));
+  const report = await composeCanonicalGlobalRulesReport();
+  assert.equal(
+    report.budget.totalExceeded,
+    false,
+    `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
+  );
+  assert.ok(
+    report.budget.totalTokens <= 8000,
+    `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
+  );
+});
 
-    const result = spawnSync('compose-agentsmd', [
-      '--root', projectRoot,
-      '--dry-run',
-      '--json',
+test('compose-agentsmd 7.3.0 reports an advisory target and read-only effective budget', async () => {
+  const canonical = await composeCanonicalGlobalRulesReport();
+  const localRuleset = JSON.parse(await readFile(path.join(repoRoot, 'agent-ruleset.json'), 'utf8'));
+  assert.equal(localRuleset.global, false, 'budget check covers the repo ruleset source scope');
+  const generatedBefore = await Promise.all(['AGENTS.md', 'CLAUDE.md'].map(async (file) =>
+    readFile(path.join(repoRoot, file), 'utf8')));
+  const gitStateBefore = spawnSync('git', ['-C', repoRoot, 'status', '--porcelain'], {
+    encoding: 'utf8',
+  });
+  assert.equal(gitStateBefore.status, 0, gitStateBefore.stderr);
+
+  const traceRoot = await mkdtemp(path.join(os.tmpdir(), 'agent-rules-readonly-'));
+  const tracePath = path.join(traceRoot, 'git-trace.log');
+  assert.ok(path.resolve(tracePath).startsWith(path.resolve(traceRoot) + path.sep));
+  let result;
+  try {
+    result = spawnSync('compose-agentsmd', [
+      'check-budget', '--root', repoRoot, '--json',
     ], {
       encoding: 'utf8',
       maxBuffer: 10 * 1024 * 1024,
       shell: process.platform === 'win32',
+      env: { ...process.env, GIT_TRACE: tracePath },
     });
-
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-    const report = JSON.parse(result.stdout);
-    assert.equal(
-      report.budget.totalExceeded,
-      false,
-      `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
-    );
-    assert.ok(
-      report.budget.totalTokens <= 8000,
-      `global rules exceed hard budget: ${report.budget.totalTokens}/8000`,
-    );
+    await assert.rejects(stat(tracePath), { code: 'ENOENT' }, 'check-budget must not invoke Git');
   } finally {
-    await rm(projectRoot, { recursive: true, force: true });
+    await rm(traceRoot, { recursive: true, force: true });
   }
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const report = JSON.parse(result.stdout);
+  const effectiveTokens = Math.max(report.budget.actualTokens, report.budget.canonicalTokens);
+  assert.ok(effectiveTokens > 0, 'global budget must be nonzero');
+  assert.equal(report.budget.totalBudget, 8000, 'hard limit remains 8000');
+  assert.equal(report.budget.softTargetTokens, 7000, 'soft target remains 7000');
+  assert.equal(report.budget.totalExceeded, false, 'hard limit is not exceeded');
+  assert.equal(typeof report.budget.softTargetExceeded, 'boolean');
+  if (report.budget.softTargetExceeded) {
+    assert.equal(result.status, 0, 'exceeding the advisory target does not fail the command');
+  }
+  assert.equal(report.budget.remainingTokens, 8000 - report.budget.totalTokens);
+  assert.ok(report.budget.totalTokens >= canonical.budget.totalTokens);
+  assert.ok(report.budget.actualTokens > 0);
+  assert.ok(report.budget.canonicalTokens > 0);
+  assert.equal(
+    report.budget.totalTokens,
+    effectiveTokens,
+  );
+
+  const generatedAfter = await Promise.all(['AGENTS.md', 'CLAUDE.md'].map(async (file) =>
+    readFile(path.join(repoRoot, file), 'utf8')));
+  assert.deepEqual(generatedAfter, generatedBefore, 'check-budget must not write generated files');
+  const gitStateAfter = spawnSync('git', ['-C', repoRoot, 'status', '--porcelain'], {
+    encoding: 'utf8',
+  });
+  assert.equal(gitStateAfter.status, 0, gitStateAfter.stderr);
+  assert.equal(gitStateAfter.stdout, gitStateBefore.stdout, 'check-budget must not mutate Git state');
 });
 
 test('canonical verification uses the shared PowerShell verifier', async () => {
@@ -371,7 +452,7 @@ test('CI verifies a pinned compose release and current main compatibility', asyn
   const canonicalJob = extractJobSection(workflow, 'verify');
   assertComposeVerificationJob(
     canonicalJob,
-    'ade39fc513f02f7e84927074387a4bc7bc2a7011',
+    'dcf5c4a4f159d7e2df1f52d51c4d651f7bf2ca5f',
   );
   assert.match(canonicalJob, /^    name: Verify with pinned compose-agentsmd$/mu);
   assert.doesNotMatch(canonicalJob, /^\s+continue-on-error:\s*true$/mu);

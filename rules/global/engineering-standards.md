@@ -3,21 +3,19 @@
 ## Tooling and dependencies
 
 - Prefer maintained upstream tools; verify existing solutions before custom
-  logic.
-- Prefer deterministic checks and ordinary exact-path/symbol/string search. For
-  semantic narrowing among 12+ discovered source candidates, use `jev_rank`
-  with paths/globs and `jev_pick` by relevance from the supplied candidate list.
-- Use `jev_decide` only for plan-changing choices among 2–6 plausible options
-  with evidence and user priorities; retain `ask_user`, `investigate`, and
-  `none` outcomes.
-- Use `jev_verify` for specific claims against direct evidence and `jev_navigate`
-  for supported multi-step browser work. Do not use Jev for generation,
-  multi-hop reasoning, deep patch correctness review, judging deterministic
-  test/build/Git/version/hash/CI facts, or repeating decisions on unchanged
-  evidence.
-- Jev completion reviews and generic next-step judgments are optional. For low
-  confidence, invalid/escape results, or service failure, use a
-  stronger reasoner or ask a person as appropriate.
+  logic. Use deterministic checks and exact path/symbol/string search. For
+  semantic narrowing among 12+ source candidates, use `jev_rank` with
+  paths/globs, then `jev_pick` by relevance from the supplied candidate list.
+- Use `jev_decide` only for plan-changing choices among 2–6 plausible
+  options, with evidence and user priorities; retain `ask_user`,
+  `investigate`, and `none`. Use `jev_verify` for specific claims against
+  direct evidence and `jev_navigate`
+  for supported multi-step browser work.
+- Do not use Jev for generation, multi-hop reasoning, deep patch correctness
+  review, deterministic test/build/Git/version/hash/CI facts, or repeating
+  decisions on unchanged evidence. Completion reviews and generic next-step
+  judgments are optional; for low confidence, invalid/escape results, or service
+  failure, use a stronger reasoner or ask a person.
 
 ## Unreal Blueprint graph capture
 
@@ -30,12 +28,13 @@
 ## System design
 
 - Designs MUST compose cleanly through clear dependency direction, shallow
-  control flow, intention-revealing names, and centralized change points.
-- Keep code/docs/tests/config DRY; fix root causes and remove obsolete code in
-  the same change.
-- Failure paths MUST tear down resources, leave no partial state, verify cleanup,
-  and preserve last-known-good state until replacement validates.
-- Updates, syncs, migrations, self-updates, and generated-runtime replacements
+  control flow,
+  intention-revealing names, and centralized change points. Keep
+  code/docs/tests/config DRY; fix root causes and remove obsolete code in the
+  change.
+- Failure paths MUST tear down resources, leave no partial state, verify
+  cleanup, and preserve last-known-good state until replacement validates.
+  Updates, syncs, migrations, self-updates, and generated-runtime replacements
   MUST validate replacement state off-path before narrow final cutover.
 - Multi-step state transitions MUST persist durable state for deterministic
   resume/reconcile; failed staged artifacts MUST stay off the authoritative path
@@ -50,14 +49,14 @@
 
 ## Restriction and diagnostic design
 
-- Before adding an allowlist, suppression, replacement, or access/display/
-  processing restriction, state its concrete requirement/failure mode and weigh
-  benefits against implementation/maintenance/testing/operational costs. Add
-  only for demonstrated need; remove when it ends. Preserve validation for
-  correct behavior, input shape, authorization, or state transitions.
+- Before adding an allowlist, suppression, replacement, or
+  access/display/processing restriction, state its concrete requirement/failure
+  mode and weigh benefits against implementation/maintenance/testing/operational
+  costs. Add only for demonstrated need; remove when it ends. Preserve validation
+  for correct behavior, input shape, authorization, or state transitions.
 - Preserve structured diagnostic identifiers exactly as received, including
-  unknown non-empty values; do not replace them with generic errors solely for
-  being unregistered. Keep stored values unchanged. If escaping for display,
+  unknown non-empty values; never replace them with generic errors just because
+  they are unregistered, or alter stored values. When escaping for display,
   reversibly distinguish actual newlines from literal backslash sequences in a
   line-safe format. Validate known/unknown/missing identifiers and control
   characters. Do not require unconditional disclosure of arbitrary exception
@@ -65,15 +64,15 @@
 
 ## Automated test isolation and user-data protection
 
-- Tests/fixtures/mocks MUST NOT mutate real user data/config, credentials/tokens,
-  browser profiles, or auth/session files. Per-user home/app-data defaults are
-  real until redirected to a test-owned path.
+- Tests/fixtures/mocks MUST NOT mutate real user data/config,
+  credentials/tokens, browser profiles, or auth/session files. Per-user
+  home/app-data defaults are real until redirected to a test-owned path.
 - Before any test write, inject a unique test-owned temp root for stateful paths
-  (missing-file defaults, fallback paths, login/retry callbacks). Validate resolved
-  targets inside it BEFORE writing; mocked reads don't stop callbacks writing
-  to production defaults.
-- For concurrent tests, prefer injected paths/isolated subprocesses over shared
-  home/config changes; isolate targets before destructive tests.
+  (missing-file defaults, fallback paths, login/retry callbacks). Validate
+  resolved targets inside it BEFORE writing; mocked reads don't stop callbacks
+  writing to production defaults. For concurrent tests, prefer injected
+  paths/isolated subprocesses over shared home/config changes; isolate targets
+  before destructive tests.
 - Add regression coverage for original fallback writes; verify user state
   unchanged without exposing secrets or sensitive file contents.
 
@@ -89,12 +88,13 @@
 ## Linters, formatters, and static analysis
 
 - Every repo MUST pin a formatter and linter/analyzer per primary language.
-- Never disable lint rules globally; suppressions MUST be narrow, justified
-  inline, and time-bounded.
-- New repos MUST configure formatter automation before completion; existing repos
-  MUST preserve/add it when changing formatter-managed files.
+  Never disable lint rules globally; suppressions MUST be narrow, justified
+  inline, and time-bounded. New repos MUST configure formatter automation before
+  completion; existing repos MUST preserve/add it when changing formatter-managed
+  files.
 - Quality automation MUST separate roles: editor/save and pre-commit hooks MAY
-  mutate working files; CI MUST NOT mutate the repo. Procedure: `code-quality-setup`.
+  mutate working files; CI MUST NOT mutate the repo. Procedure:
+  `code-quality-setup`.
 - Formatting/auto-fixing pre-commit hooks MUST be lightweight and staged-file-
   only; they MUST NOT run the full suite, full typecheck, production build,
   integration tests, or other long-running gates.
@@ -103,11 +103,11 @@
 
 ## CI enforcement
 
-- CI MUST check format/lint on every PR; warnings fail.
-- GitHub Actions `push`/`pull_request` jobs MUST set `timeout-minutes: 10`.
-- If 10 minutes is insufficient, optimize CI first; extensions require user
-  approval and MUST NOT exceed 15 minutes. Checks over 15 minutes MUST NOT run on
-  `push`/`pull_request`; use manual triggers such as `workflow_dispatch`.
+- CI MUST check format/lint on every PR; warnings fail. GitHub Actions
+  `push`/`pull_request` jobs MUST set `timeout-minutes: 10`. If 10 minutes is
+  insufficient, optimize CI first; extensions require user approval and MUST NOT
+  exceed 15 minutes. Checks over 15 minutes MUST NOT run on `push`/`pull_request`;
+  use manual triggers such as `workflow_dispatch`.
 
 ## GitHub Actions runtime currency
 

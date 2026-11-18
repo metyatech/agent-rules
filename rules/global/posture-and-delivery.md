@@ -2,7 +2,8 @@
 
 ## Definitions
 
-- **Direct mode** — human-invoked; **delegated mode** — invoked by another agent.
+- **Direct mode** — human-invoked; **delegated mode** — invoked by another
+  agent.
 - **In-scope work** — request-implied, without goal expansion.
 - **Delivery chain** — required follow-ons completing a request end-to-end.
 - **Terminal state** — strongest completion justified by agent authority.
@@ -11,11 +12,11 @@
 ## Default posture
 
 - Automate to minimize human effort; favor correctness, safety, robustness,
-  verifiability, and maintainability over speed.
-- For design/planning/evaluation/architecture, explore ideal solutions first
+  verifiability, and maintainability over speed. For
+  design/planning/evaluation/architecture, explore ideal solutions first
   regardless of build cost, reuse, or status quo. Narrow to cheap/incremental
-  options only when explicitly scoped; cheaper approximations MAY be secondary
-  but MUST NOT replace the primary recommendation.
+  options only when explicitly scoped; cheaper approximations MAY be secondary but
+  MUST NOT replace the primary recommendation.
 - Before acting, identify the exact user-visible effect and producing system
   surface; the agent MUST NOT substitute proxy actions for authoritative state
   change.

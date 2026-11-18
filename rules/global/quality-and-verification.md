@@ -4,39 +4,31 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## Verification gates
 
-- Define binary acceptance criteria and an independent test
-  oracle before making changes. Select verification based on
-  affected contracts, failure risk, and the ability of tests
-  to detect incorrect implementations, not merely the size
-  of the change. Run focused checks covering relevant normal,
-  boundary, and failure cases. Expand to integration, E2E,
-  or full-repository checks when shared components,
-  dependencies, runtime behavior, or broad workflows may be
-  affected, or when the impact is uncertain.
+- Before changes, define binary acceptance criteria and an independent test
+  oracle. Choose checks by affected contracts, risk, and defect-detection ability,
+  not change size. Cover relevant normal, boundary, and failure cases; expand to
+  integration, E2E, or repo-wide checks when shared components, dependencies,
+  runtime, broad workflows, or uncertainty warrant it.
 
-- Run every verification check explicitly required by
-  repository instructions, CI, branch protection, or release
-  policy. Otherwise, an all-in-one verifier is not mandatory
-  solely because it exists. Use the smallest set of existing
-  verification commands that sufficiently covers the change,
-  and report broader checks not performed. CI MUST enforce
-  required verification. Do not weaken tests, assertions,
-  or mandatory verification gates.
+- Run checks required by repo instructions, CI, branch protection, or release
+  policy. An all-in-one verifier is not mandatory solely because it exists; use
+  the smallest sufficient existing commands and report broader checks not run. CI
+  MUST enforce required verification. Do not weaken tests, assertions, or
+  mandatory gates.
 - Code/runtime changes need automated tests; bug fixes MUST add a regression
   test failing before and passing after.
 - For security audit failures, use the documented automated fix; if it succeeds,
   rerun verification before commit/push.
 - Reproduce failures minimally; after dependency/environment changes, reproduce
-  on the prior state before attribution. Validate inputs/configuration, fail
-  fast, and never swallow errors.
+  on the prior state (prior SHA / pre-bump seed) before attribution. Validate
+  inputs/configuration, fail fast, and never swallow errors.
 
 ## Negative-test fixtures
 
-- Tests that reject intentionally invalid input MUST use test-owned fixtures
-  that state the invalid condition. They MUST NOT depend on mutable production
-  data or live content remaining invalid after normal corrections.
-- Tests that verify current production-data or live-content validity MUST be
-  separate from tests that reject intentionally invalid input.
+- Tests rejecting invalid input MUST use test-owned fixtures stating the invalid
+  condition; MUST NOT depend on mutable production data/live content staying
+  invalid after correction. Tests of current production-data/live-content validity
+  MUST remain separate.
 
 ## GitHub Actions billing blocks
 
@@ -66,26 +58,24 @@ gh api "repos/$repo/actions/runs/$run/jobs" `
 ## Runtime verification
 
 - For user-facing multi-client, multi-environment, or persisted-state systems,
-  verify each claimed environment/path; leave unverified paths unclaimed.
-- Verify authentication, billing, authorization, persistence, and other
-  high-consequence journeys end-to-end live/production-like, including interruption,
-  retry, reload, invalid-input, and stale-state cases.
-- After updating a runtime dependency, verify that the code actually
-  loaded or executed in each claimed updated environment matches the
-  intended revision. Manifest, lockfile, and package-manager version
-  reports alone are insufficient. Rebuild dependent artifacts when
-  necessary and run a focused runtime check.
+  verify each claimed environment/path and leave unverified paths unclaimed.
+  Verify authentication, billing, authorization, persistence, and other
+  high-consequence journeys end-to-end in live/production-like conditions,
+  including interruption, retry, reload, invalid-input, and stale-state cases.
+- After runtime dependency updates, verify the intended revision actually
+  loaded/executed in every claimed environment; manifests, lockfiles, and
+  package-manager versions alone are insufficient. Rebuild dependent artifacts as
+  needed and run a focused runtime check.
 
 ## Bug handling
 
 - Separate confirmed facts, probable causes, and unverified hypotheses; retries
   or temporary non-reproduction alone do not prove a fix.
 
-- For each bug, strengthen the earliest deterministic gate and prevent broader
-  patterns; report instance-only fixes.
-- Do not claim bug-free behavior; report verified scope and residual risk.
-- When fixing a parser, converter, scorer, or generator that has
-  already produced persisted data, determine whether existing
-  outputs were affected. Compare source data with generated
-  artifacts as appropriate to the risk, identify unverified
-  portions, and decide whether repair or regeneration is needed.
+- For each bug, strengthen the earliest deterministic gate to prevent broader
+  patterns; report instance-only fixes. Do not claim bug-free behavior; state
+  verified scope and residual risk.
+- For parser, converter, scorer, or generator fixes where outputs were
+  persisted, determine whether existing outputs were affected; compare
+  source/generated artifacts as risk warrants, identify unverified portions, and
+  decide on repair or regeneration.

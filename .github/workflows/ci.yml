@@ -28,8 +28,8 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: metyatech/compose-agentsmd
-          # compose-agentsmd v7.2.0 release commit
-          ref: ade39fc513f02f7e84927074387a4bc7bc2a7011
+          # compose-agentsmd v7.3.0 release commit
+          ref: dcf5c4a4f159d7e2df1f52d51c4d651f7bf2ca5f
           path: .ci/compose-agentsmd
 
       - name: Install compose-agentsmd dependencies

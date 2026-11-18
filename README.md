@@ -36,6 +36,33 @@ Edit `agent-profiles.json`, `rules/global/`, or `rules/domains/`.
 
 Do not edit generated `AGENTS.md` or `CLAUDE.md` directly.
 
+Before editing a consumer's shared rules, run
+`compose-agentsmd edit-rules --root <consumer repo>` to discover source
+workspaces and review the initial effective total, 8000-token hard limit,
+7000-token advisory target, and remaining margin. During repeated edits, use
+the read-only `compose-agentsmd check-budget --root <agent-rules repo> --json`
+for exact measurements; it works with rulesets using `global: false` and still
+measures their editable global-rule source. It does not clone, fetch, push, or
+write. Keep headroom instead of publishing at
+the hard limit; aim near 7000 without treating it as another hard gate.
+
+When the effective global count is above the 7000-token advisory target, new
+always-on obligations should normally be paired in the same patch with lossless
+deduplication of at least equal token size (net global growth <= 0). Otherwise,
+record an explicit exception rationale and sustainable placement/mechanisation.
+Use a profile-selected domain only for genuinely conditional obligations and a
+skill only for procedures whose invocation is guaranteed. Never silently move
+mandatory always-on rules out of scope or remove requirements to save tokens.
+This is an authoring review practice, not a hard CI/test gate or a 7000-token
+rejection threshold.
+
+Place always-on invariants in `rules/global/`, profile-selected obligations
+in `rules/domains/`, and procedures in task skills only when their invocation
+is guaranteed. Never move a mandatory global rule into a conditional domain or
+skill without proving it remains in force wherever required. After edits, run
+the canonical full verifier below; `apply-rules` independently enforces the
+8000-token hard gate before pushing or regenerating outputs.
+
 ## Verification
 
 Run the canonical verification command with
