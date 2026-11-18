@@ -4,12 +4,26 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## Verification gates
 
-- Define binary acceptance criteria/evidence; target checks, verify changed
-  contracts, then run full repository verification.
+- Define binary acceptance criteria and an independent test
+  oracle before making changes. Select verification based on
+  affected contracts, failure risk, and the ability of tests
+  to detect incorrect implementations, not merely the size
+  of the change. Run focused checks covering relevant normal,
+  boundary, and failure cases. Expand to integration, E2E,
+  or full-repository checks when shared components,
+  dependencies, runtime behavior, or broad workflows may be
+  affected, or when the impact is uncertain.
+
+- Run every verification check explicitly required by
+  repository instructions, CI, branch protection, or release
+  policy. Otherwise, an all-in-one verifier is not mandatory
+  solely because it exists. Use the smallest set of existing
+  verification commands that sufficiently covers the change,
+  and report broader checks not performed. CI MUST enforce
+  required verification. Do not weaken tests, assertions,
+  or mandatory verification gates.
 - Code/runtime changes need automated tests; bug fixes MUST add a regression
   test failing before and passing after.
-- Run the repository-standard verifier before completion, adding one if absent;
-  CI MUST enforce it. Commit hooks are early safeguards, not final gates.
 - For security audit failures, use the documented automated fix; if it succeeds,
   rerun verification before commit/push.
 - Reproduce failures minimally; after dependency/environment changes, reproduce
@@ -40,14 +54,13 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
   permission/authentication gates.
 
 ```powershell
-$repo='OWNER/REPO'; $run=RUN_ID
+$repo='OWNER/REPO'; $run='RUN_ID'
 gh api "repos/$repo/actions/runs/$run/jobs" `
-  --jq '.jobs[]|[.id,(.runner_id//0),(.steps|length)]|@tsv' |
-  % {
-    $id,$runner,$steps=$_.Split("`t")
-    "$id runner=$runner steps=$steps annotation=$(gh api `
-      "repos/$repo/check-runs/$id/annotations" --jq '.[].message')"
-  }
+  --jq '.jobs[]|[.id,(.runner_id//0),(.steps|length)]|@tsv' | % {
+  $id,$runner,$steps=$_.Split("`t")
+  "$id runner=$runner steps=$steps annotation=$(gh api `
+    "repos/$repo/check-runs/$id/annotations" --jq '.[].message')"
+}
 ```
 
 ## Runtime verification

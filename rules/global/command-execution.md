@@ -8,6 +8,32 @@
   MCP access or report a blocker and stop dependent work. For third-party
   failures, check latest stable release; if persistent, document limits and use
   deterministic workarounds.
+
+- Before running commands that require project dependencies,
+  ensure those dependencies are available. If dependencies
+  are missing, prepare them as part of the current task
+  rather than treating their absence as a reason to stop.
+
+- Prefer the project's standard dependency installation
+  method. Before installing, check whether compatible
+  dependencies or caches are already available and can be
+  safely reused. Verify compatibility with the dependency
+  manifest and lockfile.
+
+- If dependency preparation fails, identify the cause and
+  try an appropriate alternative within the same execution.
+  Alternatives may include reusing compatible installed
+  dependencies, using an existing cache, or retrying the
+  required operation through the approved host execution
+  path when the failure is caused by sandbox restrictions.
+
+- Do not stop solely because the first dependency preparation
+  method failed. Stop only when the required dependencies
+  cannot be prepared through available permitted methods,
+  or when continuing would violate an explicit requirement.
+  Never modify shared dependencies unsafely, bypass required
+  approvals, or weaken verification to compensate for missing
+  dependencies.
 - For `EPERM`, `EACCES`, access denied, or denied file/Git operations
   (read/write, create, rename, install), verify target, ownership, conflicts,
   side effects. If ambiguous, retry same operation once via approved
