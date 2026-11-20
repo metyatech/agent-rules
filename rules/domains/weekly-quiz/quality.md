@@ -16,11 +16,14 @@
   confirm each course separately. Do not draft or edit quiz questions during
   this scope check. Inspect only the material sections needed to establish the
   scope; the presence of a whole material file does not mean all of it was taught.
-- When confirmed progress exists, show its saved scope and ask the teacher to
-  confirm it before authoring. When no progress record exists, show the planned
-  syllabus scope and any existing lesson notes, clearly treating the notes as
-  unconfirmed, and ask whether that scope was taught. Existing lesson notes MUST
-  NOT be migrated or treated as confirmed progress automatically.
+- When the target lesson has confirmed progress, present its saved scope and
+  ask the teacher to confirm it before authoring. Otherwise, inspect the latest
+  earlier confirmed progress in the same course, year, and semester, ordered
+  syllabus, and relevant materials and notes. If an earlier confirmed boundary
+  and sufficient evidence exist, propose a concrete tentative starting/ending
+  scope (sections, pages, or exercises) and ask whether it was taught. Otherwise,
+  present the planned scope as unconfirmed and ask only for missing facts.
+  Never treat notes or estimates as confirmed or migrate them automatically.
 - If the teacher says the scope is different or cannot confirm it, ask only for
   the missing details and request scope confirmation again. Do not generate or
   edit questions until the teacher explicitly approves the taught scope.
@@ -30,10 +33,11 @@
   editing quiz questions. When the confirmed record is unchanged, do not rewrite
   `progress.yaml`. Scope approval is sufficient to begin authoring after this
   gate; do not ask for a second, separate permission to create the quiz.
-- Never infer taught progress from the schedule, lesson notes, or available
-  materials alone. A syllabus describes the plan and MUST NOT be changed
-  automatically to match actual progress; do not automatically request a
-  syllabus update when progress differs.
+- A tentative scope inferred from earlier confirmed progress, the syllabus,
+  or materials MUST NOT be treated as taught progress without teacher approval.
+  A syllabus describes the plan and MUST NOT be changed automatically to match
+  actual progress; do not automatically request a syllabus update when progress
+  differs.
 - Publishing a quiz to Track requires explicit teacher approval; authoring,
   validation, or export alone does not authorize publication.
 - The agent MUST check both the syllabus and the actual lesson materials,

@@ -70,6 +70,19 @@
 - Before writing each question, decide its `出題意図`. Write the question so that it
   tests that intent.
 - Put `出題意図` at the beginning of `## Explanation`.
+- Make each question self-contained across its prompt, options, code
+  examples, and explanation: define all answer-relevant objects, variables,
+  initial states, constraints, and references; never refer to absent code or
+  figures. Remove redundant introductions, repeated conditions, and
+  restatements without losing facts needed for a unique answer. Explanations
+  MUST give the decisive reasoning, not merely repeat the answer.
+- In beginner programming questions, property/method expressions MUST show
+  their owning object in prompts, options, examples, and explanations.
+  `classList.add()` and `classList.remove('show')` are insufficient even if
+  prose names the element; use `notice.classList.add('show')` with `notice`
+  defined. Only explicit code-completion blanks may omit the part being tested
+  when surrounding code establishes the full receiver. Do not add untaught
+  boilerplate or rewrite valid standalone global functions.
 - When creating a preparation set for a regular exam, pair each preparation
   question one-to-one with the regular exam question.
 - When `## Scoring` is disclosed to examinees, each bullet MUST name one concise,
