@@ -11,17 +11,28 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
   runtime, broad workflows, or uncertainty warrant it.
 
 - Run checks required by repo instructions, CI, branch protection, or release
-  policy. An all-in-one verifier is not mandatory solely because it exists; use
-  the smallest sufficient existing commands and report broader checks not run. CI
-  MUST enforce required verification. Do not weaken tests, assertions, or
+  policy. Use focused tests during investigation and run required full gates
+  after the final change. An all-in-one verifier is not mandatory solely
+  because it exists; use the smallest sufficient existing commands and report
+  broader checks not run. A silent long-running test is neither pass nor fail:
+  check its final exit and results; do not restart just for lack of output.
+  CI MUST enforce required verification. Do not weaken tests, assertions, or
   mandatory gates.
 - Code/runtime changes need automated tests; bug fixes MUST add a regression
   test failing before and passing after.
+- Do not test rule or documentation prose wording or paraphrases; these tests
+  duplicate policy and break on equivalent rewrites. Test observable behavior,
+  schemas, limits, tool contracts, and generated-artifact consistency. Exact
+  literals require a concrete justification as externally mandated machine
+  identifiers or protocol formats.
 - For security audit failures, use the documented automated fix; if it succeeds,
   rerun verification before commit/push.
-- Reproduce failures minimally; after dependency/environment changes, reproduce
-  on the prior state (prior SHA / pre-bump seed) before attribution. Validate
-  inputs/configuration, fail fast, and never swallow errors.
+- Reproduce failures minimally; for environment-dependent defects, collect
+  affected-runtime observations read-only and encode relevant, sanitized
+  differences in test-owned fixtures rather than relying on assumptions.
+  After dependency/environment changes, reproduce on the prior state (prior
+  SHA / pre-bump seed) before attribution. Validate inputs/configuration, fail
+  fast, and never swallow errors.
 
 ## Negative-test fixtures
 

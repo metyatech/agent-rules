@@ -2,7 +2,6 @@ $ErrorActionPreference = 'Stop'
 
 Write-Host 'Running Node regression tests.'
 node --test `
-    tests/verify-course-authoring.test.mjs `
     tests/verify-global-rules.test.mjs
 
 if ($LASTEXITCODE -ne 0) {
