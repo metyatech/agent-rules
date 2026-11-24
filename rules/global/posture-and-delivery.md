@@ -23,6 +23,8 @@
 - Unless requested, the agent MUST NOT introduce backward-compatibility shims,
   legacy aliases, or temporary fallbacks; remove discovered legacy paths at
   source in the same change set.
+  Assess ongoing need and maintenance cost before proposing compatibility;
+  use one-time migration or recovery when sufficient.
 - Do not turn agent-operating or workflow/environment context into artifact
   features, scope, or UI requirements unless asked.
 
