@@ -10,14 +10,13 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
   integration, E2E, or repo-wide checks when shared components, dependencies,
   runtime, broad workflows, or uncertainty warrant it.
 
-- Run checks required by repo instructions, CI, branch protection, or release
-  policy. Use focused tests during investigation and run required full gates
-  after the final change. An all-in-one verifier is not mandatory solely
-  because it exists; use the smallest sufficient existing commands and report
-  broader checks not run. A silent long-running test is neither pass nor fail:
-  check its final exit and results; do not restart just for lack of output.
-  CI MUST enforce required verification. Do not weaken tests, assertions, or
-  mandatory gates.
+- Run repo-, CI-, branch-protection-, and release-required checks. Use focused
+  tests during investigation; run required full gates after final changes.
+  Existence alone doesn't mandate an all-in-one verifier: use the smallest
+  sufficient existing commands; report broader checks not run. For silent
+  long-running tests, check final exit/results; silence is neither pass nor
+  fail and doesn't justify restart. CI MUST enforce required checks; never
+  weaken tests, assertions, or mandatory gates.
 - Code/runtime changes need automated tests; bug fixes MUST add a regression
   test failing before and passing after.
 - Do not test rule or documentation prose wording or paraphrases; these tests
@@ -74,9 +73,11 @@ gh api "repos/$repo/actions/runs/$run/jobs" `
   high-consequence journeys end-to-end in live/production-like conditions,
   including interruption, retry, reload, invalid-input, and stale-state cases.
 - After runtime dependency updates, verify the intended revision actually
-  loaded/executed in every claimed environment; manifests, lockfiles, and
-  package-manager versions alone are insufficient. Rebuild dependent artifacts as
-  needed and run a focused runtime check.
+  loaded/executed in each claimed environment, not just manifest/lockfile/package-manager
+  versions. Rebuild dependent artifacts as needed; run focused runtime checks.
+- For OS-specific script generation, process launch, or autostart changes,
+  test with the actual OS/interpreter where feasible, not just text or mocks.
+  Cover applicable first install, migration, update, and failure recovery.
 
 ## Bug handling
 

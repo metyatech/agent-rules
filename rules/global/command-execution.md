@@ -1,24 +1,22 @@
 # Commands
 
-- Prefer repo-standard scripts; add no wrappers, redirects, or pipes unless
-  asked. Reproduce reported failures (or closest equivalent) before fixing.
-  Nonzero exits fail unless documented and explicitly checked in code; unknown
+- Prefer repo-standard scripts; no wrappers, redirects, or pipes unless asked.
+  Reproduce reported failures (or closest equivalent) before fixes.
+  Nonzero exits fail unless documented and checked explicitly in code; unknown
   codes fail.
-- Use available capabilities only. For missing/changed tools/config, verify
-  MCP access or report a blocker and stop dependent work. For third-party
-  failures, check latest stable release; if persistent, document limits and use
-  deterministic workarounds.
+- Use available capabilities only. For missing/changed tools/config, verify MCP
+  access or report blocker and stop dependent work. For third-party failures,
+  check latest stable; if persistent, document limits and use deterministic
+  workarounds.
 
-- Before dependency-requiring commands, ensure project dependencies are
-  available; if not, prepare them in this task. Prefer the repo-standard
-  installer; first check compatible installed dependencies/caches and verify
-  manifest/lockfile compatibility.
-- If preparation fails, identify why and try a permitted alternative in the same
-  execution: reuse compatible dependencies/cache or, for sandbox restrictions,
-  retry the required operation through the approved host path. Do not stop at the
-  first failed method; stop only when no permitted preparation works or an
-  explicit requirement forbids continuing. Never modify shared dependencies
-  unsafely, bypass approval, or weaken verification.
+- Before dependency-requiring commands, check installed dependencies/caches
+  against manifest/lockfile; prepare missing dependencies in this task, preferring
+  the repo-standard installer.
+- If preparation fails, identify why and try permitted alternatives in the same
+  execution (compatible dependencies/cache or approved host retry for sandbox
+  restrictions). Stop only if none works or explicitly forbidden to continue.
+  Never modify shared dependencies unsafely, bypass approval, or weaken
+  verification.
 - For `EPERM`, `EACCES`, access denied, or denied file/Git operations
   (read/write, create, rename, install), verify target, ownership, conflicts,
   side effects. If ambiguous, retry same operation once via approved
@@ -30,21 +28,19 @@
 
 ## Processes
 
-- System diagnostics MUST be read-only by default. The agent MUST NOT
-  terminate, force-kill, restart, or otherwise disrupt pre-existing processes,
-  shared daemons, or services without explicit action-specific user
-  authorization.
-- Agent-started isolated temporary test fixtures MAY be cleaned without
-  approval only with verified ownership/identity. A PID alone is
-  insufficient; retain a process handle or verify executable identity and
-  creation time before termination.
-- Starting/discovering managed/shared daemons during diagnostics doesn't make
-  them agent-owned disposable test processes. Managed services MUST use
-  official lifecycle for authorized stops/restarts; force termination requires
-  separate explicit authorization after managed shutdown fails.
-- The agent MUST NOT use broad process-name matches, unverified PIDs, or
-  process-tree kills for diagnostics. If ownership/identity is uncertain, the
-  agent MUST leave it running and report why.
+- Diagnostics MUST be read-only by default. Never disrupt pre-existing
+  processes, shared daemons, or services without explicit action-specific user
+  authorization. Discovery/start does not make managed/shared daemons disposable.
+  Use official lifecycle for authorized stops/restarts; force termination
+  requires separate explicit authorization after managed shutdown fails.
+- Clean agent-started isolated temporary test fixtures without approval only
+  with verified ownership: retain a handle or verify executable identity and
+  creation time before termination. A PID alone is insufficient. Never use broad
+  process-name matches, unverified PIDs, or process-tree kills for diagnostics.
+  If ownership/identity is uncertain, leave it running and report why.
+- Autostart, scheduled, and background processes MUST show no console/GUI unless
+  user interaction is required. Verify actual launch, not just task visibility
+  settings; preserve startup, stop, monitoring, recovery, and updates.
 
 ## Git
 
