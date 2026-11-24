@@ -15,8 +15,10 @@ keywords mean MUST.
 ## Authoring
 
 - Rules MUST be MECE (one obligation/module; cross-reference, not duplicate),
-  atomic, imperative, and yes/no-testable; avoid hedges ("ideally", "reasonable",
-  "perhaps").
+  atomic, imperative, yes/no-testable, and unhedged. Review existing coverage:
+  prefer revising, merging, or deleting redundant or obsolete rules over adding.
+  Add only if existing rules and sound judgment are insufficient and the benefit
+  justifies token and maintenance cost. Preserve necessary obligations.
 - Put any-workspace rules in `rules/global/` and selective rules in
   `rules/domains/<domain>/`; encode principles, not surface examples.
 - Persistent user instructions MUST use appropriate modules unless task-scoped.
