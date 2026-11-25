@@ -103,11 +103,14 @@
 
 ## CI enforcement
 
-- CI MUST check format/lint on every PR; warnings fail. GitHub Actions
-  `push`/`pull_request` jobs MUST set `timeout-minutes: 10`. If 10 minutes is
-  insufficient, optimize CI first; extensions require user approval and MUST NOT
-  exceed 15 minutes. Checks over 15 minutes MUST NOT run on `push`/`pull_request`;
-  use manual triggers such as `workflow_dispatch`.
+- CI MUST check format/lint on every PR; warnings fail.
+  GitHub Actions `push`/`pull_request` jobs MUST set `timeout-minutes: 10`.
+  Optimize before extending (user approval required; maximum 15 minutes).
+  Run checks over 15 minutes only manually (e.g. `workflow_dispatch`).
+- GitHub Actions MUST stay within account-wide included usage unless the user
+  explicitly approves paid usage. For CI creation, changes, and audits, estimate
+  monthly cost from total billable job time, frequency, and runner rates;
+  minimize usage without weakening required gates. See `code-quality-setup`.
 
 ## GitHub Actions runtime currency
 
