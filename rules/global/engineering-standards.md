@@ -49,18 +49,18 @@
 
 ## Restriction and diagnostic design
 
-- Before adding an allowlist, suppression, replacement, or
-  access/display/processing restriction, state its concrete requirement/failure
-  mode and weigh benefits against implementation/maintenance/testing/operational
-  costs. Add only for demonstrated need; remove when it ends. Preserve validation
-  for correct behavior, input shape, authorization, or state transitions.
-- Preserve structured diagnostic identifiers exactly as received, including
-  unknown non-empty values; never replace them with generic errors just because
-  they are unregistered, or alter stored values. When escaping for display,
-  reversibly distinguish actual newlines from literal backslash sequences in a
-  line-safe format. Validate known/unknown/missing identifiers and control
-  characters. Do not require unconditional disclosure of arbitrary exception
+- Before adding allowlists, suppression, replacement, or access/display/processing
+  restrictions, demonstrate concrete need/failure modes and weigh benefits
+  against implementation/maintenance/test/operational costs. Remove obsolete
+  restrictions; preserve behavior/input-shape/authorization/state-transition validation.
+- Store structured diagnostic IDs verbatim, including unknown non-empty ones;
+  never genericize unregistered IDs. Escape display line-safely and reversibly
+  (actual newlines vs literal backslash sequences); validate known/unknown/missing
+  IDs and control characters. Never mandate unconditional disclosure of exception
   messages or sensitive tokens.
+- Retain original investigation-relevant local diagnostic data without needless
+  omission, summarization, or masking; honor data protection. Bound recurring
+  logs by age/total size; automate rotation/cleanup.
 
 ## Automated test isolation and user-data protection
 
