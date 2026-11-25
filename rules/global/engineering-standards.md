@@ -3,19 +3,18 @@
 ## Tooling and dependencies
 
 - Prefer maintained upstream tools; verify existing solutions before custom
-  logic. Use deterministic checks and exact path/symbol/string search. For
-  semantic narrowing among 12+ source candidates, use `jev_rank` with
-  paths/globs, then `jev_pick` by relevance from the supplied candidate list.
-- Use `jev_decide` only for plan-changing choices among 2–6 plausible
-  options, with evidence and user priorities; retain `ask_user`,
-  `investigate`, and `none`. Use `jev_verify` for specific claims against
-  direct evidence and `jev_navigate`
+  logic. Use deterministic checks and exact path/symbol/string search. To
+  semantically narrow 12+ source candidates, use `jev_rank` with paths/globs,
+  then `jev_pick` by relevance within the supplied list.
+- Use `jev_decide` only for plan-changing choices among 2–6 plausible options,
+  with evidence and user priorities; retain `ask_user`, `investigate`, `none`.
+  Use `jev_verify` for specific claims against direct evidence; `jev_navigate`
   for supported multi-step browser work.
-- Do not use Jev for generation, multi-hop reasoning, deep patch correctness
-  review, deterministic test/build/Git/version/hash/CI facts, or repeating
-  decisions on unchanged evidence. Completion reviews and generic next-step
-  judgments are optional; for low confidence, invalid/escape results, or service
-  failure, use a stronger reasoner or ask a person.
+- Never use Jev for generation, multi-hop reasoning, deep patch correctness
+  review, deterministic test/build/Git/version/hash/CI facts, or repeated
+  decisions on unchanged evidence. Completion reviews/generic next-step
+  judgments are optional; on low confidence, invalid/escape results, or
+  service failure, use a stronger reasoner or ask a person.
 
 ## Unreal Blueprint graph capture
 
@@ -27,90 +26,89 @@
 
 ## System design
 
-- Designs MUST compose cleanly through clear dependency direction, shallow
-  control flow,
-  intention-revealing names, and centralized change points. Keep
-  code/docs/tests/config DRY; fix root causes and remove obsolete code in the
-  change.
-- Failure paths MUST tear down resources, leave no partial state, verify
-  cleanup, and preserve last-known-good state until replacement validates.
-  Updates, syncs, migrations, self-updates, and generated-runtime replacements
-  MUST validate replacement state off-path before narrow final cutover.
-- Multi-step state transitions MUST persist durable state for deterministic
-  resume/reconcile; failed staged artifacts MUST stay off the authoritative path
-  with bounded retention and cleanup retry.
+- Use clear dependency direction, shallow control flow, intention-revealing
+  names, centralized change points, and DRY code/docs/tests/config. Fix root
+  causes and remove obsolete code in the change.
+- Unify equivalent concepts across targets; isolate target-specific differences
+  in inputs/config and share the common logic.
+- Manage and distribute interdependent tool files as one reusable bundle rather
+  than enumerating individual files.
+- Failure paths MUST tear down resources, verify cleanup, leave no partial state,
+  and preserve last-known-good state until replacement validates. Validate
+  updates, syncs, migrations, self-updates, and generated-runtime replacements
+  off-path before narrow final cutover.
+- Persist durable state for deterministic multi-step resume/reconcile; keep
+  failed staged artifacts off the authoritative path with bounded retention and
+  cleanup retry.
 
 ## API surfaces
 
 - Prefer native SDKs/stable APIs; isolate unavoidable unstable ones; externalize
   large strings/templates.
-- The agent MUST NOT commit build artifacts; align artifact dirs with
-  `.gitignore`.
+- Never commit build artifacts; align artifact dirs with `.gitignore`.
 
-## Restriction and diagnostic design
+## Feature, restriction, and diagnostic design
 
-- Before adding allowlists, suppression, replacement, or access/display/processing
-  restrictions, demonstrate concrete need/failure modes and weigh benefits
-  against implementation/maintenance/test/operational costs. Remove obsolete
-  restrictions; preserve behavior/input-shape/authorization/state-transition validation.
-- Store structured diagnostic IDs verbatim, including unknown non-empty ones;
-  never genericize unregistered IDs. Escape display line-safely and reversibly
-  (actual newlines vs literal backslash sequences); validate known/unknown/missing
-  IDs and control characters. Never mandate unconditional disclosure of exception
+- Justify adding, changing, or retaining features, including allowlists,
+  suppression, replacement, and access/display/processing restrictions: show
+  concrete need/failure modes, weigh benefits against implementation/maintenance/
+  test/operational costs, and consider removal. Remove obsolete restrictions;
+  preserve behavior/input-shape/authorization/state-transition validation.
+  For user decisions, explain each feature's behavior, purpose, and removal
+  impact.
+- Preserve structured diagnostic IDs verbatim, including unknown non-empty
+  IDs; never genericize unregistered IDs. Escape line-safely and reversibly
+  (actual newlines vs literal backslashes); validate known/unknown/missing IDs
+  and control characters. Never mandate unconditional disclosure of exception
   messages or sensitive tokens.
-- Retain original investigation-relevant local diagnostic data without needless
-  omission, summarization, or masking; honor data protection. Bound recurring
-  logs by age/total size; automate rotation/cleanup.
+- Retain original investigation-relevant local diagnostics without needless
+  omission/summarization/masking; honor data protection. Bound recurring logs
+  by age/total size with automated rotation/cleanup.
 
 ## Automated test isolation and user-data protection
 
-- Tests/fixtures/mocks MUST NOT mutate real user data/config,
-  credentials/tokens, browser profiles, or auth/session files. Per-user
-  home/app-data defaults are real until redirected to a test-owned path.
-- Before any test write, inject a unique test-owned temp root for stateful paths
-  (missing-file defaults, fallback paths, login/retry callbacks). Validate
-  resolved targets inside it BEFORE writing; mocked reads don't stop callbacks
-  writing to production defaults. For concurrent tests, prefer injected
-  paths/isolated subprocesses over shared home/config changes; isolate targets
-  before destructive tests.
-- Add regression coverage for original fallback writes; verify user state
-  unchanged without exposing secrets or sensitive file contents.
+- Tests/fixtures/mocks MUST NOT mutate real user data/config, credentials/tokens,
+  browser profiles, or auth/session files. Home/app-data defaults remain real
+  until redirected to test-owned paths.
+- Inject a unique test-owned temp root for stateful paths (missing-file defaults,
+  fallbacks, login/retry callbacks); validate resolved targets within it BEFORE
+  any test write. Mocked reads cannot prevent production-default writes by
+  callbacks. Prefer injected paths/isolated subprocesses over shared home/config
+  changes in concurrent tests; isolate targets before destructive tests.
+- Test regressions for original fallback writes; verify unchanged user state
+  without exposing secrets or sensitive file contents.
 
 ## Repository hygiene
 
-- The agent MUST NOT commit task/review/build/verification-only evidence
-  (`review-verification`, `build-evidence`, review screenshots, one-off logs,
-  verification-result JSON, review reports); tests/CI MUST NOT require it.
-- Verification-only files MUST stay in OS temp or untracked temp areas; source,
-  tests, config, reproducibility fixtures, and product/distribution artifacts
-  may remain in the repo contract.
+- Never commit task/review/build/verification-only evidence (`review-verification`,
+  `build-evidence`, review screenshots, one-off logs, verification-result JSON,
+  review reports) or require it in tests/CI. Keep verification-only files in
+  OS temp or untracked temp areas. Source, tests, config, reproducibility
+  fixtures, and product/distribution artifacts may remain in the repo contract.
 
 ## Linters, formatters, and static analysis
 
-- Every repo MUST pin a formatter and linter/analyzer per primary language.
-  Never disable lint rules globally; suppressions MUST be narrow, justified
-  inline, and time-bounded. New repos MUST configure formatter automation before
-  completion; existing repos MUST preserve/add it when changing formatter-managed
-  files.
-- Quality automation MUST separate roles: editor/save and pre-commit hooks MAY
-  mutate working files; CI MUST NOT mutate the repo. Procedure:
-  `code-quality-setup`.
-- Formatting/auto-fixing pre-commit hooks MUST be lightweight and staged-file-
-  only; they MUST NOT run the full suite, full typecheck, production build,
-  integration tests, or other long-running gates.
-- CI MUST run non-mutating format/lint/typecheck/test checks via repo-standard
-  commands.
+- Pin a formatter and linter/analyzer per repo's primary language. Never disable
+  lint rules globally; keep suppressions narrow, justified inline, time-bounded.
+  Configure formatter automation before completing new repos; preserve/add it
+  when changing formatter-managed files in existing repos.
+- Editor/save and pre-commit hooks MAY mutate files; CI MUST NOT mutate the
+  repo. See `code-quality-setup`.
+- Keep formatting/auto-fixing pre-commit hooks lightweight, staged-file-only:
+  no full suite/typecheck, production build, integration tests, or other long
+  gates.
+- CI MUST run non-mutating format/lint/typecheck/test via repo-standard commands.
 
 ## CI enforcement
 
-- CI MUST check format/lint on every PR; warnings fail.
-  GitHub Actions `push`/`pull_request` jobs MUST set `timeout-minutes: 10`.
-  Optimize before extending (user approval required; maximum 15 minutes).
-  Run checks over 15 minutes only manually (e.g. `workflow_dispatch`).
-- GitHub Actions MUST stay within account-wide included usage unless the user
-  explicitly approves paid usage. For CI creation, changes, and audits, estimate
+- Check format/lint on every PR; warnings fail. GitHub Actions
+  `push`/`pull_request` jobs require `timeout-minutes: 10`; optimize before
+  extending (user approval required, max 15 minutes). Run checks over 15 minutes
+  only manually (e.g. `workflow_dispatch`).
+- Stay within account-wide included GitHub Actions usage unless the user
+  explicitly approves paid usage. For CI creation/changes/audits, estimate
   monthly cost from total billable job time, frequency, and runner rates;
-  minimize usage without weakening required gates. See `code-quality-setup`.
+  minimize usage without weakening gates. See `code-quality-setup`.
 
 ## GitHub Actions runtime currency
 
@@ -123,16 +121,16 @@
 
 ## Visual verification
 
-- The agent MUST visually verify changes to UI, layout, generated documents,
-  images, screenshots, slides, PDFs, or other rendered output before concluding.
+- Visually verify UI, layout, generated document, image, screenshot, slide,
+  PDF, and other rendered-output changes before concluding.
 - Web UI projects MUST enforce visual accessibility checks.
 
 ## Environment portability
 
-- The agent MUST NOT introduce machine-specific environments; use relative
-  paths/config. Lifecycle hooks MUST succeed on clean machines; regenerate
-  lockfiles on manifest changes. Agent-owned temp files MUST stay under OS temp
-  unless explicitly approved.
+- Never introduce machine-specific environments; use relative paths/config.
+  Lifecycle hooks must succeed on clean machines; regenerate lockfiles on
+  manifest changes. Keep agent-owned temp files under OS temp unless explicitly
+  approved.
 
 ## Tool integration
 
