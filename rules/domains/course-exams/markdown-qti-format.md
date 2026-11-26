@@ -127,13 +127,21 @@ time_budget_seconds: 180
 - The manifest is `assessment.yaml`.
 - Manifests MUST contain `items`.
 - Manifests MAY contain `time_limit_seconds`.
-- Standard weekly-quiz and exam assessment titles MUST be derived by the
-  assessment system from the canonical assessment path and course metadata;
-  their manifests MUST NOT contain `title`.
-- Assessments outside the standard weekly-quiz / midterm / regular-term exam
-  naming model MAY contain an explicit non-empty `title`.
-- The manifest root MUST otherwise contain only optional `title`, optional
-  `time_limit_seconds`, and `items`.
+- Standard assessment titles MUST be derived from course metadata only for
+  exact standard paths under the canonical course/year/semester root:
+  `quizzes/wNN/assessment.yaml` (two digits), or
+  `exams/<exam>/<attempt>/assessment.yaml`, with `<exam>` matching
+  `^\d*(midterm-exam|final-exam)$` and `<attempt>` matching
+  `^\d*(preparation|regular|retake)(?:-(.+))?$`. Matching manifests MUST NOT
+  contain `title`.
+- All other valid assessment paths MUST contain an explicit string `title`
+  that is not empty or whitespace-only. Preserve the title text as supplied.
+- Exam paths MAY have one or more classification directories under `exams/`.
+  Standard title matching MUST NOT restrict valid non-standard exam layouts.
+  Existing canonical root, kind, reserved-directory, question-bank reference,
+  and path safety requirements still apply.
+- The manifest root MUST otherwise contain only `title` (as required or
+  forbidden above), optional `time_limit_seconds`, and `items`.
 - A root `type` field is FORBIDDEN. Manifest `type: quiz` and `type: exam` MUST
   NOT be used. Distinguish quiz,
   exam, and preparation-set behavior outside the common manifest schema.
