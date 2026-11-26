@@ -48,7 +48,6 @@ async function composeCanonicalGlobalRulesReport() {
     await writeFile(path.join(projectRoot, 'agent-ruleset.json'), JSON.stringify({
       sources: [repoRoot],
       profile: 'agent-rules',
-      global: true,
     }));
 
     const result = spawnSync('compose-agentsmd', [
@@ -82,6 +81,21 @@ test('profile JSON maps mixed Node and Python projects to their machine-readable
   assert.throws(() => assert.deepEqual(invalidProfiles['node-python']?.domains, ['node', 'python']));
 });
 
+test('canonical ruleset selects the unchanged profile and outputs without a global option', async () => {
+  const ruleset = JSON.parse(await readFile(path.join(repoRoot, 'agent-ruleset.json'), 'utf8'));
+
+  assert.equal(Object.hasOwn(ruleset, 'global'), false);
+  assert.deepEqual(ruleset, {
+    sources: ['.'],
+    profile: 'agent-rules',
+    claude: {
+      enabled: true,
+      output: 'CLAUDE.md',
+    },
+    output: 'AGENTS.md',
+  });
+});
+
 test('compose-agentsmd computes global rules within the hard 8000-token limit', async () => {
   const report = await composeCanonicalGlobalRulesReport();
   assertWithinHardTokenBudget(report);
@@ -94,7 +108,7 @@ test('compose-agentsmd check-budget reports effective limits without writing fil
   const canonical = await composeCanonicalGlobalRulesReport();
   const rulesetPath = path.join(repoRoot, 'agent-ruleset.json');
   const ruleset = JSON.parse(await readFile(rulesetPath, 'utf8'));
-  assert.equal(ruleset.global, false);
+  assert.equal(Object.hasOwn(ruleset, 'global'), false);
   const gitStateBefore = spawnSync('git', ['-C', repoRoot, 'status', '--porcelain'], {
     encoding: 'utf8',
   });
@@ -185,7 +199,7 @@ test('CI workflow pins executable verification configuration', async () => {
   assert.doesNotMatch(workflow, /^  schedule:/mu);
 
   const canonicalJob = extractJobSection(workflow, 'verify');
-  const pinnedRef = 'dcf5c4a4f159d7e2df1f52d51c4d651f7bf2ca5f';
+  const pinnedRef = 'd66978e3be0bffe66f070ebb013796f3e8b52a20';
   assertComposeVerificationJob(canonicalJob, pinnedRef);
   const wrongPinnedRefJob = canonicalJob.replace(`ref: ${pinnedRef}`, 'ref: another-revision');
   assert.notEqual(wrongPinnedRefJob, canonicalJob);

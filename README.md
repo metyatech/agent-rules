@@ -41,9 +41,8 @@ Before editing a consumer's shared rules, run
 workspaces and review the initial effective total, 8000-token hard limit,
 7000-token advisory target, and remaining margin. During repeated edits, use
 the read-only `compose-agentsmd check-budget --root <agent-rules repo> --json`
-for exact measurements; it works with rulesets using `global: false` and still
-measures their editable global-rule source. It does not clone, fetch, push, or
-write. Keep headroom instead of publishing at
+for exact measurements; it still measures the editable global-rule source. It does
+not clone, fetch, push, or write. Keep headroom instead of publishing at
 the hard limit; aim near 7000 without treating it as another hard gate.
 
 When the effective global count is above the 7000-token advisory target, new

@@ -1,7 +1,6 @@
 {
   "sources": ["."],
   "profile": "agent-rules",
-  "global": false,
   "claude": {
     "enabled": true,
     "output": "CLAUDE.md"
