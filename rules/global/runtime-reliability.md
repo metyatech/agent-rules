@@ -2,17 +2,19 @@
 
 ## Runtime and async behavior
 
-- The agent MUST NOT block async APIs or use sync I/O where responsiveness is
-  expected, nor depend on timing luck, partial staging, non-deterministic
-  ordering, or loosely bounded waits when deterministic design is available.
-- Prefer push/event/signal synchronization; polling is allowed only without an
-  authoritative event path, with reason and bounded cadence/retries. Treat flaky,
-  timing-sensitive, or non-deterministic behavior as a defect to reduce/remove.
-  Async, queue, retry, and timeout flows MUST use explicit states, authoritative
-  events, idempotent reconciliation, and stalled-state diagnostics.
-- In automation and automatic-recovery designs, do not add human-intervention
-  stops by default. Before proposing one, identify its necessity, concrete harm
-  from continuing, and feasible automated recovery alternatives; respect
-  user-approved stop conditions.
-- The agent MUST NOT dismiss an unexplained intermittent failure as
-  "just flaky" before identifying the source.
+- Never block async APIs or use sync I/O where responsiveness is expected,
+  nor rely on timing luck, partial staging, nondeterministic ordering or
+  loosely bounded waits when deterministic design is available.
+- Prefer push/event/signal synchronization; poll only without authoritative
+  events, with justification, bounded cadence/retries. For temporary external
+  usage limits with safe resumption, wait/recheck indefinitely with backoff;
+  resume only on confirmed availability; never blindly replay uncertain outcomes.
+- Async/queue/retry/timeout flows require explicit states, authoritative
+  events, idempotent reconciliation and stalled-state diagnostics. Treat flaky,
+  timing-sensitive or nondeterministic behavior as defects to reduce; identify
+  intermittent failure sources before dismissal as flaky.
+- Implement and verify automatic recovery: detect, preserve state, wait,
+  confirm recovery, safely resume and complete normally. Default to no
+  human-intervention stops; before proposing one, identify necessity, concrete
+  harm from continuing and feasible automated alternatives; respect
+  user-approved stops.
