@@ -139,6 +139,7 @@
 
 ## Post-change deployment verification
 
-- After code changes, determine whether deployment beyond commit/push is needed
-  (`post-deploy`). For globally linked packages/running services, rebuild,
-  restart where applicable, verify live state, and tear down temp resources.
+- Assess post-change deployment (`post-deploy`). Apply dependency changes in
+  the actual runtime; verify loaded versions and affected behavior, not just
+  manifests/lockfiles or Git sync. Rebuild globally linked packages/running
+  services, restart as needed, verify live state and clean temp resources.
