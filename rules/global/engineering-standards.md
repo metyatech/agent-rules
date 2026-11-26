@@ -3,18 +3,18 @@
 ## Tooling and dependencies
 
 - Prefer maintained upstream tools; verify existing solutions before custom
-  logic. Use deterministic checks and exact path/symbol/string search. To
-  semantically narrow 12+ source candidates, use `jev_rank` with paths/globs,
-  then `jev_pick` by relevance within the supplied list.
+  logic. Use deterministic checks and exact path/symbol/string search. Narrow
+  12+ source candidates semantically with `jev_rank` (paths/globs), then
+  `jev_pick` by relevance within the supplied list.
 - Use `jev_decide` only for plan-changing choices among 2–6 plausible options,
-  with evidence and user priorities; retain `ask_user`, `investigate`, `none`.
-  Use `jev_verify` for specific claims against direct evidence; `jev_navigate`
+  with evidence/user priorities; retain `ask_user`, `investigate`, `none`.
+  Use `jev_verify` for specific claims against direct evidence, `jev_navigate`
   for supported multi-step browser work.
 - Never use Jev for generation, multi-hop reasoning, deep patch correctness
   review, deterministic test/build/Git/version/hash/CI facts, or repeated
   decisions on unchanged evidence. Completion reviews/generic next-step
-  judgments are optional; on low confidence, invalid/escape results, or
-  service failure, use a stronger reasoner or ask a person.
+  judgments: optional. Low confidence, invalid/escape results, service failure:
+  use a stronger reasoner or ask a person.
 
 ## Unreal Blueprint graph capture
 
@@ -27,19 +27,18 @@
 ## System design
 
 - Use clear dependency direction, shallow control flow, intention-revealing
-  names, centralized change points, and DRY code/docs/tests/config. Fix root
-  causes and remove obsolete code in the change.
-- Unify equivalent concepts across targets; isolate target-specific differences
-  in inputs/config and share the common logic.
-- Manage and distribute interdependent tool files as one reusable bundle rather
-  than enumerating individual files.
-- Failure paths MUST tear down resources, verify cleanup, leave no partial state,
-  and preserve last-known-good state until replacement validates. Validate
-  updates, syncs, migrations, self-updates, and generated-runtime replacements
-  off-path before narrow final cutover.
+  names, centralized change points, DRY code/docs/tests/config. Fix root causes;
+  remove obsolete code in the change.
+- Unify equivalent concepts across targets; share logic, isolate target-specific
+  differences in inputs/config.
+- Manage/distribute interdependent tool files as one reusable bundle, not
+  individually enumerated files.
+- On failure, tear down resources, verify cleanup, leave no partial state.
+  Preserve last-known-good state until replacement validates. Validate
+  updates/syncs/migrations/self-updates/generated-runtime replacements off-path
+  before narrow final cutover.
 - Persist durable state for deterministic multi-step resume/reconcile; keep
-  failed staged artifacts off the authoritative path with bounded retention and
-  cleanup retry.
+  failed staged artifacts off authoritative paths; bound retention, retry cleanup.
 
 ## API surfaces
 
@@ -49,21 +48,22 @@
 
 ## Feature, restriction, and diagnostic design
 
-- Justify adding, changing, or retaining features, including allowlists,
-  suppression, replacement, and access/display/processing restrictions: show
-  concrete need/failure modes, weigh benefits against implementation/maintenance/
-  test/operational costs, and consider removal. Remove obsolete restrictions;
-  preserve behavior/input-shape/authorization/state-transition validation.
-  For user decisions, explain each feature's behavior, purpose, and removal
-  impact.
-- Preserve structured diagnostic IDs verbatim, including unknown non-empty
-  IDs; never genericize unregistered IDs. Escape line-safely and reversibly
-  (actual newlines vs literal backslashes); validate known/unknown/missing IDs
-  and control characters. Never mandate unconditional disclosure of exception
+- Justify feature/restriction additions, changes, retention (e.g. allowlists,
+  suppression, replacement, access/display/processing limits): concrete needs,
+  failure modes, benefits vs implementation/maintenance/test/operational costs;
+  consider removal. For specific use cases, inspect constraints; prefer
+  removing needless restrictions or generalizing existing functionality over
+  special cases when sufficient. Remove obsolete restrictions; preserve specified
+  behavior and input-shape/authorization/state-transition validation. For user
+  decisions, explain each feature's behavior, purpose, removal impact.
+- Preserve structured diagnostic IDs verbatim (including unknown non-empty IDs);
+  never genericize unregistered IDs. Escape line-safely/reversibly (actual
+  newlines vs literal backslashes); validate known/unknown/missing IDs and
+  control characters. Never mandate unconditional disclosure of exception
   messages or sensitive tokens.
 - Retain original investigation-relevant local diagnostics without needless
-  omission/summarization/masking; honor data protection. Bound recurring logs
-  by age/total size with automated rotation/cleanup.
+  omission/summarization/masking; honor data protection. Automatically
+  rotate/clean recurring logs with age/total-size bounds.
 
 ## Automated test isolation and user-data protection
 
@@ -94,9 +94,8 @@
   when changing formatter-managed files in existing repos.
 - Editor/save and pre-commit hooks MAY mutate files; CI MUST NOT mutate the
   repo. See `code-quality-setup`.
-- Keep formatting/auto-fixing pre-commit hooks lightweight, staged-file-only:
-  no full suite/typecheck, production build, integration tests, or other long
-  gates.
+- Formatting/auto-fixing pre-commit hooks: lightweight, staged-file-only;
+  no full suite/typecheck, production build, integration tests, other long gates.
 - CI MUST run non-mutating format/lint/typecheck/test via repo-standard commands.
 
 ## CI enforcement
@@ -107,13 +106,13 @@
   only manually (e.g. `workflow_dispatch`).
 - Stay within account-wide included GitHub Actions usage unless the user
   explicitly approves paid usage. For CI creation/changes/audits, estimate
-  monthly cost from total billable job time, frequency, and runner rates;
-  minimize usage without weakening gates. See `code-quality-setup`.
+  monthly cost from total billable job time/frequency/runner rates; minimize
+  usage without weakening gates. See `code-quality-setup`.
 
 ## GitHub Actions runtime currency
 
 - GitHub Actions JavaScript actions MUST use GitHub's current GA Node major;
-  migration windows MUST use documented opt-in and remove it when obsolete.
+  migration windows require documented opt-in; remove when obsolete.
   Procedure: `code-quality-setup`.
 - Fix runtime deprecation annotations in the same change. Do not pin workflows,
   action metadata, or setup actions to deprecated runtime majors unless the user
@@ -129,8 +128,7 @@
 
 - Never introduce machine-specific environments; use relative paths/config.
   Lifecycle hooks must succeed on clean machines; regenerate lockfiles on
-  manifest changes. Keep agent-owned temp files under OS temp unless explicitly
-  approved.
+  manifest changes. Agent-owned temp files: OS temp unless explicitly approved.
 
 ## Tool integration
 
