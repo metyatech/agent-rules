@@ -2,6 +2,9 @@
 
 - Weekly quizzes MUST help students retrieve taught lesson content, check
   whether they understand it, and identify knowledge gaps.
+- Select quiz content by the taught lesson's learning objectives, not merely
+  the material used. Do not require recall of facts specific to teaching
+  materials, examples, or topics unless those facts are learning objectives.
 - A weekly quiz for `wXX` MUST assess the content of lesson `XX`, where `XX` is
   the numeric part after `w` with leading zeros ignored. For example, `w01`
   assesses lesson 1, `w07` assesses lesson 7, and `w14` assesses lesson 14. Do

@@ -42,18 +42,17 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## GitHub Actions billing blocks
 
-- Mark a job `未実行（課金制限）` only with an annotation explicitly stating
-  failed account payments or a spending limit, `runner_id=0`, and zero steps.
-  Ignore it as a release/commit/push blocker only after repo-standard local
-  gates and applicable tests/format/lint/build pass; record CI unrun/unverified.
-- Judge jobs independently. Missing/empty annotations, API/tool errors,
-  timeouts, assigned runners, executed steps, unclear causes, test failures, or
-  failed/unrun local gates block.
-  Never skip checks or weaken tests/assertions.
-- Do not change billing settings/workflows/branch protection/runner config or
-  rerun just to retry billing. If branch protection requires the check, do
-  not bypass it; stop and report. Keep all other release, deploy, publish,
-  permission/authentication gates.
+- Per job, mark `未実行（課金制限）` only with explicit payment-failure/spending-limit
+  annotation, `runner_id=0`, zero steps. Waive commit/push/release blocking only
+  after repo-standard local gates and applicable test/format/lint/build pass;
+  record CI unrun/unverified. Missing/empty annotations, API/tool errors,
+  timeouts, assigned runners, executed steps, unclear causes, test failures,
+  or failed/unrun local gates block.
+- Find and run safe existing CLI/SDK/local alternatives for blocked steps;
+  verify commit, artifacts, destination, live state. Report unavailable steps.
+- Keep all verification/release/deploy/publish/authentication/permission gates.
+  Never change billing/workflow/branch protection/runner settings or rerun
+  merely to retry billing. Stop/report if branch protection requires the check.
 
 ```powershell
 $repo='OWNER/REPO'; $run='RUN_ID'
