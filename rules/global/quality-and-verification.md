@@ -4,55 +4,49 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
 
 ## Verification gates
 
-- Before changes, define binary acceptance criteria and an independent test
-  oracle. Choose checks by affected contracts, risk, and defect-detection ability,
-  not change size. Cover relevant normal, boundary, and failure cases; expand to
-  integration, E2E, or repo-wide checks when shared components, dependencies,
-  runtime, broad workflows, or uncertainty warrant it.
-
-- Run repo-, CI-, branch-protection-, and release-required checks. Use focused
-  tests during investigation; run required full gates after final changes.
-  Existence alone doesn't mandate an all-in-one verifier: use the smallest
-  sufficient existing commands; report broader checks not run. For silent
-  long-running tests, check final exit/results; silence is neither pass nor
-  fail and doesn't justify restart. CI MUST enforce required checks; never
-  weaken tests, assertions, or mandatory gates.
-- Code/runtime changes need automated tests; bug fixes MUST add a regression
+- Define binary acceptance criteria and an independent test oracle before changes.
+  Select checks by affected contracts, risk, detection ability, not change size;
+  cover relevant normal/boundary/failure cases; expand to integration/E2E/repo-wide
+  for shared components, dependencies, runtime, broad workflows, or uncertainty
+  as warranted.
+- Run required repo/CI/branch-protection/release checks: focused during
+  investigation, full after final changes. Use smallest sufficient existing
+  commands; report broader checks omitted (all-in-one verifier existence alone
+  doesn't mandate it). Verify silent long tests' final exit/results; silence
+  proves neither outcome nor justifies restart. CI MUST enforce required checks;
+  never weaken tests/assertions/mandatory gates.
+- Code/runtime changes require automated tests; bug fixes MUST add a regression
   test failing before and passing after.
-- Do not test rule or documentation prose wording or paraphrases; these tests
-  duplicate policy and break on equivalent rewrites. Test observable behavior,
-  schemas, limits, tool contracts, and generated-artifact consistency. Exact
-  literals require a concrete justification as externally mandated machine
-  identifiers or protocol formats.
-- For security audit failures, use the documented automated fix; if it succeeds,
+- Test behavior, schemas, limits, tool contracts, generated-artifact consistency,
+  not rule/docs wording/paraphrases (duplicate policy, break equivalent rewrites).
+  Exact literals require concrete external machine-identifier/protocol mandates.
+- For security audit failures, use documented automated fixes; on success,
   rerun verification before commit/push.
-- Reproduce failures minimally; for environment-dependent defects, collect
-  affected-runtime observations read-only and encode relevant, sanitized
-  differences in test-owned fixtures rather than relying on assumptions.
-  After dependency/environment changes, reproduce on the prior state (prior
-  SHA / pre-bump seed) before attribution. Validate inputs/configuration, fail
-  fast, and never swallow errors.
+- Reproduce minimally. For environment-dependent defects, observe affected
+  runtimes read-only, encode relevant sanitized differences in test-owned
+  fixtures, not assumptions. Reproduce prior state (SHA/pre-bump seed) before
+  attributing dependency/environment regressions. Validate inputs/config, fail
+  fast, never swallow errors.
 
 ## Negative-test fixtures
 
-- Tests rejecting invalid input MUST use test-owned fixtures stating the invalid
-  condition; MUST NOT depend on mutable production data/live content staying
-  invalid after correction. Tests of current production-data/live-content validity
-  MUST remain separate.
+- Invalid-input tests MUST use test-owned fixtures stating the invalid condition,
+  never rely on mutable production/live data remaining invalid after correction.
+  Test current production/live data validity separately.
 
 ## GitHub Actions billing blocks
 
-- Per job, mark `未実行（課金制限）` only with explicit payment-failure/spending-limit
+- Mark jobs `未実行（課金制限）` only with explicit payment-failure/spending-limit
   annotation, `runner_id=0`, zero steps. Waive commit/push/release blocking only
-  after repo-standard local gates and applicable test/format/lint/build pass;
-  record CI unrun/unverified. Missing/empty annotations, API/tool errors,
-  timeouts, assigned runners, executed steps, unclear causes, test failures,
-  or failed/unrun local gates block.
-- Find and run safe existing CLI/SDK/local alternatives for blocked steps;
-  verify commit, artifacts, destination, live state. Report unavailable steps.
+  if repo-standard local gates and applicable test/format/lint/build pass; record
+  CI unrun/unverified. Missing/empty annotations, API/tool errors, timeouts,
+  assigned runners, executed steps, unclear causes, test failures, failed/unrun
+  local gates block.
+- Find/run safe existing CLI/SDK/local alternatives for blocked steps; verify
+  commit, artifacts, destination, live state; report unavailable steps.
 - Keep all verification/release/deploy/publish/authentication/permission gates.
-  Never change billing/workflow/branch protection/runner settings or rerun
-  merely to retry billing. Stop/report if branch protection requires the check.
+  Never change billing/workflow/branch-protection/runner settings or rerun just
+  to retry billing. Stop/report if branch protection requires the check.
 
 ```powershell
 $repo='OWNER/REPO'; $run='RUN_ID'
@@ -66,27 +60,32 @@ gh api "repos/$repo/actions/runs/$run/jobs" `
 
 ## Runtime verification
 
-- For user-facing multi-client, multi-environment, or persisted-state systems,
-  verify each claimed environment/path and leave unverified paths unclaimed.
-  Verify authentication, billing, authorization, persistence, and other
-  high-consequence journeys end-to-end in live/production-like conditions,
-  including interruption, retry, reload, invalid-input, and stale-state cases.
-- After runtime dependency updates, verify the intended revision actually
-  loaded/executed in each claimed environment, not just manifest/lockfile/package-manager
-  versions. Rebuild dependent artifacts as needed; run focused runtime checks.
-- For OS-specific script generation, process launch, or autostart changes,
-  test with the actual OS/interpreter where feasible, not just text or mocks.
-  Cover applicable first install, migration, update, and failure recovery.
+- For user-facing multi-client/environment or persisted-state systems, claim
+  only verified environments/paths. Verify authentication, billing, authorization,
+  persistence, other high-consequence journeys E2E in live/production-like
+  conditions: interruption, retry, reload, invalid input, stale state.
+- Verify live-update compatibility with surviving processes, in-memory/persisted
+  state, locks, queues, sessions, and mixed versions as applicable; cold-start
+  success alone is insufficient.
+- After runtime dependency updates, verify intended revisions actually load/run
+  per claimed environment, not just manifest/lockfile/package-manager/Git sync.
+  Rebuild dependent artifacts as needed; run focused runtime checks.
+- Test OS-specific script generation, process launch, and autostart changes on
+  actual OS/interpreter where feasible, not just text/mocks; cover applicable
+  first install, migration, update, and failure recovery.
 
 ## Bug handling
 
-- Separate confirmed facts, probable causes, and unverified hypotheses; retries
-  or temporary non-reproduction alone do not prove a fix.
-
-- For each bug, strengthen the earliest deterministic gate to prevent broader
-  patterns; report instance-only fixes. Do not claim bug-free behavior; state
-  verified scope and residual risk.
-- For parser, converter, scorer, or generator fixes where outputs were
-  persisted, determine whether existing outputs were affected; compare
-  source/generated artifacts as risk warrants, identify unverified portions, and
-  decide on repair or regeneration.
+- Separate confirmed facts, probable causes, unverified hypotheses; retries or
+  temporary non-reproduction alone don't prove fixes.
+- For incidents following own changes, compare timing, logs, history, deployed
+  revisions, before/after behavior; report evidenced causality (own change,
+  pre-existing, or undetermined).
+- Separate incident recovery, leftover cleanup, prevention. Check current state
+  before recovery; never repeat completed user/agent actions. On user direction,
+  take safe interim measures without awaiting permanent fixes.
+- Strengthen each bug's earliest deterministic gate against broader patterns;
+  report instance-only fixes, verified scope, residual risk; never claim bug-free.
+- For parser/converter/scorer/generator fixes, assess affected persisted outputs,
+  compare source/generated artifacts as warranted, identify unverified portions,
+  decide repair/regeneration.

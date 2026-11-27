@@ -137,7 +137,6 @@
 
 ## Post-change deployment verification
 
-- Assess post-change deployment (`post-deploy`). Apply dependency changes in
-  the actual runtime; verify loaded versions and affected behavior, not just
-  manifests/lockfiles or Git sync. Rebuild globally linked packages/running
-  services, restart as needed, verify live state and clean temp resources.
+- Assess deployment (`post-deploy`): apply dependency changes to actual runtimes;
+  rebuild globally linked packages/running services, restart as needed. Verify
+  live state/affected behavior per `quality-and-verification`; clean temp resources.
