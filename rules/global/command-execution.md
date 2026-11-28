@@ -20,8 +20,8 @@
 - For `EPERM`, `EACCES`, access denied, or denied file/Git operations
   (read/write, create, rename, install), verify target, ownership, conflicts,
   side effects. If ambiguous, retry same operation once via approved
-  sandbox/host; for clearly OS-admin-only failures, use scoped admin. Known MXC
-  signatures require native approval first. HTTP 401/403, auth, timeouts, locks,
+  sandbox/host; for clearly OS-admin-only failures, use scoped admin. See
+  Sandbox for MXC routing. HTTP 401/403, auth, timeouts, locks,
   and config errors aren't OS permission failures. Preserve approval gates;
   report failed/refused/unavailable retries. Claim full verification only after
   all required checks pass.
@@ -109,26 +109,23 @@
 
 ## Sandbox
 
-- On Windows, `EPERM`, `EACCES`, or WinError 5 creating Junctions/hard links or
-  atomically replacing a file under MXC or sandboxed/redirected `%TEMP%` /
-  `%LOCALAPPDATA%` is a sandbox signature, not proof of an app defect. Node
-  `fs.symlinkSync(target, link, 'junction')` creates a directory junction, not
-  a symlink privilege probe; MXC `EPERM` is a known capability signature. Do
-  not attribute it to Developer Mode/OS denial before native approval.
-- For this MXC-specific signature, make one Codex native sandbox escalation
-  (`require_escalated` or equivalent) for the same in-scope command/directory,
-  with a brief reason. For test failures, escalate the original full test
-  command, never a link-only probe. Use the configured reviewer (`auto_review`
-  when available); never bypass it.
-- If approved, rerun the same full command once; verify its exit code and every
-  assertion, including the whole suite for test commands. Do not infer success
-  from partial results. If refused, unavailable, or failing, don't repeat
-  escalation/unchanged diagnosis; report uncovered verification and continue
-  independent safe work. Preserve all tests/assertions; never weaken/disable
-  them. Skips aren't passes.
-- Classify genuine OS symlink failures as Windows capability/privilege issues
-  (e.g. Developer Mode), distinct from MXC; scope admin actions. Never use the
-  legacy `elevated` Windows sandbox,
-  `danger-full-access`, global
-  sandbox disablement, or broad security/config changes. Report unverified
-  required assertions.
+- MXC is the default. Before execution, request native approval only when evidence
+  establishes that the same in-scope operation (or a required child of its
+  original full test suite) fails under the same MXC backend, version, OS and
+  environment; otherwise run in MXC. Auth, network, timeout, lock and config
+  errors alone are not MXC signatures. Never blanket-escalate Git, shell, tests
+  or all commands.
+- For a new MXC-specific signature, request native approval once for the same scoped
+  command/directory; for tests, request the original full suite, never a
+  link-only probe. Use the configured reviewer (auto_review when available).
+  If approved, run the same command once and verify its exit code and all
+  assertions/the whole suite. If refused, unavailable or failing, do not retry
+  or bypass; report uncovered verification and continue independent safe work.
+- On Windows, MXC `EPERM`, `EACCES` or WinError 5 for junctions/hard links or
+  atomic replacement, including sandboxed/redirected `%TEMP%`/`%LOCALAPPDATA%`,
+  indicates a capability limit, not an app defect or OS denial. Node
+  `fs.symlinkSync(target, link, 'junction')` creates a junction, not a
+  symlink privilege probe. Distinguish genuine OS symlink privilege limits
+  after approval and scope admin actions. Never use legacy `elevated`,
+  `danger-full-access`, global sandbox disablement or broad security/config
+  changes.
