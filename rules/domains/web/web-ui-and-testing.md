@@ -15,16 +15,15 @@
   uncovered contract; do not add an E2E harness or require E2E/PR CI for every
   user-visible change. Preserve existing required gates and add automation only
   when it provides distinct value over the current verification.
-- For React UI changes, add tests that cover initial mount and at least one
-  update (re-render) path; include unmount/cleanup when relevant.
-- If behavior differs between first render and later renders (effects, caching,
-  hydration), cover both paths explicitly.
+- Test React initial/update paths and relevant cleanup when changed behavior
+  depends on state, effects, async data, hydration, caching, or other
+  transition-dependent behavior; static or presentational edits need no such tests.
 - Configure E2E to fail fast and avoid auto-opening browsers (headless/no-open).
 - For Next.js E2E, prefer next build + next start.
 - If Playwright tests fail to launch, clear playwright/.cache and retry.
-- When adding/changing links, add tests that verify the target resolves; if not
-  feasible, document manual verification.
-- For cross-system integration flows, add an end-to-end test (or a contract test
-  at the boundary). If impractical, document the limitation and get explicit
-  user approval before skipping.
+- Verify changed links by browser/manual/direct check; automate critical or
+  generated destinations and recurring failures.
+- For cross-system flows, use proportionate boundary checks; manual checks suit
+  low-risk personal paths. Use integration/E2E for material boundary risk and
+  report unverified high-risk gaps.
 - Use established icon libraries; do not handcraft custom icons or inline SVGs.

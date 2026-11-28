@@ -21,8 +21,8 @@
 
 ## GitHub repository metadata
 
-- For public repositories, set a useful GitHub Description and relevant Topics.
-  Set a Homepage only when an actual useful destination exists.
+- Set public-repo Description/Topics when they materially aid identification,
+  discovery, or management; set Homepage only for a real, useful destination.
 - Topics MUST be relevant, stable, lowercase GitHub topics that describe the
   repository's language, platform, domain, and artifact type.
 

@@ -16,15 +16,17 @@ GUI verification: `gui-standards`. Procedural detail: `quality-workflow`.
   proves neither outcome nor justifies restart. For workflows that are used,
   preserve their timeout, billing, and failure-propagation controls. Never weaken
   tests/assertions or skip existing mandatory gates merely to pass.
-- Code/runtime changes require automated tests; bug fixes MUST add a regression
-  test failing before and passing after.
+- Behavior-changing code requires risk-proportionate tests; non-behavioral edits
+  do not. Bug fixes MUST add red/green regression tests when feasible; otherwise
+  document alternative evidence and the unverified gap. Never weaken assertions.
 - Test behavior, schemas, limits, tool contracts, generated-artifact consistency,
   not rule/docs wording/paraphrases (duplicate policy, break equivalent rewrites).
   Exact literals require concrete external machine-identifier/protocol mandates.
-- Choose security controls by concrete exposure, such as untrusted inputs, code,
-  credentials, sensitive data, destructive operations, users, distribution, or
-  exploitable flaws. Assess impact; public visibility or dependencies alone do
-  not require scanners, audits, or security documents.
+- Choose security controls for actual exposure (internet-accessible service,
+  untrusted input/code execution, credentials/sensitive data, destructive
+  operations, external users/distribution, known exploitable flaw); assess impact.
+  Public visibility or dependencies alone do not trigger scanners, audits, or
+  security documents.
 - Reproduce minimally. For environment-dependent defects, observe affected
   runtimes read-only, encode relevant sanitized differences in test-owned
   fixtures, not assumptions. Reproduce prior state (SHA/pre-bump seed) before

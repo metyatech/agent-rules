@@ -88,11 +88,13 @@
 
 ## Quality tooling and CI
 
-- Add formatters, analyzers, or lint rules only for concrete correctness or
-  architecture gaps missed by compiler checks, tests, and review; prefer existing
-  tools and relevant rules. Avoid style-only checks, AI-only formatting, and
-  formatting churn. Markdown lint requires human-edited content and a real
-  structural, rendering, or readability need.
+- Reuse formatters required by repo/toolchain or useful for generated-output
+  consistency or diff noise; do not add one for AI style/readability or cause
+  formatting-only churn.
+- Add analyzers/lint only for correctness or architecture gaps missed by
+  compiler/type checks, tests, or review; prefer existing relevant rules.
+- Markdown lint requires human-edited documents and a real structural, rendering,
+  or readability need.
 - No default hooks: add only for evidenced recurring misses or risks better
   prevented before commit than by existing checks; keep them lightweight and
   staged-file scoped. CI MUST NOT mutate the repository. Use CI only for distinct
@@ -117,7 +119,8 @@
 
 - Visually verify UI, layout, generated document, image, screenshot, slide,
   PDF, and other rendered-output changes before concluding.
-- Web UI projects MUST enforce visual accessibility checks.
+- Personal-only UI needs no new accessibility harness by default; scale checks
+  by exposure and requirements (see `gui-standards`).
 
 ## Environment portability
 

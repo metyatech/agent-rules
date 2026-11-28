@@ -52,24 +52,19 @@ obligations follow.
 
 ## Accessibility minimum
 
-- Every interactive control MUST have an accessible name and visible focus
-  indicator; the primary flow MUST be keyboard-completable in logical focus and
-  reading order. The agent MUST NOT convey state, selection, or validity through
-  color alone; pair it with shape, weight, icon, or text. Text and UI components
-  MUST meet WCAG 2.1 AA contrast (4.5:1 normal text, 3:1 large text/UI
-  components). The agent MUST NOT remove the default focus ring without an
-  equally visible replacement.
+- Keep low-cost basics in personal UI: accessible names, visible focus, primary-
+  flow keyboard access, and non-color cues where relevant. Full WCAG conformance
+  or scans are not defaults.
+- External-user interfaces or explicit accessibility requirements MUST meet
+  WCAG 2.1 AA contrast (4.5:1 text, 3:1 large text/UI) and other applicable
+  targets; retain visible focus or an equally visible replacement.
 
 ## Verification gates
 
-Before reporting completion on any GUI change, the agent MUST:
-
-1. Complete a first-use walkthrough following only the visible UI.
-2. Take screenshots at normal and reduced width; review for
-   overflow, clipping, wrapping, and missing controls.
-3. Verify keyboard reachability and visible focus for the primary
-   flow.
-4. Run a whole-screen plausibility pass.
+- For new/major flows, layout changes, or high-consequence paths, walk through
+  the visible UI, review normal/reduced-width screenshots, check keyboard/focus,
+  and review the whole screen. For isolated changes, verify affected controls,
+  flow, or layout only.
 
 If the primary flow is not immediately understandable, iterate
 until first-use clarity is achieved.
