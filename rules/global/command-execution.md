@@ -109,18 +109,20 @@
 
 ## Sandbox
 
-- MXC is the default. Before execution, request native approval only when evidence
-  establishes that the same in-scope operation (or a required child of its
-  original full test suite) fails under the same MXC backend, version, OS and
-  environment; otherwise run in MXC. Auth, network, timeout, lock and config
-  errors alone are not MXC signatures. Never blanket-escalate Git, shell, tests
-  or all commands.
-- For a new MXC-specific signature, request native approval once for the same scoped
-  command/directory; for tests, request the original full suite, never a
+- MXC is the default. Before execution, request native approval only when
+  evidence establishes that the same in-scope operation (or a required child
+  of its original full test suite) fails under the same MXC backend, version,
+  OS and environment; otherwise run in MXC. Auth, network, timeout, lock and
+  config errors alone are not MXC signatures. Never blanket-escalate Git,
+  shell, tests or all commands. Include a brief reason in every native approval
+  request.
+- For a new MXC-specific signature, request native approval once for the same
+  scoped command/directory; for tests, request the original full suite, never a
   link-only probe. Use the configured reviewer (auto_review when available).
   If approved, run the same command once and verify its exit code and all
-  assertions/the whole suite. If refused, unavailable or failing, do not retry
-  or bypass; report uncovered verification and continue independent safe work.
+  assertions/the whole suite. Partial results and skipped tests are not passes.
+  If refused, unavailable or failing, do not retry or bypass; report uncovered
+  verification and continue independent safe work.
 - On Windows, MXC `EPERM`, `EACCES` or WinError 5 for junctions/hard links or
   atomic replacement, including sandboxed/redirected `%TEMP%`/`%LOCALAPPDATA%`,
   indicates a capability limit, not an app defect or OS denial. Node
