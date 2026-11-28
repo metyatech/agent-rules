@@ -8,9 +8,8 @@
   local configuration files. Verify a clean environment can
   install and use the product via the README's documented
   steps.
-- Define a SemVer policy and document what counts as a
-  breaking change.
-- Keep the package version and the Git tag consistent.
+- For versioned releases, document the versioning policy and breaking changes;
+  align the release version with its Git tag.
 
 ## Trusted publishing
 
@@ -22,8 +21,8 @@
 
 ## GitHub repository metadata
 
-- For every public repository, set the GitHub Description, Topics, and Homepage
-  fields.
+- For public repositories, set a useful GitHub Description and relevant Topics.
+  Set a Homepage only when an actual useful destination exists.
 - Topics MUST be relevant, stable, lowercase GitHub topics that describe the
   repository's language, platform, domain, and artifact type.
 

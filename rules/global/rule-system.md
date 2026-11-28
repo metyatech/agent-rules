@@ -43,7 +43,6 @@ keywords mean MUST.
 
 ## Mechanisation
 
-- When source/build artifacts permit deterministic rule checks, enforce them
-  with lint, schema, types, tests, or hooks instead of model recall.
-- Add feasible deterministic checks with new rules; when editing a rule, migrate
-  mechanically checkable subsets into system checks in the same change set.
+- Mechanize concrete machine contracts or critical invariants only when detection
+  benefit exceeds implementation and maintenance cost. Reuse existing checks; do
+  not add prose tests, duplicate gates, or infrastructure to verify infrastructure.

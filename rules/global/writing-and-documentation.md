@@ -17,9 +17,8 @@
 
 ## Docs
 
-- Every repo MUST have a README: purpose, environments,
-  setup/usage/development commands, required variables/config,
-  release/deployment steps, companion doc links.
+- A product README MUST explain its purpose and applicable user setup or usage;
+  omit irrelevant boilerplate.
 - Assess doc impact; update all affected docs in the same change set to match
   behavior; omit no-op notes. If docs conflict with code, follow code
   conventions and

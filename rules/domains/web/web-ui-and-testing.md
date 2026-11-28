@@ -11,9 +11,10 @@
 
 - For user-visible UI changes, verify in a real browser; if not possible,
   explain and provide manual steps.
-- Always add E2E tests for user-visible changes; if no harness exists, add one.
-- Run E2E in CI and require it for PR merges; do not defer correctness coverage
-  to scheduled runs.
+- Select existing tests or browser checks by the changed behavior, risk, and
+  uncovered contract; do not add an E2E harness or require E2E/PR CI for every
+  user-visible change. Preserve existing required gates and add automation only
+  when it provides distinct value over the current verification.
 - For React UI changes, add tests that cover initial mount and at least one
   update (re-render) path; include unmount/cleanup when relevant.
 - If behavior differs between first render and later renders (effects, caching,

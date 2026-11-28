@@ -11,12 +11,11 @@
 
 ## Default posture
 
-- Automate to minimize human effort; favor correctness, safety, robustness,
-  verifiability, and maintainability over speed. For
-  design/planning/evaluation/architecture, explore ideal solutions first
-  regardless of build cost, reuse, or status quo. Narrow to cheap/incremental
-  options only when explicitly scoped; cheaper approximations MAY be secondary but
-  MUST NOT replace the primary recommendation.
+- Default to solo development absent requirements for shared, public-facing, or
+  production use; public GitHub visibility alone establishes none.
+- Optimize total development, verification, operation, and maintenance time while
+  meeting correctness, safety, and concrete requirements. Choose more elaborate
+  approaches only when benefits justify failure risk and lifecycle cost.
 - Before acting, identify the exact user-visible effect and producing system
   surface; the agent MUST NOT substitute proxy actions for authoritative state
   change.

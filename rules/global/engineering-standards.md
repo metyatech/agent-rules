@@ -27,8 +27,8 @@
 ## System design
 
 - Use clear dependency direction, shallow control flow, intention-revealing
-  names, centralized change points, DRY code/docs/tests/config. Fix root causes;
-  remove obsolete code in the change.
+  names, and centralized change points where they reduce real defects or change
+  cost. Fix root causes and remove obsolete code in the affected scope.
 - Unify equivalent concepts across targets; share logic, isolate target-specific
   differences in inputs/config.
 - Manage/distribute interdependent tool files as one reusable bundle, not
@@ -86,28 +86,23 @@
   OS temp or untracked temp areas. Source, tests, config, reproducibility
   fixtures, and product/distribution artifacts may remain in the repo contract.
 
-## Linters, formatters, and static analysis
+## Quality tooling and CI
 
-- Pin a formatter and linter/analyzer per repo's primary language. Never disable
-  lint rules globally; keep suppressions narrow, justified inline, time-bounded.
-  Configure formatter automation before completing new repos; preserve/add it
-  when changing formatter-managed files in existing repos.
-- Editor/save and pre-commit hooks MAY mutate files; CI MUST NOT mutate the
-  repo. See `code-quality-setup`.
-- Formatting/auto-fixing pre-commit hooks: lightweight, staged-file-only;
-  no full suite/typecheck, production build, integration tests, other long gates.
-- CI MUST run non-mutating format/lint/typecheck/test via repo-standard commands.
-
-## CI enforcement
-
-- Check format/lint on every PR; warnings fail. GitHub Actions
-  `push`/`pull_request` jobs require `timeout-minutes: 10`; optimize before
-  extending (user approval required, max 15 minutes). Run checks over 15 minutes
-  only manually (e.g. `workflow_dispatch`).
-- Stay within account-wide included GitHub Actions usage unless the user
-  explicitly approves paid usage. For CI creation/changes/audits, estimate
-  monthly cost from total billable job time/frequency/runner rates; minimize
-  usage without weakening gates. See `code-quality-setup`.
+- Add formatters, analyzers, or lint rules only for concrete correctness or
+  architecture gaps missed by compiler checks, tests, and review; prefer existing
+  tools and relevant rules. Avoid style-only checks, AI-only formatting, and
+  formatting churn. Markdown lint requires human-edited content and a real
+  structural, rendering, or readability need.
+- No default hooks: add only for evidenced recurring misses or risks better
+  prevented before commit than by existing checks; keep them lightweight and
+  staged-file scoped. CI MUST NOT mutate the repository. Use CI only for distinct
+  value, not every local check or PR by default. Remove existing gates only after
+  evidence-based review; never ignore or weaken required checks to pass. Used
+  GitHub Actions `push`/`pull_request` jobs retain
+  `timeout-minutes: 10`; optimize before a user-approved extension, capped at 15.
+  Run longer checks manually. Keep within included usage unless paid spend is
+  approved; estimate monthly cost from billable time, frequency, and runner rates
+  for CI changes/audits. See `code-quality-setup`.
 
 ## GitHub Actions runtime currency
 
